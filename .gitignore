@@ -40,4 +40,4 @@ luac.out
 *.hex
 
 # Everything that deals with VS Code stuff
-.vscode/*
+.vscode
