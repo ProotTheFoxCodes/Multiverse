@@ -39,6 +39,5 @@ luac.out
 *.x86_64
 *.hex
 
-# JSON files (except the metadata JSON file)
-*.json
-!MultiversalFeverDream.json
+# Everything that deals with VS Code stuff
+.vscode/*
