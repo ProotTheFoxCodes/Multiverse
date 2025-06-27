@@ -12,3 +12,8 @@ MultiversalFeverDream.transmuted_gradient = SMODS.Gradient {
         HEX("56B847")
     }
 }
+SMODS.Rarity {
+    key = "Transmuted",
+    default_weight = 0,
+    badge_colour = MultiversalFeverDream.transmuted_gradient
+}

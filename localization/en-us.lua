@@ -1,6 +1,6 @@
 return {
     descriptions = {
-        Mod = ""
+        
     },
     misc = {
 
