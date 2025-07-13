@@ -1,4 +1,4 @@
-# Multiversal Fever Dream
+# Multiverse
 A Balatro mod I made because I was bored and needed something to work on.
 This mod introduces:
  - New Jokers that reference other media (primarily games), somewhat balanced compared to vanilla Jokers
