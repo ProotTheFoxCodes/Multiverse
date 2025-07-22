@@ -1,0 +1,217 @@
+SMODS.Joker {
+    key = "bloodbath",
+    atlas = "placeholder",
+    pos = {x = 2, y = 0},
+    config = {extra = {xmult = 1.9}},
+    rarity = 3,
+    blueprint_compat = true,
+    cost = 9,
+    loc_vars = function(self, info, card)
+        return {vars = {card.ability.extra.xmult}}
+    end,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play then
+            if G.GAME.current_round.hands_left == 0 then
+                return {
+                    xmult = card.ability.extra.xmult
+                }
+            end
+        end
+    end
+}
+SMODS.Joker {
+    key = "cataclysm",
+    atlas = "placeholder",
+    pos = {x = 1, y = 0},
+    config = {extra = {mult = 19}},
+    rarity = 2,
+    blueprint_compat = true,
+    cost = 6,
+    loc_vars = function(self, info, card)
+        return {vars = {card.ability.extra.mult}}
+    end,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play then
+            if G.GAME.current_round.hands_left == 0 then
+                return {
+                    mult = card.ability.extra.mult
+                }
+            end
+        end
+    end
+}
+SMODS.Joker {
+    key = "aftermath",
+    atlas = "placeholder",
+    pos = {x = 0, y = 0},
+    config = {extra = {chips = 19}},
+    rarity = 1,
+    blueprint_compat = true,
+    cost = 5,
+    loc_vars = function(self, info, card)
+        return {vars = {card.ability.extra.chips}}
+    end,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play then
+            if G.GAME.current_round.hands_left == 0 then
+                return {
+                    chips = card.ability.extra.chips
+                }
+            end
+        end
+    end
+}
+SMODS.Joker {
+    key = "magic_school_bus",
+    atlas = "placeholder",
+    pos = {x = 1, y = 0},
+    config = {extra = {mult = 0, mult_gain = 1}},
+    rarity = 2,
+    blueprint_compat = true,
+    perishable_compat = false,
+    cost = 6,
+    loc_vars = function(self, info, card)
+        return {
+            vars = {
+                card.ability.extra.mult_gain,
+                card.ability.extra.mult
+            }
+        }
+    end,
+    calculate = function(self, card, context)
+        if context.before then
+            local has_face_card = false
+            for _, playing_card in ipairs(G.hand.cards) do
+                if playing_card:is_face() then
+                    card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
+                    has_face_card = true
+                end
+            end
+            if has_face_card then
+                return {
+                    message = localize("k_upgrade_ex"),
+                }
+            else
+                card.ability.extra.mult = 0
+                return {
+                    message = localize("k_mul_missed_bus")
+                }
+            end
+        end
+        if context.joker_main then
+            return {
+                mult = card.ability.extra.mult
+            }
+        end
+    end
+}
+SMODS.Joker {
+    key = "v1",
+    atlas = "placeholder",
+    pos = {x = 2, y = 0},
+    config = {extra = {xmult = 1.5, seal = "Gold"}},
+    rarity = 3,
+    blueprint_compat = false,
+    cost = 9,
+    loc_vars = function(self, info, card)
+        table.append(info, G.P_SEALS[card.ability.extra.seal])
+        return {vars = {card.ability.extra.xmult}}
+    end,
+    calculate = function(self, card, context)
+        if context.before and G.GAME.current_round.hands_played == 0 and not context.blueprint then
+            local rand_card = table.get_random_item(context.scoring_hand)
+            rand_card:set_seal(card.ability.extra.seal, nil, true)
+        end
+        if context.individual and context.cardarea == G.play and not context.blueprint then
+            if context.other_card:get_seal() == card.ability.extra.seal then
+                return {
+                    xmult = card.ability.extra.xmult
+                }
+            end
+        end
+    end
+}
+SMODS.Joker {
+    key = "villager",
+    atlas = "placeholder",
+    pos = {x = 0, y = 0},
+    config = {extra = {mult = 30, money_loss = 1}},
+    rarity = 1,
+    blueprint_compat = true,
+    cost = 4,
+    loc_vars = function(self, info, card)
+        return {
+            vars = {
+                card.ability.extra.mult,
+                card.ability.extra.money_loss
+            }
+        }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            ease_dollars(-card.ability.extra.money_loss)
+            return {
+                mult = card.ability.extra.mult,
+            }
+        end
+    end
+}
+SMODS.Joker {
+    key = "antimatter",
+    atlas = "placeholder",
+    pos = {x = 2, y = 0},
+    config = {extra = {mult = 1, dim1 = 1, dim2 = 1, rounds_held = 0}},
+    rarity = 3,
+    blueprint_compat = true,
+    perishable_compat = false,
+    cost = 7,
+    loc_vars = function(self, info, card)
+        return {vars = {card.ability.extra.mult}}
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {mult = card.ability.extra.mult}
+        end
+        if context.end_of_round and context.cardarea == G.jokers then
+            card.ability.extra.rounds_held = card.ability.extra.rounds_held + 1
+            local msg
+            if card.ability.extra.rounds_held == 1 then
+                msg = localize("k_mul_antimatter_init")
+            elseif card.ability.extra.rounds_held <= 3 then
+                msg = localize("k_mul_antimatter_grow1")
+            elseif card.ability.extra.rounds_held <= 6 then
+                card.ability.extra.dim2 = 2
+                msg = localize("k_mul_antimatter_grow2")
+            elseif card.ability.extra.rounds_held <= 10 then
+                card.ability.extra.dim2 = card.ability.extra.dim2 + 1
+                msg = localize("k_mul_antimatter_grow3")
+            else
+                card.ability.extra.dim2 = card.ability.extra.dim2 + card.ability.extra.rounds_held - 9
+                msg = localize("k_mul_antimatter_grow4")
+            end
+            card.ability.extra.dim1 = card.ability.extra.dim1 + card.ability.extra.dim2
+            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.dim1
+            return {message = msg}
+        end
+    end
+}
+SMODS.Joker {
+    key = "red_balloon",
+    atlas = "placeholder",
+    pos = {x = 0, y = 0},
+    config = {extra = {money = 1}},
+    blueprint_compat = true,
+    eternal_compat = false,
+    loc_vars = function(self, info, card)
+        return {vars = {card.ability.extra.money}}
+    end,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play then
+            return {dollars = card.ability.extra.money}
+        end
+        if context.end_of_round and context.main_eval and not context.game_over and not context.blueprint then
+            Multiverse.destroy_joker(card)
+            return {message = localize("k_mul_popped")}
+        end
+    end
+}

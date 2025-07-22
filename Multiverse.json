@@ -4,13 +4,13 @@
     "author": [
         "ThunderEdge73"
     ],
-    "description": "Adds new Jokers and mechanics to give Balatro some (extreme) spice.",
+    "description": "Adds new Jokers and mechanics to give Balatro some spice whilst somewhat maintaining vanilla balance.",
     "prefix": "mul",
     "main_file": "Multiverse.lua",
-    "priority": -30,
+    "priority": -1000000,
     "badge_colour": "063970",
     "version": "1.0.0~",
     "dependencies": [
-        "Steamodded (>=1.0.0~BETA-0614a)"
+        "Steamodded (>=1.0.0~BETA-0711a)"
     ]
 }
