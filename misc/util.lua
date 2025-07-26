@@ -1,52 +1,50 @@
----Talisman compatibility
+---Talisman compatibility?
 to_big = to_big or function(x)
     return x
 end
----Checks if value is mapped to a key within t.
----@param t table
+---Checks if value is mapped to a key within a table t.
+---@param table table
 ---@param value any
 ---@return boolean
-table.contains_value = function(t, value)
-    for _, v in ipairs(t) do
+Multiverse.contains_value = function(table, value)
+    for _, v in ipairs(table) do
         if v == value then return true end
     end
     return false
 end
----Counts the number of items in a table t with non-numeric indices.
----@param t table
+---Counts the number of items in a table t.
+---@param table table
 ---@return number
-table.len = function(t)
+Multiverse.len = function(table)
     local count = 0
-    for _, _ in pairs(t) do
+    for _, _ in pairs(table) do
         count = count + 1
     end
     return count
 end
 ---Gets a random value from a numerically-indexed table.
----@param t table
+---@param table table
 ---@return any
-table.get_random_item = function(t)
-    return t[math.random(#t)]
+Multiverse.get_random_item = function(table)
+    return table[math.random(#table)]
 end
 ---Appends an item to a numerically-indexed table.
----@param t table
+---@param table table
 ---@param item any
-table.append = function(t, item)
-    t[#t+1] = item
+Multiverse.append = function(table, item)
+    table[#table+1] = item
 end
----Destroys the given joker
-Multiverse.destroy_joker = function(joker, sound)
-    local sfx_path = sound or "tarot1"
-    G.E_MANAGER:add_event(Event({
-        func = function()
-            play_sound(sfx_path)
-            joker.T.r = -0.2
-            joker:juice_up(0.3,0.4)
-            joker.states.drag.is = true
-            joker.children.center.pinch.x = true
-            joker:start_dissolve(G.C.RED, nil, 1.6)
-            joker = nil
-            return true
+Multiverse.transmutations = {
+    ["j_joker"] = "j_mul_ren_amamiya",
+    ["j_mul_villager"] = "j_mul_steve"
+}
+Multiverse.update_anim = function(card, dt)
+    if card.config.center.anim_info then
+        local data = card.config.center.anim_info
+        card.config.center.anim_info.anim_progress = card.config.center.anim_info.anim_progress + (dt * data.num_frames / data.anim_time)
+        if card.config.center.anim_info.anim_progress > data.num_frames then
+            card.config.center.anim_info.anim_progress = card.config.center.anim_info.anim_progress - data.num_frames
         end
-    }))
+        card.config.center.pos.x = math.floor(card.config.center.anim_info.anim_progress) % data.num_frames
+    end
 end

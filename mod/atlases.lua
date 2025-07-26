@@ -17,10 +17,14 @@ SMODS.Atlas {
     path = "modicon.png"
 }
 SMODS.Atlas {
-    key = "philosophers_stone",
+    key = "p_stone",
     px = 71,
     py = 95,
     path = "philosophers_stone.png",
-    atlas_table = "ANIMATION_ATLAS",
-    frames = 18
+}
+SMODS.Atlas {
+    key = "placeholder_modifiers",
+    px = 71,
+    py = 95,
+    path = "placeholder_modifiers.png"
 }

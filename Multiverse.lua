@@ -15,14 +15,16 @@ local files = {
     "misc/util.lua",
     "mod/atlases.lua",
     "mod/stickers.lua",
+    "mod/enhancements.lua",
+    "mod/seals.lua",
     "mod/overrides.lua",
     "mod/transmuted_jokers.lua",
     "mod/jokers.lua",
     "mod/tarots.lua",
     "mod/spectrals.lua",
-    --"mod/myth.lua"
+    "mod/myth.lua"
 }
 
 for _, path in ipairs(files) do
-    SMODS.load_file(path)()
+    assert(SMODS.load_file(path))()
 end

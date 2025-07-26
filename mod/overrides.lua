@@ -1,19 +1,22 @@
 SMODS.Joker:take_ownership("joker", {
     transmutable_compat = true,
-    config = {extra = {mult = 4, tarots_used = {n = 0}}},
+    config = {extra = {mult = 4, tarots_used = {n = 0}, transmute_req = 20}},
     loc_vars = function(self, info, card)
-        return {vars = {card.ability.extra.mult, card.ability.extra.tarots_used.n}}
+        Multiverse.append(info, {
+            set = "Other", key = "mul_joker_hint"
+        })
+        return {vars = {card.ability.extra.mult, card.ability.extra.tarots_used.n, card.ability.extra.transmute_req}}
     end,
     calculate = function(self, card, context)
         if context.joker_main then
             return {mult = card.ability.extra.mult}
         end
         if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == "Tarot" then
-            if not card.ability.extra.tarots_used[context.consumeable.ability.name] then
-                card.ability.extra.tarots_used[context.consumeable.ability.name] = true
+            if not card.ability.extra.tarots_used[context.consumeable.config.center.key] then
+                card.ability.extra.tarots_used[context.consumeable.config.center.key] = true
                 card.ability.extra.tarots_used.n = card.ability.extra.tarots_used.n + 1
             end
-            if card.ability.extra.tarots_used.n >= 20 then
+            if card.ability.extra.tarots_used.n >= card.ability.extra.transmute_req then
                 -- note to self: when adding modded stickers, must add mod prefix before sticker key
                 card.ability.mul_transmutable = true
             end

@@ -114,12 +114,12 @@ SMODS.Joker {
     blueprint_compat = false,
     cost = 9,
     loc_vars = function(self, info, card)
-        table.append(info, G.P_SEALS[card.ability.extra.seal])
+        Multiverse.append(info, G.P_SEALS[card.ability.extra.seal])
         return {vars = {card.ability.extra.xmult}}
     end,
     calculate = function(self, card, context)
         if context.before and G.GAME.current_round.hands_played == 0 and not context.blueprint then
-            local rand_card = table.get_random_item(context.scoring_hand)
+            local rand_card = Multiverse.get_random_item(context.scoring_hand)
             rand_card:set_seal(card.ability.extra.seal, nil, true)
         end
         if context.individual and context.cardarea == G.play and not context.blueprint then
@@ -135,21 +135,44 @@ SMODS.Joker {
     key = "villager",
     atlas = "placeholder",
     pos = {x = 0, y = 0},
-    config = {extra = {mult = 30, money_loss = 1}},
+    config = {extra = {mult = 20, money_loss = 1, transmute_req = 30}},
     rarity = 1,
     blueprint_compat = true,
-    cost = 4,
+    transmutable_compat = true,
+    cost = 6,
     loc_vars = function(self, info, card)
+        Multiverse.append(info, {
+            set = "Other", key = "mul_villager_hint"
+        })
+        local count = 0
+        if G.playing_cards then
+            for _, v in ipairs(G.playing_cards) do
+                if (SMODS.has_enhancement(v, "m_steel")
+                or SMODS.has_enhancement(v, "m_gold")
+                or SMODS.has_enhancement(v, "m_stone")) then
+                    count = count + 1
+                end
+            end
+        end
         return {
             vars = {
                 card.ability.extra.mult,
-                card.ability.extra.money_loss
+                card.ability.extra.money_loss,
+                count,
+                card.ability.extra.transmute_req
             }
         }
     end,
     calculate = function(self, card, context)
         if context.joker_main then
             ease_dollars(-card.ability.extra.money_loss)
+            local count = 0
+            for _, c in ipairs(G.playing_cards) do
+                if SMODS.has_enhancement(c, "m_steel") or SMODS.has_enhancement(c, "m_gold") or SMODS.has_enhancement(c, "m_stone") then
+                    count = count + 1
+                end
+            end
+            card.ability.mul_transmutable = count >= card.ability.extra.transmute_req
             return {
                 mult = card.ability.extra.mult,
             }
@@ -210,7 +233,7 @@ SMODS.Joker {
             return {dollars = card.ability.extra.money}
         end
         if context.end_of_round and context.main_eval and not context.game_over and not context.blueprint then
-            Multiverse.destroy_joker(card)
+            SMODS.destroy_cards(card)
             return {message = localize("k_mul_popped")}
         end
     end

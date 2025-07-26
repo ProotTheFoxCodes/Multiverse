@@ -1,7 +1,18 @@
 return {
     descriptions = {
+        Enhanced = {
+            m_mul_calling_card = {
+                name = "Calling Card",
+                text = {
+                    "{X:mult,C:white}X#1#{} Mult when played",
+                    "or held in hand",
+                    "Increases to {X:mult,C:white}X#2#{} during",
+                    "a Boss Blind"
+                }
+            }
+        },
         Myth = {
-            c_philosophers_stone = {
+            c_mul_philosophers_stone = {
                 name = "Philosopher\'s Stone",
                 text = {
                     "{C:mul_transmuted,E:1}Transmutes{} {C:attention}#1#{} selected Joker",
@@ -56,6 +67,7 @@ return {
                 text = {
                     "{C:mult}+#1#{} Mult, lose {C:money}$#2#{}",
                     "when hand is played",
+                    "{C:inactive}(#3#/#4#?){}"
                 }
             },
             j_mul_antimatter = {
@@ -71,11 +83,23 @@ return {
                     "{C:red,E:2}Self-destructs{} at end of round"
                 }
             },
+            j_mul_ren_amamiya = {
+                name = "Ren Amamiya",
+                text = {
+                    "The {C:attention}first{} played card that",
+                    "scores becomes a {C:attention}Calling Card{}",
+                    "Retrigger all played {C:attention}Calling Cards{}",
+                    "a number of times equal to the",
+                    "number of {C:attention}distinct{} {C:tarot}Tarot{} cards",
+                    "in your consumable area",
+                    "{C:inactive}(Currently #1# times){}"
+                }
+            },
             j_joker = {
                 name = "Joker",
                 text = {
                     "{C:mult}+#1#{} Mult",
-                    "{C:inactive}(#2#/20?){}"
+                    "{C:inactive}(#2#/#3#?){}"
                 }
             }
         },
@@ -87,6 +111,29 @@ return {
                     "on this card to create",
                     "{C:mul_transmuted,E:1}Transmuted{} Jokers"
                 }
+            },
+            mul_joker_hint = {
+                name = "Hint",
+                text = {
+                    "Use a variety of",
+                    "{C:tarot}Tarot{} cards"
+                }
+            },
+            mul_villager_hint = {
+                name = "Hint",
+                text = {
+                    "Get lots of {C:attention}Gold{},",
+                    "{C:attention}Stone{} and {C:attention}Steel{}"
+                }
+            },
+            undiscovered_fraud = {
+                name = "Not Discovered",
+                text = {
+					"Purchase or use",
+					"this card in an",
+					"unseeded run to",
+					"learn what it does",
+				}
             }
         }
     },
@@ -99,12 +146,13 @@ return {
             k_mul_antimatter_grow2 = "Even more!",
             k_mul_antimatter_grow3 = "Is this too much?",
             k_mul_antimatter_grow4 = "What have we done?",
-            k_mul_popped = "Popped!"
+            k_mul_popped = "Popped!",
+            k_mul_myth = "Myth",
+            b_myth_cards = "Myth Cards"
         },
         labels = {
-            myth = "Myth",
             mul_transmutable = "Transmutable",
-
+            mul_myth = "Myth",
             k_mul_transmuted = "Transmuted",
         }
     }
