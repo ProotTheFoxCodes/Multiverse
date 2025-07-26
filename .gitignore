@@ -41,3 +41,6 @@ luac.out
 
 # Everything that deals with VS Code stuff
 .vscode
+
+# Definitions for Balatro functions
+balatro-lsp
