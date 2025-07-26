@@ -43,5 +43,5 @@ luac.out
 .vscode
 
 # Definitions for Balatro functions
-balatro-lsp
 .balatro-lsp
+.love2d
