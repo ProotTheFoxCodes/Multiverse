@@ -6,7 +6,7 @@ SMODS.Joker {
     rarity = 3,
     blueprint_compat = true,
     cost = 9,
-    loc_vars = function(self, info, card)
+    loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.xmult}}
     end,
     calculate = function(self, card, context)
@@ -27,7 +27,7 @@ SMODS.Joker {
     rarity = 2,
     blueprint_compat = true,
     cost = 6,
-    loc_vars = function(self, info, card)
+    loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.mult}}
     end,
     calculate = function(self, card, context)
@@ -48,7 +48,7 @@ SMODS.Joker {
     rarity = 1,
     blueprint_compat = true,
     cost = 5,
-    loc_vars = function(self, info, card)
+    loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.chips}}
     end,
     calculate = function(self, card, context)
@@ -70,7 +70,7 @@ SMODS.Joker {
     blueprint_compat = true,
     perishable_compat = false,
     cost = 6,
-    loc_vars = function(self, info, card)
+    loc_vars = function(self, info_queue, card)
         return {
             vars = {
                 card.ability.extra.mult_gain,
@@ -113,16 +113,17 @@ SMODS.Joker {
     rarity = 3,
     blueprint_compat = false,
     cost = 9,
-    loc_vars = function(self, info, card)
-        Multiverse.append(info, G.P_SEALS[card.ability.extra.seal])
+    loc_vars = function(self, info_queue, card)
+        table.insert(info_queue, G.P_SEALS[card.ability.extra.seal])
         return {vars = {card.ability.extra.xmult}}
     end,
     calculate = function(self, card, context)
         if context.before and G.GAME.current_round.hands_played == 0 and not context.blueprint then
-            local rand_card = Multiverse.get_random_item(context.scoring_hand)
+            local rand_card = Multiverse.get_random_item(context.scoring_hand, "v1")
             rand_card:set_seal(card.ability.extra.seal, nil, true)
         end
         if context.individual and context.cardarea == G.play and not context.blueprint then
+            SMODS.add_card({key_append = ""})
             if context.other_card:get_seal() == card.ability.extra.seal then
                 return {
                     xmult = card.ability.extra.xmult
@@ -135,13 +136,13 @@ SMODS.Joker {
     key = "villager",
     atlas = "placeholder",
     pos = {x = 0, y = 0},
-    config = {extra = {mult = 20, money_loss = 1, transmute_req = 30}},
+    config = {extra = {mult = 20, money_loss = 1, transmute_req = 25}},
     rarity = 1,
     blueprint_compat = true,
     transmutable_compat = true,
     cost = 6,
-    loc_vars = function(self, info, card)
-        Multiverse.append(info, {
+    loc_vars = function(self, info_queue, card)
+        table.insert(info_queue, {
             set = "Other", key = "mul_villager_hint"
         })
         local count = 0
@@ -164,15 +165,15 @@ SMODS.Joker {
         }
     end,
     calculate = function(self, card, context)
+        local count = 0
+        for _, c in ipairs(G.playing_cards) do
+            if SMODS.has_enhancement(c, "m_steel") or SMODS.has_enhancement(c, "m_gold") or SMODS.has_enhancement(c, "m_stone") then
+                count = count + 1
+            end
+        end
+        card.ability.mul_transmutable = count >= card.ability.extra.transmute_req
         if context.joker_main then
             ease_dollars(-card.ability.extra.money_loss)
-            local count = 0
-            for _, c in ipairs(G.playing_cards) do
-                if SMODS.has_enhancement(c, "m_steel") or SMODS.has_enhancement(c, "m_gold") or SMODS.has_enhancement(c, "m_stone") then
-                    count = count + 1
-                end
-            end
-            card.ability.mul_transmutable = count >= card.ability.extra.transmute_req
             return {
                 mult = card.ability.extra.mult,
             }
@@ -188,7 +189,7 @@ SMODS.Joker {
     blueprint_compat = true,
     perishable_compat = false,
     cost = 7,
-    loc_vars = function(self, info, card)
+    loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.mult}}
     end,
     calculate = function(self, card, context)
@@ -222,19 +223,24 @@ SMODS.Joker {
     key = "red_balloon",
     atlas = "placeholder",
     pos = {x = 0, y = 0},
-    config = {extra = {money = 1}},
+    config = {extra = {money = 1, rounds_held = 0, total_rounds = 3}},
     blueprint_compat = true,
     eternal_compat = false,
-    loc_vars = function(self, info, card)
-        return {vars = {card.ability.extra.money}}
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.money, card.ability.extra.rounds_held, card.ability.extra.total_rounds}}
     end,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
             return {dollars = card.ability.extra.money}
         end
         if context.end_of_round and context.main_eval and not context.game_over and not context.blueprint then
-            SMODS.destroy_cards(card)
-            return {message = localize("k_mul_popped")}
+            card.ability.extra.rounds_held = card.ability.extra.rounds_held + 1
+            if card.ability.extra.rounds_held >= 3 then
+                SMODS.destroy_cards(card)
+                return {message = localize("k_mul_popped")}
+            else
+                return {message = card.ability.extra.rounds_held .. "/" .. card.ability.extra.total_rounds}
+            end
         end
     end
 }

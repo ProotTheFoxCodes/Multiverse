@@ -1,8 +1,8 @@
 SMODS.Joker:take_ownership("joker", {
     transmutable_compat = true,
-    config = {extra = {mult = 4, tarots_used = {n = 0}, transmute_req = 20}},
+    config = {extra = {mult = 4, tarots_used = {n = 0}, transmute_req = 15}}, -- Original value is 15
     loc_vars = function(self, info, card)
-        Multiverse.append(info, {
+        table.insert(info, {
             set = "Other", key = "mul_joker_hint"
         })
         return {vars = {card.ability.extra.mult, card.ability.extra.tarots_used.n, card.ability.extra.transmute_req}}

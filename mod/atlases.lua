@@ -11,6 +11,12 @@ SMODS.Atlas {
     path = "placeholder_sticker.png"
 }
 SMODS.Atlas {
+    key = "placeholder_modifiers",
+    px = 71,
+    py = 95,
+    path = "placeholder_modifiers.png"
+}
+SMODS.Atlas {
     key = "modicon",
     px = 34,
     py = 34,
@@ -23,8 +29,20 @@ SMODS.Atlas {
     path = "philosophers_stone.png",
 }
 SMODS.Atlas {
-    key = "placeholder_modifiers",
+    key = "ren_amamiya",
     px = 71,
     py = 95,
-    path = "placeholder_modifiers.png"
+    path = "ren_amamiya.png"
+}
+SMODS.Atlas {
+    key = "calling_card",
+    px = 71,
+    py = 95,
+    path = "call_card.png"
+}
+SMODS.Atlas {
+    key = "holy_grail",
+    px = 71,
+    py = 95,
+    path = "holy_grail.png"
 }

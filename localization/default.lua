@@ -4,10 +4,21 @@ return {
             m_mul_calling_card = {
                 name = "Calling Card",
                 text = {
-                    "{X:mult,C:white}X#1#{} Mult when played",
-                    "or held in hand",
-                    "Increases to {X:mult,C:white}X#2#{} during",
-                    "a Boss Blind"
+                    "{X:mult,C:white}X#1#{} Mult",
+                    "Increases to {X:mult,C:white}X#2#{} Mult",
+                    "during a Boss Blind",
+                    "Always treated as an {C:attention}Ace{} of {C:hearts}Hearts{}",
+                }
+            },
+            m_mul_netherite = {
+                name = "Netherite",
+                text = {
+                    "{C:chips}+#1#{} Chips when held in",
+                    "hand or played",
+                    "{X:mult,C:white}X#2#{} Mult when held",
+                    "in hand",
+                    "Gives {C:money}$#3#{} when held in",
+                    "hand at end of round",
                 }
             }
         },
@@ -16,7 +27,16 @@ return {
                 name = "Philosopher\'s Stone",
                 text = {
                     "{C:mul_transmuted,E:1}Transmutes{} {C:attention}#1#{} selected Joker",
-                    "that is currently {C:attention}Transmutable{}"
+                    "that is currently {C:mul_transmuted}Transmutable{}",
+                    "{C:inactive}(Must have room, bypasses Eternal){}"
+                }
+            },
+            c_mul_holy_grail = {
+                name = "Holy Grail",
+                text = {
+                    "Creates {C:attention}#1#{} {C:dark_edition}Negative{} consumables",
+                    "relevant to the {C:mul_transmuted}transmutation{}",
+                    "of selected Joker"
                 }
             }
         },
@@ -80,7 +100,8 @@ return {
                 name = "Red Balloon",
                 text = {
                     "Earn {C:money}$#1#{} when a card is scored",
-                    "{C:red,E:2}Self-destructs{} at end of round"
+                    "{C:red,E:2}Self-destructs{} in {C:attention}#3#{} rounds",
+                    "{C:inactive}(Currently #2#/#3#){}"
                 }
             },
             j_mul_ren_amamiya = {
@@ -100,6 +121,14 @@ return {
                 text = {
                     "{C:mult}+#1#{} Mult",
                     "{C:inactive}(#2#/#3#?){}"
+                }
+            },
+            j_mul_steve = {
+                name = "Steve",
+                text = {
+                    "All played cards with {C:diamonds}#1#{}",
+                    "suit become {C:attention}Netherite{} cards",
+                    "{C:attention}+#2#{} hand size"
                 }
             }
         },
@@ -126,7 +155,7 @@ return {
                     "{C:attention}Stone{} and {C:attention}Steel{}"
                 }
             },
-            undiscovered_fraud = {
+            undiscovered_myth = {
                 name = "Not Discovered",
                 text = {
 					"Purchase or use",
@@ -147,12 +176,12 @@ return {
             k_mul_antimatter_grow3 = "Is this too much?",
             k_mul_antimatter_grow4 = "What have we done?",
             k_mul_popped = "Popped!",
-            k_mul_myth = "Myth",
+            k_myth = "Myth",
             b_myth_cards = "Myth Cards"
         },
         labels = {
             mul_transmutable = "Transmutable",
-            mul_myth = "Myth",
+            myth = "Myth",
             k_mul_transmuted = "Transmuted",
         }
     }
