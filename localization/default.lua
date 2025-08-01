@@ -130,31 +130,6 @@ return {
                     "suit become {C:attention}Netherite{} cards",
                     "{C:attention}+#2#{} hand size"
                 }
-            },
-            j_mul_summoned_skull = {
-                name = "Summoned Skull",
-                text = {
-                    "{X:mult,C:white}X#1#{} Mult",
-                    "Destroys a {C:attention}random{} Joker",
-                    "when purchased"
-                }
-            },
-            j_mul_fifty_fifty = {
-                name = "50/50",
-                text = {
-                    "{C:green}#1# in #2#{} chance",
-                    "to give {X:mult,C:white}X#3#{} Mult",
-                    "If this probability fails, instead",
-                    "give {C:mult}+#4#{} Mult"
-                }
-            },
-            j_mul_victory_royale = {
-                name = "Victory Royale",
-                text = {
-                    "{C:green}#1# in #2#{} chance for scored cards",
-                    "to create a random {C:spectral}Spectral{} card",
-                    "{C:inactive}(Must have room){}"
-                }
             }
         },
         Other = {
@@ -201,8 +176,6 @@ return {
             k_mul_antimatter_grow3 = "Is this too much?",
             k_mul_antimatter_grow4 = "What have we done?",
             k_mul_popped = "Popped!",
-            k_mul_won_5050 = "Won!",
-            k_mul_lost_5050 = "Lost...",
             k_myth = "Myth",
             b_myth_cards = "Myth Cards"
         },

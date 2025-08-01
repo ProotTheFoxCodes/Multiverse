@@ -36,7 +36,7 @@ SMODS.Joker {
                     ref_value = "calling_card_anim_state",
                     ease = "quad",
                     ease_to = 5,
-                    delay = 1
+                    delay = 1.2
                 }))
             end
             if context.repetition and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, "m_mul_calling_card") then
