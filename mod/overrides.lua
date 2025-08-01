@@ -1,6 +1,6 @@
 SMODS.Joker:take_ownership("joker", {
     transmutable_compat = true,
-    config = {extra = {mult = 4, tarots_used = {n = 0}, transmute_req = 15}}, -- Original value is 15
+    config = {extra = {mult = 4, tarots_used = {n = 0}, transmute_req = 1}}, -- Original value is 15
     loc_vars = function(self, info, card)
         table.insert(info, {
             set = "Other", key = "mul_joker_hint"
@@ -18,7 +18,8 @@ SMODS.Joker:take_ownership("joker", {
             end
             if card.ability.extra.tarots_used.n >= card.ability.extra.transmute_req then
                 -- note to self: when adding modded stickers, must add mod prefix before sticker key
-                card.ability.mul_transmutable = true
+                print("entered")
+                card:add_sticker("mul_transmutable", true) -- another note to self: pass in true as 2nd argument
             end
         end
     end
