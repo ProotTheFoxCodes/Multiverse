@@ -1,4 +1,4 @@
-get_rank_hook = Card.get_id
+local get_rank_hook = Card.get_id
 Card.get_id = function(self)
     if SMODS.has_enhancement(self, "m_mul_calling_card") then
         return 14
@@ -6,7 +6,7 @@ Card.get_id = function(self)
         return get_rank_hook(self)
     end
 end
-chip_bonus_hook = Card.get_chip_bonus
+local chip_bonus_hook = Card.get_chip_bonus
 Card.get_chip_bonus = function(self)
     if SMODS.has_enhancement(self, "m_mul_calling_card") then
         return 11 + (self.ability.perma_bonus or 0)
@@ -14,7 +14,7 @@ Card.get_chip_bonus = function(self)
         return chip_bonus_hook(self)
     end
 end
-is_suit_hook = Card.is_suit
+local is_suit_hook = Card.is_suit
 Card.is_suit = function(self, suit, bypass_debuff, flush_calc)
     if SMODS.has_enhancement(self, "m_mul_calling_card") then
         if flush_calc then
