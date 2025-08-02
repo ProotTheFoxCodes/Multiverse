@@ -18,9 +18,8 @@ SMODS.Joker:take_ownership("joker", {
             end
             if card.ability.extra.tarots_used.n >= card.ability.extra.transmute_req then
                 -- note to self: when adding modded stickers, must add mod prefix before sticker key
-                print("entered")
-                card:add_sticker("mul_transmutable", true) -- doesnt work
-                -- card.ability.mul_transmutable = true -- does work
+                card:add_sticker("mul_transmutable", true)
+                -- another note to self: pass in true as 2nd argument to card:add_sticker()
             end
         end
     end

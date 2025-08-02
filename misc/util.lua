@@ -41,6 +41,19 @@ Multiverse.transmutations = {
         key = "j_mul_steve",
     }
 }
+---Forces a number to be within a given range
+---@param n number
+---@param min? number
+---@param max? number
+---@return number
+Multiverse.clamp = function(n, min, max)
+    local lower = min or 0
+    local higher = max or 1
+    if lower > higher then error("min cannot be higher than max") end
+    if n < lower then return lower
+    elseif n > higher then return higher
+    else return n end
+end
 --- Code taken from https://easings.net/
 --- 
 --- I have generalized the poly easings to allow for any degree of polynomial

@@ -10,7 +10,6 @@ Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient {
     },
     cycle = 1.5
 }
-Multiverse.calling_card_anim_state = 0
 
 local files = {
     "misc/util.lua",

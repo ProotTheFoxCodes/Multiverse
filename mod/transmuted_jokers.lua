@@ -17,7 +17,7 @@ SMODS.Joker {
         local unique_tarots = {n = 0}
         if G.consumeables then
             for _, c in ipairs(G.consumeables.cards) do
-                if not unique_tarots[c.config.center.key] then
+                if not unique_tarots[c.config.center.key] and c.ability.set == "Tarot" then
                     unique_tarots[c.config.center.key] = true
                     unique_tarots.n = unique_tarots.n + 1
                 end
@@ -32,10 +32,10 @@ SMODS.Joker {
                 context.scoring_hand[1]:set_ability("m_mul_calling_card")
                 G.E_MANAGER:add_event(Event({
                     trigger = "ease",
-                    ref_table = Multiverse,
-                    ref_value = "calling_card_anim_state",
+                    ref_table = G.GAME,
+                    ref_value = "mul_call_card_anim_state",
                     ease = "quad",
-                    ease_to = 5,
+                    ease_to = 6,
                     delay = 1
                 }))
             end
@@ -44,7 +44,7 @@ SMODS.Joker {
                 local unique_tarots = {n = 0}
                 if G.consumeables then
                     for _, c in ipairs(G.consumeables.cards) do
-                        if not unique_tarots[c.config.center.key] then
+                        if not unique_tarots[c.config.center.key] and c.ability.set == "Tarot" then
                             unique_tarots[c.config.center.key] = true
                             unique_tarots.n = unique_tarots.n + 1
                         end
@@ -54,8 +54,15 @@ SMODS.Joker {
                     return {repetitions = unique_tarots.n}
                 end
             end
-            if context.end_of_round and not context.game_over and context.main_eval then
-                Multiverse.calling_card_anim_state = 0
+            if context.after then
+                G.E_MANAGER:add_event(Event({
+                    trigger = "ease",
+                    ref_table = G.GAME,
+                    ref_value = "mul_call_card_anim_state",
+                    ease = "quad",
+                    ease_to = 0,
+                    delay = 1
+                }))
             end
         end
     end
