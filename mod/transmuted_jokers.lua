@@ -28,7 +28,6 @@ SMODS.Joker {
     calculate = function(self, card, context)
         if not context.blueprint then
             if context.before and context.main_eval and context.scoring_hand then
-                ---@diagnostic disable-next-line: param-type-mismatch
                 context.scoring_hand[1]:set_ability("m_mul_calling_card")
                 G.E_MANAGER:add_event(Event({
                     trigger = "ease",
