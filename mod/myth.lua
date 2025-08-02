@@ -3,7 +3,7 @@ SMODS.ConsumableType {
     primary_colour = HEX("C5CC41"),
     secondary_colour = HEX("89C41B"),
     collection_rows = {3,4},
-    shop_rate = 1.5,
+    shop_rate = 1,
     default = "c_mul_holy_grail"
 }
 SMODS.Consumable {

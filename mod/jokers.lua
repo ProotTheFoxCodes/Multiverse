@@ -136,7 +136,7 @@ SMODS.Joker {
     key = "villager",
     atlas = "placeholder",
     pos = {x = 0, y = 0},
-    config = {extra = {mult = 20, money_loss = 1, transmute_req = 1}}, -- Original value is 25
+    config = {extra = {mult = 20, money_loss = 1, transmute_req = 25}},
     rarity = 1,
     blueprint_compat = true,
     transmutable_compat = true,
@@ -167,7 +167,9 @@ SMODS.Joker {
     calculate = function(self, card, context)
         local count = 0
         for _, c in ipairs(G.playing_cards) do
-            if SMODS.has_enhancement(c, "m_steel") or SMODS.has_enhancement(c, "m_gold") or SMODS.has_enhancement(c, "m_stone") then
+            if SMODS.has_enhancement(c, "m_steel")
+            or SMODS.has_enhancement(c, "m_gold")
+            or SMODS.has_enhancement(c, "m_stone") then
                 count = count + 1
             end
         end

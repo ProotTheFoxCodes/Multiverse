@@ -1,6 +1,6 @@
 SMODS.Joker:take_ownership("joker", {
     transmutable_compat = true,
-    config = {extra = {mult = 4, tarots_used = {n = 0}, transmute_req = 1}}, -- Original value is 15
+    config = {extra = {mult = 4, tarots_used = {n = 0}, transmute_req = 15}},
     loc_vars = function(self, info, card)
         table.insert(info, {
             set = "Other", key = "mul_joker_hint"
