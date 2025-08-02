@@ -44,76 +44,126 @@ return {
             j_mul_bloodbath = {
                 name = "Bloodbath",
                 text = {
-                    "All cards give {X:mult,C:white}X#1#{} Mult when",
-                    "scored on {C:attention}last hand{} of round"
+                    {
+                        "All cards give {X:mult,C:white}X#1#{} Mult when",
+                        "scored on {C:attention}last hand{} of round"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"I hate the Michigun ufo part\""
+                    }
                 }
             },
             j_mul_cataclysm = {
                 name = "Cataclysm",
                 text = {
-                    "All cards give {C:mult}+#1#{} Mult when",
-                    "scored on {C:attention}last hand{} of round"
+                    {
+                        "All cards give {C:mult}+#1#{} Mult when",
+                        "scored on {C:attention}last hand{} of round"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"That first wave is so stupid\""
+                    }
                 }
             },
             j_mul_aftermath = {
                 name = "Aftermath",
                 text = {
-                    "All cards give {C:chips}+#1#{} Chips when",
-                    "scored on {C:attention}last hand{} of round"
+                    {
+                        "All cards give {C:chips}+#1#{} Chips when",
+                        "scored on {C:attention}last hand{} of round"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"Who even remembers this level?\""
+                    }
                 }
             },
             j_mul_magic_school_bus = {
                 name = "Magic School Bus",
                 text = {
-                    "This Joker gains {C:mult}+#1#{} Mult per",
-                    "{C:attention}face{} card held in hand",
-                    "Resets if there are no",
-                    "{C:attention}face cards{} held in hand",
-                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+                    {
+                        "This Joker gains {C:mult}+#1#{} Mult per",
+                        "{C:attention}face{} card held in hand",
+                        "Resets if there are no",
+                        "{C:attention}face cards{} held in hand",
+                        "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"Mrs. Frizzle, where are we going?\"",
+                        "{C:inactive,s:0.8}\"We're going gambling!\""
+                    }
                 }
             },
             j_mul_v1 = {
                 name = "V1",
                 text = {
-                    "When {C:attention}first hand{} of round is",
-                    "played, add a {C:attention}Gold Seal{} to",
-                    "a random scoring card",
-                    "Cards with a {C:attention}Gold Seal{} give",
-                    "{X:mult,C:white}X#1#{} Mult when scored"
+                    {
+                        "When {C:attention}first hand{} of round is",
+                        "played, add a {C:attention}Gold Seal{} to",
+                        "a random scoring card",
+                        "Cards with a {C:attention}Gold Seal{} give",
+                        "{X:mult,C:white}X#1#{} Mult when scored"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"Ultrakill fans will do anything",
+                        "{C:inactive,s:0.8}to screw the murder robot\""
+                    }
                 }
             },
             j_mul_villager = {
                 name = "Villager",
                 text = {
-                    "{C:mult}+#1#{} Mult, lose {C:money}$#2#{}",
-                    "when hand is played",
-                    "{C:inactive}(#3#/#4#?){}"
+                    {
+                        "{C:mult}+#1#{} Mult, lose {C:money}$#2#{}",
+                        "when hand is played",
+                        "{C:inactive}(#3#/#4#?){}"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"Oh, them? They're the villagers!\""
+                    }
                 }
             },
             j_mul_antimatter = {
                 name = "Antimatter",
                 text = {
-                    "{C:mult}+#1#{} Mult?"
+                    {
+                        "{C:mult}+#1#{} Mult?"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"The ninth dimension is",
+                        "{C:inactive,s:0.8}[DATA EXPUNGED], trust me bro\""
+                    }
                 }
             },
             j_mul_red_balloon = {
                 name = "Red Balloon",
                 text = {
-                    "Earn {C:money}$#1#{} when a card is scored",
-                    "{C:red,E:2}Self-destructs{} in {C:attention}#3#{} rounds",
-                    "{C:inactive}(Currently #2#/#3#){}"
+                    {
+                        "Earn {C:money}$#1#{} when a card is scored",
+                        "{C:red,E:2}Self-destructs{} in {C:attention}#3#{} rounds",
+                        "{C:inactive}(Currently #2#/#3#){}"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"The hardest balloon to pop,",
+                        "{C:inactive,s:0.8}especially if it's camoflauged,",
+                        "{C:inactive,s:0.8}regenerating and fortified\""
+                    }
                 }
             },
             j_mul_ren_amamiya = {
                 name = "Ren Amamiya",
                 text = {
-                    "The {C:attention}first{} played card that",
-                    "scores becomes a {C:attention}Calling Card{}",
-                    "Retrigger all played {C:attention}Calling Cards{}",
-                    "a number of times equal to the",
-                    "number of {C:attention}distinct{} {C:tarot}Tarot{} cards",
-                    "in your consumable area",
-                    "{C:inactive}(Currently #1# times){}"
+                    {
+                        "The {C:attention}first{} played card that",
+                        "scores becomes a {C:attention}Calling Card{}",
+                        "Retrigger all played {C:attention}Calling Cards{}",
+                        "a number of times equal to the",
+                        "number of {C:attention}distinct{} {C:tarot}Tarot{} cards",
+                        "in your consumable area",
+                        "{C:inactive}(Currently #1# times){}"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"You never see it coming\""
+                    }
                 }
             },
             j_joker = {
@@ -126,34 +176,63 @@ return {
             j_mul_steve = {
                 name = "Steve",
                 text = {
-                    "All played cards with {C:diamonds}#1#{}",
-                    "suit become {C:attention}Netherite{} cards",
-                    "{C:attention}+#2#{} hand size"
+                    {
+                        "All played cards with {C:diamonds}#1#{}",
+                        "suit become {C:attention}Netherite{} cards",
+                        "{C:attention}+#2#{} hand size"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"L-l-l-lava,{}",
+                        "{C:inactive,s:0.8}ch-ch-ch-chicken,",
+                        "{C:inactive,s:0.8}ooh lava chicken now you're",
+                        "{C:inactive,s:0.8}ringing the bell\""
+                    }
                 }
             },
             j_mul_summoned_skull = {
                 name = "Summoned Skull",
                 text = {
-                    "{X:mult,C:white}X#1#{} Mult",
-                    "Destroys a {C:attention}random{} Joker",
-                    "when purchased"
+                    {
+                        "{X:mult,C:white}X#1#{} Mult",
+                        "Destroys a {C:attention}random{} Joker",
+                        "when purchased"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"Yugi should've used this",
+                        "{C:inactive,s:0.8}as his ace monster",
+                        "{C:inactive,s:0.8}instead of Dark Magician,",
+                        "{C:inactive,s:0.8}needs 1 less tribute for the same",
+                        "{C:inactive,s:0.8}amount of attack power\""
+                    }
                 }
             },
             j_mul_fifty_fifty = {
                 name = "50/50",
                 text = {
-                    "{C:green}#1# in #2#{} chance",
-                    "to give {X:mult,C:white}X#3#{} Mult",
-                    "If this probability fails, instead",
-                    "give {C:mult}+#4#{} Mult"
+                    {
+                        "{C:green}#1# in #2#{} chance",
+                        "to give {X:mult,C:white}X#3#{} Mult",
+                        "If this probability fails, instead",
+                        "give {C:mult}+#4#{} Mult"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"The 50/50 feels like a",
+                        "{C:inactive,s:0.8}10/90 because of how often",
+                        "{C:inactive,s:0.8}I get a Qiqi\""
+                    }
                 }
             },
             j_mul_victory_royale = {
                 name = "Victory Royale",
                 text = {
-                    "{C:green}#1# in #2#{} chance for scored cards",
-                    "to create a random {C:spectral}Spectral{} card",
-                    "{C:inactive}(Must have room){}"
+                    {
+                        "{C:green}#1# in #2#{} chance for scored cards",
+                        "to create a random {C:spectral}Spectral{} card",
+                        "{C:inactive}(Must have room){}"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"Who let Miku have a gun?\""
+                    }
                 }
             }
         },
