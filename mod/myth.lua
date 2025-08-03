@@ -18,7 +18,10 @@ SMODS.Consumable {
     config = {max_highlighted = 1},
     discovered = true,
     loc_vars = function(self, info_queue, card)
-        table.insert(info_queue, G.P_CENTERS.mul_transmutable)
+        table.insert(info_queue, {
+            set = "Other",
+            key = "mul_transmutable"
+        })
         return {vars = {card.ability.max_highlighted}}
     end,
     in_pool = function(self, args)

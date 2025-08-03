@@ -242,11 +242,12 @@ return {
                     {
                         "Scored cards {C:attention}randomly{} give",
                         "either {C:mult}+#1#{} Mult",
-                        "or {X:mult,C:white}X#2#{} Mult"
+                        "or {X:mult,C:white}X#2#{} Mult",
+                        "{C:inactive}(#3#/#4#?){}"
                     },
                     {
                         "{C:inactive,s:0.8}\"These turtles always",
-                        "{C:inactive,s:0.8}pick the wrong time",
+                        "{C:inactive,s:0.8}pick the worst time",
                         "{C:inactive,s:0.8}to throw hammers at me\""
                     }
                 }
@@ -273,6 +274,13 @@ return {
                 text = {
                     "Get lots of {C:attention}Gold{},",
                     "{C:attention}Stone{} and {C:attention}Steel{}"
+                }
+            },
+            mul_hammer_bro_hint = {
+                name = "Hint",
+                text = {
+                    "Trigger this card",
+                    "lots of times"
                 }
             },
             undiscovered_myth = {
