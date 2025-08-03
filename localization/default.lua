@@ -61,7 +61,7 @@ return {
                         "scored on {C:attention}last hand{} of round"
                     },
                     {
-                        "{C:inactive,s:0.8}\"That first wave is so stupid\""
+                        "{C:inactive,s:0.8}\"That first wave part is so stupid\""
                     }
                 }
             },
@@ -130,7 +130,8 @@ return {
                     },
                     {
                         "{C:inactive,s:0.8}\"The ninth dimension is",
-                        "{C:inactive,s:0.8}[DATA EXPUNGED], trust me bro\""
+                        "{C:inactive,s:0.8}[DATA EXPUNGED],",
+                        "{C:inactive,s:0.8}trust me bro\""
                     }
                 }
             },
@@ -184,8 +185,8 @@ return {
                     {
                         "{C:inactive,s:0.8}\"L-l-l-lava,{}",
                         "{C:inactive,s:0.8}ch-ch-ch-chicken,",
-                        "{C:inactive,s:0.8}ooh lava chicken now you're",
-                        "{C:inactive,s:0.8}ringing the bell\""
+                        "{C:inactive,s:0.8}ooooh lava chicken now",
+                        "{C:inactive,s:0.8}you're ringing the bell\""
                     }
                 }
             },
@@ -234,6 +235,21 @@ return {
                         "{C:inactive,s:0.8}\"Who let Miku have a gun?\""
                     }
                 }
+            },
+            j_mul_hammer_bro = {
+                name = "Hammer Bro",
+                text = {
+                    {
+                        "Scored cards {C:attention}randomly{} give",
+                        "either {C:mult}+#1#{} Mult",
+                        "or {X:mult,C:white}X#2#{} Mult"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"These turtles always",
+                        "{C:inactive,s:0.8}pick the wrong time",
+                        "{C:inactive,s:0.8}to throw hammers at me\""
+                    }
+                }
             }
         },
         Other = {
@@ -280,8 +296,8 @@ return {
             k_mul_antimatter_grow3 = "Is this too much?",
             k_mul_antimatter_grow4 = "What have we done?",
             k_mul_popped = "Popped!",
-            k_mul_won_5050 = "Won!",
-            k_mul_lost_5050 = "Lost...",
+            k_mul_won_fifty_fifty = "Won!",
+            k_mul_lost_fifty_fifty = "Lost...",
             k_myth = "Myth",
             b_myth_cards = "Myth Cards"
         },

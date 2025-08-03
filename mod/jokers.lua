@@ -341,3 +341,24 @@ SMODS.Joker {
         end
     end
 }
+SMODS.Joker {
+    key = "hammer_bro",
+    atlas = "placeholder",
+    pos = {x = 1, y = 0},
+    config = {extra = {mult = 5, xmult = 1.25}},
+    rarity = 2,
+    cost = 8,
+    blueprint_compat = true,
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.mult, card.ability.extra.xmult}}
+    end,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play then
+            if pseudorandom("hammer_bro", 1, 2) == 1 then
+                return {xmult = card.ability.extra.xmult}
+            else
+                return {mult = card.ability.extra.mult}
+            end
+        end
+    end
+}
