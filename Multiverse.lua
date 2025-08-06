@@ -14,6 +14,7 @@ Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient {
 local files = {
     "misc/util.lua",
     "misc/hooks.lua",
+    "mod/sounds.lua",
     "mod/atlases.lua",
     "mod/stickers.lua",
     "mod/enhancements.lua",

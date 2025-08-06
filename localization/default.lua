@@ -251,6 +251,21 @@ return {
                         "{C:inactive,s:0.8}to throw hammers at me\""
                     }
                 }
+            },
+            j_mul_gerson = {
+                name = "Gerson",
+                text = {
+                    {
+                        "Disables every {C:attention}Boss Blind{}",
+                        "When {C:attention}Boss Blind{} is",
+                        "selected, this Joker gains",
+                        "an effect based on the",
+                        "current {C:attention}Boss Blind{}"
+                    },
+                    {
+                        "{C:inactive,s:0.8}\"I'm old!\""
+                    }
+                }
             }
         },
         Other = {

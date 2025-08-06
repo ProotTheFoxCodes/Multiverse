@@ -23,15 +23,6 @@ Multiverse.len = function(table)
     end
     return count
 end
----Gets a random value from a numerically-indexed table.
----@generic T
----@param table table<integer, T>
----@param seed string
----@return T
-Multiverse.get_random_item = function(table, seed)
-    local source = seed or "get_random_item"
-    return table[pseudorandom(source, 1, #table)]
-end
 ---@type table<string, {key: string}>
 Multiverse.transmutations = {
     ["j_joker"] = {
@@ -39,6 +30,9 @@ Multiverse.transmutations = {
     },
     ["j_mul_villager"] = {
         key = "j_mul_steve",
+    },
+    ["j_mul_hammer_bro"] = {
+        key = "j_mul_gerson",
     }
 }
 ---Forces a number to be within a given range

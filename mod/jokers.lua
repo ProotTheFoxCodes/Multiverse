@@ -119,7 +119,7 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         if context.before and G.GAME.current_round.hands_played == 0 then
-            local rand_card = Multiverse.get_random_item(context.scoring_hand, "mul_v1")
+            local rand_card = pseudorandom_element(context.scoring_hand, "mul_v1") or context.scoring_hand[1]
             rand_card:set_seal(card.ability.extra.seal)
         end
         if context.individual and context.cardarea == G.play then
@@ -265,12 +265,12 @@ SMODS.Joker {
     calculate = function(self, card, context)
         if context.buying_card and context.card == card and G.jokers and not context.blueprint then
             local pool = {}
-            for _, value in ipairs(G.jokers.cards) do
-                if value ~= card then
-                    pool[#pool+1] = value
+            for _, c in ipairs(G.jokers.cards) do
+                if c ~= card then
+                    pool[#pool+1] = c
                 end
             end
-            local joker_to_destroy = Multiverse.get_random_item(pool, "mul_summoned_skull")
+            local joker_to_destroy = pseudorandom_element(pool, "mul_summoned_skull")
             SMODS.destroy_cards(joker_to_destroy)
         end
         if context.joker_main then
@@ -345,7 +345,7 @@ SMODS.Joker {
     key = "hammer_bro",
     atlas = "placeholder",
     pos = {x = 1, y = 0},
-    config = {extra = {mult = 5, xmult = 1.25, progress = 0, transmute_req = 100}},
+    config = {extra = {mult = 5, xmult = 1.25, progress = 0, transmute_req = 120}},
     rarity = 2,
     cost = 8,
     blueprint_compat = true,

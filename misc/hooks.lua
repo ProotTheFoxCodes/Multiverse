@@ -1,5 +1,5 @@
 local get_rank_hook = Card.get_id
-Card.get_id = function(self)
+function Card:get_id()
     if SMODS.has_enhancement(self, "m_mul_calling_card") then
         return 14
     else
@@ -7,7 +7,7 @@ Card.get_id = function(self)
     end
 end
 local chip_bonus_hook = Card.get_chip_bonus
-Card.get_chip_bonus = function(self)
+function Card:get_chip_bonus()
     if SMODS.has_enhancement(self, "m_mul_calling_card") then
         return 11 + (self.ability.perma_bonus or 0)
     else
@@ -15,7 +15,7 @@ Card.get_chip_bonus = function(self)
     end
 end
 local is_face_hook = Card.is_face
-Card.is_face = function(self, from_boss)
+function Card:is_face(from_boss)
     if SMODS.has_enhancement(self, "m_mul_calling_card") then
         if self.debuff and not from_boss then return end
         if next(SMODS.find_card("j_pareidolia")) then return true end
@@ -24,7 +24,7 @@ Card.is_face = function(self, from_boss)
     end
 end
 local is_suit_hook = Card.is_suit
-Card.is_suit = function(self, suit, bypass_debuff, flush_calc)
+function Card:is_suit(suit, bypass_debuff, flush_calc)
     if SMODS.has_enhancement(self, "m_mul_calling_card") then
         if flush_calc then
             if next(SMODS.find_card("j_smeared", false)) then

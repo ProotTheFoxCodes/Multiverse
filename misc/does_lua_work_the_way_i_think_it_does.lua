@@ -1,6 +1,3 @@
-function hi(x, y)
-    if y then print("hi") end
-    print(x)
+if 0 then
+    print("wtf")
 end
-
-hi(2)
