@@ -257,10 +257,10 @@ return {
                 text = {
                     {
                         "Disables every {C:attention}Boss Blind{}",
-                        "When {C:attention}Boss Blind{} is",
-                        "selected, this Joker gains",
-                        "an effect based on the",
-                        "current {C:attention}Boss Blind{}"
+                        "All Jokers each give",
+                        "{X:mult,C:white}X#1#{} Mult, increases by",
+                        "{X:mult,C:white}X#2#{} when entering",
+                        "a {C:attention}Boss Blind{}",
                     },
                     {
                         "{C:inactive,s:0.8}\"I'm old!\""

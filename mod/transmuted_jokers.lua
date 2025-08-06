@@ -104,22 +104,7 @@ SMODS.Joker {
     blueprint_compat = false,
     cost = 40,
     loc_vars = function(self, info_queue, card)
-        for blind_key, num in pairs(card.ability.extra.boss_blinds) do
-            local vars = {}
-            local loc_table = {
-                set = "Other",
-                key = "mul_inv_" .. blind_key
-            }
-            if blind_key == "bl_water"
-            or blind_key == "bl_needle" then
-                vars[#vars+1] = num
-            elseif blind_key == "bl_wheel" then
-                local numer, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds)
-                vars[#vars+1] = numer
-                vars[#vars+1] = denom
-            end
-            table.insert(info_queue, loc_table)
-        end
+        return {vars = {card.ability.extra.joker_xmult, card.ability.extra.increment}}
     end,
     config = {extra = {joker_xmult = 1, increment = 0.5}},
     add_to_deck = function(self, card, from_debuff)
@@ -148,7 +133,7 @@ SMODS.Joker {
                 end
             }))
         end
-        if context.other_joker and not context.blueprint then
+        if context.other_joker and not context.blueprint and card.ability.extra.joker_xmult > 1 then
             return {
                 xmult = card.ability.extra.joker_xmult
             }
