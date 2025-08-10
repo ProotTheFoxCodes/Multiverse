@@ -12,7 +12,7 @@ SMODS.Consumable {
     atlas = "p_stone",
     anim_info = {anim_time = .9, frames = 18, anim_progress = 0},
     update = function(self, card, dt)
-        Multiverse.update_anim(card, G.real_dt)
+        Multiverse.update_card_anim(card, G.real_dt)
     end,
     pos = {x = 0, y = 0},
     config = {max_highlighted = 1},
@@ -58,7 +58,7 @@ SMODS.Consumable {
     atlas = "holy_grail",
     anim_info = {anim_time = .9, frames = 18, anim_progress = 0},
     update = function(self, card, dt)
-        Multiverse.update_anim(card, G.real_dt)
+        Multiverse.update_card_anim(card, G.real_dt)
     end,
     pos = {x = 0, y = 0},
     config = {max_highlighted = 1, extra = {num_consumables = 3}},

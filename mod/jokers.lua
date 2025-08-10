@@ -310,26 +310,26 @@ SMODS.Joker {
     key = "victory_royale",
     atlas = "placeholder",
     pos = {x = 1, y = 0},
-    config = {extra = {odds = 100}},
+    config = {extra = {odds = 100, decrement = 1}},
     rarity = 2,
     cost = 7,
     blueprint_compat = true,
     loc_vars = function(self, info_queue, card)
         local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "mul_victory_royale")
-        return {vars = {num, denom}}
+        return {vars = {num, denom, card.ability.extra.decrement}}
     end,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play and
         #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
             if SMODS.pseudorandom_probability(card, "mul_victory_royale", 1, card.ability.extra.odds) then
-                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                card.ability.extra.odds = 100
                 G.E_MANAGER:add_event(Event({
                     func = function ()
                         SMODS.add_card({
                             set = "Spectral",
+                            edition = "e_negative",
                             key_append = "mul_victory_royale"
                         })
-                        G.GAME.consumeable_buffer = 0
                         return true
                     end
                 }))
@@ -337,6 +337,8 @@ SMODS.Joker {
                     message = localize("k_plus_spectral"),
                     colour = G.C.SECONDARY_SET.Spectral
                 }
+            elseif card.ability.extra.odds > 2 then
+                card.ability.extra.odds = card.ability.extra.odds - card.ability.extra.decrement
             end
         end
     end

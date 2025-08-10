@@ -42,3 +42,41 @@ function Card:is_suit(suit, bypass_debuff, flush_calc)
         return is_suit_hook(self, suit, bypass_debuff, flush_calc)
     end
 end
+local draw_hook = love.draw
+function love.draw()
+    draw_hook()
+    for key, anim in pairs(Multiverse.all_animations) do
+        if anim.is_active then
+            if anim.is_continuous then
+                anim.progress = anim.progress + G.real_dt * #anim.frames / anim.duration
+                if anim.progress >= #anim.frames then
+                    anim.progress = anim.progress - #anim.frames
+                end
+                -- anim_progress \in [0, #anim_frames)
+                -- anim_progress + 1 \in [1, anim_frames + 1)
+            else
+                if anim.progress < #anim.frames then
+                    anim.progress = anim.progress + G.real_dt * #anim.frames / anim.duration
+                else
+                    anim.is_active = false
+                    anim.progress = 0
+                end
+            end
+            --print(Multiverse.clamp(math.floor(anim.progress) + 1, 1, #anim.frames))
+            love.graphics.setColor(1,1,1,1)
+            love.graphics.draw(
+                anim.image,
+                anim.frames[Multiverse.clamp(math.floor(anim.progress) + 1, 1, #anim.frames)],
+                Multiverse.anchors.x[anim.anchor.x_alignment] + (anim.anchor.y_offset or 0),
+                Multiverse.anchors.y[anim.anchor.y_alignment] + (anim.anchor.y_offset or 0),
+                anim.rotation,
+                anim.x_scale,
+                anim.y_scale,
+                Multiverse.base_offsets.x[anim.anchor.x_alignment](anim),
+                Multiverse.base_offsets.y[anim.anchor.y_alignment](anim),
+                0,
+                0
+            )
+        end
+    end
+end

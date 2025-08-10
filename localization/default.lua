@@ -185,8 +185,8 @@ return {
                     {
                         "{C:inactive,s:0.8}\"L-l-l-lava,{}",
                         "{C:inactive,s:0.8}ch-ch-ch-chicken,",
-                        "{C:inactive,s:0.8}ooooh lava chicken now",
-                        "{C:inactive,s:0.8}you're ringing the bell\""
+                        "{C:inactive,s:0.8}steve's lava chicken yeah",
+                        "{C:inactive,s:0.8}it's tasty as hell\""
                     }
                 }
             },
@@ -227,8 +227,12 @@ return {
                 name = "Victory Royale",
                 text = {
                     {
-                        "{C:green}#1# in #2#{} chance for scored cards",
-                        "to create a random {C:spectral}Spectral{} card",
+                        "{C:green}#1# in #2#{} chance for",
+                        "scored cards to create",
+                        "a random {C:dark_edition}Negative{}",
+                        "{C:spectral}Spectral{} card",
+                        "{C:green}Base odds{} decreases by",
+                        "{C:attention}#3#{} when a card is scored",
                         "{C:inactive}(Must have room){}"
                     },
                     {
@@ -265,6 +269,28 @@ return {
                     {
                         "{C:inactive,s:0.8}\"I'm old!\""
                     }
+                }
+            }
+        },
+        Spectral = {
+            c_mul_eternity = {
+                name = "Eternity",
+                text = {
+                    "Select 1 card in hand",
+                    "Destroys all unselected cards",
+                    "in hand and gives",
+                    "all Jokers {C:attention}Eternal{}",
+                }
+            },
+            c_mul_eternity_alt = {
+                name = "Eternity",
+                text = {
+                    "Select 1 card in hand",
+                    "Destroys all unselected cards",
+                    "in hand and gives",
+                    "all Jokers {C:attention}Eternal{}",
+                    "{C:inactive}(Destroys all Jokers that",
+                    "{C:inactive}cannot receive Eternal)"
                 }
             }
         },

@@ -1,6 +1,5 @@
 Multiverse = {}
-local mod_path = "" .. SMODS.current_mod.path
-Multiverse.path = mod_path
+Multiverse.path = "" .. SMODS.current_mod.path
 
 Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient {
     key = "transmuted_gradient",
@@ -11,22 +10,15 @@ Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient {
     cycle = 1.5
 }
 
-local files = {
-    "misc/util.lua",
-    "misc/hooks.lua",
-    "mod/sounds.lua",
-    "mod/atlases.lua",
-    "mod/stickers.lua",
-    "mod/enhancements.lua",
-    "mod/seals.lua",
-    "mod/overrides.lua",
-    "mod/transmuted_jokers.lua",
-    "mod/jokers.lua",
-    "mod/tarots.lua",
-    "mod/spectrals.lua",
-    "mod/myth.lua"
-}
-
-for _, path in ipairs(files) do
-    assert(SMODS.load_file(path))()
+local misc_files = NFS.getDirectoryItems(Multiverse.path .. "misc")
+for _, item in ipairs(misc_files) do
+    print("Multiverse: Loading " .. item)
+    local f, err = SMODS.load_file("misc/" .. item)
+    if err then error(err) elseif f then f() end
+end
+local mod_files = NFS.getDirectoryItems(Multiverse.path .. "mod")
+for _, item in ipairs(mod_files) do
+    print("Multiverse: Loading " .. item)
+    local f, err = SMODS.load_file("mod/" .. item)
+    if err then error(err) elseif f then f() end
 end

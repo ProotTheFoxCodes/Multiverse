@@ -7,7 +7,7 @@ end
 ---@param table table
 ---@param value any
 ---@return boolean
-Multiverse.contains_value = function(table, value)
+function Multiverse.contains_value(table, value)
     for _, v in ipairs(table) do
         if v == value then return true end
     end
@@ -16,7 +16,7 @@ end
 ---Counts the number of items in a table t.
 ---@param table table
 ---@return integer
-Multiverse.len = function(table)
+function Multiverse.len(table)
     local count = 0
     for _, _ in pairs(table) do
         count = count + 1
@@ -40,7 +40,7 @@ Multiverse.transmutations = {
 ---@param min? number
 ---@param max? number
 ---@return number
-Multiverse.clamp = function(n, min, max)
+function Multiverse.clamp(n, min, max)
     local lower = min or 0
     local higher = max or 1
     if lower > higher then error("min cannot be higher than max") end
@@ -128,15 +128,145 @@ Multiverse.easings = {
 ---@param card Card
 ---@param dt number
 ---@param vertical? boolean
-Multiverse.update_anim = function(card, dt, vertical)
+function Multiverse.update_card_anim(card, dt, vertical)
     local dir = (vertical and "y") or "x"
     if card.config.center.anim_info then
         local data = card.config.center.anim_info
         card.config.center.anim_info.anim_progress = card.config.center.anim_info.anim_progress or 0
         card.config.center.anim_info.anim_progress = card.config.center.anim_info.anim_progress + (dt * data.frames / data.anim_time)
-        if card.config.center.anim_info.anim_progress > data.frames then
+        if card.config.center.anim_info.anim_progress >= data.frames then
             card.config.center.anim_info.anim_progress = card.config.center.anim_info.anim_progress - data.frames
         end
-        card.config.center.pos[dir] = math.floor(card.config.center.anim_info.anim_progress) % data.frames
+        card.config.center.pos[dir] = Multiverse.clamp(math.floor(card.config.center.anim_info.anim_progress), 0, data.frames)
+    end
+end
+
+---@class Anchor
+---@field x_alignment "l" | "c" | "r"
+---@field y_alignment "b" | "c" | "t"
+---@field x_offset number?
+---@field y_offset number?
+
+---@class Animation
+---@field path string The path to the file where the animation is stored
+---@field frames integer The number of frames the animation has
+---@field columns integer? The number of columns the spritesheet has. Do not include if the spritesheet is all in one row.
+---@field px integer The width of an individual frame of the animation
+---@field py integer The height of an individual frame of the animation
+---@field key string The key of the animation.
+---@field is_continuous boolean? Whether or not this animation is supposed to run continuously.
+---@field anchor Anchor
+---@field duration number The amount of time that one animation loop will take
+---@field x_scale number?
+---@field y_scale number?
+---@field rotation number?
+
+---@class AnimationData
+---@field frames love.Quad[]
+---@field image love.Image
+---@field is_active boolean
+---@field progress number
+---@field is_continuous boolean
+---@field anchor Anchor
+---@field x_scale number
+---@field y_scale number
+---@field rotation number
+---@field px integer
+---@field py integer
+---@field duration number
+
+---@type AnimationData[]
+Multiverse.all_animations = {}
+
+---Registers an animation to a global table.
+---@param t Animation
+---@return AnimationData
+function Multiverse.Animation(t)
+    local file_data = assert(NFS.newFileData(Multiverse.path .. "assets/animations/" .. t.path), "Failed to get file data")
+    local image_data = assert(love.image.newImageData(file_data), "Failed to convert to image data")
+    local love_image = assert(love.graphics.newImage(image_data), "Failed to create an image")
+    ---@type AnimationData
+    local anim_data = {
+        frames = {},
+        image = love_image,
+        is_active = false,
+        progress = 0,
+        is_continuous = t.is_continuous or false,
+        anchor = t.anchor,
+        x_scale = t.x_scale or 1,
+        y_scale = t.y_scale or 1,
+        rotation = t.rotation or 0,
+        px = t.px,
+        py = t.py,
+        duration = t.duration
+    }
+    for i = 1, t.frames do
+        local x, y = (i - 1) % (t.columns or i), (t.columns and math.floor((i-1)/t.columns) or 0)
+        anim_data.frames[#anim_data.frames+1] = love.graphics.newQuad(x * t.px, y * t.py, t.px, t.py, love_image)
+    end
+    Multiverse.all_animations = Multiverse.all_animations or {}
+    Multiverse.all_animations[t.key] = anim_data
+    return anim_data
+end
+---@type table<string,table<string, number>>>
+Multiverse.anchors = {
+    x = {
+        l = 0,
+        c = love.graphics.getWidth() / 2,
+        r = love.graphics.getWidth()
+    },
+    y = {
+        t = 0,
+        c = love.graphics.getHeight() / 2,
+        b = love.graphics.getHeight()
+    }
+}
+---Gets the correct offset for love.draw based on the animation's dimensions
+---using a function that takes in an Animation and returns a number.
+---The functions are grouped by axis and then by alignment type.
+---@type table<string, table<string, fun(a: AnimationData): number>>
+Multiverse.base_offsets = {
+    x = {
+        l = function(a)
+            return 0
+        end,
+        c = function(a)
+            return a.px / 2
+        end,
+        r = function(a)
+            return a.px
+        end
+    },
+    y = {
+        t = function(a)
+            return 0
+        end,
+        c = function(a)
+            return a.py/2
+        end,
+        b = function(a)
+            return a.py
+        end
+    }
+}
+
+---Starts the animation with the given key.
+---@param key string The key of the animation to start
+---@param callback? fun(): nil
+function Multiverse.start_animation(key, callback)
+    if Multiverse.all_animations[key] then
+        Multiverse.all_animations[key].progress = 0
+        Multiverse.all_animations[key].is_active = true
+    else
+        error("No animation for " .. key .. " exists")
+    end
+end
+
+function Multiverse.end_animation(key)
+    if Multiverse.all_animations[key] then
+        Multiverse.all_animations[key].progress = 0
+        Multiverse.all_animations[key].is_active = false
+    else
+        error("No animation for " .. key .. " exists")
     end
 end
