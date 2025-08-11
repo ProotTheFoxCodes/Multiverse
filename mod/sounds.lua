@@ -3,16 +3,17 @@ SMODS.Sound {
     path = "gerson_sfx.wav"
 }
 SMODS.Sound {
-    key = "prophecy",
+    key = "prophecy_music",
     path = "Creo_Prophecy.wav",
     select_music_track = function(self)
-        if G.jokers then
+        if G.jokers and Multiverse.config["music"]["prophecy"] then
             for _, joker in ipairs(G.jokers.cards) do
                 if joker.ability.mul_transmutable then
-                    return 5
+                    return 2
                 end
             end
         end
     end,
-    sync = false
+    sync = false,
+    volume = 0.8
 }

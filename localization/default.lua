@@ -7,11 +7,13 @@ return {
                     "{X:mult,C:white}X#1#{} Mult",
                     "Increases to {X:mult,C:white}X#2#{} Mult",
                     "during a Boss Blind",
-                    "Always treated as an {C:attention}Ace{} of {C:hearts}Hearts{}",
+                    "Always treated as an",
+                    "{C:attention}Ace{} of {C:hearts}Hearts{}",
+                    "Gives no base chips"
                 }
             },
             m_mul_netherite = {
-                name = "Netherite",
+                name = "Netherite Card",
                 text = {
                     "{C:chips}+#1#{} Chips when held in",
                     "hand or played",
@@ -19,6 +21,23 @@ return {
                     "in hand",
                     "Gives {C:money}$#3#{} when held in",
                     "hand at end of round",
+                }
+            },
+            m_mul_normal = {
+                name = "Normal Card",
+                text = {
+                    "{C:chips}+#1#{} Chips",
+                    "Treated as",
+                    "a {C:attention}face card{}"
+                }
+            },
+            m_mul_motivated = {
+                name = "Motivated Card",
+                text = {
+                    "Retrigger this",
+                    "card {C:attention}#1#{} time",
+                    "{C:green}#2# in #3#{} chance to",
+                    "lose enhancement"
                 }
             }
         },
@@ -49,7 +68,7 @@ return {
                         "scored on {C:attention}last hand{} of round"
                     },
                     {
-                        "{C:inactive,s:0.8}\"I hate the Michigun ufo part\""
+                        "{C:inactive,s:0.8}I hate the Michigun ufo part"
                     }
                 }
             },
@@ -61,7 +80,7 @@ return {
                         "scored on {C:attention}last hand{} of round"
                     },
                     {
-                        "{C:inactive,s:0.8}\"That first wave part is so stupid\""
+                        "{C:inactive,s:0.8}That first wave part is so stupid"
                     }
                 }
             },
@@ -73,7 +92,7 @@ return {
                         "scored on {C:attention}last hand{} of round"
                     },
                     {
-                        "{C:inactive,s:0.8}\"Who even remembers this level?\""
+                        "{C:inactive,s:0.8}Who even remembers this level?"
                     }
                 }
             },
@@ -88,8 +107,8 @@ return {
                         "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
                     },
                     {
-                        "{C:inactive,s:0.8}\"Mrs. Frizzle, where are we going?\"",
-                        "{C:inactive,s:0.8}\"We're going gambling!\""
+                        "{C:inactive,s:0.8}Mrs. Frizzle, where are we going?",
+                        "{C:inactive,s:0.8}We're going gambling!"
                     }
                 }
             },
@@ -104,8 +123,8 @@ return {
                         "{X:mult,C:white}X#1#{} Mult when scored"
                     },
                     {
-                        "{C:inactive,s:0.8}\"Ultrakill fans will do anything",
-                        "{C:inactive,s:0.8}to screw the murder robot\""
+                        "{C:inactive,s:0.8}Ultrakill fans will do anything",
+                        "{C:inactive,s:0.8}to screw the murder robot"
                     }
                 }
             },
@@ -118,7 +137,7 @@ return {
                         "{C:inactive}(#3#/#4#?){}"
                     },
                     {
-                        "{C:inactive,s:0.8}\"Oh, them? They're the villagers!\""
+                        "{C:inactive,s:0.8}Oh, them? They're the villagers!"
                     }
                 }
             },
@@ -129,9 +148,9 @@ return {
                         "{C:mult}+#1#{} Mult?"
                     },
                     {
-                        "{C:inactive,s:0.8}\"The ninth dimension is",
+                        "{C:inactive,s:0.8}The ninth dimension is",
                         "{C:inactive,s:0.8}[DATA EXPUNGED],",
-                        "{C:inactive,s:0.8}trust me bro\""
+                        "{C:inactive,s:0.8}trust me bro"
                     }
                 }
             },
@@ -144,9 +163,9 @@ return {
                         "{C:inactive}(Currently #2#/#3#){}"
                     },
                     {
-                        "{C:inactive,s:0.8}\"The hardest balloon to pop,",
+                        "{C:inactive,s:0.8}The hardest balloon to pop,",
                         "{C:inactive,s:0.8}especially if it's camoflauged,",
-                        "{C:inactive,s:0.8}regenerating and fortified\""
+                        "{C:inactive,s:0.8}regenerating and fortified"
                     }
                 }
             },
@@ -163,7 +182,7 @@ return {
                         "{C:inactive}(Currently #1# times){}"
                     },
                     {
-                        "{C:inactive,s:0.8}\"You never see it coming\""
+                        "{C:inactive,s:0.8}You never see it coming"
                     }
                 }
             },
@@ -183,10 +202,10 @@ return {
                         "{C:attention}+#2#{} hand size"
                     },
                     {
-                        "{C:inactive,s:0.8}\"L-l-l-lava,{}",
+                        "{C:inactive,s:0.8}L-l-l-lava,{}",
                         "{C:inactive,s:0.8}ch-ch-ch-chicken,",
                         "{C:inactive,s:0.8}steve's lava chicken yeah",
-                        "{C:inactive,s:0.8}it's tasty as hell\""
+                        "{C:inactive,s:0.8}it's tasty as hell"
                     }
                 }
             },
@@ -199,11 +218,11 @@ return {
                         "when purchased"
                     },
                     {
-                        "{C:inactive,s:0.8}\"Yugi should've used this",
+                        "{C:inactive,s:0.8}Yugi should've used this",
                         "{C:inactive,s:0.8}as his ace monster",
                         "{C:inactive,s:0.8}instead of Dark Magician,",
                         "{C:inactive,s:0.8}needs 1 less tribute for the same",
-                        "{C:inactive,s:0.8}amount of attack power\""
+                        "{C:inactive,s:0.8}amount of attack power"
                     }
                 }
             },
@@ -217,9 +236,9 @@ return {
                         "give {C:mult}+#4#{} Mult"
                     },
                     {
-                        "{C:inactive,s:0.8}\"The 50/50 feels like a",
+                        "{C:inactive,s:0.8}The 50/50 feels like a",
                         "{C:inactive,s:0.8}10/90 because of how often",
-                        "{C:inactive,s:0.8}I get a Qiqi\""
+                        "{C:inactive,s:0.8}I get a Qiqi"
                     }
                 }
             },
@@ -236,7 +255,7 @@ return {
                         "{C:inactive}(Must have room){}"
                     },
                     {
-                        "{C:inactive,s:0.8}\"Who let Miku have a gun?\""
+                        "{C:inactive,s:0.8}Who let Miku have a gun?"
                     }
                 }
             },
@@ -250,9 +269,9 @@ return {
                         "{C:inactive}(#3#/#4#?){}"
                     },
                     {
-                        "{C:inactive,s:0.8}\"These turtles always",
+                        "{C:inactive,s:0.8}These turtles always",
                         "{C:inactive,s:0.8}pick the worst time",
-                        "{C:inactive,s:0.8}to throw hammers at me\""
+                        "{C:inactive,s:0.8}to throw hammers at me"
                     }
                 }
             },
@@ -267,7 +286,18 @@ return {
                         "a {C:attention}Boss Blind{}",
                     },
                     {
-                        "{C:inactive,s:0.8}\"I'm old!\""
+                        "{C:inactive,s:0.8}I'm old!"
+                    }
+                }
+            },
+            j_mul_stand_user = {
+                nae = "Stand User",
+                text = {
+                    {
+                        "Prevents Death during",
+                        "a Boss Blind, then",
+                        "-1 Ante",
+                        "{C:red,E:2}Self-destructs{}"
                     }
                 }
             }
@@ -276,21 +306,47 @@ return {
             c_mul_eternity = {
                 name = "Eternity",
                 text = {
-                    "Select 1 card in hand",
-                    "Destroys all unselected cards",
-                    "in hand and gives",
+                    "Select {C:attention}#1#{} card in hand",
+                    "Destroys all unselected",
+                    "cards in hand and gives",
                     "all Jokers {C:attention}Eternal{}",
                 }
             },
             c_mul_eternity_alt = {
                 name = "Eternity",
                 text = {
-                    "Select 1 card in hand",
-                    "Destroys all unselected cards",
-                    "in hand and gives",
+                    "Select {C:attention}#1#{} card in hand",
+                    "Destroys all unselected",
+                    "cards in hand and gives",
                     "all Jokers {C:attention}Eternal{}",
                     "{C:inactive}(Destroys all Jokers that",
                     "{C:inactive}cannot receive Eternal)"
+                }
+            }
+        },
+        Tarot = {
+            c_mul_lobotomized = {
+                name = "The Lobotomized",
+                text = {
+                    "Enhances {C:attention}#1#{}",
+                    "selected cards to",
+                    "{C:attention}Normal Cards{}"
+                }
+            },
+            c_mul_chair = {
+                name = "The Chair",
+                text = {
+                    "Enhances {C:attention}#1#{} selected",
+                    "card into a",
+                    "{C:attention}Motivated Card{}"
+                }
+            },
+            c_mul_apple = {
+                name = "The Apple",
+                text = {
+                    "Plays the entire",
+                    "{C:attention}Bad Apple{} video",
+                    "for no benefit"
                 }
             }
         },

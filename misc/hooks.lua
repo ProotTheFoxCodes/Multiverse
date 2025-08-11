@@ -1,50 +1,21 @@
-local get_rank_hook = Card.get_id
-function Card:get_id()
-    if SMODS.has_enhancement(self, "m_mul_calling_card") then
-        return 14
-    else
-        return get_rank_hook(self)
-    end
-end
-local chip_bonus_hook = Card.get_chip_bonus
-function Card:get_chip_bonus()
-    if SMODS.has_enhancement(self, "m_mul_calling_card") then
-        return 11 + (self.ability.perma_bonus or 0)
-    else
-        return chip_bonus_hook(self)
-    end
-end
 local is_face_hook = Card.is_face
 function Card:is_face(from_boss)
     if SMODS.has_enhancement(self, "m_mul_calling_card") then
         if self.debuff and not from_boss then return end
         if next(SMODS.find_card("j_pareidolia")) then return true end
-    else
-        return is_face_hook(self, from_boss)
     end
-end
-local is_suit_hook = Card.is_suit
-function Card:is_suit(suit, bypass_debuff, flush_calc)
-    if SMODS.has_enhancement(self, "m_mul_calling_card") then
-        if flush_calc then
-            if next(SMODS.find_card("j_smeared", false)) then
-                return suit == "Hearts" or suit == "Diamonds"
-            end
-            return suit == "Hearts"
-        else
-            if self.debuff and not bypass_debuff then return end
-            if next(SMODS.find_card("j_smeared", false)) then
-                return suit == "Hearts" or suit == "Diamonds"
-            end
-            return suit == "Hearts"
-        end
-    else
-        return is_suit_hook(self, suit, bypass_debuff, flush_calc)
+    if SMODS.has_enhancement(self, "m_mul_normal") then
+        if self.debuff and not from_boss then return end
+        return true
     end
+    return is_face_hook(self, from_boss)
 end
 local draw_hook = love.draw
 function love.draw()
     draw_hook()
+    local width, height = love.graphics.getDimensions()
+    local x_factor = width / 1980
+    local y_factor = height / 1080
     for key, anim in pairs(Multiverse.all_animations) do
         if anim.is_active then
             if anim.is_continuous then
@@ -67,13 +38,30 @@ function love.draw()
             love.graphics.draw(
                 anim.image,
                 anim.frames[Multiverse.clamp(math.floor(anim.progress) + 1, 1, #anim.frames)],
-                Multiverse.anchors.x[anim.anchor.x_alignment] + (anim.anchor.y_offset or 0),
-                Multiverse.anchors.y[anim.anchor.y_alignment] + (anim.anchor.y_offset or 0),
+                Multiverse.anchors.x[anim.anchor.x_alignment] + (anim.anchor.y_offset or 0) * x_factor,
+                Multiverse.anchors.y[anim.anchor.y_alignment] + (anim.anchor.y_offset or 0) * y_factor,
                 anim.rotation,
-                anim.x_scale,
-                anim.y_scale,
+                anim.x_scale * x_factor,
+                anim.y_scale * y_factor,
                 Multiverse.base_offsets.x[anim.anchor.x_alignment](anim),
                 Multiverse.base_offsets.y[anim.anchor.y_alignment](anim),
+                0,
+                0
+            )
+        end
+    end
+    for key, video in pairs(Multiverse.all_videos) do
+        if video.video:isPlaying() then
+            love.graphics.setColor(1,1,1,1)
+            love.graphics.draw(
+                video.video,
+                Multiverse.anchors.x[video.anchor.x_alignment] + (video.anchor.y_offset or 0) * x_factor,
+                Multiverse.anchors.y[video.anchor.y_alignment] + (video.anchor.y_offset or 0) * y_factor,
+                video.rotation,
+                video.x_scale * x_factor,
+                video.y_scale * y_factor,
+                Multiverse.base_offsets.x[video.anchor.x_alignment](video),
+                Multiverse.base_offsets.y[video.anchor.y_alignment](video),
                 0,
                 0
             )

@@ -337,7 +337,7 @@ SMODS.Joker {
                     message = localize("k_plus_spectral"),
                     colour = G.C.SECONDARY_SET.Spectral
                 }
-            elseif card.ability.extra.odds > 2 then
+            elseif card.ability.extra.odds > 2 and not context.blueprint then
                 card.ability.extra.odds = card.ability.extra.odds - card.ability.extra.decrement
             end
         end
@@ -349,7 +349,7 @@ SMODS.Joker {
     pos = {x = 1, y = 0},
     config = {extra = {mult = 5, xmult = 1.25, progress = 0, transmute_req = 120}},
     rarity = 2,
-    cost = 8,
+    cost = 7,
     blueprint_compat = true,
     loc_vars = function(self, info_queue, card)
         table.insert(info_queue, {
@@ -378,4 +378,17 @@ SMODS.Joker {
             end
         end
     end
+}
+SMODS.Joker {
+    key = "stand_user",
+    atlas = "placeholder",
+    pos = {x = 2, y = 0},
+    config = {extra = {ante_change = 1}},
+    rarity = 3,
+    cost = 8,
+    blueprint_compat = false,
+    eternal_compat = false,
+    loc_vars = function (self, info_queue, card)
+        return {vars = {-card.ability.extra.ante_change}}
+    end,
 }

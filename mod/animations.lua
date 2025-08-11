@@ -14,3 +14,13 @@ Multiverse.Animation {
     x_scale = 3,
     y_scale = 3,
 }
+Multiverse.Video {
+    key = "bad_apple",
+    path = "badapple.ogv",
+    anchor = {
+        x_alignment = "c",
+        y_alignment = "c"
+    },
+    x_scale = 2.5,
+    y_scale = 2.5
+}

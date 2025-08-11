@@ -48,80 +48,6 @@ function Multiverse.clamp(n, min, max)
     elseif n > higher then return higher
     else return n end
 end
---- Code taken from https://easings.net/
---- 
---- I have generalized the poly easings to allow for any degree of polynomial
-Multiverse.easings = {
-    exp = {
-        ["in"] = function (num)
-            if num == 0 then return 0
-            else return 2 ^ (10 * num - 10) end
-        end,
-        ["out"] = function (num)
-            if num == 1 then return 0
-            else return 1 - (2 ^ (-10 * num)) end
-        end,
-        ["in_out"] = function (num)
-            if num == 0 or num == 1 then return num end
-            if num < 0.5 then
-                return 2 ^ (20 * num - 11)
-            else
-                return 1 - (2 ^ (-20 * num + 9))
-            end
-        end
-    },
-    poly = {
-        ["in"] = function (num, deg)
-            return num ^ deg
-        end,
-        ["out"] = function (num, deg)
-            return 1 - (1 - num) ^ deg
-        end,
-        ["in_out"] = function (num, deg)
-            if num < 0.5 then
-                return (2 ^ (deg - 1)) * (num ^ deg)
-            else
-                return 1 - ((2 ^ (deg - 1)) * (num ^ deg))
-            end
-        end
-    },
-    sin = {
-        ["in"] = function (num)
-            return 1 - math.cos(math.pi * num / 2)
-        end,
-        ["out"] = function (num)
-            return math.sin(math.pi * num / 2)
-        end,
-        ["in_out"] = function (num)
-            return -(math.cos(math.pi * num) - 1) / 2
-        end
-    },
-    back = {
-        ["in"] = function (num)
-            local c = 1.70158
-            if num == 1 then return 1 end
-            return (c + 1) * (num ^ 3) - c * (num ^ 2)
-        end,
-        ["out"] = function (num)
-            local c = 1.70158
-            if num == 0 then return 0 end
-            return 1 - (c + 1) * ((1 - num) ^ 3) + c * ((1 - num) ^ 2)
-        end,
-        ["in_out"] = function (num)
-            local c = 1.70158 * 1.525
-            if num == 0 or num == 1 then return num end
-            if num < 0.5 then
-                return 2 * num ^ 2 * ((2 * num - 1) * c + 2 * num)
-            else
-                return 1 - (2 * (1 - num) ^ 2 * ((1 -2 * num) * c + 2 - 2 * num))
-            end
-        end
-    },
-    lin = function (num)
-        return num
-    end
-}
-
 ---Updates the animation state of a given card.
 ---
 ---Make sure to pass in <code>G.real_dt</code> for the dt argument.
@@ -147,45 +73,46 @@ end
 ---@field x_offset number?
 ---@field y_offset number?
 
----@class Animation
----@field path string The path to the file where the animation is stored
+---@class Multiverse.Animation
+---@field path string The name of the file where the animation is stored
 ---@field frames integer The number of frames the animation has
 ---@field columns integer? The number of columns the spritesheet has. Do not include if the spritesheet is all in one row.
 ---@field px integer The width of an individual frame of the animation
 ---@field py integer The height of an individual frame of the animation
----@field key string The key of the animation.
----@field is_continuous boolean? Whether or not this animation is supposed to run continuously.
----@field anchor Anchor
+---@field key string The key of the animation
+---@field is_continuous boolean? Whether or not this animation is supposed to run continuously
+---@field anchor Anchor The place on the screen where the animation is 
 ---@field duration number The amount of time that one animation loop will take
----@field x_scale number?
----@field y_scale number?
----@field rotation number?
+---@field x_scale number? The factor that the animation will be scaled horizontally 
+---@field y_scale number? The factor that the animation will be scaled vertically
+---@field rotation number? The rotation of the animation in radians
 
----@class AnimationData
----@field frames love.Quad[]
----@field image love.Image
----@field is_active boolean
----@field progress number
----@field is_continuous boolean
----@field anchor Anchor
----@field x_scale number
----@field y_scale number
----@field rotation number
----@field px integer
----@field py integer
----@field duration number
+---@class Multiverse.AnimationData
+---@field frames love.Quad[] The quadrants of the file that each represent a single frame
+---@field image love.Image The image where all the quadrants are derived from
+---@field is_active boolean Whether or not the animation is displayed on screen
+---@field progress number Represents the completion progress of the animation
+---@field px integer The width of an individual frame of the animation
+---@field py integer The height of an individual frame of the animation
+---@field is_continuous boolean? Whether or not this animation is supposed to run continuously
+---@field anchor Anchor The place on the screen where the animation is 
+---@field duration number The amount of time that one animation loop will take
+---@field x_scale number? The factor that the animation will be scaled horizontally 
+---@field y_scale number? The factor that the animation will be scaled vertically
+---@field rotation number? The rotation of the animation in radians
 
----@type AnimationData[]
+---@type table<string, Multiverse.AnimationData>
 Multiverse.all_animations = {}
 
 ---Registers an animation to a global table.
----@param t Animation
----@return AnimationData
+---Access this animation with Multiverse.all_animations[key].
+---@param t Multiverse.Animation
+---@return Multiverse.AnimationData
 function Multiverse.Animation(t)
     local file_data = assert(NFS.newFileData(Multiverse.path .. "assets/animations/" .. t.path), "Failed to get file data")
     local image_data = assert(love.image.newImageData(file_data), "Failed to convert to image data")
     local love_image = assert(love.graphics.newImage(image_data), "Failed to create an image")
-    ---@type AnimationData
+    ---@type Multiverse.AnimationData
     local anim_data = {
         frames = {},
         image = love_image,
@@ -224,7 +151,7 @@ Multiverse.anchors = {
 ---Gets the correct offset for love.draw based on the animation's dimensions
 ---using a function that takes in an Animation and returns a number.
 ---The functions are grouped by axis and then by alignment type.
----@type table<string, table<string, fun(a: AnimationData): number>>
+---@type table<string, table<string, fun(a: Multiverse.AnimationData | Multiverse.VideoData): number>>
 Multiverse.base_offsets = {
     x = {
         l = function(a)
@@ -252,8 +179,7 @@ Multiverse.base_offsets = {
 
 ---Starts the animation with the given key.
 ---@param key string The key of the animation to start
----@param callback? fun(): nil
-function Multiverse.start_animation(key, callback)
+function Multiverse.start_animation(key)
     if Multiverse.all_animations[key] then
         Multiverse.all_animations[key].progress = 0
         Multiverse.all_animations[key].is_active = true
@@ -261,12 +187,77 @@ function Multiverse.start_animation(key, callback)
         error("No animation for " .. key .. " exists")
     end
 end
-
+---Ends the animation with the given key.
+---@param key string
 function Multiverse.end_animation(key)
     if Multiverse.all_animations[key] then
         Multiverse.all_animations[key].progress = 0
         Multiverse.all_animations[key].is_active = false
     else
         error("No animation for " .. key .. " exists")
+    end
+end
+
+---@class Multiverse.Video
+---@field path string The name of the file where the video is stored
+---@field key string The key of the animation.
+---@field anchor Anchor The place on the screen where the animation is 
+---@field x_scale number? The factor that the animation will be scaled horizontally 
+---@field y_scale number? The factor that the animation will be scaled vertically
+---@field rotation number? The rotation of the animation in radians
+---@field volume number? The volume of the video
+
+---@class Multiverse.VideoData
+---@field video love.Video The video to be displayed
+---@field anchor Anchor The place on the screen where the animation is 
+---@field x_scale number? The factor that the animation will be scaled horizontally 
+---@field y_scale number? The factor that the animation will be scaled vertically
+---@field rotation number? The rotation of the animation in radians
+---@field px integer The width of an individual frame of the animation
+---@field py integer The height of an individual frame of the animation
+
+---@type table<string, Multiverse.VideoData>
+Multiverse.all_videos = {}
+
+---Registers a video to a global table.
+---Access this video with Multiverse.all_videos[key].
+---@param t Multiverse.Video
+---@return Multiverse.VideoData
+function Multiverse.Video(t)
+    local path = Multiverse.path .. "assets/videos/" .. t.path
+    local f = NFS.read(path)
+    love.filesystem.write("mul_" .. t.key .. ".ogv", f)
+    local love_video = love.graphics.newVideo("mul_" .. t.key .. ".ogv")
+    if love_video:getSource() then
+        love_video:getSource():setVolume(G.SETTINGS.SOUND.volume * G.SETTINGS.SOUND.game_sounds_volume / 1000)
+    end
+    ---@type Multiverse.VideoData
+    local v_data = {
+        video = love_video,
+        anchor = t.anchor,
+        x_scale = t.x_scale or 1,
+        y_scale = t.y_scale or 1,
+        rotation = t.rotation or 0,
+        px = love_video:getWidth(),
+        py = love_video:getHeight()
+    }
+    Multiverse.all_videos = Multiverse.all_videos or {}
+    Multiverse.all_videos[t.key] = v_data
+    return v_data
+end
+
+function Multiverse.play_video(key)
+    if Multiverse.all_videos[key] then
+        Multiverse.all_videos[key].video:play()
+    else
+        error("No video for " .. key .. " exists")
+    end
+end
+
+function Multiverse.stop_video(key)
+    if Multiverse.all_videos[key] then
+        Multiverse.all_videos[key].video:pause()
+    else
+        error("No video for " .. key .. " exists")
     end
 end

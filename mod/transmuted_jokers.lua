@@ -13,18 +13,9 @@ SMODS.Joker {
     cost = 40,
     loc_vars = function(self, info_queue, card)
         table.insert(info_queue, G.P_CENTERS.m_mul_calling_card)
-        ---@type table<string, integer | boolean>
-        local unique_tarots = {n = 0}
-        if G.consumeables then
-            for _, c in ipairs(G.consumeables.cards) do
-                if not unique_tarots[c.config.center.key] and c.ability.set == "Tarot" then
-                    unique_tarots[c.config.center.key] = true
-                    unique_tarots.n = unique_tarots.n + 1
-                end
-            end
-        end
-        return {vars = {unique_tarots.n}}
+        return {vars = {card.ability.extra.tarots_held.n}}
     end,
+    config = {extra = {tarots_held = {n = 0}}},
     calculate = function(self, card, context)
         if not context.blueprint then
             if context.before and context.main_eval and context.scoring_hand then
@@ -37,20 +28,27 @@ SMODS.Joker {
                     ease_to = 6,
                     delay = 1
                 }))
-            end
-            if context.repetition and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, "m_mul_calling_card") then
-                ---@type table<string, integer | boolean>
-                local unique_tarots = {n = 0}
+                card.ability.extra.tarots_held = {n = 0}
                 if G.consumeables then
                     for _, c in ipairs(G.consumeables.cards) do
-                        if not unique_tarots[c.config.center.key] and c.ability.set == "Tarot" then
-                            unique_tarots[c.config.center.key] = true
-                            unique_tarots.n = unique_tarots.n + 1
+                        if not card.ability.extra.tarots_held[c.config.center.key] and c.ability.set == "Tarot" then
+                            card.ability.extra.tarots_held[c.config.center.key] = 1
+                            card.ability.extra.tarots_held.n = card.ability.extra.tarots_held.n + 1
                         end
                     end
                 end
-                if unique_tarots.n > 0 then
-                    return {repetitions = unique_tarots.n}
+            end
+            if context.repetition and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, "m_mul_calling_card") then
+                if G.consumeables then
+                    for _, c in ipairs(G.consumeables.cards) do
+                        if not card.ability.extra.tarots_held[c.config.center.key] and c.ability.set == "Tarot" then
+                            card.ability.extra.tarots_held[c.config.center.key] = 1
+                            card.ability.extra.tarots_held.n = card.ability.extra.tarots_held.n + 1
+                        end
+                    end
+                end
+                if card.ability.extra.tarots_held.n > 0 then
+                    return {repetitions = card.ability.extra.tarots_held.n}
                 end
             end
             if context.after then

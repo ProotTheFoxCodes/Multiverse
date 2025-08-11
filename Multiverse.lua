@@ -1,6 +1,6 @@
 Multiverse = {}
 Multiverse.path = "" .. SMODS.current_mod.path
-
+SMODS.optional_features.quantum_enhancements = true
 Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient {
     key = "transmuted_gradient",
     colours = {
@@ -9,6 +9,8 @@ Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient {
     },
     cycle = 1.5
 }
+
+Multiverse.config = SMODS.current_mod.config
 
 local misc_files = NFS.getDirectoryItems(Multiverse.path .. "misc")
 for _, item in ipairs(misc_files) do

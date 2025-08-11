@@ -3,9 +3,7 @@ SMODS.Enhancement {
     atlas = "calling_card",
     pos = {x = 0, y = 0},
     config = {extra = {xmult = 2, boss_xmult = 3}},
-    overrides_base_rank = true,
     replace_base_card = true,
-    any_suit = true,
     weight = 0,
     in_pool = function(self, args)
         return false
@@ -13,6 +11,7 @@ SMODS.Enhancement {
     update = function (self, card, dt)
         G.GAME.mul_call_card_anim_state = G.GAME.mul_call_card_anim_state or 0
         card.config.center.pos.x = math.floor(Multiverse.clamp(G.GAME.mul_call_card_anim_state, 0, 5))
+        assert(SMODS.change_base(card, "Hearts", "Ace"))
     end,
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.xmult, card.ability.extra.boss_xmult}}
@@ -25,6 +24,9 @@ SMODS.Enhancement {
                 return {xmult = card.ability.extra.xmult}
             end
         end
+    end,
+    draw = function(self, card, layer)
+        
     end
 }
 SMODS.Enhancement {
@@ -35,5 +37,36 @@ SMODS.Enhancement {
     weight = 0,
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.bonus, card.ability.h_x_mult, card.ability.h_dollars}}
+    end
+}
+SMODS.Enhancement {
+    key = "normal",
+    atlas = "placeholder_modifiers",
+    pos = {x = 0, y = 0},
+    config = {bonus = 22},
+    weight = 5,
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.bonus}}
+    end
+}
+SMODS.Enhancement {
+    key = "motivated",
+    atlas = "placeholder_modifiers",
+    pos = {x = 0, y = 0},
+    config = {extra = {retriggers = 1, odds = 4}},
+    weight = 5,
+    loc_vars = function(self, info_queue, card)
+        local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "mul_motivated")
+        return {vars = {card.ability.extra.retriggers, num, denom}}
+    end,
+    calculate = function(self, card, context)
+        if context.repetition then
+            return {
+                repetitions = card.ability.extra.retriggers
+            }
+        end
+        if context.after and SMODS.pseudorandom_probability(card, "mul_motivated", 1, card.ability.extra.odds) then
+            card:set_ability("c_base", nil, true)
+        end
     end
 }
