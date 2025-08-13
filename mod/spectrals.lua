@@ -3,9 +3,6 @@ SMODS.Consumable {
     set = "Spectral",
     atlas = "placeholder",
     pos = {x = 1, y = 1},
-    can_use = function(self, card)
-        return G.hand and #G.hand.cards >= 1 and #G.hand.highlighted == 1
-    end,
     loc_vars = function(self, info_queue, card)
         table.insert(info_queue, {
             set = "Other",
@@ -21,6 +18,9 @@ SMODS.Consumable {
             end
         end
         return {key = (has_incompat and "eternity_alt") or nil, vars = {1}}
+    end,
+    can_use = function(self, card)
+        return G.hand and #G.hand.cards >= 1 and #G.hand.highlighted == 1
     end,
     use = function(self, card, area, copier)
         local cards_to_destroy = {}

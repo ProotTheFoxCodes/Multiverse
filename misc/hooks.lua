@@ -1,10 +1,10 @@
 local is_face_hook = Card.is_face
 function Card:is_face(from_boss)
-    if SMODS.has_enhancement(self, "m_mul_calling_card") then
+    if self.config.center.key == "m_mul_calling_card" then
         if self.debuff and not from_boss then return end
         if next(SMODS.find_card("j_pareidolia")) then return true end
     end
-    if SMODS.has_enhancement(self, "m_mul_normal") then
+    if self.config.center.key == "m_mul_normal" then
         if self.debuff and not from_boss then return end
         return true
     end
@@ -67,4 +67,13 @@ function love.draw()
             )
         end
     end
+end
+
+local tooltip_hook = create_popup_UIBox_tooltip
+function create_popup_UIBox_tooltip(tooltip)
+    local ret = tooltip_hook(tooltip)
+    if ret and tooltip.colour then
+        ret.config.colour = tooltip.colour
+    end
+    return ret
 end

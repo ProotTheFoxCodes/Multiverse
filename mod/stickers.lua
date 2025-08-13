@@ -4,5 +4,5 @@ SMODS.Sticker {
     pos = {x = 0, y = 0},
     badge_colour = Multiverse.TRANSMUTED_GRADIENT,
     rate = 0,
-    default_compat = true
+    default_compat = false
 }

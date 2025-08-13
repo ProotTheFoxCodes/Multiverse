@@ -25,6 +25,12 @@ SMODS.Consumable {
     set = "Tarot",
     atlas = "placeholder",
     pos = {x = 0, y = 1},
+    in_pool = function(self, args)
+        return Multiverse.config and Multiverse.config["joke"]
+    end,
+    can_use = function(self, card)
+        return true
+    end,
     use = function(self, card, area, copier)
         Multiverse.play_video("bad_apple")
         G.E_MANAGER:add_event(Event({
@@ -32,7 +38,4 @@ SMODS.Consumable {
             delay = 219 * G.SPEEDFACTOR
         }))
     end,
-    can_use = function(self, card)
-        return true
-    end
 }

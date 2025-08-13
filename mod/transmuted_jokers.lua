@@ -1,7 +1,10 @@
 SMODS.Rarity {
     key = "transmuted",
     default_weight = 0,
-    badge_colour = Multiverse.TRANSMUTED_GRADIENT
+    badge_colour = Multiverse.TRANSMUTED_GRADIENT,
+    pools = {
+        ["Joker"] = true
+    }
 }
 SMODS.Joker {
     key = "ren_amamiya",
@@ -18,16 +21,8 @@ SMODS.Joker {
     config = {extra = {tarots_held = {n = 0}}},
     calculate = function(self, card, context)
         if not context.blueprint then
-            if context.before and context.main_eval and context.scoring_hand then
+            if context.before and context.scoring_hand then
                 context.scoring_hand[1]:set_ability("m_mul_calling_card")
-                G.E_MANAGER:add_event(Event({
-                    trigger = "ease",
-                    ref_table = G.GAME,
-                    ref_value = "mul_call_card_anim_state",
-                    ease = "quad",
-                    ease_to = 6,
-                    delay = 1
-                }))
                 card.ability.extra.tarots_held = {n = 0}
                 if G.consumeables then
                     for _, c in ipairs(G.consumeables.cards) do
@@ -36,6 +31,25 @@ SMODS.Joker {
                             card.ability.extra.tarots_held.n = card.ability.extra.tarots_held.n + 1
                         end
                     end
+                end
+            end
+            if context.initial_scoring_step then
+                local has_call_card = false
+                for _, c in ipairs(G.playing_cards) do
+                    if c.config.center.key == "m_mul_calling_card" then
+                        has_call_card = true
+                        break
+                    end
+                end
+                if has_call_card then
+                    G.E_MANAGER:add_event(Event({
+                        trigger = "ease",
+                        ref_table = G.GAME,
+                        ref_value = "mul_call_card_anim_state",
+                        ease = "quad",
+                        ease_to = 6,
+                        delay = 1
+                    }))
                 end
             end
             if context.repetition and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, "m_mul_calling_card") then
@@ -52,14 +66,23 @@ SMODS.Joker {
                 end
             end
             if context.after then
-                G.E_MANAGER:add_event(Event({
-                    trigger = "ease",
-                    ref_table = G.GAME,
-                    ref_value = "mul_call_card_anim_state",
-                    ease = "quad",
-                    ease_to = 0,
-                    delay = 1
-                }))
+                local has_call_card = false
+                for _, c in ipairs(G.playing_cards) do
+                    if c.config.center.key == "m_mul_calling_card" then
+                        has_call_card = true
+                        break
+                    end
+                end
+                if has_call_card then
+                    G.E_MANAGER:add_event(Event({
+                        trigger = "ease",
+                        ref_table = G.GAME,
+                        ref_value = "mul_call_card_anim_state",
+                        ease = "quad",
+                        ease_to = 0,
+                        delay = 1
+                    }))
+                end
             end
         end
     end

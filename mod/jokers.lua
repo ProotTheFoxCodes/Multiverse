@@ -136,7 +136,7 @@ SMODS.Joker {
     key = "villager",
     atlas = "placeholder",
     pos = {x = 0, y = 0},
-    config = {extra = {mult = 20, money_loss = 1, transmute_req = 25}},
+    config = {extra = {mult = 20, money_loss = 1, transmute_req = Multiverse.set_transmute_requirements(25)}},
     rarity = 1,
     blueprint_compat = true,
     transmutable_compat = true,
@@ -166,22 +166,33 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         local count = 0
-        for _, c in ipairs(G.playing_cards) do
-            if SMODS.has_enhancement(c, "m_steel")
-            or SMODS.has_enhancement(c, "m_gold")
-            or SMODS.has_enhancement(c, "m_stone") then
-                count = count + 1
+        if not context.blueprint then
+            for _, c in ipairs(G.playing_cards) do
+                if SMODS.has_enhancement(c, "m_steel")
+                or SMODS.has_enhancement(c, "m_gold")
+                or SMODS.has_enhancement(c, "m_stone") then
+                    count = count + 1
+                end
+            end
+            if count >= card.ability.extra.transmute_req then
+                card:add_sticker("mul_transmutable", true)
+            else
+                card:remove_sticker("mul_transmutable")
             end
         end
-        if count >= card.ability.extra.transmute_req then
-            card:add_sticker("mul_transmutable")
-        else
-            card:remove_sticker("mul_transmutable")
-        end
         if context.joker_main then
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) - 1
             ease_dollars(-card.ability.extra.money_loss)
             return {
                 mult = card.ability.extra.mult,
+                func = function()
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            G.GAME.dollar_buffer = 0
+                            return true
+                        end
+                    }))
+                end
             }
         end
     end
@@ -237,8 +248,16 @@ SMODS.Joker {
         return {vars = {card.ability.extra.money, card.ability.extra.rounds_held, card.ability.extra.total_rounds}}
     end,
     calculate = function(self, card, context)
+        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
         if context.individual and context.cardarea == G.play then
-            return {dollars = card.ability.extra.money}
+            return {dollars = card.ability.extra.money, func = function()
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        G.GAME.dollar_buffer = 0
+                        return true
+                    end
+                }))
+            end}
         end
         if context.end_of_round and context.main_eval and not context.game_over and not context.blueprint then
             card.ability.extra.rounds_held = card.ability.extra.rounds_held + 1
@@ -328,7 +347,8 @@ SMODS.Joker {
                         SMODS.add_card({
                             set = "Spectral",
                             edition = "e_negative",
-                            key_append = "mul_victory_royale"
+                            key_append = "mul_victory_royale",
+                            skip_materialize = true
                         })
                         return true
                     end
@@ -347,7 +367,7 @@ SMODS.Joker {
     key = "hammer_bro",
     atlas = "placeholder",
     pos = {x = 1, y = 0},
-    config = {extra = {mult = 5, xmult = 1.25, progress = 0, transmute_req = 120}},
+    config = {extra = {mult = 5, xmult = 1.25, progress = 0, transmute_req = Multiverse.set_transmute_requirements(120)}},
     rarity = 2,
     cost = 7,
     blueprint_compat = true,
@@ -373,9 +393,9 @@ SMODS.Joker {
             else
                 return {mult = card.ability.extra.mult}
             end
-            if card.ability.extra.progress >= card.ability.extra.transmute_req then
-                card:add_sticker("mul_transmutable")
-            end
+        end
+        if context.joker_main and card.ability.extra.progress >= card.ability.extra.transmute_req then
+            card:add_sticker("mul_transmutable", true)
         end
     end
 }
@@ -383,7 +403,7 @@ SMODS.Joker {
     key = "stand_user",
     atlas = "placeholder",
     pos = {x = 2, y = 0},
-    config = {extra = {ante_change = 1}},
+    config = {extra = {ante_change = 1, in_boss = false}},
     rarity = 3,
     cost = 8,
     blueprint_compat = false,
@@ -391,4 +411,30 @@ SMODS.Joker {
     loc_vars = function (self, info_queue, card)
         return {vars = {-card.ability.extra.ante_change}}
     end,
+    add_to_deck = function(self, card, from_debuff)
+        if G.GAME.blind then
+            card.ability.extra.in_boss = G.GAME.blind.boss
+        end
+    end,
+    calculate = function(self, card, context)
+        if context.setting_blind then
+            card.ability.extra.in_boss = context.blind.boss
+        end
+        if context.end_of_round and context.game_over and context.main_eval and card.ability.extra.in_boss and not context.blueprint then
+            ease_ante(-card.ability.extra.ante_change)
+            G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
+            G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante - card.ability.extra.ante_change
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    SMODS.destroy_cards(card)
+                    return true
+                end
+            }))
+            return {
+                message = localize("k_saved_ex"),
+                saved = "mul_stand_user",
+                colour = G.C.RED
+            }
+        end
+    end
 }

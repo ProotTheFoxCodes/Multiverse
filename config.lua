@@ -1,11 +1,11 @@
 return {
     ["debug"] = false,
     ["crossmod"] = true,
-    ["joke"] = false,
+    ["joke"] = true,
     ["music"] = {
-        ["prophecy"] = true,
-        ["hammer_of_justice"] = true,
-        ["life_will_change"] = true,
-        ["pigstep"] = true,
+        ["Prophecy"] = true,
+        ["Hammer of Justice"] = true,
+        ["Life Will Change"] = true,
+        ["Pigstep"] = true,
     }
 }

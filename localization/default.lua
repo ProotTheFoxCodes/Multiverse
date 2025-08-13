@@ -107,8 +107,8 @@ return {
                         "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
                     },
                     {
-                        "{C:inactive,s:0.8}Mrs. Frizzle, where are we going?",
-                        "{C:inactive,s:0.8}We're going gambling!"
+                        "{C:inactive,s:0.8}\"Mrs. Frizzle, where are we going?\"",
+                        "{C:inactive,s:0.8}\"We're going gambling!\""
                     }
                 }
             },
@@ -252,7 +252,6 @@ return {
                         "{C:spectral}Spectral{} card",
                         "{C:green}Base odds{} decreases by",
                         "{C:attention}#3#{} when a card is scored",
-                        "{C:inactive}(Must have room){}"
                     },
                     {
                         "{C:inactive,s:0.8}Who let Miku have a gun?"
@@ -291,13 +290,17 @@ return {
                 }
             },
             j_mul_stand_user = {
-                nae = "Stand User",
+                name = "Stand User",
                 text = {
                     {
                         "Prevents Death during",
-                        "a Boss Blind, then",
-                        "-1 Ante",
+                        "a {C:attention}Boss Blind{}, then",
+                        "{C:attention}#1#{} Ante",
                         "{C:red,E:2}Self-destructs{}"
+                    },
+                    {
+                        "{C:inactive,s:0.8}The stand user",
+                        "{C:inactive,s:0.8}could be anyone"
                     }
                 }
             }
@@ -388,7 +391,7 @@ return {
 					"unseeded run to",
 					"learn what it does",
 				}
-            }
+            },
         }
     },
     misc = {
@@ -403,8 +406,37 @@ return {
             k_mul_popped = "Popped!",
             k_mul_won_fifty_fifty = "Won!",
             k_mul_lost_fifty_fifty = "Lost...",
+            mul_stand_user = "Saved by Stand User via time reversal",
             k_myth = "Myth",
-            b_myth_cards = "Myth Cards"
+            b_myth_cards = "Myth Cards",
+            mul_page = "Page",
+            mul_customization = "Enable or disable certain aspects of Multiverse here",
+            mul_changes_warn = "Any config changes take effect after starting a new run",
+            mul_changes_debug = "Debug Mode affects several elements of the mod",
+            mul_changes_pool1 = "Enabling/disabling certain types of content affects",
+            mul_changes_pool2 = "whether or not cards of those types can spawn",
+            mul_music_customization1 = "Enable or disable certain songs that this mod uses",
+            mul_music_customization2 = "Hover over the song details to see when the song plays",
+            mul_debug = "Enable Debug Mode",
+            mul_crossmod = "Enable Crossmod Content",
+            mul_joke = "Enable Joke Content",
+            ["mul_Prophecy"] = {
+                "Plays when you have",
+                "a Joker that has the",
+                "{C:mul_transmuted}Transmutable{} sticker"
+            },
+            ["mul_Life Will Change"] = {
+                "Plays when you",
+                "have {C:attention}Ren Amamiya{}"
+            },
+            ["mul_Pigstep"] = {
+                "Plays when you",
+                "have {C:attention}Steve{}"
+            },
+            ["mul_Hammer of Justice"] = {
+                "Plays when you",
+                "have {C:attention}Gerson{}"
+            },
         },
         labels = {
             mul_transmutable = "Transmutable",

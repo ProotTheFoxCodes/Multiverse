@@ -15,5 +15,48 @@ SMODS.Sound {
         end
     end,
     sync = false,
-    volume = 0.8
+    volume = 0.9,
+    pitch = 1
+}
+SMODS.Sound {
+    key = "pigstep_music",
+    path = "LenaRaine_Pigstep.wav",
+    select_music_track = function(self)
+        if G.jokers and Multiverse.config["music"]["prophecy"] then
+            if next(SMODS.find_card("j_mul_steve")) then
+                return 3
+            end
+        end
+    end,
+    sync = false,
+    volume = 0.9,
+    pitch = 1
+}
+SMODS.Sound {
+    key = "lifewillchange_music",
+    path = "P5_LifeWillChange.wav",
+    select_music_track = function(self)
+        if G.jokers and Multiverse.config["music"]["prophecy"] then
+            if next(SMODS.find_card("j_mul_ren_amamiya")) then
+                return 3
+            end
+        end
+    end,
+    sync = false,
+    volume = 0.9,
+    pitch = 1
+}
+SMODS.Sound {
+    key = "hammerofjustice_music",
+    path = "TobyFox_HammerOfJustice.wav",
+    select_music_track = function(self)
+        if G.jokers and Multiverse.config["music"]["prophecy"] then
+            if next(SMODS.find_card("j_mul_gerson")) then
+                return 3
+            end
+        end
+    end,
+    sync = false,
+    volume = 0.9,
+    pitch = 1,
 }

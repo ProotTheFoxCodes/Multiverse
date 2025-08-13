@@ -261,3 +261,7 @@ function Multiverse.stop_video(key)
         error("No video for " .. key .. " exists")
     end
 end
+
+function Multiverse.set_transmute_requirements(base)
+    return Multiverse.config.debug and 1 or base
+end
