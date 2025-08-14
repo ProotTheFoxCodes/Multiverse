@@ -329,7 +329,7 @@ SMODS.Joker {
     key = "victory_royale",
     atlas = "placeholder",
     pos = {x = 1, y = 0},
-    config = {extra = {odds = 100, decrement = 1}},
+    config = {extra = {odds = 100, decrement = 2}},
     rarity = 2,
     cost = 7,
     blueprint_compat = true,
