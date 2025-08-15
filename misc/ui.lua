@@ -145,10 +145,6 @@ Multiverse.music_credits = {
                 "Life Will Change",
                 "Persona 5 OST"
             },
-        },
-    },
-    {
-        {
             {
                 "Pigstep",
                 "Minecraft OST"
@@ -157,8 +153,8 @@ Multiverse.music_credits = {
                 "Hammer of Justice",
                 "Deltarune Chapter 4 OST"
             },
-        }
-    }
+        },
+    },
 }
 
 function Multiverse.config_tab_definition()
