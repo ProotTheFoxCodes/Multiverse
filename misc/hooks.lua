@@ -37,7 +37,7 @@ function love.draw()
             love.graphics.draw(
                 anim.image,
                 anim.frames[Multiverse.clamp(math.floor(anim.progress) + 1, 1, #anim.frames)],
-                Multiverse.anchors.x[anim.anchor.x_alignment] + (anim.anchor.y_offset or 0) * x_factor,
+                Multiverse.anchors.x[anim.anchor.x_alignment] + (anim.anchor.x_offset or 0) * x_factor,
                 Multiverse.anchors.y[anim.anchor.y_alignment] + (anim.anchor.y_offset or 0) * y_factor,
                 anim.rotation,
                 anim.x_scale * x_factor,
@@ -54,7 +54,7 @@ function love.draw()
             love.graphics.setColor(1,1,1,1)
             love.graphics.draw(
                 video.video,
-                Multiverse.anchors.x[video.anchor.x_alignment] + (video.anchor.y_offset or 0) * x_factor,
+                Multiverse.anchors.x[video.anchor.x_alignment] + (video.anchor.x_offset or 0) * x_factor,
                 Multiverse.anchors.y[video.anchor.y_alignment] + (video.anchor.y_offset or 0) * y_factor,
                 video.rotation,
                 video.x_scale * x_factor,

@@ -48,10 +48,10 @@ Multiverse.Animation {
     anchor = {
         x_alignment = "c",
         y_alignment = "b",
-        y_offset = -30,
-        x_offset = 40
+        x_offset = 50,
+        y_offset = -30
     },
     duration = 1,
-    x_scale = 9,
-    y_scale = 9,
+    x_scale = 8,
+    y_scale = 8,
 }
