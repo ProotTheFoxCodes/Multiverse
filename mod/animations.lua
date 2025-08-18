@@ -8,11 +8,11 @@ Multiverse.Animation {
     anchor = {
         x_alignment = "c",
         y_alignment = "t",
-        x_offset = 50
+        x_offset = 115
     },
     duration = .4,
-    x_scale = 3,
-    y_scale = 3,
+    x_scale = 3.7,
+    y_scale = 3.7,
 }
 Multiverse.Video {
     key = "bad_apple",
@@ -47,9 +47,8 @@ Multiverse.Animation {
     py = 100,
     anchor = {
         x_alignment = "c",
-        y_alignment = "b",
-        x_offset = 50,
-        y_offset = -30
+        y_alignment = "c",
+        x_offset = 100
     },
     duration = 1,
     x_scale = 8,
