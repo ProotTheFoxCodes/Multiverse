@@ -371,6 +371,7 @@ SMODS.Joker {
     rarity = 2,
     cost = 7,
     blueprint_compat = true,
+    transmutable_compat = true,
     loc_vars = function(self, info_queue, card)
         table.insert(info_queue, {
             set = "Other",

@@ -9,7 +9,7 @@ return {
                     "during a Boss Blind",
                     "Always treated as an",
                     "{C:attention}Ace{} of {C:hearts}Hearts{}",
-                    "Gives no base chips"
+                    "Gives no base {C:chips}chips{}"
                 }
             },
             m_mul_netherite = {
@@ -38,6 +38,18 @@ return {
                     "card {C:attention}#1#{} time",
                     "{C:green}#2# in #3#{} chance to",
                     "lose enhancement"
+                }
+            },
+            m_mul_waldo = {
+                name = "Waldo Card",
+                text = {
+                    "Retrigger this",
+                    "card {C:attention}#1#{} time per",
+                    "card in played hand",
+                    "Gives no base {C:chips}chips{}",
+                    "Has no rank or suit",
+                    "You can only have {C:attention}1{}",
+                    "{C:attention}Waldo Card{} in deck"
                 }
             }
         },
@@ -303,6 +315,26 @@ return {
                         "{C:inactive,s:0.8}could be anyone"
                     }
                 }
+            },
+            j_pareidolia = {
+                name = "Pareidolia",
+                text = {
+                    "All cards are",
+                    "considered",
+                    "{C:attention}face{} cards",
+                    "{C:inactive}(#1#/#2#?){}"
+                },
+            },
+            j_mul_waldo = {
+                name = "Waldo",
+                text = {
+                    "Add a {C:attention}Waldo Card{} to",
+                    "deck when this card",
+                    "is obtained",
+                    "{C:attention}Waldo Cards{} give {X:mult,C:white}X#1#{} Mult",
+                    "per card in full deck",
+                    "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}"
+                }
             }
         },
         Spectral = {
@@ -351,6 +383,14 @@ return {
                     "{C:attention}Bad Apple{} video",
                     "for no benefit"
                 }
+            },
+            c_mul_burger = {
+                name = "The Burger",
+                text = {
+                    "Plays an animation",
+                    "of a person with a",
+                    "burger for {C:attention}1{} minute"
+                }
             }
         },
         Other = {
@@ -381,6 +421,13 @@ return {
                 text = {
                     "Trigger this card",
                     "lots of times"
+                }
+            },
+            mul_pareidolia_hint = {
+                name = "Hint",
+                text = {
+                    "Play some unique",
+                    "{C:attention}poker hands{}"
                 }
             },
             undiscovered_myth = {

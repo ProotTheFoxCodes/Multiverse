@@ -154,6 +154,12 @@ Multiverse.music_credits = {
                 "Deltarune Chapter 4 OST"
             },
         },
+        {
+            {
+                "Presage",
+                "MIRAR",
+            }
+        },
     },
 }
 

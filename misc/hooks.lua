@@ -30,7 +30,6 @@ function love.draw()
                     anim.progress = anim.progress + G.real_dt * #anim.frames / anim.duration
                 else
                     anim.is_active = false
-                    anim.progress = 0
                 end
             end
             --print(Multiverse.clamp(math.floor(anim.progress) + 1, 1, #anim.frames))
@@ -51,7 +50,7 @@ function love.draw()
         end
     end
     for key, video in pairs(Multiverse.all_videos) do
-        if video.video:isPlaying() then
+        if video.is_visible then
             love.graphics.setColor(1,1,1,1)
             love.graphics.draw(
                 video.video,
@@ -76,4 +75,17 @@ function create_popup_UIBox_tooltip(tooltip)
         ret.config.colour = tooltip.colour
     end
     return ret
+end
+
+local copy_card_hook = copy_card
+function copy_card(other, new_card, card_scale, playing_card, strip_edition)
+    local card = copy_card_hook(other, new_card, card_scale, playing_card, strip_edition)
+    if card and SMODS.has_enhancement(card, "m_mul_waldo") then
+        if not Multiverse.all_animations["explosion"].is_active then
+            Multiverse.start_animation("explosion")
+            play_sound("mul_deltarune_explosion", 1, 0.9)
+        end
+        card:set_ability("c_base", nil, true)
+    end
+    return card
 end

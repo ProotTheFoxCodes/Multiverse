@@ -33,9 +33,12 @@ Multiverse.transmutations = {
     },
     ["j_mul_hammer_bro"] = {
         key = "j_mul_gerson",
+    },
+    ["j_pareidolia"] = {
+        key = "j_mul_waldo",
     }
 }
----Forces a number to be within a given range
+---Forces a number to be within a given range.
 ---@param n number
 ---@param min? number
 ---@param max? number
@@ -149,7 +152,7 @@ Multiverse.anchors = {
     }
 }
 ---Gets the correct offset for love.draw based on the animation's dimensions
----using a function that takes in an Animation and returns a number.
+---using a function that takes in AnimationData or VideoData and returns a number.
 ---The functions are grouped by axis and then by alignment type.
 ---@type table<string, table<string, fun(a: Multiverse.AnimationData | Multiverse.VideoData): number>>
 Multiverse.base_offsets = {
@@ -215,6 +218,7 @@ end
 ---@field rotation number? The rotation of the animation in radians
 ---@field px integer The width of an individual frame of the animation
 ---@field py integer The height of an individual frame of the animation
+---@field is_visible boolean Whether or not the video is visible on screen
 
 ---@type table<string, Multiverse.VideoData>
 Multiverse.all_videos = {}
@@ -239,7 +243,8 @@ function Multiverse.Video(t)
         y_scale = t.y_scale or 1,
         rotation = t.rotation or 0,
         px = love_video:getWidth(),
-        py = love_video:getHeight()
+        py = love_video:getHeight(),
+        is_visible = false
     }
     Multiverse.all_videos = Multiverse.all_videos or {}
     Multiverse.all_videos[t.key] = v_data
@@ -248,7 +253,17 @@ end
 
 function Multiverse.play_video(key)
     if Multiverse.all_videos[key] then
+        Multiverse.all_videos[key].video:rewind()
         Multiverse.all_videos[key].video:play()
+        Multiverse.all_videos[key].is_visible = true
+    else
+        error("No video for " .. key .. " exists")
+    end
+end
+
+function Multiverse.pause_video(key)
+    if Multiverse.all_videos[key] then
+        Multiverse.all_videos[key].video:pause()
     else
         error("No video for " .. key .. " exists")
     end
@@ -256,6 +271,7 @@ end
 
 function Multiverse.stop_video(key)
     if Multiverse.all_videos[key] then
+        Multiverse.all_videos[key].is_visible = false
         Multiverse.all_videos[key].video:pause()
     else
         error("No video for " .. key .. " exists")

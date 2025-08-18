@@ -17,6 +17,7 @@ SMODS.Consumable {
     pos = {x = 0, y = 0},
     config = {max_highlighted = 1},
     discovered = true,
+    cost = 6,
     loc_vars = function(self, info_queue, card)
         table.insert(info_queue, {
             set = "Other",
@@ -63,6 +64,7 @@ SMODS.Consumable {
     pos = {x = 0, y = 0},
     config = {max_highlighted = 1, extra = {num_consumables = 3}},
     discovered = true,
+    cost = 6,
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.num_consumables}}
     end,

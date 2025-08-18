@@ -25,9 +25,6 @@ SMODS.Enhancement {
             end
         end
     end,
-    draw = function(self, card, layer)
-        
-    end
 }
 SMODS.Enhancement {
     key = "netherite",
@@ -67,6 +64,27 @@ SMODS.Enhancement {
         end
         if context.after and SMODS.pseudorandom_probability(card, "mul_motivated", 1, card.ability.extra.odds) then
             card:set_ability("c_base", nil, true)
+        end
+    end
+}
+SMODS.Enhancement {
+    key = "waldo",
+    atlas = "placeholder_modifiers",
+    pos = {x = 0, y = 0},
+    config = {extra = {retrigger_inc = 1}},
+    weight = 0,
+    always_scores = true,
+    no_rank = true,
+    no_suit = true,
+    replace_base_card = true,
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.retrigger_inc}}
+    end,
+    calculate = function(self, card, context)
+        if context.repetition and context.cardarea == G.play then
+            return {
+                repetitions = card.ability.extra.retrigger_inc * #context.full_hand
+            }
         end
     end
 }

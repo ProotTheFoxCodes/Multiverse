@@ -16,22 +16,22 @@ SMODS.Joker {
     cost = 40,
     loc_vars = function(self, info_queue, card)
         table.insert(info_queue, G.P_CENTERS.m_mul_calling_card)
-        return {vars = {card.ability.extra.tarots_held.n}}
+        local tarots_held = {n = 0}
+        if G.consumeables then
+            for _, c in ipairs(G.consumeables.cards) do
+                if not tarots_held[c.config.center.key] and c.ability.set == "Tarot" then
+                    tarots_held[c.config.center.key] = 1
+                    tarots_held.n = tarots_held.n + 1
+                end
+            end
+        end
+        return {vars = {tarots_held.n}}
     end,
-    config = {extra = {tarots_held = {n = 0}}},
+    config = {extra = {}},
     calculate = function(self, card, context)
         if not context.blueprint then
-            if context.before and context.scoring_hand then
+            if context.before then
                 context.scoring_hand[1]:set_ability("m_mul_calling_card")
-                card.ability.extra.tarots_held = {n = 0}
-                if G.consumeables then
-                    for _, c in ipairs(G.consumeables.cards) do
-                        if not card.ability.extra.tarots_held[c.config.center.key] and c.ability.set == "Tarot" then
-                            card.ability.extra.tarots_held[c.config.center.key] = 1
-                            card.ability.extra.tarots_held.n = card.ability.extra.tarots_held.n + 1
-                        end
-                    end
-                end
             end
             if context.initial_scoring_step then
                 local has_call_card = false
@@ -53,15 +53,16 @@ SMODS.Joker {
                 end
             end
             if context.repetition and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, "m_mul_calling_card") then
+                local tarots_held = {n = 0}
                 if G.consumeables then
                     for _, c in ipairs(G.consumeables.cards) do
-                        if not card.ability.extra.tarots_held[c.config.center.key] and c.ability.set == "Tarot" then
-                            card.ability.extra.tarots_held[c.config.center.key] = 1
-                            card.ability.extra.tarots_held.n = card.ability.extra.tarots_held.n + 1
+                        if not tarots_held[c.config.center.key] and c.ability.set == "Tarot" then
+                            tarots_held[c.config.center.key] = 1
+                            tarots_held.n = tarots_held.n + 1
                         end
                     end
                 end
-                if card.ability.extra.tarots_held.n > 0 then
+                if tarots_held.n > 0 then
                     return {repetitions = card.ability.extra.tarots_held.n}
                 end
             end
@@ -160,4 +161,37 @@ SMODS.Joker {
             }
         end
     end
+}
+SMODS.Joker {
+    key = "waldo",
+    atlas = "placeholder",
+    pos = {x = 4, y = 0},
+    config = {extra = {xmult_inc = 0.5}},
+    rarity = "mul_transmuted",
+    cost = 40,
+    blueprint_compat = false,
+    loc_vars = function(self, info_queue, card)
+        local cards_in_deck = 0
+        if G.playing_cards then
+            cards_in_deck = #G.playing_cards
+        end
+        return {vars = {card.ability.extra.xmult_inc, (card.ability.extra.xmult_inc * cards_in_deck + 1)}}
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        if not from_debuff then
+            SMODS.add_card({
+                set = "Base",
+                area = G.deck,
+                skip_materialize = true,
+                enhancement = "m_mul_waldo"
+            })
+        end
+    end,
+    calculate = function(self, card, context)
+        if context.individual and not context.blueprint and SMODS.has_enhancement(context.other_card, "m_mul_waldo") then
+            return {
+                xmult = card.ability.extra.xmult_inc * #G.playing_cards + 1
+            }
+        end
+    end,
 }

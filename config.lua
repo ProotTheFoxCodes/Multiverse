@@ -7,5 +7,6 @@ return {
         ["Hammer of Justice"] = true,
         ["Life Will Change"] = true,
         ["Pigstep"] = true,
+        ["Presage"] = true,
     }
 }

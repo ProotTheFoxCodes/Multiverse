@@ -1,6 +1,6 @@
 SMODS.Sound {
     key = "gerson_laugh",
-    path = "gerson_sfx.wav"
+    path = "gerson_sfx.ogg"
 }
 SMODS.Sound {
     key = "prophecy_music",
@@ -59,4 +59,20 @@ SMODS.Sound {
     sync = false,
     volume = 0.85,
     pitch = 1,
+}
+SMODS.Sound {
+    key = "presage_music",
+    path = "MIRAR_Presage.wav",
+    select_music_track = function(self)
+        if G.GAME and G.GAME.round_resets.ante > 8 then
+            if G.GAME.round_resets.ante % 8 == 0 then
+                return 4
+            end
+            return 1
+        end
+    end
+}
+SMODS.Sound {
+    key = "deltarune_explosion",
+    path = "deltarune_explosion.ogg"
 }
