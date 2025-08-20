@@ -1,4 +1,4 @@
-# Multiverse
+<h1 align = "center"> Multiverse </h1>
 
 ![The logo of the mod. Appears in-game to the bottom left of the Balatro logo in the main menu.](multiverse_logo_README.png)
 
