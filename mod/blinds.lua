@@ -29,5 +29,8 @@ SMODS.Blind {
     end,
     collection_loc_vars = function(self)
         return {vars = {10}}
+    end,
+    in_pool = function(self)
+        return Multiverse.config.joke
     end
 }
