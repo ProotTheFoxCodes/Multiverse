@@ -8,5 +8,6 @@ return {
         ["Life Will Change"] = true,
         ["Pigstep"] = true,
         ["Presage"] = true,
+        ["Sneaky Snitch"] = true,
     }
 }

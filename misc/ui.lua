@@ -158,6 +158,10 @@ Multiverse.music_credits = {
             {
                 "Presage",
                 "MIRAR",
+            },
+            {
+                "Sneaky Snitch",
+                "Kevin Macleod"
             }
         },
     },
@@ -172,16 +176,6 @@ function Multiverse.config_tab_definition()
                     active_colour = Multiverse.TRANSMUTED_GRADIENT,
                     ref_table = Multiverse.config,
                     ref_value = "debug",
-                })
-            }
-        },
-        {n = G.UIT.R, config = {align = "cr"},
-            nodes = {
-                create_toggle({
-                    label = localize("mul_crossmod"),
-                    active_colour = Multiverse.TRANSMUTED_GRADIENT,
-                    ref_table = Multiverse.config,
-                    ref_value = "crossmod",
                 })
             }
         },

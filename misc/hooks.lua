@@ -66,6 +66,41 @@ function love.draw()
             )
         end
     end
+    if Multiverse.in_limbo then
+        if Multiverse.in_limbo == "end" then
+            for _, key in ipairs(Multiverse.limbo_keys) do
+                love.graphics.setColor(key.end_color)
+                love.graphics.draw(
+                    Multiverse.LIMBO_KEY_SPRITE,
+                    love.graphics.getWidth() / 2 + (key.x - 2.5) * 150,
+                    love.graphics.getHeight() / 2 + (key.y - 1.5) * 150,
+                    0,
+                    0.5,
+                    0.5,
+                    61,
+                    43,
+                    0,
+                    0
+                )
+            end
+        else
+            for _, key in ipairs(Multiverse.limbo_keys) do
+                love.graphics.setColor(key.current_color)
+                love.graphics.draw(
+                    Multiverse.LIMBO_KEY_SPRITE,
+                    love.graphics.getWidth() / 2 + (key.x - 2.5) * 150,
+                    love.graphics.getHeight() / 2 + (key.y - 1.5) * 150,
+                    0,
+                    0.5,
+                    0.5,
+                    61,
+                    43,
+                    0,
+                    0
+                )
+            end
+        end
+    end
 end
 
 local tooltip_hook = create_popup_UIBox_tooltip
@@ -83,9 +118,56 @@ function copy_card(other, new_card, card_scale, playing_card, strip_edition)
     if card and SMODS.has_enhancement(card, "m_mul_waldo") then
         if not Multiverse.all_animations["explosion"].is_active then
             Multiverse.start_animation("explosion")
-            play_sound("mul_deltarune_explosion", 1, 0.9)
+            play_sound("mul_deltarune_explosion", 1, 0.8)
         end
         card:set_ability("c_base", nil, true)
     end
     return card
+end
+
+local mousepressed_hook = love.mousepressed
+function love.mousepressed(x, y, button, istouch, presses)
+    mousepressed_hook(x, y, button, istouch, presses)
+    if Multiverse.in_limbo == "end" and not Multiverse.has_guessed then
+        local clicked = Multiverse.detect_key_click(x, y)
+        if clicked then
+            Multiverse.has_guessed = true
+            Multiverse.in_limbo = nil
+            Multiverse.limbo_safe = clicked.is_correct
+            if not clicked.is_correct then
+                G.GAME.blind.chips = G.GAME.blind.chips * 10
+                G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+                Multiverse.start_animation("explosion")
+                play_sound("mul_deltarune_explosion", 1, 0.8)
+            end
+        end
+    end
+end
+
+local start_run_hook = Game.start_run
+function Game:start_run(args)
+    start_run_hook(self, args)
+    if args.savetext then
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                if G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_limbo" and not G.GAME.blind.disabled then
+                    G.GAME.blind.chips = G.GAME.blind.chips * 10
+                    G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+                end
+                return true
+            end
+        }))
+    end
+end
+
+local options_hook = G.FUNCS.options
+function G.FUNCS.options()
+    if Multiverse.in_limbo then return end
+    options_hook()
+end
+
+local info_hook = G.FUNCS.run_info
+function G.FUNCS.run_info()
+    if Multiverse.in_limbo then return end
+    info_hook()
 end

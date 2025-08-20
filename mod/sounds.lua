@@ -58,21 +58,39 @@ SMODS.Sound {
     end,
     sync = false,
     volume = 0.85,
-    pitch = 1,
+    pitch = 1
 }
 SMODS.Sound {
     key = "presage_music",
     path = "MIRAR_Presage.wav",
     select_music_track = function(self)
-        if G.GAME and G.GAME.round_resets.ante > 8 then
-            if G.GAME.round_resets.ante % 8 == 0 then
-                return 4
-            end
+        if G.GAME and G.GAME.round_resets.ante >= 8 then
             return 1
         end
-    end
+    end,
+    sync = false,
+    volume = 0.75,
+    pitch = 1
 }
 SMODS.Sound {
     key = "deltarune_explosion",
     path = "deltarune_explosion.ogg"
+}
+SMODS.Sound {
+    key = "sneaky_snitch_music",
+    path = "KevinMacleod_SneakySnitch.wav",
+    select_music_track = function(self)
+        if G.jokers and Multiverse.config.music["Sneaky Snitch"] then
+            if next(SMODS.find_card("j_mul_waldo")) then
+                return 3
+            end
+        end
+    end,
+    sync = false,
+    volume = 0.8,
+    pitch = 1
+}
+SMODS.Sound {
+    key = "isolation_limbo",
+    path = "NightHawk22_Isolation(LimboKeys).ogg"
 }

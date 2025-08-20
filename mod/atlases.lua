@@ -46,3 +46,11 @@ SMODS.Atlas {
     py = 95,
     path = "holy_grail.png"
 }
+SMODS.Atlas {
+    key = "multiverse_blinds",
+    px = 34,
+    py = 34,
+    path = "blinds.png",
+    atlas_table = "ANIMATION_ATLAS",
+    frames = 21
+}

@@ -1,5 +1,16 @@
 return {
     descriptions = {
+        Blind = {
+            bl_mul_limbo = {
+                name = "The Limbo",
+                text = {
+                    "When Blind is selected,",
+                    "use your left mouse button to",
+                    "do the Limbo keys minigame",
+                    "and if you fail, X#1# Blind size",
+                }
+            }
+        },
         Enhanced = {
             m_mul_calling_card = {
                 name = "Calling Card",
@@ -457,15 +468,14 @@ return {
             k_myth = "Myth",
             b_myth_cards = "Myth Cards",
             mul_page = "Page",
-            mul_customization = "Enable or disable certain aspects of Multiverse here",
-            mul_changes_warn = "Any config changes take effect after starting a new run",
+            mul_customization = "You can enable or disable certain aspects of Multiverse here",
+            mul_changes_warn = "It is recommended to restart the game after making config changes",
             mul_changes_debug = "Debug Mode affects several elements of the mod",
             mul_changes_pool1 = "Enabling/disabling certain types of content affects",
             mul_changes_pool2 = "whether or not cards of those types can spawn",
             mul_music_customization1 = "Enable or disable certain songs that this mod uses",
             mul_music_customization2 = "Hover over the song details to see when the song plays",
             mul_debug = "Enable Debug Mode",
-            mul_crossmod = "Enable Crossmod Content",
             mul_joke = "Enable Joke Content",
             ["mul_Prophecy"] = {
                 "Plays when you have",
@@ -484,6 +494,14 @@ return {
                 "Plays when you",
                 "have {C:attention}Gerson{}"
             },
+            ["mul_Presage"] = {
+                "Plays on {C:attention}Ante 8{}",
+                "or higher"
+            },
+            ["mul_Sneaky Snitch"] = {
+                "Plays when you",
+                "have {C:attention}Waldo{}"
+            }
         },
         labels = {
             mul_transmutable = "Transmutable",

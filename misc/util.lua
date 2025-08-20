@@ -203,21 +203,21 @@ end
 
 ---@class Multiverse.Video
 ---@field path string The name of the file where the video is stored
----@field key string The key of the animation.
----@field anchor Anchor The place on the screen where the animation is 
----@field x_scale number? The factor that the animation will be scaled horizontally 
----@field y_scale number? The factor that the animation will be scaled vertically
----@field rotation number? The rotation of the animation in radians
+---@field key string The key of the video.
+---@field anchor Anchor The place on the screen where the video is 
+---@field x_scale number? The factor that the video will be scaled horizontally 
+---@field y_scale number? The factor that the video will be scaled vertically
+---@field rotation number? The rotation of the video in radians
 ---@field volume number? The volume of the video
 
 ---@class Multiverse.VideoData
 ---@field video love.Video The video to be displayed
----@field anchor Anchor The place on the screen where the animation is 
----@field x_scale number? The factor that the animation will be scaled horizontally 
----@field y_scale number? The factor that the animation will be scaled vertically
----@field rotation number? The rotation of the animation in radians
----@field px integer The width of an individual frame of the animation
----@field py integer The height of an individual frame of the animation
+---@field anchor Anchor The place on the screen where the video is 
+---@field x_scale number? The factor that the video will be scaled horizontally 
+---@field y_scale number? The factor that the video will be scaled vertically
+---@field rotation number? The rotation of the video in radians
+---@field px integer The width of an individual frame of the video
+---@field py integer The height of an individual frame of the video
 ---@field is_visible boolean Whether or not the video is visible on screen
 
 ---@type table<string, Multiverse.VideoData>
