@@ -72,7 +72,7 @@ function Multiverse.limbo_keys_swapping()
 end
 function Multiverse.limbo_keys_swap(count)
     Multiverse.in_limbo = "swapping"
-    local selection = pseudorandom("bl_limbo", 1, 8)
+    local selection = math.random(1, 8)
     Multiverse.assign_limbo_key_ids()
     G.E_MANAGER:add_event(Event({
         delay = .28 * (G.SPEEDFACTOR or 1),
@@ -94,7 +94,7 @@ function Multiverse.limbo_keys_swap(count)
                 Multiverse.limbo_keys_rotate_halves_cw(n)
             elseif selection == 6 then
                 Multiverse.limbo_keys_swap_cols(n)
-            elseif selection == 8 then
+            elseif selection == 7 then
                 Multiverse.limbo_keys_swap_rows(n)
             else
                 Multiverse.limbo_keys_swap_halves(n)

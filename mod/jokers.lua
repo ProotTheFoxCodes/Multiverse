@@ -439,3 +439,16 @@ SMODS.Joker {
         end
     end
 }
+SMODS.Joker {
+    key = "sisyphean_struggle",
+    atlas = "placeholder",
+    pos = {x = 0, y = 0},
+    config = {extra = {mult = 0, mult_gain = 2}},
+    rarity = 1,
+    cost = 5,
+    blueprint_compat = true,
+    loc_vars = function(self, info_queue, card)
+    end,
+    calculate = function(self, card, context)
+    end,
+}
