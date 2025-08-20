@@ -1,6 +1,6 @@
 # Multiverse
 
-![The logo of the mod. Appears in-game to the bottom left of the Balatro logo in the main menu.](mod_banner_README.png)
+![The logo of the mod. Appears in-game to the bottom left of the Balatro logo in the main menu.](multiverse_logo_README.png)
 
 A Balatro mod I made because I was bored and needed something to work on.
 This mod introduces:
