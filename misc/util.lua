@@ -51,6 +51,19 @@ function Multiverse.clamp(n, min, max)
     elseif n > higher then return higher
     else return n end
 end
+---Returns all cards in t such that func(t) is truthy.
+---@param t Card[]
+---@param func fun(card: Card): boolean
+---@return Card[]
+function Multiverse.filter(t, func)
+    local ret = {}
+    for _, c in ipairs(t) do
+        if func(c) then
+            table.insert(ret, c)
+        end
+    end
+    return ret
+end
 ---Updates the animation state of a given card.
 ---
 ---Make sure to pass in <code>G.real_dt</code> for the dt argument.

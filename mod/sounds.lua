@@ -4,7 +4,7 @@ SMODS.Sound {
 }
 SMODS.Sound {
     key = "prophecy_music",
-    path = "Creo_Prophecy.wav",
+    path = "Creo_Prophecy.ogg",
     select_music_track = function(self)
         if G.jokers and Multiverse.config.music["Prophecy"] then
             for _, joker in ipairs(G.jokers.cards) do
@@ -20,7 +20,7 @@ SMODS.Sound {
 }
 SMODS.Sound {
     key = "pigstep_music",
-    path = "LenaRaine_Pigstep.wav",
+    path = "LenaRaine_Pigstep.ogg",
     select_music_track = function(self)
         if G.jokers and Multiverse.config.music["Pigstep"] then
             if next(SMODS.find_card("j_mul_steve")) then
@@ -34,7 +34,7 @@ SMODS.Sound {
 }
 SMODS.Sound {
     key = "lifewillchange_music",
-    path = "P5_LifeWillChange.wav",
+    path = "P5_LifeWillChange.ogg",
     select_music_track = function(self)
         if G.jokers and Multiverse.config.music["Life Will Change"] then
             if next(SMODS.find_card("j_mul_ren_amamiya")) then
@@ -48,7 +48,7 @@ SMODS.Sound {
 }
 SMODS.Sound {
     key = "hammerofjustice_music",
-    path = "TobyFox_HammerOfJustice.wav",
+    path = "TobyFox_HammerOfJustice.ogg",
     select_music_track = function(self)
         if G.jokers and Multiverse.config.music["Hammer of Justice"] then
             if next(SMODS.find_card("j_mul_gerson")) then
@@ -62,7 +62,7 @@ SMODS.Sound {
 }
 SMODS.Sound {
     key = "presage_music",
-    path = "MIRAR_Presage.wav",
+    path = "MIRAR_Presage.ogg",
     select_music_track = function(self)
         if G.GAME and G.GAME.round_resets.ante >= 8 then
             return 1
@@ -78,7 +78,7 @@ SMODS.Sound {
 }
 SMODS.Sound {
     key = "sneaky_snitch_music",
-    path = "KevinMacleod_SneakySnitch.wav",
+    path = "KevinMacleod_SneakySnitch.ogg",
     select_music_track = function(self)
         if G.jokers and Multiverse.config.music["Sneaky Snitch"] then
             if next(SMODS.find_card("j_mul_waldo")) then

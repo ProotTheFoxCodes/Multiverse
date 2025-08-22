@@ -79,7 +79,7 @@ SMODS.Joker {
         }
     end,
     calculate = function(self, card, context)
-        if context.before then
+        if context.before and not context.blueprint and context.main_eval then
             local has_face_card = false
             for _, playing_card in ipairs(G.hand.cards) do
                 if playing_card:is_face() then
@@ -181,7 +181,7 @@ SMODS.Joker {
             end
         end
         if context.joker_main then
-            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) - 1
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) - card.ability.extra.money_loss
             ease_dollars(-card.ability.extra.money_loss)
             return {
                 mult = card.ability.extra.mult,
@@ -440,15 +440,89 @@ SMODS.Joker {
     end
 }
 SMODS.Joker {
-    key = "sisyphean_struggle",
+    key = "foddian_struggle",
     atlas = "placeholder",
     pos = {x = 0, y = 0},
     config = {extra = {mult = 0, mult_gain = 2}},
     rarity = 1,
-    cost = 5,
+    cost = 6,
     blueprint_compat = true,
     loc_vars = function(self, info_queue, card)
+        local suit = G.GAME.current_round.mul_foddian_suit or "Hearts"
+        return {
+            vars = {
+                localize(suit, "suits_plural"),
+                card.ability.extra.mult_gain,
+                card.ability.extra.mult,
+                colours = {G.C.SUITS[suit]}
+            },
+        }
     end,
     calculate = function(self, card, context)
+        if context.before and context.main_eval and not context.blueprint then
+            for _, c in ipairs(context.full_hand) do
+                if c:is_suit(G.GAME.current_round.mul_foddian_suit) then
+                    card.ability.extra.mult = 0
+                    return {
+                        message = localize("k_reset")
+                    }
+                end
+            end
+            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
+            return {
+                message = localize("k_upgrade_ex")
+            }
+        end
+        if context.joker_main and card.ability.extra.mult > 0 then
+            return {
+                mult = card.ability.extra.mult
+            }
+        end
+    end,
+}
+
+local function set_foddian_suit()
+    G.GAME.current_round.mul_foddian_suit = "Hearts"
+    local valid = {}
+    for _, c in ipairs(G.playing_cards) do
+        if not SMODS.has_no_suit(c) then
+            table.insert(valid, c)
+        end
+    end
+    local foddian_card = pseudorandom_element(valid, "mul_foddian" .. G.GAME.round_resets.ante)
+    if foddian_card then
+        G.GAME.current_round.mul_foddian_suit = foddian_card.base.suit
+    end
+end
+
+function SMODS.current_mod.reset_game_globals()
+    set_foddian_suit()
+end
+
+SMODS.Joker {
+    key = "peashooter",
+    atlas = "placeholder",
+    pos = {x = 0, y = 0},
+    config = {extra = {mult = 0, mult_gain = 1}},
+    rarity = 1,
+    cost = 6,
+    blueprint_compat = true,
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.mult_gain, card.ability.extra.mult}}
+    end,
+    calculate = function(self, card, context)
+        if context.before and context.main_eval and not context.blueprint then
+            if #context.full_hand == 1 then
+                card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
+                return {
+                    message = localize("k_upgrade_ex")
+                }
+            end
+        end
+        if context.joker_main and card.ability.extra.mult > 0 then
+            return {
+                mult = card.ability.extra.mult
+            }
+        end
     end,
 }

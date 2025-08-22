@@ -346,6 +346,25 @@ return {
                     "per card in full deck",
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}"
                 }
+            },
+            j_mul_foddian_struggle = {
+                name = "Foddian Struggle",
+                text = {
+                    "This Joker gains",
+                    "{C:mult}+#2#{} Mult per",
+                    "consecutive hand played",
+                    "without a {V:1}#1#{}",
+                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)"
+                }
+            },
+            j_mul_peashooter = {
+                name = "Peashooter",
+                text = {
+                    "If played hand contains",
+                    "exactly {C:attention}1{} card,",
+                    "this Joker gains {C:mult}+#1#{} Mult",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+                }
             }
         },
         Spectral = {
