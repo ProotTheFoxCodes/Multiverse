@@ -1,6 +1,6 @@
 ---@type Multiverse.limbo_key[]
 Multiverse.limbo_keys = {}
-local key_file = assert(NFS.newFileData(Multiverse.path .. "assets/misc/LimboKey.png"))
+local key_file = assert(NFS.newFileData(Multiverse.path .. "assets/misc/limbo_key.png"))
 local key_data = assert(love.image.newImageData(key_file))
 Multiverse.LIMBO_KEY_SPRITE = assert(love.graphics.newImage(key_data))
 Multiverse.LIMBO_KEY_COLORS = {
