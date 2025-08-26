@@ -77,8 +77,8 @@ function love.draw()
                     0,
                     1,
                     1,
-                    61,
-                    43,
+                    30.5,
+                    21.5,
                     0,
                     0
                 )
@@ -93,8 +93,8 @@ function love.draw()
                     0,
                     1,
                     1,
-                    61,
-                    43,
+                    30.5,
+                    21.5,
                     0,
                     0
                 )
@@ -144,22 +144,6 @@ function love.mousepressed(x, y, button, istouch, presses)
     end
 end
 
-local start_run_hook = Game.start_run
-function Game:start_run(args)
-    start_run_hook(self, args)
-    if args.savetext then
-        G.E_MANAGER:add_event(Event({
-            func = function()
-                if G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_limbo" and not G.GAME.blind.disabled then
-                    G.GAME.blind.chips = G.GAME.blind.chips * 10
-                    G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
-                end
-                return true
-            end
-        }))
-    end
-end
-
 local options_hook = G.FUNCS.options
 function G.FUNCS.options()
     if Multiverse.in_limbo then return end
@@ -170,4 +154,10 @@ local info_hook = G.FUNCS.run_info
 function G.FUNCS.run_info()
     if Multiverse.in_limbo then return end
     info_hook()
+end
+
+local deck_info_hook = G.FUNCS.deck_info
+function G.FUNCS.deck_info()
+    if Multiverse.in_limbo then return end
+    deck_info_hook()
 end

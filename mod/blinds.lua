@@ -20,7 +20,7 @@ SMODS.Blind {
     end,
     disable = function(self)
         if get_blind_amount(G.GAME.round_resets.ante) * 2 < G.GAME.blind.chips then
-            G.GAME.blind.chips = math.floor(G.GAME.blind.chips / 10)
+            G.GAME.blind.chips = get_blind_amount(G.GAME.round_resets.ante) * 2
             G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
         end
     end,

@@ -42,7 +42,7 @@ end
 function Multiverse.limbo_keys_intro()
     Multiverse.has_guessed = false
     Multiverse.in_limbo = "start"
-    play_sound("mul_isolation_limbo", 1, 0.9)
+    play_sound("mul_isolation_limbo", 1, 0.95)
     Multiverse.limbo_anim_prog = 0
     G.E_MANAGER:add_event(Event({
         delay = 4.75 * (G.SPEEDFACTOR or 1),
@@ -75,7 +75,7 @@ function Multiverse.limbo_keys_swap(count)
     local selection = math.random(1, 8)
     Multiverse.assign_limbo_key_ids()
     G.E_MANAGER:add_event(Event({
-        delay = .28 * (G.SPEEDFACTOR or 1),
+        delay = .278 * (G.SPEEDFACTOR or 1),
         trigger = "ease",
         ease_to = 1,
         ease = "quad",
@@ -124,6 +124,7 @@ function Multiverse.limbo_keys_end()
             end
             Multiverse.in_limbo = nil
             Multiverse.limbo_keys = {}
+            Multiverse.has_guessed = false
             return true
         end
     }), "other")
