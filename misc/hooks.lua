@@ -10,6 +10,30 @@ function Card:is_face(from_boss)
     end
     return is_face_hook(self, from_boss)
 end
+local is_suit_hook = Card.is_suit
+function Card:is_suit(suit, bypass_debuff, flush_calc)
+    if self.config.center.key == "m_mul_calling_card" then
+        if flush_calc then
+            if SMODS.find_card("j_smeared") then
+                return self.base.suit == "Hearts" or self.base.suit == "Diamonds"
+            end
+            return self.base.suit == "Hearts"
+        else
+            if self.debuff and not bypass_debuff then return end
+            if SMODS.find_card("j_smeared") then
+                return self.base.suit == "Hearts" or self.base.suit == "Diamonds"
+            end
+            return self.base.suit == "Hearts"
+        end
+    end
+    return is_suit_hook(self, suit, bypass_debuff, flush_calc)
+end
+local get_id_hook = Card.get_id
+function Card:get_id()
+    if self.config.center.key == "m_mul_calling_card" and not self.vampired then
+        return 11
+    end
+end
 local draw_hook = love.draw
 function love.draw()
     draw_hook()

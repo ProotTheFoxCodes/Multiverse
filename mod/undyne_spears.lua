@@ -1,0 +1,1 @@
+Multiverse.undyne_spears = {}

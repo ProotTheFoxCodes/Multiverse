@@ -11,7 +11,6 @@ SMODS.Enhancement {
     update = function (self, card, dt)
         G.GAME.mul_call_card_anim_state = G.GAME.mul_call_card_anim_state or 0
         card.config.center.pos.x = math.floor(Multiverse.clamp(G.GAME.mul_call_card_anim_state, 0, 5))
-        assert(SMODS.change_base(card, "Hearts", "Ace"))
     end,
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.xmult, card.ability.extra.boss_xmult}}
