@@ -33,6 +33,7 @@ function Card:get_id()
     if self.config.center.key == "m_mul_calling_card" and not self.vampired then
         return 11
     end
+    return get_id_hook(self)
 end
 local draw_hook = love.draw
 function love.draw()
