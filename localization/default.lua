@@ -275,6 +275,8 @@ return {
                         "{C:spectral}Spectral{} card",
                         "{C:green}Base odds{} decreases by",
                         "{C:attention}#3#{} when a card is scored",
+                        "{C:green}Base odds{} resets to {C:attention}100{}",
+                        "after creating a {C:spectral}Spectral{} card"
                     },
                     {
                         "{C:inactive,s:0.8}Who let Miku have a gun?"

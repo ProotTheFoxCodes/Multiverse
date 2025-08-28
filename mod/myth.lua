@@ -1,5 +1,5 @@
 SMODS.ConsumableType {
-    key = "Myth",
+    key = "mul_Myth",
     primary_colour = HEX("C5CC41"),
     secondary_colour = HEX("89C41B"),
     collection_rows = {3,4},
@@ -8,7 +8,7 @@ SMODS.ConsumableType {
 }
 SMODS.Consumable {
     key = "philosophers_stone",
-    set = "Myth",
+    set = "mul_Myth",
     atlas = "p_stone",
     anim_info = {anim_time = .9, frames = 18, anim_progress = 0},
     update = function(self, card, dt)
@@ -55,7 +55,7 @@ SMODS.Consumable {
 }
 SMODS.Consumable {
     key = "holy_grail",
-    set = "Myth",
+    set = "mul_Myth",
     atlas = "holy_grail",
     anim_info = {anim_time = .9, frames = 18, anim_progress = 0},
     update = function(self, card, dt)
@@ -102,7 +102,7 @@ SMODS.Consumable {
                         local card_pool = {"c_tower", "c_chariot", "c_devil"}
                         SMODS.add_card({
                             set = "Tarot",
-                            key = Multiverse.get_random_item(card_pool, "mul_holy_grail"),
+                            key = pseudorandom_element(card, "mul_holy_grail"),
                             edition = "e_negative",
                             key_append = "mul_holy_grail"
                         })

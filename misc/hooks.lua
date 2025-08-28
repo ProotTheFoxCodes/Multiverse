@@ -31,7 +31,7 @@ end
 local get_id_hook = Card.get_id
 function Card:get_id()
     if self.config.center.key == "m_mul_calling_card" and not self.vampired then
-        return 11
+        return 14
     end
     return get_id_hook(self)
 end

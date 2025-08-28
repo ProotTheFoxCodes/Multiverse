@@ -83,7 +83,11 @@ SMODS.Joker {
             local has_face_card = false
             for _, playing_card in ipairs(G.hand.cards) do
                 if playing_card:is_face() then
-                    card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
+                    SMODS.scale_card(card, {
+                        ref_table = card.ability.extra,
+                        ref_value = "mult",
+                        scalar_value = "mult_gain",
+                    })
                     has_face_card = true
                 end
             end
@@ -231,7 +235,11 @@ SMODS.Joker {
                 msg = localize("k_mul_antimatter_grow4")
             end
             card.ability.extra.dim1 = card.ability.extra.dim1 + card.ability.extra.dim2
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.dim1
+            SMODS.scale_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = "mult",
+                scalar_value = "dim1",
+            })
             return {message = msg}
         end
     end
@@ -358,7 +366,12 @@ SMODS.Joker {
                     colour = G.C.SECONDARY_SET.Spectral
                 }
             elseif card.ability.extra.odds > 2 and not context.blueprint then
-                card.ability.extra.odds = card.ability.extra.odds - card.ability.extra.decrement
+                SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "odds",
+                    scalar_value = "decrement",
+                    operation = "-"
+                })
             end
         end
     end
@@ -468,10 +481,11 @@ SMODS.Joker {
                     }
                 end
             end
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
-            return {
-                message = localize("k_upgrade_ex")
-            }
+            SMODS.scale_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = "mult",
+                scalar_value = "mult_gain",
+            })
         end
         if context.joker_main and card.ability.extra.mult > 0 then
             return {
@@ -513,10 +527,11 @@ SMODS.Joker {
     calculate = function(self, card, context)
         if context.before and context.main_eval and not context.blueprint then
             if #context.full_hand == 1 then
-                card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
-                return {
-                    message = localize("k_upgrade_ex")
-                }
+                SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "mult",
+                    scalar_value = "mult_gain",
+                })
             end
         end
         if context.joker_main and card.ability.extra.mult > 0 then
