@@ -39,8 +39,8 @@ local draw_hook = love.draw
 function love.draw()
     draw_hook()
     local width, height = love.graphics.getDimensions()
-    local x_factor = width / 1980
-    local y_factor = height / 1080
+    local x_factor = width / 1536
+    local y_factor = height / 864
     for key, anim in pairs(Multiverse.all_animations) do
         if anim.is_active then
             if anim.is_continuous then
@@ -92,16 +92,29 @@ function love.draw()
         end
     end
     if Multiverse.in_limbo then
+        love.graphics.setColor(1,1,1,1)
+        love.graphics.draw(
+            Multiverse.LIMBO_INSTRUCTIONS_SPRITE,
+            love.graphics.getWidth() - 50 * x_factor,
+            love.graphics.getHeight() / 2,
+            0,
+            x_factor * 1.5,
+            y_factor * 1.5,
+            200,
+            150,
+            0,
+            0
+        )
         if Multiverse.in_limbo == "end" then
             for _, key in ipairs(Multiverse.limbo_keys) do
                 love.graphics.setColor(key.end_color)
                 love.graphics.draw(
                     Multiverse.LIMBO_KEY_SPRITE,
-                    love.graphics.getWidth() / 2 + (key.x - 2.5) * 150,
-                    love.graphics.getHeight() / 2 + (key.y - 1.5) * 150,
+                    love.graphics.getWidth() / 2 + (key.x - 2.5) * 150 * x_factor,
+                    love.graphics.getHeight() / 2 + (key.y - 1.5) * 150 * y_factor,
                     0,
-                    1,
-                    1,
+                    x_factor,
+                    y_factor,
                     30.5,
                     21.5,
                     0,
@@ -113,11 +126,11 @@ function love.draw()
                 love.graphics.setColor(key.current_color)
                 love.graphics.draw(
                     Multiverse.LIMBO_KEY_SPRITE,
-                    love.graphics.getWidth() / 2 + (key.x - 2.5) * 150,
-                    love.graphics.getHeight() / 2 + (key.y - 1.5) * 150,
+                    love.graphics.getWidth() / 2 + (key.x - 2.5) * 150 * x_factor,
+                    love.graphics.getHeight() / 2 + (key.y - 1.5) * 150 * y_factor,
                     0,
-                    1,
-                    1,
+                    x_factor,
+                    y_factor,
                     30.5,
                     21.5,
                     0,

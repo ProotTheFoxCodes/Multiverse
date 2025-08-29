@@ -4,7 +4,7 @@
     "author": [
         "ThunderEdge73"
     ],
-    "description": "Adds new Jokers and mechanics to give Balatro some spice whilst somewhat maintaining vanilla balance.",
+    "description": "Adds new Jokers and mechanics to give Balatro some spice whilst somewhat maintaining vanilla balance. Note that this mod is not compatible with Talisman, and will probably crash if you use Talisman at some point during a run.",
     "prefix": "mul",
     "main_file": "Multiverse.lua",
     "priority": -1000000,

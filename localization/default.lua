@@ -4,10 +4,17 @@ return {
             bl_mul_limbo = {
                 name = "The Limbo",
                 text = {
-                    "When Blind is selected,",
-                    "use your left mouse button to",
-                    "do the Limbo keys minigame",
-                    "and if you fail, X#1# Blind size",
+                    "F O C U S",
+                    "(X#1# Blind size",
+                    "on failure)"
+                }
+            },
+            bl_mul_undying = {
+                name = "The Undying",
+                text = {
+                    "Survive",
+                    "(Lose chips equal to",
+                    "#1#% of Blind size when hit)"
                 }
             }
         },
@@ -64,7 +71,7 @@ return {
                 }
             }
         },
-        Myth = {
+        mul_Myth = {
             c_mul_philosophers_stone = {
                 name = "Philosopher\'s Stone",
                 text = {

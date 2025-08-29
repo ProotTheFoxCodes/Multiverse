@@ -1,6 +1,5 @@
 Multiverse = {}
 Multiverse.path = "" .. SMODS.current_mod.path
-SMODS.optional_features.quantum_enhancements = true
 Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient {
     key = "transmuted_gradient",
     colours = {
@@ -9,7 +8,6 @@ Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient {
     },
     cycle = 1.5
 }
-
 
 Multiverse.config = SMODS.current_mod.config
 Multiverse.selected_music_page = 1

@@ -15,7 +15,7 @@ SMODS.Blind {
         }))
         G.E_MANAGER:add_event(Event({
             trigger = "after",
-            delay = 18.8 * (G.SPEEDFACTOR or 1)
+            delay = 18.6 * (G.SPEEDFACTOR or 1)
         }))
     end,
     disable = function(self)
@@ -32,5 +32,30 @@ SMODS.Blind {
     end,
     in_pool = function(self)
         return Multiverse.config.joke
+    end
+}
+SMODS.Blind {
+    key = "undying",
+    atlas = "multiverse_blinds",
+    pos = {x = 0, y = 1},
+    boss_colour = HEX("344245"),
+    boss = {min = 1},
+    mult = 2,
+    press_play = function(self)
+        if not G.GAME.blind.disabled then
+            G.E_MANAGER:add_event(Event({
+                delay = 10 * (G.SPEEDFACTOR or 1),
+                trigger = "after",
+                func = function()
+                    print("Done")
+                    return true
+                end
+            }))
+        end
+    end,
+    disable = function(self)
+        if G.GAME.chips < 0 then
+            G.GAME.chips = 0
+        end
     end
 }

@@ -1,8 +1,14 @@
 ---@type Multiverse.limbo_key[]
 Multiverse.limbo_keys = {}
+
 local key_file = assert(NFS.newFileData(Multiverse.path .. "assets/misc/limbo_key.png"))
 local key_data = assert(love.image.newImageData(key_file))
 Multiverse.LIMBO_KEY_SPRITE = assert(love.graphics.newImage(key_data))
+
+local limbo_instructions_file = assert(NFS.newFileData(Multiverse.path .. "assets/misc/limbo_instructions.png"))
+local limbo_instructions_data = assert(love.image.newImageData(limbo_instructions_file))
+Multiverse.LIMBO_INSTRUCTIONS_SPRITE = assert(love.graphics.newImage(limbo_instructions_data))
+
 Multiverse.LIMBO_KEY_COLORS = {
     {236/255, 0, 0, 1},
     {1, 115/255, 0, 1},
@@ -114,7 +120,7 @@ function Multiverse.limbo_keys_end()
     Multiverse.in_limbo = "end"
     G.E_MANAGER:add_event(Event({
         trigger = "after",
-        delay = 5 * (G.SPEEDFACTOR or 1),
+        delay = 4 * (G.SPEEDFACTOR or 1),
         func = function()
             if not Multiverse.has_guessed then
                 G.GAME.blind.chips = G.GAME.blind.chips * 10
@@ -228,10 +234,13 @@ function Multiverse.limbo_keys_swap_halves(n)
     end
 end
 function Multiverse.detect_key_click(x, y)
+    local width, height = love.graphics.getDimensions()
+    local x_factor = width / 1536
+    local y_factor = height / 864
     for _, key in ipairs(Multiverse.limbo_keys) do
-        local cx = love.graphics.getWidth() / 2 + (key.x - 2.5) * 150
-        local cy = love.graphics.getHeight() / 2 + (key.y - 1.5) * 150
-        if x > cx - 30 and x < cx + 30 and y > cy - 21 and y < cy + 21 then
+        local cx = love.graphics.getWidth() / 2 + (key.x - 2.5) * 150 * x_factor
+        local cy = love.graphics.getHeight() / 2 + (key.y - 1.5) * 150 * y_factor
+        if x > cx - 30 * x_factor and x < cx + 30 * x_factor and y > cy - 21 * y_factor and y < cy + 21 * y_factor then
             return key
         end
     end
