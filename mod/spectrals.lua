@@ -17,7 +17,7 @@ SMODS.Consumable {
                 end
             end
         end
-        return {key = (has_incompat and "eternity_alt") or nil, vars = {1}}
+        return {key = (has_incompat and "c_mul_eternity_alt") or nil, vars = {1}}
     end,
     can_use = function(self, card)
         return G.hand and #G.hand.cards >= 1 and #G.hand.highlighted == 1

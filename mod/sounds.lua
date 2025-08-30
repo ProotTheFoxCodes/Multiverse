@@ -15,7 +15,7 @@ SMODS.Sound {
         end
     end,
     sync = false,
-    volume = 0.85,
+    volume = 0.5,
     pitch = 1
 }
 SMODS.Sound {
@@ -29,7 +29,7 @@ SMODS.Sound {
         end
     end,
     sync = false,
-    volume = 0.85,
+    volume = 0.5,
     pitch = 1
 }
 SMODS.Sound {
@@ -43,7 +43,7 @@ SMODS.Sound {
         end
     end,
     sync = false,
-    volume = 0.85,
+    volume = 0.55,
     pitch = 1
 }
 SMODS.Sound {
@@ -57,7 +57,7 @@ SMODS.Sound {
         end
     end,
     sync = false,
-    volume = 0.85,
+    volume = 0.65,
     pitch = 1
 }
 SMODS.Sound {
@@ -69,7 +69,7 @@ SMODS.Sound {
         end
     end,
     sync = false,
-    volume = 0.75,
+    volume = 0.45,
     pitch = 1
 }
 SMODS.Sound {
@@ -87,10 +87,21 @@ SMODS.Sound {
         end
     end,
     sync = false,
-    volume = 0.8,
+    volume = 0.6,
     pitch = 1
 }
 SMODS.Sound {
     key = "isolation_limbo",
     path = "NightHawk22_Isolation(LimboKeys).ogg"
+}
+SMODS.Sound {
+    key = "silent_music",
+    path = "silence.ogg",
+    select_music_track = function(self)
+        if Multiverse.all_videos["bad_apple"].is_visible then
+            return 69420
+        end
+    end,
+    sync = false,
+    volume = 0,
 }

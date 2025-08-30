@@ -20,12 +20,15 @@ local soul_background_file = assert(NFS.newFileData(Multiverse.path .. "assets/m
 local soul_background_data = assert(love.image.newImageData(soul_background_file))
 Multiverse.SOUL_BACKGROUND_SPRITE = assert(love.graphics.newImage(soul_background_data))
 
+local shield_file = assert(NFS.newFileData(Multiverse.path .. "assets/misc/shield.png"))
+local shield_data = assert(love.image.newImageData(shield_file))
+Multiverse.SHIELD_SPRITE = assert(love.graphics.newImage(shield_data))
+
 ---@class Multiverse.undyne_spear
 ---@field velocity number
 ---@field dir "l" | "r" | "u" | "d"
 ---@field is_reversed boolean
 ---@field r number
 ---@field theta number
----@field rotating boolean
 
 Multiverse.in_undyne = nil

@@ -8,11 +8,11 @@ Multiverse.Animation {
     anchor = {
         x_alignment = "c",
         y_alignment = "t",
-        x_offset = 115
+        x_offset = 90
     },
     duration = .4,
-    x_scale = 3.7,
-    y_scale = 3.7,
+    x_scale = 3,
+    y_scale = 3,
 }
 Multiverse.Video {
     key = "bad_apple",
@@ -21,8 +21,9 @@ Multiverse.Video {
         x_alignment = "c",
         y_alignment = "c"
     },
-    x_scale = 2.5,
-    y_scale = 2.5
+    x_scale = 2.4,
+    y_scale = 2.4,
+    volume = 0.8
 }
 Multiverse.Animation {
     key = "eating_burger",
@@ -35,8 +36,8 @@ Multiverse.Animation {
         y_alignment = "t"
     },
     duration = 0.5,
-    x_scale = 3,
-    y_scale = 3,
+    x_scale = 1.5,
+    y_scale = 1.5,
     is_continuous = true
 }
 Multiverse.Animation {
@@ -48,9 +49,23 @@ Multiverse.Animation {
     anchor = {
         x_alignment = "c",
         y_alignment = "c",
-        x_offset = 100
     },
     duration = 1,
-    x_scale = 8,
-    y_scale = 8,
+    x_scale = 6,
+    y_scale = 6,
+}
+Multiverse.Animation {
+    key = "black_bg",
+    path = "black_bg.png",
+    frames = 1,
+    px = 16,
+    py = 9,
+    anchor = {
+        x_alignment = "c",
+        y_alignment = "c"
+    },
+    duration = 1,
+    x_scale = 96,
+    y_scale = 96,
+    is_continuous = true
 }

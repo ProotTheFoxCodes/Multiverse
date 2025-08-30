@@ -469,7 +469,7 @@ return {
                     "{C:attention}poker hands{}"
                 }
             },
-            undiscovered_myth = {
+            undiscovered_mul_myth = {
                 name = "Not Discovered",
                 text = {
 					"Purchase or use",
@@ -493,8 +493,8 @@ return {
             k_mul_won_fifty_fifty = "Won!",
             k_mul_lost_fifty_fifty = "Lost...",
             mul_stand_user = "Saved by Stand User via time reversal",
-            k_myth = "Myth",
-            b_myth_cards = "Myth Cards",
+            k_mul_myth = "Myth",
+            b_mul_myth_cards = "Myth Cards",
             mul_page = "Page",
             mul_customization = "You can enable or disable certain aspects of Multiverse here",
             mul_changes_warn = "It is recommended to restart the game after making config changes",

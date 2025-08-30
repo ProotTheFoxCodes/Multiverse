@@ -34,12 +34,8 @@ SMODS.Consumable {
         return false
     end,
     can_use = function(self, card)
-        return (
-            G.jokers and
-            G.jokers.highlighted and
-            G.jokers.highlighted[1] and
-            G.jokers.highlighted[1].ability.mul_transmutable and
-            #G.jokers.cards <= G.jokers.config.card_limit - ((G.jokers.highlighted[1].edition and G.jokers.highlighted[1].edition.negative) and 1 or 0))
+        return (G.jokers.highlighted[1] and G.jokers.highlighted[1].ability or {}).mul_transmutable and
+            #G.jokers.cards <= (G.jokers.config.card_limit - ((G.jokers.highlighted[1].edition or {}).negative and 1 or 0))
     end,
     use = function(self, card, area, copier)
         local joker_to_transmute = G.jokers.highlighted[1]
@@ -71,13 +67,13 @@ SMODS.Consumable {
     can_use = function(self, card)
         return (
             G.jokers and
-            G.jokers.highlighted and
             G.jokers.highlighted[1] and
             G.jokers.highlighted[1].ability and
-            G.jokers.highlighted[1].ability.extra and -- butt ton of checks to make sure nothing is nil
-            G.jokers.highlighted[1].ability.extra.transmute_req)
-            -- in order to register a joker as transmutable,
-            -- the joker must have transmute_req as a field in ability.extra
+            G.jokers.highlighted[1].ability.extra and
+            G.jokers.highlighted[1].ability.extra.transmute_req
+        )
+        -- in order to register a joker as transmutable,
+        -- the joker must have transmute_req as a field in ability.extra
     end,
     use = function(self, card, area, copier)
         local j_key = G.jokers.highlighted[1].config.center.key

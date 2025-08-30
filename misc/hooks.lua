@@ -43,20 +43,6 @@ function love.draw()
     local y_factor = height / 864
     for key, anim in pairs(Multiverse.all_animations) do
         if anim.is_active then
-            if anim.is_continuous then
-                anim.progress = anim.progress + G.real_dt * #anim.frames / anim.duration
-                if anim.progress >= #anim.frames then
-                    anim.progress = anim.progress - #anim.frames
-                end
-                -- anim_progress \in [0, #anim_frames)
-                -- anim_progress + 1 \in [1, anim_frames + 1)
-            else
-                if anim.progress < #anim.frames then
-                    anim.progress = anim.progress + G.real_dt * #anim.frames / anim.duration
-                else
-                    anim.is_active = false
-                end
-            end
             --print(Multiverse.clamp(math.floor(anim.progress) + 1, 1, #anim.frames))
             love.graphics.setColor(1,1,1,1)
             love.graphics.draw(
@@ -141,6 +127,29 @@ function love.draw()
     end
 end
 
+local update_hook = G.update
+function G:update(dt)
+    update_hook(self, dt)
+    for key, anim in pairs(Multiverse.all_animations) do
+        if anim.is_active then
+            if anim.is_continuous then
+                anim.progress = anim.progress + G.real_dt * #anim.frames / anim.duration
+                if anim.progress >= #anim.frames then
+                    anim.progress = anim.progress - #anim.frames
+                end
+                -- anim_progress \in [0, #anim_frames)
+                -- anim_progress + 1 \in [1, anim_frames + 1)
+            else
+                if anim.progress < #anim.frames then
+                    anim.progress = anim.progress + G.real_dt * #anim.frames / anim.duration
+                else
+                    anim.is_active = false
+                end
+            end
+        end
+    end
+end
+
 local tooltip_hook = create_popup_UIBox_tooltip
 function create_popup_UIBox_tooltip(tooltip)
     local ret = tooltip_hook(tooltip)
@@ -153,7 +162,7 @@ end
 local copy_card_hook = copy_card
 function copy_card(other, new_card, card_scale, playing_card, strip_edition)
     local card = copy_card_hook(other, new_card, card_scale, playing_card, strip_edition)
-    if card and SMODS.has_enhancement(card, "m_mul_waldo") then
+    if card and SMODS.has_enhancement(card, "m_mul_waldo") and not G.VIEWING_DECK then
         if not Multiverse.all_animations["explosion"].is_active then
             Multiverse.start_animation("explosion")
             play_sound("mul_deltarune_explosion", 1, 0.8)

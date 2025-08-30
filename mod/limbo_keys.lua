@@ -48,7 +48,7 @@ end
 function Multiverse.limbo_keys_intro()
     Multiverse.has_guessed = false
     Multiverse.in_limbo = "start"
-    play_sound("mul_isolation_limbo", 1, 0.95)
+    play_sound("mul_isolation_limbo", 1, 0.65)
     Multiverse.limbo_anim_prog = 0
     G.E_MANAGER:add_event(Event({
         delay = 4.75 * (G.SPEEDFACTOR or 1),
