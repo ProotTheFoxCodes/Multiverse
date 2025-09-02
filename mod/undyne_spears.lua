@@ -179,6 +179,18 @@ Multiverse.undyne_attacks = {
         {800, "right", false, 0.3},
         {800, "left", false, 0.3},
         {1500, "right", false, 2},
+    },
+    {
+        {700, "left", false, 0.3},
+        {300, "right", true, 0.6},
+        {700, "right", true, 0.35},
+        {500, "down", true, 0.3},
+        {700, "right", false, 0.3},
+        {700, "down", false, 0.3},
+        {700, "left", false, 0.25},
+        {600, "down", false, 0.3},
+        {700, "down", false, 0.3},
+        {1000, "left", true, 0.3},
     }
 }
 
