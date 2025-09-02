@@ -125,6 +125,72 @@ function love.draw()
             end
         end
     end
+    if Multiverse.in_undyne then
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.draw(
+            Multiverse.SOUL_BACKGROUND_SPRITE,
+            love.graphics.getWidth() / 2,
+            love.graphics.getHeight() / 2,
+            0,
+            x_factor,
+            y_factor,
+            74,
+            74,
+            0,
+            0
+        )
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.draw(
+            Multiverse.GREEN_SOUL_SPRITE,
+            love.graphics.getWidth() / 2,
+            love.graphics.getHeight() / 2,
+            0,
+            x_factor,
+            y_factor,
+            74,
+            74,
+            0,
+            0
+        )
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.draw(
+            Multiverse.SHIELD_SPRITE,
+            love.graphics.getWidth() / 2,
+            love.graphics.getHeight() / 2,
+            Multiverse.shield_rotations[Multiverse.shield_dir or "up"] or 0,
+            x_factor,
+            y_factor,
+            74,
+            74,
+            0,
+            0
+        )
+        for _, spear in ipairs(Multiverse.undyne_spears) do
+            if spear.active then
+                love.graphics.setColor(1, 1, 1, 1)
+                local current_sprite
+                if spear.is_reversed then
+                    current_sprite = Multiverse.REVERSE_SPEAR_SPRITE
+                elseif spear.r <= 300 then
+                    current_sprite = Multiverse.NEAR_SPEAR_SPRITE
+                else
+                    current_sprite = Multiverse.FAR_SPEAR_SPRITE
+                end
+                love.graphics.draw(
+                    current_sprite,
+                    love.graphics.getWidth() / 2 - spear.r * math.cos(spear.theta) * x_factor,
+                    love.graphics.getHeight() / 2 - spear.r * math.sin(spear.theta) * y_factor,
+                    Multiverse.spear_rotations[spear.dir],
+                    x_factor,
+                    y_factor,
+                    22,
+                    14,
+                    0,
+                    0
+                )
+            end
+        end
+    end
 end
 
 local update_hook = G.update
@@ -148,6 +214,34 @@ function G:update(dt)
             end
         end
     end
+    for i, spear in pairs(Multiverse.undyne_spears) do
+        if spear.active then
+            if spear.r < 35 then
+                play_sound("mul_take_damage", 1, 0.7)
+                G.GAME.chips = G.GAME.chips - G.GAME.blind.chips / 10
+                spear.active = false
+            elseif spear.r < 70 then
+                local check_dir = spear.is_reversed and Multiverse.opposite_sides[spear.dir] or spear.dir
+                if check_dir == Multiverse.shield_dir then
+                    spear.active = false
+                    play_sound("mul_block_spear", 1, 0.75)
+                end
+            end
+            if spear.is_reversed and not spear.is_reversing and spear.r < Multiverse.clamp(spear.velocity / 4 + 150, 250, 350) then
+                spear.is_reversing = true
+                G.E_MANAGER:add_event(Event({
+                    trigger = "ease",
+                    delay = math.min(0.2, 0.3 - spear.velocity / 10000) * (G.SPEEDFACTOR or 1),
+                    ease_to = spear.theta + math.pi,
+                    ref_table = spear,
+                    ref_value = "theta",
+                    blockable = false,
+                    blocking = false
+                }), "other", true)
+            end
+            spear.r = spear.r - G.real_dt * spear.velocity
+        end
+    end
 end
 
 local tooltip_hook = create_popup_UIBox_tooltip
@@ -165,7 +259,7 @@ function copy_card(other, new_card, card_scale, playing_card, strip_edition)
     if card and SMODS.has_enhancement(card, "m_mul_waldo") and not G.VIEWING_DECK then
         if not Multiverse.all_animations["explosion"].is_active then
             Multiverse.start_animation("explosion")
-            play_sound("mul_deltarune_explosion", 1, 0.8)
+            play_sound("mul_deltarune_explosion", 1, 0.7)
         end
         card:set_ability("c_base", nil, true)
     end
@@ -187,6 +281,16 @@ function love.mousepressed(x, y, button, istouch, presses)
                 Multiverse.start_animation("explosion")
                 play_sound("mul_deltarune_explosion", 1, 0.8)
             end
+        end
+    end
+end
+
+local keypressed_hook = love.keypressed
+function love.keypressed(key, scancode, is_repeat)
+    keypressed_hook(key, scancode, is_repeat)
+    if Multiverse.in_undyne then
+        if key == "left" or key == "right" or key == "up" or key == "down" then
+            Multiverse.shield_dir = key
         end
     end
 end

@@ -15,7 +15,7 @@ SMODS.Sound {
         end
     end,
     sync = false,
-    volume = 0.5,
+    volume = 0.6,
     pitch = 1
 }
 SMODS.Sound {
@@ -29,7 +29,7 @@ SMODS.Sound {
         end
     end,
     sync = false,
-    volume = 0.5,
+    volume = 0.6,
     pitch = 1
 }
 SMODS.Sound {
@@ -43,7 +43,7 @@ SMODS.Sound {
         end
     end,
     sync = false,
-    volume = 0.55,
+    volume = 0.6,
     pitch = 1
 }
 SMODS.Sound {
@@ -57,7 +57,7 @@ SMODS.Sound {
         end
     end,
     sync = false,
-    volume = 0.65,
+    volume = 0.7,
     pitch = 1
 }
 SMODS.Sound {
@@ -69,7 +69,7 @@ SMODS.Sound {
         end
     end,
     sync = false,
-    volume = 0.45,
+    volume = 0.5,
     pitch = 1
 }
 SMODS.Sound {
@@ -87,7 +87,7 @@ SMODS.Sound {
         end
     end,
     sync = false,
-    volume = 0.6,
+    volume = 0.7,
     pitch = 1
 }
 SMODS.Sound {
@@ -104,4 +104,24 @@ SMODS.Sound {
     end,
     sync = false,
     volume = 0,
+}
+SMODS.Sound {
+    key = "take_damage",
+    path = "snd_hurt1.ogg"
+}
+SMODS.Sound {
+    key = "block_spear",
+    path = "snd_tempbell.ogg"
+}
+SMODS.Sound {
+    key = "BAATH_music",
+    path = "TobyFox_BAATH.ogg",
+    select_music_track = function(self)
+        if G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" then
+            return 4
+        end
+    end,
+    sync = false,
+    volume = 0.7,
+    pitch = 1,
 }

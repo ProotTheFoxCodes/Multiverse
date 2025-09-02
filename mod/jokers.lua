@@ -127,7 +127,6 @@ SMODS.Joker {
             rand_card:set_seal(card.ability.extra.seal)
         end
         if context.individual and context.cardarea == G.play then
-            SMODS.add_card({key_append = ""})
             if context.other_card:get_seal() == card.ability.extra.seal then
                 return {
                     xmult = card.ability.extra.xmult

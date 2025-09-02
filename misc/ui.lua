@@ -1,4 +1,3 @@
--- borrowing vanilla code but not overriding it in a patch to make sure i dont screw over somebody elses' patch
 function Multiverse.create_custom_toggle(args)
   args = args or {}
   args.active_colour = args.active_colour or G.C.RED
@@ -6,10 +5,10 @@ function Multiverse.create_custom_toggle(args)
   args.w = args.w or 3
   args.h = args.h or 0.5
   args.scale = args.scale or 1
-  args.label = args.label or 'TEST?'
+  args.label = args.label or 'NONE'
   args.label_scale = args.label_scale or 0.4
   args.ref_table = args.ref_table or {}
-  args.ref_value = args.ref_value or 'test'
+  args.ref_value = args.ref_value or 'NONE'
 
   local check = Sprite(0,0,0.5*args.scale,0.5*args.scale,G.ASSET_ATLAS["icons"], {x=1, y=0})
   check.states.drag.can = false
@@ -58,8 +57,6 @@ function Multiverse.music_toggle(song, credit)
         active_colour = Multiverse.TRANSMUTED_GRADIENT,
         ref_table = Multiverse.config.music,
         ref_value = song,
-        w = 0,
-        h = 0,
     })
     return { -- 1
         n = G.UIT.C,
