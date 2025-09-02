@@ -22,6 +22,10 @@ local shield_file = assert(NFS.newFileData(Multiverse.path .. "assets/misc/shiel
 local shield_data = assert(love.image.newImageData(shield_file))
 Multiverse.SHIELD_SPRITE = assert(love.graphics.newImage(shield_data))
 
+local undying_instructions_file = assert(NFS.newFileData(Multiverse.path .. "assets/misc/undying_instructions.png"))
+local undying_instructions_data = assert(love.image.newImageData(undying_instructions_file))
+Multiverse.UNDYING_INSTRUCTIONS_SPRITE = assert(love.graphics.newImage(undying_instructions_data))
+
 ---@class Multiverse.undyne_spear
 ---@field velocity number
 ---@field dir "left" | "right" | "up" | "down"

@@ -84,8 +84,8 @@ function love.draw()
             love.graphics.getWidth() - 50 * x_factor,
             love.graphics.getHeight() / 2,
             0,
-            x_factor * 1.5,
-            y_factor * 1.5,
+            x_factor,
+            y_factor,
             200,
             150,
             0,
@@ -190,6 +190,20 @@ function love.draw()
                 )
             end
         end
+    elseif G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" then
+        love.graphics.setColor(1,1,1,1)
+        love.graphics.draw(
+            Multiverse.UNDYING_INSTRUCTIONS_SPRITE,
+            love.graphics.getWidth() - 50 * x_factor,
+            love.graphics.getHeight() / 2,
+            0,
+            x_factor,
+            y_factor,
+            200,
+            150,
+            0,
+            0
+        )
     end
 end
 
