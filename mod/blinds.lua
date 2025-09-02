@@ -19,7 +19,7 @@ SMODS.Blind {
         }))
     end,
     disable = function(self)
-        if get_blind_amount(G.GAME.round_resets.ante) * 2 < G.GAME.blind.chips then
+        if to_big(get_blind_amount(G.GAME.round_resets.ante) * to_big(2)) < G.GAME.blind.chips then
             G.GAME.blind.chips = get_blind_amount(G.GAME.round_resets.ante) * 2
             G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
         end
@@ -68,8 +68,8 @@ SMODS.Blind {
         end
     end,
     disable = function(self)
-        if G.GAME.chips < 0 then
-            G.GAME.chips = 0
+        if G.GAME.chips < to_big(0) then
+            G.GAME.chips = to_big(0)
         end
     end,
     loc_vars = function(self)
