@@ -65,10 +65,12 @@ SMODS.Consumable {
             blocking = false,
             func = function()
                 Multiverse.end_animation("eating_burger")
-                SMODS.add_card({
-                    key = "j_gros_michel",
-                    edition = "e_negative"
-                })
+                if G.jokers then
+                    SMODS.add_card({
+                        key = "j_gros_michel",
+                        edition = "e_negative"
+                    })
+                end
                 return true
             end
         }))

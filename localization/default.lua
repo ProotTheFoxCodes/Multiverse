@@ -478,6 +478,27 @@ return {
 					"learn what it does",
 				}
             },
+        },
+        Mod = {
+            multiverse = {
+                name = "Multiverse",
+                text = {
+                    "A {C:attention}conceptually crazy{} but {C:attention}mechanically balanced{} Balatro mod.",
+                    "This mod contains new {C:attention}Jokers{}, {C:tarot}Tarots{}, {C:spectral}Spectrals{}, {C:attention}Blinds{}, {C:attention}card",
+                    "{C:attention}enhancements{}, and {C:mul_transmuted}Myths{} (a new consumable type).",
+                    "{C:mul_transmuted}Myth{} cards can help you obtain {C:mul_transmuted}Transmuted{} Jokers, which",
+                    "can allow your runs to reach into high {C:attention}Antes{} in {C:attention}Endless Mode{} while",
+                    "doing so in a way that feels {C:attention}relatively vanilla{} compared to other mods.",
+                    "A {C:red}warning{} for those with {C:attention}Talisman{} installed:",
+                    "I have not tested my mod with {C:attention}Talisman{} very much.",
+                    "Considering that {C:attention}Talisman{} tends to cause lots of {C:red}crashes{}",
+                    "due to how it represents numbers in its code, I do not expect",
+                    "{C:mul_transmuted}Multiverse{} to play smoothly when {C:attention}Talisman{} is installed.",
+                    "I am willing to make bugfixes regarding {C:attention}Talisman{} crashes",
+                    "if {C:mul_transmuted}Multiverse{} is responsible for the crash, however these fixes",
+                    "will most likely not be implemented until a {C:attention}future{} content update."
+                }
+            }
         }
     },
     misc = {
@@ -495,6 +516,8 @@ return {
             mul_stand_user = "Saved by Stand User via time reversal",
             k_mul_myth = "Myth",
             b_mul_myth_cards = "Myth Cards",
+            b_mul_discord_server = "My Discord Server",
+            b_mul_landing_page = "About Me",
             mul_page = "Page",
             mul_customization = "You can enable or disable certain aspects of Multiverse here",
             mul_changes_warn = "It is recommended to restart the game after making config changes",

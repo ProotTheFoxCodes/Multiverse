@@ -13,10 +13,14 @@ function Game:main_menu(change_context)
         major = G.SPLASH_LOGO,
         type = "cm",
         bond = "Strong",
-        offset = {x = -4, y = 3.5}
+        offset = {x = -4, y = 3.6}
     })
     local mul_card = Card(self.mul_title.T.x, self.mul_title.T.y, G.CARD_W * scale * 1.8, G.CARD_H * scale * 0.5, G.P_CENTERS.j_mul_mod_logo, G.P_CENTERS.j_mul_mod_logo)
     mul_card.no_ui = true
+    mul_card.ambient_tilt = 0
+    mul_card.hover_tilt = 0
+    mul_card.no_shadow = true
+    mul_card.mouse_damping = 1000
     self.mul_title:emplace(mul_card)
 end
 

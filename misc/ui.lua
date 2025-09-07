@@ -57,6 +57,8 @@ function Multiverse.music_toggle(song, credit)
         active_colour = Multiverse.TRANSMUTED_GRADIENT,
         ref_table = Multiverse.config.music,
         ref_value = song,
+        w = 0,
+        h = 0
     })
     return { -- 1
         n = G.UIT.C,
@@ -188,26 +190,34 @@ function Multiverse.config_tab_definition()
         }
     }
     local mul_nodes = {
-        {n = G.UIT.R, config = {align = "cm"},
+        {
+            n = G.UIT.R,
+            config = {align = "cm"},
             nodes = {
                 {
-                    n = G.UIT.O,
-                    config = {
-                        object = DynaText({
-                            string = localize("mul_customization"),
-                            colours = {G.C.WHITE},
-                            shadow = true,
-                            scale = 0.4
-                        })
+                    n = G.UIT.C,
+                    config = {align = "cm", padding = 0.1},
+                    nodes = {
+                        {
+                            n = G.UIT.O,
+                            config = {object = DynaText({
+                                string = localize("mul_customization"),
+                                colours = {G.C.WHITE},
+                                scale = 0.4,
+                                shadow = true
+                            })}
+                        }
                     }
                 }
             }
         },
-        {n = G.UIT.R, config = {align = "cm"},
+        {
+            n = G.UIT.R,
+            config = {align = "cm"},
             nodes = {
                 {
                     n = G.UIT.C,
-                    config = {},
+                    config = {align = "cm", padding = 0.05},
                     nodes = mul_settings
                 }
             }
@@ -217,13 +227,19 @@ function Multiverse.config_tab_definition()
             config = {align = "cm"},
             nodes = {
                 {
-                    n = G.UIT.O,
-                    config = {object = DynaText({
-                        string = localize("mul_changes_warn"),
-                        colours = {G.C.IMPORTANT},
-                        scale = 0.4,
-                        shadow = true
-                    })}
+                    n = G.UIT.C,
+                    config = {align = "cm", padding = 0.05},
+                    nodes = {
+                        {
+                            n = G.UIT.O,
+                            config = {object = DynaText({
+                                string = localize("mul_changes_warn"),
+                                colours = {G.C.IMPORTANT},
+                                scale = 0.4,
+                                shadow = true
+                            })}
+                        }
+                    }
                 }
             }
         },
@@ -232,13 +248,19 @@ function Multiverse.config_tab_definition()
             config = {align = "cm"},
             nodes = {
                 {
-                    n = G.UIT.O,
-                    config = {object = DynaText({
-                        string = localize("mul_changes_debug"),
-                        colours = {G.C.IMPORTANT},
-                        scale = 0.4,
-                        shadow = true
-                    })}
+                    n = G.UIT.C,
+                    config = {align = "cm", padding = 0.05},
+                    nodes = {
+                        {
+                            n = G.UIT.O,
+                            config = {object = DynaText({
+                                string = localize("mul_changes_debug"),
+                                colours = {G.C.IMPORTANT},
+                                scale = 0.4,
+                                shadow = true
+                            })}
+                        }
+                    }
                 }
             }
         },
@@ -247,13 +269,19 @@ function Multiverse.config_tab_definition()
             config = {align = "cm"},
             nodes = {
                 {
-                    n = G.UIT.O,
-                    config = {object = DynaText({
-                        string = localize("mul_changes_pool1"),
-                        colours = {G.C.IMPORTANT},
-                        scale = 0.4,
-                        shadow = true
-                    })}
+                    n = G.UIT.C,
+                    config = {align = "cm", padding = 0.05},
+                    nodes = {
+                        {
+                            n = G.UIT.O,
+                            config = {object = DynaText({
+                                string = localize("mul_changes_pool1"),
+                                colours = {G.C.IMPORTANT},
+                                scale = 0.4,
+                                shadow = true
+                            })}
+                        }
+                    }
                 }
             }
         },
@@ -262,16 +290,22 @@ function Multiverse.config_tab_definition()
             config = {align = "cm"},
             nodes = {
                 {
-                    n = G.UIT.O,
-                    config = {object = DynaText({
-                        string = localize("mul_changes_pool2"),
-                        colours = {G.C.IMPORTANT},
-                        scale = 0.4,
-                        shadow = true
-                    })}
+                    n = G.UIT.C,
+                    config = {align = "cm", padding = 0.05},
+                    nodes = {
+                        {
+                            n = G.UIT.O,
+                            config = {object = DynaText({
+                                string = localize("mul_changes_pool2"),
+                                colours = {G.C.IMPORTANT},
+                                scale = 0.4,
+                                shadow = true
+                            })}
+                        }
+                    }
                 }
             }
-        }
+        },
     }
     return {
         n = G.UIT.ROOT,
@@ -284,6 +318,45 @@ function Multiverse.config_tab_definition()
             }
         }
     }
+end
+
+SMODS.current_mod.custom_ui = function(nodes)
+    table.insert(nodes, {
+        n = G.UIT.R,
+        config = {align = "bm", padding = 0.05},
+        nodes = {
+            {
+                n = G.UIT.C,
+                config = {align = "cm", padding = 0.05},
+                nodes = {
+                    UIBox_button({
+                        button = "mul_discord_invite",
+                        label = {localize("b_mul_discord_server")},
+                        minw = 4.75
+                    })
+                }
+            },
+            {
+                n = G.UIT.C,
+                config = {align = "cm", padding = 0.05},
+                nodes = {
+                    UIBox_button({
+                        button = "mul_landing_page",
+                        label = {localize("b_mul_landing_page")},
+                        minw = 4.75
+                    })
+                }
+            }
+        }
+    })
+end
+
+function G.FUNCS.mul_discord_invite(e)
+    love.system.openURL("https://discord.gg/TTEU5K3XC5")
+end
+
+function G.FUNCS.mul_landing_page(e)
+    love.system.openURL("https://thunderedge.carrd.co/")
 end
 
 function Multiverse.display_songs(page)
@@ -429,4 +502,40 @@ function G.FUNCS.mul_select_music_page(args)
         })
         container.config.object:recalculate()
     end
+end
+
+SMODS.current_mod.config_tab = function()
+    return {
+        n = G.UIT.ROOT,
+        config = {
+            emboss = 0.05,
+            r = 0.1,
+            padding = 0.1,
+            colour = G.C.BLACK
+        },
+        nodes = {
+            {
+                n = G.UIT.O,
+                config = {
+                    id = "mul_config_menu",
+                    object = UIBox({
+                        definition = Multiverse.config_tab_definition(),
+                        config = {type = "cm"}
+                    }),
+                    align = "cm"
+                }
+            }
+        }
+    }
+end
+
+SMODS.current_mod.extra_tabs = function()
+    return {
+        {
+            label = "Music",
+            tab_definition_function = function()
+                return Multiverse.music_tab()
+            end
+        }
+    }
 end

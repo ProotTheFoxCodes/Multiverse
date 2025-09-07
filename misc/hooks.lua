@@ -232,7 +232,7 @@ function G:update(dt)
         if spear.active then
             if spear.r < 35 then
                 play_sound("mul_take_damage", 1, 0.7)
-                G.GAME.chips = G.GAME.chips - G.GAME.blind.chips / 10
+                G.GAME.chips = G.GAME.chips - G.GAME.blind.chips / to_big(10)
                 spear.active = false
             elseif spear.r < 70 then
                 local check_dir = spear.is_reversed and Multiverse.opposite_sides[spear.dir] or spear.dir
@@ -311,18 +311,34 @@ end
 
 local options_hook = G.FUNCS.options
 function G.FUNCS.options()
-    if Multiverse.in_limbo then return end
+    if Multiverse.in_limbo or Multiverse.in_undyne then return end
     options_hook()
 end
 
 local info_hook = G.FUNCS.run_info
 function G.FUNCS.run_info()
-    if Multiverse.in_limbo then return end
+    if Multiverse.in_limbo or Multiverse.in_undyne then return end
     info_hook()
 end
 
 local deck_info_hook = G.FUNCS.deck_info
 function G.FUNCS.deck_info()
-    if Multiverse.in_limbo then return end
+    if Multiverse.in_limbo or Multiverse.in_undyne then return end
     deck_info_hook()
+end
+
+local card_drag_hook = Card.drag
+function Card:drag(offset)
+    if self.config.center.key == "j_mul_mod_logo" then return end
+    card_drag_hook(self, offset)
+end
+
+local card_click_hook = Card.click
+function Card:click()
+    if self.config.center.key == "j_mul_mod_logo" then
+        if math.random() <= 0.00333 then
+            love.system.openURL("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+        end
+    end
+    card_click_hook(self)
 end

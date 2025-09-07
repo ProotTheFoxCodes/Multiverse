@@ -12,42 +12,6 @@ Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient {
 Multiverse.config = SMODS.current_mod.config
 Multiverse.selected_music_page = 1
 
-SMODS.current_mod.config_tab = function()
-    return {
-        n = G.UIT.ROOT,
-        config = {
-            emboss = 0.05,
-            r = 0.1,
-            padding = 0.1,
-            colour = G.C.BLACK
-        },
-        nodes = {
-            {
-                n = G.UIT.O,
-                config = {
-                    id = "mul_config_menu",
-                    object = UIBox({
-                        definition = Multiverse.config_tab_definition(),
-                        config = {type = "cm"}
-                    }),
-                    align = "cm"
-                }
-            }
-        }
-    }
-end
-
-SMODS.current_mod.extra_tabs = function()
-    return {
-        {
-            label = "Music",
-            tab_definition_function = function()
-                return Multiverse.music_tab()
-            end
-        }
-    }
-end
-
 local misc_files = NFS.getDirectoryItems(Multiverse.path .. "misc")
 for _, item in ipairs(misc_files) do
     print("Multiverse: Loading " .. item)

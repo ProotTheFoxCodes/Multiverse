@@ -37,6 +37,11 @@ SMODS.Consumable {
             end
         end
         Multiverse.start_animation("lightning")
-        SMODS.destroy_cards(cards_to_destroy)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                SMODS.destroy_cards(cards_to_destroy)
+                return true
+            end
+        }))
     end
 }
