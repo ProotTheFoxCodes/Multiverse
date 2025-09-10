@@ -327,12 +327,6 @@ function G.FUNCS.deck_info()
     deck_info_hook()
 end
 
-local card_drag_hook = Card.drag
-function Card:drag(offset)
-    if self.config.center.key == "j_mul_mod_logo" then return end
-    card_drag_hook(self, offset)
-end
-
 local card_click_hook = Card.click
 function Card:click()
     if self.config.center.key == "j_mul_mod_logo" then
