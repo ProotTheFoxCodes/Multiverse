@@ -66,10 +66,9 @@ SMODS.Consumable {
     end,
     can_use = function(self, card)
         return (
-            G.jokers and
             G.jokers.highlighted[1] and
             G.jokers.highlighted[1].ability and
-            G.jokers.highlighted[1].ability.extra and
+            type(G.jokers.highlighted[1].ability.extra) == "table" and
             G.jokers.highlighted[1].ability.extra.transmute_req
         )
         -- in order to register a joker as transmutable,
