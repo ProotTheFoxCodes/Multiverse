@@ -2,7 +2,7 @@ SMODS.ConsumableType {
     key = "mul_Myth",
     primary_colour = HEX("C5CC41"),
     secondary_colour = HEX("89C41B"),
-    collection_rows = {3,4},
+    collection_rows = { 3, 4 },
     shop_rate = 1,
     default = "c_mul_holy_grail"
 }
@@ -10,12 +10,12 @@ SMODS.Consumable {
     key = "philosophers_stone",
     set = "mul_Myth",
     atlas = "p_stone",
-    anim_info = {anim_time = .9, frames = 18, anim_progress = 0},
+    anim_info = { anim_time = .9, frames = 18, anim_progress = 0 },
     update = function(self, card, dt)
         Multiverse.update_card_anim(card, G.real_dt)
     end,
-    pos = {x = 0, y = 0},
-    config = {max_highlighted = 1},
+    pos = { x = 0, y = 0 },
+    config = { max_highlighted = 1 },
     discovered = true,
     cost = 6,
     loc_vars = function(self, info_queue, card)
@@ -23,7 +23,7 @@ SMODS.Consumable {
             set = "Other",
             key = "mul_transmutable"
         })
-        return {vars = {card.ability.max_highlighted}}
+        return { vars = { card.ability.max_highlighted } }
     end,
     in_pool = function(self, args)
         for _, c in ipairs(G.jokers.cards) do
@@ -35,7 +35,8 @@ SMODS.Consumable {
     end,
     can_use = function(self, card)
         return (G.jokers.highlighted[1] and G.jokers.highlighted[1].ability or {}).mul_transmutable and
-            #G.jokers.cards <= (G.jokers.config.card_limit - ((G.jokers.highlighted[1].edition or {}).negative and 1 or 0))
+            #G.jokers.cards <=
+            (G.jokers.config.card_limit - ((G.jokers.highlighted[1].edition or {}).negative and 1 or 0))
     end,
     use = function(self, card, area, copier)
         local joker_to_transmute = G.jokers.highlighted[1]
@@ -53,16 +54,16 @@ SMODS.Consumable {
     key = "holy_grail",
     set = "mul_Myth",
     atlas = "holy_grail",
-    anim_info = {anim_time = .9, frames = 18, anim_progress = 0},
+    anim_info = { anim_time = .9, frames = 18, anim_progress = 0 },
     update = function(self, card, dt)
         Multiverse.update_card_anim(card, G.real_dt)
     end,
-    pos = {x = 0, y = 0},
-    config = {max_highlighted = 1, extra = {num_consumables = 3}},
+    pos = { x = 0, y = 0 },
+    config = { max_highlighted = 1, extra = { num_consumables = 3 } },
     discovered = true,
     cost = 6,
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.num_consumables}}
+        return { vars = { card.ability.extra.num_consumables } }
     end,
     can_use = function(self, card)
         return (
@@ -79,7 +80,7 @@ SMODS.Consumable {
         if j_key == "j_joker" then
             for i = 1, card.ability.extra.num_consumables do
                 G.E_MANAGER:add_event(Event({
-                    func = function ()
+                    func = function()
                         SMODS.add_card({
                             set = "Tarot",
                             key = "c_emperor",
@@ -93,8 +94,8 @@ SMODS.Consumable {
         elseif j_key == "j_mul_villager" then
             for i = 1, card.ability.extra.num_consumables do
                 G.E_MANAGER:add_event(Event({
-                    func = function ()
-                        local card_pool = {"c_tower", "c_chariot", "c_devil"}
+                    func = function()
+                        local card_pool = { "c_tower", "c_chariot", "c_devil" }
                         SMODS.add_card({
                             set = "Tarot",
                             key = pseudorandom_element(card, "mul_holy_grail"),
