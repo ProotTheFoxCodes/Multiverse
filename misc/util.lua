@@ -13,6 +13,7 @@ function Multiverse.contains_value(table, value)
     end
     return false
 end
+
 ---Counts the number of items in a table t.
 ---@param table table
 ---@return integer
@@ -23,6 +24,7 @@ function Multiverse.len(table)
     end
     return count
 end
+
 ---@type table<string, {key: string}>
 Multiverse.transmutations = {
     ["j_joker"] = {
@@ -47,10 +49,15 @@ function Multiverse.clamp(n, min, max)
     local lower = min or 0
     local higher = max or 1
     if lower > higher then error("min cannot be higher than max") end
-    if n < lower then return lower
-    elseif n > higher then return higher
-    else return n end
+    if n < lower then
+        return lower
+    elseif n > higher then
+        return higher
+    else
+        return n
+    end
 end
+
 ---Returns all cards in t such that func(t) is truthy.
 ---@param t Card[]
 ---@param func fun(card: Card): boolean
@@ -64,6 +71,7 @@ function Multiverse.filter(t, func)
     end
     return ret
 end
+
 ---Updates the animation state of a given card.
 ---
 ---Make sure to pass in <code>G.real_dt</code> for the dt argument.
@@ -75,11 +83,13 @@ function Multiverse.update_card_anim(card, dt, vertical)
     if card.config.center.anim_info then
         local data = card.config.center.anim_info
         card.config.center.anim_info.anim_progress = card.config.center.anim_info.anim_progress or 0
-        card.config.center.anim_info.anim_progress = card.config.center.anim_info.anim_progress + (dt * data.frames / data.anim_time)
+        card.config.center.anim_info.anim_progress = card.config.center.anim_info.anim_progress +
+        (dt * data.frames / data.anim_time)
         if card.config.center.anim_info.anim_progress >= data.frames then
             card.config.center.anim_info.anim_progress = card.config.center.anim_info.anim_progress - data.frames
         end
-        card.config.center.pos[dir] = Multiverse.clamp(math.floor(card.config.center.anim_info.anim_progress), 0, data.frames)
+        card.config.center.pos[dir] = Multiverse.clamp(math.floor(card.config.center.anim_info.anim_progress), 0,
+            data.frames)
     end
 end
 
@@ -97,9 +107,9 @@ end
 ---@field py integer The height of an individual frame of the animation
 ---@field key string The key of the animation
 ---@field is_continuous boolean? Whether or not this animation is supposed to run continuously
----@field anchor Anchor The place on the screen where the animation is 
+---@field anchor Anchor The place on the screen where the animation is
 ---@field duration number The amount of time that one animation loop will take
----@field x_scale number? The factor that the animation will be scaled horizontally 
+---@field x_scale number? The factor that the animation will be scaled horizontally
 ---@field y_scale number? The factor that the animation will be scaled vertically
 ---@field rotation number? The rotation of the animation in radians
 
@@ -111,9 +121,9 @@ end
 ---@field px integer The width of an individual frame of the animation
 ---@field py integer The height of an individual frame of the animation
 ---@field is_continuous boolean? Whether or not this animation is supposed to run continuously
----@field anchor Anchor The place on the screen where the animation is 
+---@field anchor Anchor The place on the screen where the animation is
 ---@field duration number The amount of time that one animation loop will take
----@field x_scale number? The factor that the animation will be scaled horizontally 
+---@field x_scale number? The factor that the animation will be scaled horizontally
 ---@field y_scale number? The factor that the animation will be scaled vertically
 ---@field rotation number? The rotation of the animation in radians
 
@@ -125,7 +135,8 @@ Multiverse.all_animations = {}
 ---@param t Multiverse.Animation
 ---@return Multiverse.AnimationData
 function Multiverse.Animation(t)
-    local file_data = assert(NFS.newFileData(Multiverse.path .. "assets/animations/" .. t.path), "Failed to get file data")
+    local file_data = assert(NFS.newFileData(Multiverse.path .. "assets/animations/" .. t.path),
+        "Failed to get file data")
     local image_data = assert(love.image.newImageData(file_data), "Failed to convert to image data")
     local love_image = assert(love.graphics.newImage(image_data), "Failed to create an image")
     ---@type Multiverse.AnimationData
@@ -144,13 +155,14 @@ function Multiverse.Animation(t)
         duration = t.duration
     }
     for i = 1, t.frames do
-        local x, y = (i - 1) % (t.columns or i), (t.columns and math.floor((i-1)/t.columns) or 0)
-        anim_data.frames[#anim_data.frames+1] = love.graphics.newQuad(x * t.px, y * t.py, t.px, t.py, love_image)
+        local x, y = (i - 1) % (t.columns or i), (t.columns and math.floor((i - 1) / t.columns) or 0)
+        anim_data.frames[#anim_data.frames + 1] = love.graphics.newQuad(x * t.px, y * t.py, t.px, t.py, love_image)
     end
     Multiverse.all_animations = Multiverse.all_animations or {}
     Multiverse.all_animations[t.key] = anim_data
     return anim_data
 end
+
 ---@type table<string,table<string, number>>>
 Multiverse.anchors = {
     x = {
@@ -185,7 +197,7 @@ Multiverse.base_offsets = {
             return 0
         end,
         c = function(a)
-            return a.py/2
+            return a.py / 2
         end,
         b = function(a)
             return a.py
@@ -203,6 +215,7 @@ function Multiverse.start_animation(key)
         error("No animation for " .. key .. " exists")
     end
 end
+
 ---Ends the animation with the given key.
 ---@param key string
 function Multiverse.end_animation(key)
@@ -217,16 +230,16 @@ end
 ---@class Multiverse.Video
 ---@field path string The name of the file where the video is stored
 ---@field key string The key of the video.
----@field anchor Anchor The place on the screen where the video is 
----@field x_scale number? The factor that the video will be scaled horizontally 
+---@field anchor Anchor The place on the screen where the video is
+---@field x_scale number? The factor that the video will be scaled horizontally
 ---@field y_scale number? The factor that the video will be scaled vertically
 ---@field rotation number? The rotation of the video in radians
 ---@field volume number? The volume of the video
 
 ---@class Multiverse.VideoData
 ---@field video love.Video The video to be displayed
----@field anchor Anchor The place on the screen where the video is 
----@field x_scale number? The factor that the video will be scaled horizontally 
+---@field anchor Anchor The place on the screen where the video is
+---@field x_scale number? The factor that the video will be scaled horizontally
 ---@field y_scale number? The factor that the video will be scaled vertically
 ---@field rotation number? The rotation of the video in radians
 ---@field px integer The width of an individual frame of the video

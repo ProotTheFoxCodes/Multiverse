@@ -1,9 +1,9 @@
 SMODS.Blind {
     key = "limbo",
     atlas = "multiverse_blinds",
-    pos = {x = 0, y = 0},
+    pos = { x = 0, y = 0 },
     boss_colour = HEX("F2994B"),
-    boss = {min = 1},
+    boss = { min = 1 },
     mult = 2,
     set_blind = function(self)
         Multiverse.add_limbo_keys()
@@ -25,10 +25,10 @@ SMODS.Blind {
         end
     end,
     loc_vars = function(self)
-        return {vars = {10}}
+        return { vars = { 10 } }
     end,
     collection_loc_vars = function(self)
-        return {vars = {10}}
+        return { vars = { 10 } }
     end,
     in_pool = function(self)
         return Multiverse.config.joke
@@ -37,9 +37,9 @@ SMODS.Blind {
 SMODS.Blind {
     key = "undying",
     atlas = "multiverse_blinds",
-    pos = {x = 0, y = 1},
+    pos = { x = 0, y = 1 },
     boss_colour = HEX("344245"),
-    boss = {min = 1},
+    boss = { min = 1 },
     mult = 2,
     press_play = function(self)
         if not G.GAME.blind.disabled then
@@ -73,7 +73,7 @@ SMODS.Blind {
         end
     end,
     loc_vars = function(self)
-        return {vars = {10}}
+        return { vars = { 10 } }
     end,
     in_pool = function(self)
         return Multiverse.config.joke

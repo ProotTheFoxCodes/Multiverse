@@ -10,14 +10,14 @@ local limbo_instructions_data = assert(love.image.newImageData(limbo_instruction
 Multiverse.LIMBO_INSTRUCTIONS_SPRITE = assert(love.graphics.newImage(limbo_instructions_data))
 
 Multiverse.LIMBO_KEY_COLORS = {
-    {236/255, 0, 0, 1},
-    {1, 115/255, 0, 1},
-    {1, 233/255, 0, 1},
-    {0, 1, 1/255, 1},
-    {0, 234/255, 1, 1},
-    {0, 20/255, 240/255, 1},
-    {155/255, 0, 1, 1},
-    {241/255, 0, 1, 1},
+    { 236 / 255, 0, 0, 1 },
+    { 1, 115 / 255, 0, 1 },
+    { 1, 233 / 255, 0, 1 },
+    { 0, 1, 1 / 255, 1 },
+    { 0, 234 / 255, 1, 1 },
+    { 0, 20 / 255, 240 / 255, 1 },
+    { 155 / 255, 0, 1, 1 },
+    { 241 / 255, 0, 1, 1 },
 }
 
 ---@class Multiverse.limbo_key
@@ -28,8 +28,8 @@ Multiverse.LIMBO_KEY_COLORS = {
 ---@field is_correct boolean
 ---@field current_color number[]
 
-Multiverse.HIDDEN_KEY_COLOR = {224/255, 85/255, 32/255, 1}
-Multiverse.CORRECT_KEY_COLOR = {115/255, 232/255, 69/255, 1}
+Multiverse.HIDDEN_KEY_COLOR = { 224 / 255, 85 / 255, 32 / 255, 1 }
+Multiverse.CORRECT_KEY_COLOR = { 115 / 255, 232 / 255, 69 / 255, 1 }
 function Multiverse.add_limbo_keys()
     for i = 1, 2 do
         for j = 1, 4 do
@@ -37,7 +37,7 @@ function Multiverse.add_limbo_keys()
                 x = j,
                 y = i,
                 id = nil,
-                end_color = Multiverse.LIMBO_KEY_COLORS[(i-1) * 4 + j],
+                end_color = Multiverse.LIMBO_KEY_COLORS[(i - 1) * 4 + j],
                 is_correct = false,
                 current_color = Multiverse.HIDDEN_KEY_COLOR
             })
@@ -45,6 +45,7 @@ function Multiverse.add_limbo_keys()
     end
     Multiverse.limbo_keys[pseudorandom("bl_limbo", 1, 8)].is_correct = true
 end
+
 function Multiverse.limbo_keys_intro()
     Multiverse.has_guessed = false
     Multiverse.in_limbo = "start"
@@ -59,7 +60,8 @@ function Multiverse.limbo_keys_intro()
         func = function(n)
             for _, key in ipairs(Multiverse.limbo_keys) do
                 if key.is_correct then
-                    key.current_color = math.fmod(n * 30, 2) < 1 and Multiverse.HIDDEN_KEY_COLOR or Multiverse.CORRECT_KEY_COLOR
+                    key.current_color = math.fmod(n * 30, 2) < 1 and Multiverse.HIDDEN_KEY_COLOR or
+                    Multiverse.CORRECT_KEY_COLOR
                 end
             end
             if n == 1 then
@@ -69,6 +71,7 @@ function Multiverse.limbo_keys_intro()
         end
     }), "other")
 end
+
 Multiverse.swaps = {}
 function Multiverse.limbo_keys_swapping()
     for i = 1, 32 do
@@ -76,6 +79,7 @@ function Multiverse.limbo_keys_swapping()
     end
     Multiverse.limbo_keys_swap(1)
 end
+
 function Multiverse.limbo_keys_swap(count)
     Multiverse.in_limbo = "swapping"
     local selection = math.random(1, 8)
@@ -116,6 +120,7 @@ function Multiverse.limbo_keys_swap(count)
         end
     }), "other")
 end
+
 function Multiverse.limbo_keys_end()
     Multiverse.in_limbo = "end"
     G.E_MANAGER:add_event(Event({
@@ -135,11 +140,13 @@ function Multiverse.limbo_keys_end()
         end
     }), "other")
 end
+
 function Multiverse.assign_limbo_key_ids()
     for _, key in ipairs(Multiverse.limbo_keys) do
         key.id = (key.x + (key.y - 1) * 4)
     end
 end
+
 function Multiverse.limbo_keys_rotate_cw(n)
     for _, key in ipairs(Multiverse.limbo_keys) do
         if key.id <= 3 then
@@ -153,6 +160,7 @@ function Multiverse.limbo_keys_rotate_cw(n)
         end
     end
 end
+
 function Multiverse.limbo_keys_rotate_ccw(n)
     for _, key in ipairs(Multiverse.limbo_keys) do
         if key.id == 1 then
@@ -166,6 +174,7 @@ function Multiverse.limbo_keys_rotate_ccw(n)
         end
     end
 end
+
 function Multiverse.limbo_keys_cross(n)
     for _, key in ipairs(Multiverse.limbo_keys) do
         if key.id <= 4 then
@@ -180,6 +189,7 @@ function Multiverse.limbo_keys_cross(n)
         end
     end
 end
+
 function Multiverse.limbo_keys_rotate_halves_cw(n)
     for _, key in ipairs(Multiverse.limbo_keys) do
         if key.id == 1 or key.id == 3 then
@@ -193,6 +203,7 @@ function Multiverse.limbo_keys_rotate_halves_cw(n)
         end
     end
 end
+
 function Multiverse.limbo_keys_rotate_halves_ccw(n)
     for _, key in ipairs(Multiverse.limbo_keys) do
         if key.id == 1 or key.id == 3 then
@@ -206,6 +217,7 @@ function Multiverse.limbo_keys_rotate_halves_ccw(n)
         end
     end
 end
+
 function Multiverse.limbo_keys_swap_cols(n)
     for _, key in ipairs(Multiverse.limbo_keys) do
         if key.id % 4 == 1 or key.id % 4 == 3 then
@@ -215,6 +227,7 @@ function Multiverse.limbo_keys_swap_cols(n)
         end
     end
 end
+
 function Multiverse.limbo_keys_swap_rows(n)
     for _, key in ipairs(Multiverse.limbo_keys) do
         if key.id <= 4 then
@@ -224,6 +237,7 @@ function Multiverse.limbo_keys_swap_rows(n)
         end
     end
 end
+
 function Multiverse.limbo_keys_swap_halves(n)
     for _, key in ipairs(Multiverse.limbo_keys) do
         if key.id % 4 == 1 or key.id % 4 == 2 then
@@ -233,6 +247,7 @@ function Multiverse.limbo_keys_swap_halves(n)
         end
     end
 end
+
 function Multiverse.detect_key_click(x, y)
     local width, height = love.graphics.getDimensions()
     local x_factor = width / 1536

@@ -10,6 +10,7 @@ function Card:is_face(from_boss)
     end
     return is_face_hook(self, from_boss)
 end
+
 local is_suit_hook = Card.is_suit
 function Card:is_suit(suit, bypass_debuff, flush_calc)
     if self.config.center.key == "m_mul_calling_card" then
@@ -28,6 +29,7 @@ function Card:is_suit(suit, bypass_debuff, flush_calc)
     end
     return is_suit_hook(self, suit, bypass_debuff, flush_calc)
 end
+
 local get_id_hook = Card.get_id
 function Card:get_id()
     if self.config.center.key == "m_mul_calling_card" and not self.vampired then
@@ -35,6 +37,7 @@ function Card:get_id()
     end
     return get_id_hook(self)
 end
+
 local draw_hook = love.draw
 function love.draw()
     draw_hook()
@@ -44,7 +47,7 @@ function love.draw()
     for key, anim in pairs(Multiverse.all_animations) do
         if anim.is_active then
             --print(Multiverse.clamp(math.floor(anim.progress) + 1, 1, #anim.frames))
-            love.graphics.setColor(1,1,1,1)
+            love.graphics.setColor(1, 1, 1, 1)
             love.graphics.draw(
                 anim.image,
                 anim.frames[Multiverse.clamp(math.floor(anim.progress) + 1, 1, #anim.frames)],
@@ -62,7 +65,7 @@ function love.draw()
     end
     for key, video in pairs(Multiverse.all_videos) do
         if video.is_visible then
-            love.graphics.setColor(1,1,1,1)
+            love.graphics.setColor(1, 1, 1, 1)
             love.graphics.draw(
                 video.video,
                 Multiverse.anchors.x[video.anchor.x_alignment] + (video.anchor.x_offset or 0) * x_factor,
@@ -78,7 +81,7 @@ function love.draw()
         end
     end
     if Multiverse.in_limbo then
-        love.graphics.setColor(1,1,1,1)
+        love.graphics.setColor(1, 1, 1, 1)
         love.graphics.draw(
             Multiverse.LIMBO_INSTRUCTIONS_SPRITE,
             love.graphics.getWidth() - 50 * x_factor,
@@ -191,7 +194,7 @@ function love.draw()
             end
         end
     elseif G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" then
-        love.graphics.setColor(1,1,1,1)
+        love.graphics.setColor(1, 1, 1, 1)
         love.graphics.draw(
             Multiverse.UNDYING_INSTRUCTIONS_SPRITE,
             love.graphics.getWidth() - 50 * x_factor,
