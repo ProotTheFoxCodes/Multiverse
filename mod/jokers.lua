@@ -112,25 +112,20 @@ SMODS.Joker {
 SMODS.Joker {
     key = "v1",
     atlas = "placeholder",
-    pos = { x = 2, y = 0 },
-    config = { extra = { xmult = 1.5, seal = "Gold" } },
-    rarity = 3,
+    pos = { x = 1, y = 0 },
+    config = { extra = { seal = "Gold" } },
+    rarity = 2,
     blueprint_compat = true,
-    cost = 9,
+    cost = 8,
     loc_vars = function(self, info_queue, card)
         table.insert(info_queue, G.P_SEALS[card.ability.extra.seal])
         return { vars = { card.ability.extra.xmult } }
     end,
     calculate = function(self, card, context)
         if context.before and G.GAME.current_round.hands_played == 0 then
-            local rand_card = pseudorandom_element(context.scoring_hand, "mul_v1") or context.scoring_hand[1]
-            rand_card:set_seal(card.ability.extra.seal)
-        end
-        if context.individual and context.cardarea == G.play then
-            if context.other_card:get_seal() == card.ability.extra.seal then
-                return {
-                    xmult = card.ability.extra.xmult
-                }
+            local rand_card = pseudorandom_element(context.scoring_hand, "mul_v1")
+            if rand_card then
+                rand_card:set_seal(card.ability.extra.seal)
             end
         end
     end

@@ -149,8 +149,6 @@ return {
                         "When {C:attention}first hand{} of round is",
                         "played, add a {C:attention}Gold Seal{} to",
                         "a random scoring card",
-                        "Cards with a {C:attention}Gold Seal{} give",
-                        "{X:mult,C:white}X#1#{} Mult when scored"
                     },
                     {
                         "{C:inactive,s:0.8}Ultrakill fans will do anything",
