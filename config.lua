@@ -9,5 +9,6 @@ return {
         ["Pigstep"] = true,
         ["Presage"] = true,
         ["Sneaky Snitch"] = true,
+        ["Battle Against a True Hero"] = true,
     }
 }

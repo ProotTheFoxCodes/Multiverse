@@ -480,7 +480,7 @@ return {
             },
         },
         Mod = {
-            multiverse = {
+            Multiverse = {
                 name = "Multiverse",
                 text = {
                     "A {C:attention}conceptually crazy{} but {C:attention}mechanically balanced{} Balatro mod.",
@@ -552,6 +552,10 @@ return {
             ["mul_Sneaky Snitch"] = {
                 "Plays when you",
                 "have {C:attention}Waldo{}"
+            },
+            ["mul_Battle Against a True Hero"] = {
+                "Plays when facing",
+                "The Undying"
             }
         },
         labels = {

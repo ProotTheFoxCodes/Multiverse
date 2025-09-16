@@ -117,7 +117,7 @@ SMODS.Sound {
     key = "BAATH_music",
     path = "TobyFox_BAATH.ogg",
     select_music_track = function(self)
-        if G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" then
+        if G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" and Multiverse.config.music["Battle Against a True Hero"] then
             return 4
         end
     end,

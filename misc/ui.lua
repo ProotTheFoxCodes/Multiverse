@@ -204,11 +204,15 @@ Multiverse.music_credits = {
         {
             {
                 "Presage",
-                "MIRAR",
+                "MIRAR"
             },
             {
                 "Sneaky Snitch",
                 "Kevin Macleod"
+            },
+            {
+                "Battle Against a True Hero",
+                "Undertale OST"
             }
         },
     },

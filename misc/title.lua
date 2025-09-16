@@ -1,28 +1,35 @@
 -- Do main menu stuff here
--- Yoinked from Fool's Gambit
+-- Yoinked from Maximus (Thanks Astra)
 local main_menu_hook = Game.main_menu
-function Game:main_menu(change_context)
-    main_menu_hook(self, change_context)
-    local scale = 1.7
-    local card_area_initial = {
-        h = G.CARD_H,
-        w = G.CARD_W,
-    }
-    self.mul_title = CardArea(20, 20, card_area_initial.w, card_area_initial.h, { card_limit = 1, type = "title" })
-    G.mul_title:set_alignment({
-        major = G.SPLASH_LOGO,
+function Game.main_menu(change_context)
+    local ret = main_menu_hook(change_context)
+    G.SPLASH_MULTIVERSE_LOGO = Sprite(
+        0, 0,
+        6,
+        6 * G.ASSET_ATLAS["mul_mod_logo"].py / G.ASSET_ATLAS["mul_mod_logo"].px,
+        G.ASSET_ATLAS["mul_mod_logo"],
+        { x = 0, y = 0 }
+    )
+    G.SPLASH_MULTIVERSE_LOGO:set_alignment({
+        major = G.title_top,
         type = "cm",
         bond = "Strong",
-        offset = { x = -4, y = 3.6 }
+        offset = { x = 0, y = -3.5 }
     })
-    local mul_card = Card(self.mul_title.T.x, self.mul_title.T.y, G.CARD_W * scale * 1.8, G.CARD_H * scale * 0.5,
-        G.P_CENTERS.j_mul_mod_logo, G.P_CENTERS.j_mul_mod_logo)
-    mul_card.no_ui = true
-    mul_card.ambient_tilt = 0
-    mul_card.hover_tilt = 0
-    mul_card.no_shadow = true
-    mul_card.mouse_damping = 1000
-    self.mul_title:emplace(mul_card)
+    G.SPLASH_MULTIVERSE_LOGO.tilt_var = { mx = 0, my = 0, dx = 0, dy = 0, amt = 0 }
+    G.SPLASH_MULTIVERSE_LOGO.states.collide.can = true
+    function G.SPLASH_MULTIVERSE_LOGO:click()
+        play_sound('button', 1, 0.3)
+        G.FUNCS['openModUI_Multiverse']()
+    end
+    function G.SPLASH_MULTIVERSE_LOGO:hover()
+        G.SPLASH_MULTIVERSE_LOGO:juice_up(0.05,0.05)
+        Node.hover(self)
+    end
+    function G.SPLASH_MULTIVERSE_LOGO:stop_hover()
+        Node.stop_hover(self)
+    end
+    return ret
 end
 
 SMODS.Atlas {
@@ -30,21 +37,4 @@ SMODS.Atlas {
     px = 575,
     py = 250,
     path = "multiverse_logo.png"
-}
-SMODS.Joker {
-    key = "mod_logo",
-    atlas = "mod_logo",
-    pos = { x = 0, y = 0 },
-    unlocked = true,
-    discovered = true,
-    no_collection = true,
-    loc_txt = {
-        name = "",
-        text = {
-            ""
-        }
-    },
-    in_pool = function(self, args)
-        return false
-    end
 }
