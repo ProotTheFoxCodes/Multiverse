@@ -6,6 +6,21 @@ SMODS.ConsumableType {
     shop_rate = 2,
     default = "c_mul_holy_grail"
 }
+---@type table<string, {key: string}>
+Multiverse.transmutations = {
+    ["j_joker"] = {
+        key = "j_mul_ren_amamiya",
+    },
+    ["j_mul_villager"] = {
+        key = "j_mul_steve",
+    },
+    ["j_mul_hammer_bro"] = {
+        key = "j_mul_gerson",
+    },
+    ["j_pareidolia"] = {
+        key = "j_mul_waldo",
+    }
+}
 SMODS.Consumable {
     key = "philosophers_stone",
     set = "mul_Myth",
