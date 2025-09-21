@@ -42,6 +42,9 @@ luac.out
 # Everything that deals with VS Code stuff
 .vscode
 
+# Vim stuff i guess
+.vim
+
 # Definitions for Balatro functions
 .balatro-lsp
 .lovelyignore
