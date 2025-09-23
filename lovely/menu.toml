@@ -20,7 +20,8 @@ if self.SPLASH_MULTIVERSE_LOGO then
     love.graphics.push()
     self.SPLASH_MULTIVERSE_LOGO:translate_container()
     self.SPLASH_MULTIVERSE_LOGO:draw()
-    self.SPLASH_MULTIVERSE_LOGO.T.r = 0.08 * math.sin(G.TIMERS.REAL * 1.2)
+    self.SPLASH_MULTIVERSE_LOGO.T.r = 0.08 * math.sin(G.TIMERS.REAL * 1.152)
+    self.SPLASH_MULTIVERSE_LOGO.T.scale = 1 + 0.03 * math.sin(G.TIMERS.REAL * 1.06)
     love.graphics.pop()
 end
 '''

@@ -14,7 +14,7 @@ function Game.main_menu(change_context)
         major = G.title_top,
         type = "cm",
         bond = "Strong",
-        offset = { x = 0, y = -3.5 }
+        offset = { x = 0, y = 3.5 }
     })
     G.SPLASH_MULTIVERSE_LOGO.tilt_var = { mx = 0, my = 0, dx = 0, dy = 0, amt = 0 }
     G.SPLASH_MULTIVERSE_LOGO.states.collide.can = true
