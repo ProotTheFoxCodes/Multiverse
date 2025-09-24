@@ -213,6 +213,14 @@ end
 local update_hook = G.update
 function G:update(dt)
     update_hook(self, dt)
+    if G.SPLASH_MULTIVERSE_LOGO then
+        G.SPLASH_MULTIVERSE_LOGO:set_alignment({
+            major = G.title_top,
+            type = "cm",
+            bond = "Strong",
+            offset = { x = 8 * math.sin(G.TIMERS.REAL * 0.075), y = 3.75 * math.cos(G.TIMERS.REAL * 0.075) }
+        })
+    end
     for key, anim in pairs(Multiverse.all_animations) do
         if anim.is_active then
             if anim.is_continuous then

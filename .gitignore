@@ -43,7 +43,7 @@ luac.out
 .vscode
 
 # Vim stuff i guess
-.vim
+*.vim
 
 # Definitions for Balatro functions
 .balatro-lsp
