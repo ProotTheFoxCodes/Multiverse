@@ -40,233 +40,31 @@ end
 
 local draw_hook = love.draw
 function love.draw()
-    draw_hook()
+    local ret = draw_hook()
     local width, height = love.graphics.getDimensions()
     local x_factor = width / 1536
     local y_factor = height / 864
-    for key, anim in pairs(Multiverse.all_animations) do
-        if anim.is_active then
-            --print(Multiverse.clamp(math.floor(anim.progress) + 1, 1, #anim.frames))
-            love.graphics.setColor(1, 1, 1, 1)
-            love.graphics.draw(
-                anim.image,
-                anim.frames[Multiverse.clamp(math.floor(anim.progress) + 1, 1, #anim.frames)],
-                Multiverse.anchors.x[anim.anchor.x_alignment] + (anim.anchor.x_offset or 0) * x_factor,
-                Multiverse.anchors.y[anim.anchor.y_alignment] + (anim.anchor.y_offset or 0) * y_factor,
-                anim.rotation,
-                anim.x_scale * x_factor,
-                anim.y_scale * y_factor,
-                Multiverse.base_offsets.x[anim.anchor.x_alignment](anim),
-                Multiverse.base_offsets.y[anim.anchor.y_alignment](anim),
-                0,
-                0
-            )
-        end
-    end
-    for key, video in pairs(Multiverse.all_videos) do
-        if video.is_visible then
-            love.graphics.setColor(1, 1, 1, 1)
-            love.graphics.draw(
-                video.video,
-                Multiverse.anchors.x[video.anchor.x_alignment] + (video.anchor.x_offset or 0) * x_factor,
-                Multiverse.anchors.y[video.anchor.y_alignment] + (video.anchor.y_offset or 0) * y_factor,
-                video.rotation,
-                video.x_scale * x_factor,
-                video.y_scale * y_factor,
-                Multiverse.base_offsets.x[video.anchor.x_alignment](video),
-                Multiverse.base_offsets.y[video.anchor.y_alignment](video),
-                0,
-                0
-            )
-        end
-    end
-    if Multiverse.in_limbo then
-        love.graphics.setColor(1, 1, 1, 1)
-        love.graphics.draw(
-            Multiverse.LIMBO_INSTRUCTIONS_SPRITE,
-            love.graphics.getWidth() - 50 * x_factor,
-            love.graphics.getHeight() / 2,
-            0,
-            x_factor,
-            y_factor,
-            200,
-            150,
-            0,
-            0
-        )
-        if Multiverse.in_limbo == "end" then
-            for _, key in ipairs(Multiverse.limbo_keys) do
-                love.graphics.setColor(key.end_color)
-                love.graphics.draw(
-                    Multiverse.LIMBO_KEY_SPRITE,
-                    love.graphics.getWidth() / 2 + (key.x - 2.5) * 150 * x_factor,
-                    love.graphics.getHeight() / 2 + (key.y - 1.5) * 150 * y_factor,
-                    0,
-                    x_factor,
-                    y_factor,
-                    30.5,
-                    21.5,
-                    0,
-                    0
-                )
-            end
-        else
-            for _, key in ipairs(Multiverse.limbo_keys) do
-                love.graphics.setColor(key.current_color)
-                love.graphics.draw(
-                    Multiverse.LIMBO_KEY_SPRITE,
-                    love.graphics.getWidth() / 2 + (key.x - 2.5) * 150 * x_factor,
-                    love.graphics.getHeight() / 2 + (key.y - 1.5) * 150 * y_factor,
-                    0,
-                    x_factor,
-                    y_factor,
-                    30.5,
-                    21.5,
-                    0,
-                    0
-                )
-            end
-        end
-    end
-    if Multiverse.in_undyne then
-        love.graphics.setColor(1, 1, 1, 1)
-        love.graphics.draw(
-            Multiverse.SOUL_BACKGROUND_SPRITE,
-            love.graphics.getWidth() / 2,
-            love.graphics.getHeight() / 2,
-            0,
-            x_factor,
-            y_factor,
-            74,
-            74,
-            0,
-            0
-        )
-        love.graphics.setColor(1, 1, 1, 1)
-        love.graphics.draw(
-            Multiverse.GREEN_SOUL_SPRITE,
-            love.graphics.getWidth() / 2,
-            love.graphics.getHeight() / 2,
-            0,
-            x_factor,
-            y_factor,
-            74,
-            74,
-            0,
-            0
-        )
-        love.graphics.setColor(1, 1, 1, 1)
-        love.graphics.draw(
-            Multiverse.SHIELD_SPRITE,
-            love.graphics.getWidth() / 2,
-            love.graphics.getHeight() / 2,
-            Multiverse.shield_rotations[Multiverse.shield_dir or "up"] or 0,
-            x_factor,
-            y_factor,
-            74,
-            74,
-            0,
-            0
-        )
-        for _, spear in ipairs(Multiverse.undyne_spears) do
-            if spear.active then
-                love.graphics.setColor(1, 1, 1, 1)
-                local current_sprite
-                if spear.is_reversed then
-                    current_sprite = Multiverse.REVERSE_SPEAR_SPRITE
-                elseif spear.r <= 300 then
-                    current_sprite = Multiverse.NEAR_SPEAR_SPRITE
-                else
-                    current_sprite = Multiverse.FAR_SPEAR_SPRITE
-                end
-                love.graphics.draw(
-                    current_sprite,
-                    love.graphics.getWidth() / 2 - spear.r * math.cos(spear.theta) * x_factor,
-                    love.graphics.getHeight() / 2 - spear.r * math.sin(spear.theta) * y_factor,
-                    Multiverse.spear_rotations[spear.dir],
-                    x_factor,
-                    y_factor,
-                    22,
-                    14,
-                    0,
-                    0
-                )
-            end
-        end
-    elseif G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" then
-        love.graphics.setColor(1, 1, 1, 1)
-        love.graphics.draw(
-            Multiverse.UNDYING_INSTRUCTIONS_SPRITE,
-            love.graphics.getWidth() - 50 * x_factor,
-            love.graphics.getHeight() / 2,
-            0,
-            x_factor,
-            y_factor,
-            200,
-            150,
-            0,
-            0
-        )
-    end
+    Multiverse.handle_other_drawing(x_factor, y_factor)
+    Multiverse.handle_limbo_drawing(x_factor, y_factor)
+    Multiverse.handle_undyne_drawing(x_factor, y_factor)
+    return ret
 end
 
 local update_hook = G.update
 function G:update(dt)
-    update_hook(self, dt)
-    if G.SPLASH_MULTIVERSE_LOGO then
+    local ret = update_hook(self, dt)
+    if G.SPLASH_MULTIVERSE_LOGO and G.SPLASH_MULTIVERSE_LOGO.dissolve == 0 then
+        G.mul_loaded_timer = (G.mul_loaded_timer or 0) + G.real_dt
         G.SPLASH_MULTIVERSE_LOGO:set_alignment({
             major = G.title_top,
             type = "cm",
             bond = "Strong",
-            offset = { x = 8 * math.sin(G.TIMERS.REAL * 0.075), y = 3.75 * math.cos(G.TIMERS.REAL * 0.075) }
+            offset = { x = 8 * math.sin(G.mul_loaded_timer * 0.075), y = 3.7 * math.cos(G.mul_loaded_timer * 0.075) }
         })
     end
-    for key, anim in pairs(Multiverse.all_animations) do
-        if anim.is_active then
-            if anim.is_continuous then
-                anim.progress = anim.progress + G.real_dt * #anim.frames / anim.duration
-                if anim.progress >= #anim.frames then
-                    anim.progress = anim.progress - #anim.frames
-                end
-                -- anim_progress \in [0, #anim_frames)
-                -- anim_progress + 1 \in [1, anim_frames + 1)
-            else
-                if anim.progress < #anim.frames then
-                    anim.progress = anim.progress + G.real_dt * #anim.frames / anim.duration
-                else
-                    anim.is_active = false
-                end
-            end
-        end
-    end
-    for i, spear in pairs(Multiverse.undyne_spears) do
-        if spear.active then
-            if spear.r < 35 then
-                play_sound("mul_take_damage", 1, 0.7)
-                G.GAME.chips = G.GAME.chips - G.GAME.blind.chips / to_big(10)
-                spear.active = false
-            elseif spear.r < 70 then
-                local check_dir = spear.is_reversed and Multiverse.opposite_sides[spear.dir] or spear.dir
-                if check_dir == Multiverse.shield_dir then
-                    spear.active = false
-                    play_sound("mul_block_spear", 1, 0.75)
-                end
-            end
-            if spear.is_reversed and not spear.is_reversing and spear.r < Multiverse.clamp(spear.velocity / 4 + 150, 250, 350) then
-                spear.is_reversing = true
-                G.E_MANAGER:add_event(Event({
-                    trigger = "ease",
-                    delay = math.min(0.2, 0.3 - spear.velocity / 10000) * (G.SPEEDFACTOR or 1),
-                    ease_to = spear.theta + math.pi,
-                    ref_table = spear,
-                    ref_value = "theta",
-                    blockable = false,
-                    blocking = false
-                }), "other", true)
-            end
-            spear.r = spear.r - G.real_dt * spear.velocity
-        end
-    end
+    Multiverse.update_animations()
+    Multiverse.update_spears()
+    return ret
 end
 
 local tooltip_hook = create_popup_UIBox_tooltip
@@ -336,14 +134,4 @@ local deck_info_hook = G.FUNCS.deck_info
 function G.FUNCS.deck_info()
     if Multiverse.in_limbo or Multiverse.in_undyne then return end
     deck_info_hook()
-end
-
-local card_click_hook = Card.click
-function Card:click()
-    if self.config.center.key == "j_mul_mod_logo" then
-        if math.random() <= 0.00333 then
-            love.system.openURL("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-        end
-    end
-    card_click_hook(self)
 end

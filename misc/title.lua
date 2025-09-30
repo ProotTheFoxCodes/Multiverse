@@ -16,6 +16,9 @@ function Game.main_menu(change_context)
         bond = "Strong",
         offset = { x = 0, y = 3.75 }
     })
+    G.SPLASH_MULTIVERSE_LOGO:define_draw_steps({ {
+        shader = 'dissolve',
+    } })
     G.SPLASH_MULTIVERSE_LOGO.tilt_var = { mx = 0, my = 0, dx = 0, dy = 0, amt = 0 }
     G.SPLASH_MULTIVERSE_LOGO.states.collide.can = true
     G.SPLASH_MULTIVERSE_LOGO.dissolve = 1
@@ -26,7 +29,8 @@ function Game.main_menu(change_context)
         blocking = false,
         func = (function()
             play_sound('whoosh1', 0.2, 0.8)
-            G.SPLASH_MULTIVERSE_LOGO:juice_up(0.1,0.1)
+            ease_value(G.SPLASH_MULTIVERSE_LOGO, 'dissolve', -1, nil, nil, nil,
+                    change_context == 'splash' and 2.3 or 0.9)
             G.VIBRATION = G.VIBRATION + 1.5
             return true
         end)
@@ -36,7 +40,7 @@ function Game.main_menu(change_context)
         G.FUNCS['openModUI_Multiverse']()
     end
     function G.SPLASH_MULTIVERSE_LOGO:hover()
-        G.SPLASH_MULTIVERSE_LOGO:juice_up(0.05,0.05)
+        G.SPLASH_MULTIVERSE_LOGO:juice_up(0.1,0.1)
         Node.hover(self)
     end
     function G.SPLASH_MULTIVERSE_LOGO:stop_hover()

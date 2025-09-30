@@ -260,3 +260,54 @@ function Multiverse.detect_key_click(x, y)
         end
     end
 end
+
+function Multiverse.handle_limbo_drawing(x_factor, y_factor)
+    if Multiverse.in_limbo then
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.draw(
+            Multiverse.LIMBO_INSTRUCTIONS_SPRITE,
+            love.graphics.getWidth() - 50 * x_factor,
+            love.graphics.getHeight() / 2,
+            0,
+            x_factor,
+            y_factor,
+            200,
+            150,
+            0,
+            0
+        )
+        if Multiverse.in_limbo == "end" then
+            for _, key in ipairs(Multiverse.limbo_keys) do
+                love.graphics.setColor(key.end_color)
+                love.graphics.draw(
+                    Multiverse.LIMBO_KEY_SPRITE,
+                    love.graphics.getWidth() / 2 + (key.x - 2.5) * 150 * x_factor,
+                    love.graphics.getHeight() / 2 + (key.y - 1.5) * 150 * y_factor,
+                    0,
+                    x_factor,
+                    y_factor,
+                    30.5,
+                    21.5,
+                    0,
+                    0
+                )
+            end
+        else
+            for _, key in ipairs(Multiverse.limbo_keys) do
+                love.graphics.setColor(key.current_color)
+                love.graphics.draw(
+                    Multiverse.LIMBO_KEY_SPRITE,
+                    love.graphics.getWidth() / 2 + (key.x - 2.5) * 150 * x_factor,
+                    love.graphics.getHeight() / 2 + (key.y - 1.5) * 150 * y_factor,
+                    0,
+                    x_factor,
+                    y_factor,
+                    30.5,
+                    21.5,
+                    0,
+                    0
+                )
+            end
+        end
+    end
+end

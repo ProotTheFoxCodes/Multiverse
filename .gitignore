@@ -44,6 +44,8 @@ luac.out
 
 # Vim stuff i guess
 *.vim
+.luarc.json
+.emmyrc.json
 
 # Definitions for Balatro functions
 .balatro-lsp

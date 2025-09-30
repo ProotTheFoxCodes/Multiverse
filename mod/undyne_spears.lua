@@ -220,3 +220,117 @@ Multiverse.start_undyne_attack = function(i, p)
     }), "other")
     return #pattern
 end
+
+function Multiverse.handle_undyne_drawing(x_factor, y_factor)
+    if Multiverse.in_undyne then
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.draw(
+            Multiverse.SOUL_BACKGROUND_SPRITE,
+            love.graphics.getWidth() / 2,
+            love.graphics.getHeight() / 2,
+            0,
+            x_factor,
+            y_factor,
+            74,
+            74,
+            0,
+            0
+        )
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.draw(
+            Multiverse.GREEN_SOUL_SPRITE,
+            love.graphics.getWidth() / 2,
+            love.graphics.getHeight() / 2,
+            0,
+            x_factor,
+            y_factor,
+            74,
+            74,
+            0,
+            0
+        )
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.draw(
+            Multiverse.SHIELD_SPRITE,
+            love.graphics.getWidth() / 2,
+            love.graphics.getHeight() / 2,
+            Multiverse.shield_rotations[Multiverse.shield_dir or "up"] or 0,
+            x_factor,
+            y_factor,
+            74,
+            74,
+            0,
+            0
+        )
+        for _, spear in ipairs(Multiverse.undyne_spears) do
+            if spear.active then
+                love.graphics.setColor(1, 1, 1, 1)
+                local current_sprite
+                if spear.is_reversed then
+                    current_sprite = Multiverse.REVERSE_SPEAR_SPRITE
+                elseif spear.r <= 300 then
+                    current_sprite = Multiverse.NEAR_SPEAR_SPRITE
+                else
+                    current_sprite = Multiverse.FAR_SPEAR_SPRITE
+                end
+                love.graphics.draw(
+                    current_sprite,
+                    love.graphics.getWidth() / 2 - spear.r * math.cos(spear.theta) * x_factor,
+                    love.graphics.getHeight() / 2 - spear.r * math.sin(spear.theta) * y_factor,
+                    Multiverse.spear_rotations[spear.dir],
+                    x_factor,
+                    y_factor,
+                    22,
+                    14,
+                    0,
+                    0
+                )
+            end
+        end
+    elseif G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" then
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.draw(
+            Multiverse.UNDYING_INSTRUCTIONS_SPRITE,
+            love.graphics.getWidth() - 50 * x_factor,
+            love.graphics.getHeight() / 2,
+            0,
+            x_factor,
+            y_factor,
+            200,
+            150,
+            0,
+            0
+        )
+    end
+end
+
+function Multiverse.update_spears()
+    for i, spear in pairs(Multiverse.undyne_spears) do
+        if spear.active then
+            if spear.r < 35 then
+                play_sound("mul_take_damage", 1, 0.7)
+                G.GAME.chips = G.GAME.chips - G.GAME.blind.chips / to_big(10)
+                spear.active = false
+            elseif spear.r < 70 then
+                local check_dir = spear.is_reversed and Multiverse.opposite_sides[spear.dir] or spear.dir
+                if check_dir == Multiverse.shield_dir then
+                    spear.active = false
+                    play_sound("mul_block_spear", 1, 0.75)
+                end
+            end
+            if spear.is_reversed and not spear.is_reversing and spear.r < Multiverse.clamp(spear.velocity / 4 + 150, 250, 350) then
+                spear.is_reversing = true
+                G.E_MANAGER:add_event(Event({
+                    trigger = "ease",
+                    delay = math.min(0.2, 0.3 - spear.velocity / 10000) * (G.SPEEDFACTOR or 1),
+                    ease_to = spear.theta + math.pi,
+                    ref_table = spear,
+                    ref_value = "theta",
+                    blockable = false,
+                    blocking = false
+                }), "other", true)
+            end
+            spear.r = spear.r - G.real_dt * spear.velocity
+        end
+    end
+end

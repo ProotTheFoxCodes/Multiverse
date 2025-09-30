@@ -290,6 +290,83 @@ function Multiverse.stop_video(key)
     end
 end
 
+function Multiverse.handle_other_drawing(x_factor, y_factor)
+    for key, anim in pairs(Multiverse.all_animations) do
+        if anim.is_active then
+            --print(Multiverse.clamp(math.floor(anim.progress) + 1, 1, #anim.frames))
+            love.graphics.setColor(1, 1, 1, 1)
+            love.graphics.draw(
+                anim.image,
+                anim.frames[Multiverse.clamp(math.floor(anim.progress) + 1, 1, #anim.frames)],
+                Multiverse.anchors.x[anim.anchor.x_alignment] + (anim.anchor.x_offset or 0) * x_factor,
+                Multiverse.anchors.y[anim.anchor.y_alignment] + (anim.anchor.y_offset or 0) * y_factor,
+                anim.rotation,
+                anim.x_scale * x_factor,
+                anim.y_scale * y_factor,
+                Multiverse.base_offsets.x[anim.anchor.x_alignment](anim),
+                Multiverse.base_offsets.y[anim.anchor.y_alignment](anim),
+                0,
+                0
+            )
+        end
+    end
+    for key, video in pairs(Multiverse.all_videos) do
+        if video.is_visible then
+            love.graphics.setColor(1, 1, 1, 1)
+            love.graphics.draw(
+                video.video,
+                Multiverse.anchors.x[video.anchor.x_alignment] + (video.anchor.x_offset or 0) * x_factor,
+                Multiverse.anchors.y[video.anchor.y_alignment] + (video.anchor.y_offset or 0) * y_factor,
+                video.rotation,
+                video.x_scale * x_factor,
+                video.y_scale * y_factor,
+                Multiverse.base_offsets.x[video.anchor.x_alignment](video),
+                Multiverse.base_offsets.y[video.anchor.y_alignment](video),
+                0,
+                0
+            )
+        end
+    end
+end
+
+function Multiverse.update_animations()
+    for key, anim in pairs(Multiverse.all_animations) do
+        if anim.is_active then
+            if anim.is_continuous then
+                anim.progress = anim.progress + G.real_dt * #anim.frames / anim.duration
+                if anim.progress >= #anim.frames then
+                    anim.progress = anim.progress - #anim.frames
+                end
+                -- anim_progress \in [0, #anim_frames)
+                -- anim_progress + 1 \in [1, anim_frames + 1)
+            else
+                if anim.progress < #anim.frames then
+                    anim.progress = anim.progress + G.real_dt * #anim.frames / anim.duration
+                else
+                    anim.is_active = false
+                end
+            end
+        end
+    end
+end
+
 function Multiverse.set_transmute_requirements(base)
     return Multiverse.config.debug and 1 or base
+end
+
+function Multiverse.get_screen_x_scale()
+    return love.graphics.getWidth() / 1536
+end
+
+function Multiverse.get_screen_y_scale()
+    return love.graphics.getHeight() / 864
+end
+
+function Multiverse.get_screen_scale()
+    return Multiverse.get_screen_x_scale(), Multiverse.get_screen_y_scale()
+end
+
+---@param card Card
+function Multiverse.get_card_x_pos(card)
+    return 88.8 * Multiverse.get_screen_x_scale() + card.children.center.CT.x * card.children.center.scale.x
 end

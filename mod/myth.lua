@@ -74,7 +74,7 @@ Multiverse.transmutations = {
                 for i = 1, 3 do
                     G.E_MANAGER:add_event(Event({
                         func = function()
-                            local card_pool = { "c_lovers", "c_strength", "c_death" }
+                            local card_pool = { "c_lovers", "c_strength", "c_death", "c_hanged_man" }
                             SMODS.add_card({
                                 key = pseudorandom_element(card_pool, "mul_holy_grail"),
                                 edition = "e_negative",
@@ -150,12 +150,10 @@ SMODS.Consumable {
     can_use = function(self, card)
         return (
             G.jokers.highlighted[1] and
-            G.jokers.highlighted[1].ability and
-            type(G.jokers.highlighted[1].ability.extra) == "table" and
-            G.jokers.highlighted[1].ability.extra.transmute_req
-        )
+            Multiverse.transmutations[G.jokers.highlighted[1].config.center.key]
+        ) ~= nil
         -- in order to register a joker as transmutable,
-        -- the joker must have transmute_req as a field in ability.extra
+        -- the joker's key must be in Multiverse.transmutations
     end,
     use = function(self, card, area, copier)
         local j_key = G.jokers.highlighted[1].config.center.key
