@@ -61,13 +61,14 @@ return {
             m_mul_waldo = {
                 name = "Waldo Card",
                 text = {
-                    "Retrigger this",
-                    "card {C:attention}#1#{} time per",
-                    "card in played hand",
+                    "Retrigger this card {C:attention}#1#{}",
+                    "time for every {C:attention}#2#{} cards",
+                    "in full deck",
                     "Gives no base {C:chips}chips{}",
                     "Has no rank or suit",
-                    "You can only have {C:attention}1{}",
-                    "{C:attention}Waldo Card{} in deck"
+                    "Cannot be copied",
+                    "{C:inactive}(Currently {C:attention}#3#{C:inactive} retriggers){}",
+                    "{C:inactive}(Minimum of {C:attention}1{C:inactive} retrigger){}"
                 }
             }
         },

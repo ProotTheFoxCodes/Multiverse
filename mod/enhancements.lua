@@ -70,7 +70,7 @@ SMODS.Enhancement {
     key = "waldo",
     atlas = "placeholder_modifiers",
     pos = { x = 0, y = 0 },
-    config = { extra = { retrigger_inc = 1 } },
+    config = { extra = { retrigger_inc = 1, cards_per_retrigger = 5 } },
     weight = 0,
     always_scores = true,
     no_rank = true,
@@ -80,12 +80,16 @@ SMODS.Enhancement {
         return false
     end,
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.retrigger_inc } }
+        local num_triggers = 1
+        if G.playing_cards then
+            num_triggers = math.max(math.floor(#G.playing_cards / card.ability.extra.cards_per_retrigger), 1)
+        end
+        return { vars = { card.ability.extra.retrigger_inc, card.ability.extra.cards_per_retrigger, num_triggers } }
     end,
     calculate = function(self, card, context)
         if context.repetition and context.cardarea == G.play then
             return {
-                repetitions = card.ability.extra.retrigger_inc * #context.full_hand
+                repetitions = card.ability.extra.retrigger_inc * math.max(math.floor(#G.playing_cards / card.ability.extra.cards_per_retrigger), 1)
             }
         end
     end

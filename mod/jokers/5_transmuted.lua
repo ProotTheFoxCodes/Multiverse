@@ -166,7 +166,7 @@ SMODS.Joker {
     key = "waldo",
     atlas = "placeholder",
     pos = { x = 4, y = 0 },
-    config = { extra = { xmult_inc = 0.5 } },
+    config = { extra = { xmult_inc = 1 } },
     rarity = "mul_transmuted",
     cost = 40,
     blueprint_compat = false,
