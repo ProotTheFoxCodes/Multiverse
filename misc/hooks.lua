@@ -16,15 +16,15 @@ function Card:is_suit(suit, bypass_debuff, flush_calc)
     if self.config.center.key == "m_mul_calling_card" then
         if flush_calc then
             if SMODS.find_card("j_smeared") then
-                return self.base.suit == "Hearts" or self.base.suit == "Diamonds"
+                return suit == "Hearts" or suit == "Diamonds"
             end
-            return self.base.suit == "Hearts"
+            return suit == "Hearts"
         else
             if self.debuff and not bypass_debuff then return end
             if SMODS.find_card("j_smeared") then
-                return self.base.suit == "Hearts" or self.base.suit == "Diamonds"
+                return suit == "Hearts" or suit == "Diamonds"
             end
-            return self.base.suit == "Hearts"
+            return suit == "Hearts"
         end
     end
     return is_suit_hook(self, suit, bypass_debuff, flush_calc)
