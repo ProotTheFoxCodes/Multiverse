@@ -76,6 +76,9 @@ SMODS.Enhancement {
     no_rank = true,
     no_suit = true,
     replace_base_card = true,
+    in_pool = function (self, args)
+        return false
+    end,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.retrigger_inc } }
     end,
