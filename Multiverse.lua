@@ -19,8 +19,8 @@ function Multiverse.recursive_load(path)
     local files = NFS.getDirectoryItems(Multiverse.path .. path)
     for _, item in ipairs(files) do
         if string.sub(item, -4) == ".lua" then
-            print("Multiverse: Loading " .. item)
-            local f, err = SMODS.load_file(path .. "/" .. item:gsub("%d+_", ""))
+            print("Multiverse: Loading " .. item:gsub("%d+_", ""))
+            local f, err = SMODS.load_file(path .. "/" .. item)
             if err then error(err) elseif f then f() end
         elseif path:find("%.") == nil then
             Multiverse.recursive_load(path .. "/" .. item)
