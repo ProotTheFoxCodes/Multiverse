@@ -397,6 +397,16 @@ return {
                 }
             }
         },
+        Tag = {
+            tag_mul_magnum_opus = {
+                name = "Magnum Opus Tag",
+                text = {
+                    "The next shop",
+                    "will have a free",
+                    "{C:mul_transmuted}Philosopher's Stone{}"
+                }
+            }
+        },
         Tarot = {
             c_mul_lobotomized = {
                 name = "The Lobotomized",
