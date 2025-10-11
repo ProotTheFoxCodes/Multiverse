@@ -184,7 +184,7 @@ return {
                 }
             },
             j_mul_red_balloon = {
-                name = "Red Balloon",
+                name = "Red Bloon",
                 text = {
                     {
                         "Earn {C:money}$#1#{} when a card is scored",
@@ -192,9 +192,8 @@ return {
                         "{C:inactive}(Currently #2#/#3#){}"
                     },
                     {
-                        "{C:inactive,s:0.8}The hardest balloon to pop,",
-                        "{C:inactive,s:0.8}especially if it's camoflauged,",
-                        "{C:inactive,s:0.8}regenerating and fortified"
+                        "{C:inactive,s:0.8}Who is paying the monkeys",
+                        "{C:inactive,s:0.8}to pop these bloons?"
                     }
                 }
             },
@@ -233,7 +232,7 @@ return {
                     {
                         "{C:inactive,s:0.8}L-l-l-lava,{}",
                         "{C:inactive,s:0.8}ch-ch-ch-chicken,",
-                        "{C:inactive,s:0.8}steve's lava chicken yeah",
+                        "{C:inactive,s:0.8}Steve's lava chicken yeah",
                         "{C:inactive,s:0.8}it's tasty as hell"
                     }
                 }
@@ -243,15 +242,13 @@ return {
                 text = {
                     {
                         "{X:mult,C:white}X#1#{} Mult",
-                        "Destroys a {C:attention}random{} Joker",
-                        "when purchased"
+                        "{C:attention}Destroys{} a random",
+                        "Joker when purchased"
                     },
                     {
-                        "{C:inactive,s:0.8}Yugi should've used this",
-                        "{C:inactive,s:0.8}as his ace monster",
-                        "{C:inactive,s:0.8}instead of Dark Magician,",
-                        "{C:inactive,s:0.8}needs 1 less tribute for the same",
-                        "{C:inactive,s:0.8}amount of attack power"
+                        "{C:inactive,s:0.8}Don't do the Mr. Bones",
+                        "{C:inactive,s:0.8}glitch or else you'll get",
+                        "{C:inactive,s:0.8}sent to the Shadow Realm"
                     }
                 }
             },
@@ -347,31 +344,52 @@ return {
             j_mul_waldo = {
                 name = "Waldo",
                 text = {
-                    "Add a {C:attention}Waldo Card{} to",
-                    "deck when this card",
-                    "is obtained",
-                    "{C:attention}Waldo Cards{} give {X:mult,C:white}X#1#{} Mult",
-                    "per card in full deck",
-                    "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}"
+                    {
+                        "Add a {C:attention}Waldo Card{} to",
+                        "deck when this card",
+                        "is obtained",
+                        "{C:attention}Waldo Cards{} give {X:mult,C:white}X#1#{} Mult",
+                        "per card in full deck",
+                        "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}"
+                    },
+                    {
+                        "{C:inactive,s:0.8}After years of searching,",
+                        "{C:inactive,s:0.8}we've finally found him"
+                    }
                 }
             },
             j_mul_foddian_struggle = {
                 name = "Foddian Struggle",
                 text = {
-                    "This Joker gains",
-                    "{C:mult}+#2#{} Mult per",
-                    "consecutive hand played",
-                    "without a {V:1}#1#{}",
-                    "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)"
+                    {
+                        "This Joker gains",
+                        "{C:mult}+#2#{} Mult per",
+                        "consecutive hand played",
+                        "without a {V:1}#1#{}",
+                        "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)"
+                    },
+                    {
+                        "{C:inactive,s:0.8}Press F to pay respects",
+                        "{C:inactive,s:0.8}for the broken keyboards",
+                        "{C:inactive,s:0.8}and mice due to gamer rage"
+                    }
                 }
             },
             j_mul_peashooter = {
                 name = "Peashooter",
                 text = {
-                    "If played hand contains",
-                    "exactly {C:attention}1{} card,",
-                    "this Joker gains {C:mult}+#1#{} Mult",
-                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+                    {
+                        "If played hand contains",
+                        "exactly {C:attention}1{} card,",
+                        "this Joker gains {C:mult}+#1#{} Mult",
+                        "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+                    },
+                    {
+                        "{C:inactive,s:0.8}Dave must be feeding",
+                        "{C:inactive,s:0.8}them some crazy stuff",
+                        "{C:inactive,s:0.8}if their peas can",
+                        "{C:inactive,s:0.8}decapitate zombies"
+                    }
                 }
             }
         },
@@ -522,6 +540,7 @@ return {
             k_mul_popped = "Popped!",
             k_mul_won_fifty_fifty = "Won!",
             k_mul_lost_fifty_fifty = "Lost...",
+            k_mul_thaumaturgy_energy = "Thaumaturgy Energy:",
             mul_stand_user = "Saved by Stand User via time reversal",
             k_mul_myth = "Myth",
             b_mul_myth_cards = "Myth Cards",

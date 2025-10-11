@@ -605,3 +605,18 @@ SMODS.current_mod.extra_tabs = function()
         }
     }
 end
+
+
+function Multiverse.create_thaumaturgy_ui()
+    return {n=G.UIT.R, config={align = "cm", id = "row_thaumaturgy"}, nodes = {
+        {n=G.UIT.C, config={align = "cm", padding = 0.05, minw = 1.45, minh = 0.6, colour = G.C.DYN_UI.BOSS_MAIN, emboss = 0.05, r = 0.1}, nodes={
+            {n=G.UIT.R, config={align = "cm", padding = 0.05}, nodes={
+                {n=G.UIT.T, config={text = localize('k_mul_thaumaturgy_energy'), minh = 0.33, scale = 0.85*0.4, colour = G.C.UI.TEXT_LIGHT, shadow = true}},
+                {n=G.UIT.C, config={minw = 0.05}},
+                {n=G.UIT.C, config={align = "cm", r = 0.1, minw = 1.2, colour = G.C.DYN_UI.BOSS_DARK, id = 'col_thaumaturgy_text'}, nodes={
+                    {n=G.UIT.O, config={object = DynaText({string = {{ref_table = G.GAME, ref_value = 'mul_thaumaturgy_energy'}}, colours = {Multiverse.TRANSMUTED_GRADIENT},shadow = true, scale = 1.5*0.4}),id = 'thaumaturgy_UI_count'}},
+                }},
+            }},
+        }},
+    }}
+end

@@ -9,7 +9,7 @@
     "main_file": "Multiverse.lua",
     "priority": 0,
     "badge_colour": "063970",
-    "version": "0.0.7~PRERELEASE",
+    "version": "0.0.8~PRERELEASE",
     "dependencies": [
         "Steamodded (>=1.0.0~BETA-0827c)"
     ]

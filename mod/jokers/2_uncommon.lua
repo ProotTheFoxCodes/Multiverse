@@ -72,7 +72,7 @@ SMODS.Joker {
     end
 }
 SMODS.Joker {
-    key = "v1",
+    key = "v2",
     atlas = "placeholder",
     pos = { x = 1, y = 0 },
     config = { extra = { seal = "Gold" } },
@@ -85,9 +85,11 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         if context.before and G.GAME.current_round.hands_played == 0 then
-            local rand_card = pseudorandom_element(context.scoring_hand, "mul_v1")
-            if rand_card then
-                rand_card:set_seal(card.ability.extra.seal)
+            for _, c in ipairs(context.scoring_hand) do
+                if c:is_suit("Hearts") then
+                    c:set_seal(card.ability.extra.seal)
+                    break
+                end
             end
         end
     end
@@ -95,7 +97,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "summoned_skull",
     atlas = "placeholder",
-    pos = { x = 2, y = 0 },
+    pos = { x = 1, y = 0 },
     config = { extra = { xmult = 2.5 } },
     rarity = 2,
     cost = 7,
