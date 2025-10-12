@@ -103,7 +103,8 @@ SMODS.Consumable {
     loc_vars = function(self, info_queue, card)
         table.insert(info_queue, {
             set = "Other",
-            key = "mul_transmutable"
+            key = "mul_transmutable",
+            vars = {G.GAME.mul_thaumaturgy_energy_per_joker or 10}
         })
         return { vars = { card.ability.max_highlighted } }
     end,
@@ -116,9 +117,7 @@ SMODS.Consumable {
         return false
     end,
     can_use = function(self, card)
-        return (G.jokers.highlighted[1] and G.jokers.highlighted[1].ability or {}).mul_transmutable and
-            #G.jokers.cards <=
-            (G.jokers.config.card_limit - ((G.jokers.highlighted[1].edition or {}).negative and 1 or 0))
+        return (G.jokers.highlighted[1] and G.jokers.highlighted[1].ability or {}).mul_transmutable
     end,
     use = function(self, card, area, copier)
         local joker_to_transmute = G.jokers.highlighted[1]

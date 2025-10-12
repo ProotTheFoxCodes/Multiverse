@@ -143,13 +143,13 @@ return {
                     }
                 }
             },
-            j_mul_v1 = {
-                name = "V1",
+            j_mul_v2 = {
+                name = "V2",
                 text = {
                     {
                         "When {C:attention}first hand{} of round is",
                         "played, add a {C:attention}Gold Seal{} to",
-                        "a random scoring card",
+                        "first scored {C:hearts}Hearts{} card",
                     },
                     {
                         "{C:inactive,s:0.8}Ultrakill fans will do anything",
@@ -421,7 +421,8 @@ return {
                 text = {
                     "The next shop",
                     "will have a free",
-                    "{C:mul_transmuted}Philosopher's Stone{}"
+                    "{C:mul_transmuted}Philosopher's Stone{}",
+                    "{C:inactive,s:0.8}Cannot be duplicated{}"
                 }
             }
         },
@@ -465,7 +466,9 @@ return {
                 text = {
                     "Can use {C:attention}Philosopher's Stone{}",
                     "on this card to create",
-                    "{C:mul_transmuted,E:1}Transmuted{} Jokers"
+                    "{C:mul_transmuted,E:1}Transmuted{} Jokers",
+                    "{C:mul_transmuted}+#1#{} Thaumaturgy Energy",
+                    "at end of round"
                 }
             },
             mul_joker_hint = {
@@ -505,6 +508,15 @@ return {
 					"learn what it does",
 				}
             },
+            mul_thaumaturgy_desc = {
+                name = "Thaumaturgy Energy",
+                text = {
+                    "You gain Thaumaturgy Energy{}",
+                    "at the end of each round",
+                    "If Thaumaturgy Energy is at least",
+                    "{C:attention}100{}, creates a {C:mul_transmuted}Magnum Opus{} tag",
+                }
+            }
         },
         Mod = {
             Multiverse = {
@@ -514,8 +526,8 @@ return {
                     "This mod contains new {C:attention}Jokers{}, {C:tarot}Tarots{}, {C:spectral}Spectrals{}, {C:attention}Blinds{}, {C:attention}card",
                     "{C:attention}enhancements{}, and {C:mul_transmuted}Myths{} (a new consumable type).",
                     "{C:mul_transmuted}Myth{} cards can help you obtain {C:mul_transmuted}Transmuted{} Jokers, which",
-                    "can allow your runs to reach into high {C:attention}Antes{} in {C:attention}Endless Mode{} while",
-                    "doing so in a way that feels {C:attention}relatively vanilla{} compared to other mods.",
+                    "can allow your runs to reach into high {C:attention}Antes{} in {C:attention}Endless Mode{} while doing",
+                    "so in a way that feels {C:attention}relatively vanilla{} and doesn't invalidate vanilla content.",
                     "A {C:red}warning{} for those with {C:attention}Talisman{} installed:",
                     "I have not tested my mod with {C:attention}Talisman{} very much.",
                     "Considering that {C:attention}Talisman{} tends to cause lots of {C:red}crashes{}",
@@ -540,13 +552,12 @@ return {
             k_mul_popped = "Popped!",
             k_mul_won_fifty_fifty = "Won!",
             k_mul_lost_fifty_fifty = "Lost...",
-            k_mul_thaumaturgy_energy = "Thaumaturgy Energy:",
-            mul_stand_user = "Saved by Stand User via time reversal",
+            k_mul_thaumaturgy_energy = "Thaumaturgy Energy",
             k_mul_myth = "Myth",
             b_mul_myth_cards = "Myth Cards",
             b_mul_discord_server = "My Discord Server",
             b_mul_landing_page = "About Me",
-            mul_page = "Page",
+            mul_stand_user = "Saved by Stand User via time reversal",
             mul_customization = "You can enable or disable certain aspects of Multiverse here",
             mul_changes_warn = "It is recommended to restart the game after making config changes",
             mul_changes_debug = "Debug Mode affects several elements of the mod",
@@ -590,6 +601,9 @@ return {
             mul_transmutable = "Transmutable",
             myth = "Myth",
             k_mul_transmuted = "Transmuted",
+        },
+        v_dictionary = {
+            a_thaumaturgy_energy = "+#1# Energy"
         }
     }
 }

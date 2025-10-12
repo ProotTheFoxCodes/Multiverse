@@ -131,5 +131,7 @@ local start_run_hook = Game.start_run
 function Game:start_run(args)
     local ret = start_run_hook(self, args)
     if not G.GAME.mul_thaumaturgy_energy then G.GAME.mul_thaumaturgy_energy = 0 end
+    if not G.GAME.mul_thaumaturgy_energy_rate then G.GAME.mul_thaumaturgy_energy_rate = 2 end
+    if not G.GAME.mul_thaumaturgy_energy_per_joker then G.GAME.mul_thaumaturgy_energy_per_joker = 10 end
     return ret
 end

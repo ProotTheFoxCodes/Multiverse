@@ -496,7 +496,7 @@ function Multiverse.music_tab_definition(page)
     table.insert(mul_nodes, Multiverse.display_songs(page))
     local pages = {}
     for i, _ in ipairs(Multiverse.music_credits) do
-        table.insert(pages, localize("mul_page") .. string.format(" %s/%s", i, #Multiverse.music_credits))
+        table.insert(pages, localize("k_page") .. string.format(" %s/%s", i, #Multiverse.music_credits))
     end
     table.insert(mul_nodes, {
         n = G.UIT.R,

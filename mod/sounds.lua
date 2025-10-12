@@ -15,7 +15,7 @@ SMODS.Sound {
         end
     end,
     sync = false,
-    volume = 0.6,
+    volume = 0.5,
     pitch = 1
 }
 SMODS.Sound {
