@@ -22,12 +22,12 @@ return {
             m_mul_calling_card = {
                 name = "Calling Card",
                 text = {
-                    "{X:mult,C:white}X#1#{} Mult",
-                    "Increases to {X:mult,C:white}X#2#{} Mult",
-                    "during a Boss Blind",
+                    "Gives {X:mult,C:white}X#1#{} Mult",
+                    "per ante",
                     "Always treated as an",
                     "{C:attention}Ace{} of {C:hearts}Hearts{}",
-                    "Gives no base {C:chips}chips{}"
+                    "Gives no base {C:chips}chips{}",
+                    "{C:attention}(Currently {X:mult,C:white}X#2#{C:attention} Mult){}"
                 }
             },
             m_mul_netherite = {

@@ -2,7 +2,7 @@ SMODS.Enhancement {
     key = "calling_card",
     atlas = "calling_card",
     pos = { x = 0, y = 0 },
-    config = { extra = { xmult = 2, boss_xmult = 3 } },
+    config = { extra = { xmult = 1 } },
     replace_base_card = true,
     weight = 0,
     in_pool = function(self, args)
@@ -13,15 +13,13 @@ SMODS.Enhancement {
         card.config.center.pos.x = math.floor(Multiverse.clamp(G.GAME.mul_call_card_anim_state, 0, 5))
     end,
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.xmult, card.ability.extra.boss_xmult } }
+        return { vars = { card.ability.extra.xmult, 1 + card.ability.extra.xmult * G.GAME.round_resets.ante } }
     end,
     calculate = function(self, card, context)
         if context.main_scoring and context.cardarea == G.play then
-            if G.GAME.blind and G.GAME.blind.boss then
-                return { xmult = card.ability.extra.boss_xmult }
-            else
-                return { xmult = card.ability.extra.xmult }
-            end
+            return {
+                xmult = 1 + card.ability.extra.xmult * G.GAME.round_resets.ante
+            }
         end
     end,
 }
