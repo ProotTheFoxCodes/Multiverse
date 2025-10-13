@@ -69,3 +69,20 @@ Multiverse.Animation {
     y_scale = 96,
     is_continuous = true
 }
+Multiverse.Animation {
+    key = "gerson_disable",
+    path = "gerson.png",
+    frames = 7,
+    px = 52,
+    py = 112,
+    anchor = {
+        x_alignment = "l",
+        y_alignment = "t",
+        x_offset = 385,
+        y_offset = 117
+    },
+    duration = 0.7,
+    rotation = math.pi / 2,
+    x_scale = 2.5,
+    y_scale = 2.5
+}

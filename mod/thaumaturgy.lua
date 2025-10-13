@@ -1,6 +1,10 @@
 SMODS.current_mod.calculate = function(self, context)
     if context.end_of_round and not context.blueprint and not context.game_over and context.main_eval then
         Multiverse.ease_thaumaturgy_energy(G.GAME.mul_thaumaturgy_energy_rate, {from_charge = true})
+        if G.GAME.mul_thaumaturgy_energy >= 100 then
+            Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, {from_magnum_opus = true})
+            add_tag(Tag("tag_mul_magnum_opus", false, "Small"))
+        end
     end
 end
 

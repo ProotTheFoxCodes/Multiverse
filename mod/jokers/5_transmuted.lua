@@ -137,6 +137,12 @@ SMODS.Joker {
                     G.GAME.blind:disable()
                     play_sound("mul_gerson_laugh", 1, 1)
                     delay(0.4)
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            Multiverse.start_animation("gerson_disable")
+                            return true
+                        end
+                    }))
                     return true
                 end
             }))
@@ -151,6 +157,12 @@ SMODS.Joker {
                     G.GAME.blind:disable()
                     play_sound("mul_gerson_laugh", 1, 1)
                     delay(0.4)
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            Multiverse.start_animation("gerson_disable")
+                            return true
+                        end
+                    }))
                     return true
                 end
             }))

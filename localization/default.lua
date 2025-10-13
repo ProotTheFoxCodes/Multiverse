@@ -511,10 +511,12 @@ return {
             mul_thaumaturgy_desc = {
                 name = "Thaumaturgy Energy",
                 text = {
-                    "You gain Thaumaturgy Energy{}",
+                    "You gain {C:mul_transmuted}+#1#{} Thaumaturgy Energy",
                     "at the end of each round",
                     "If Thaumaturgy Energy is at least",
-                    "{C:attention}100{}, creates a {C:mul_transmuted}Magnum Opus{} tag",
+                    "{C:attention}100{} at end of round, Thaumaturgy",
+                    "Energy is {C:red}reset{} to {C:attention}0{} and",
+                    "a {C:mul_transmuted}Magnum Opus{} tag is created"
                 }
             }
         },
@@ -603,7 +605,8 @@ return {
             k_mul_transmuted = "Transmuted",
         },
         v_dictionary = {
-            a_thaumaturgy_energy = "+#1# Energy"
+            a_mul_thaumaturgy_energy = "+#1# Energy",
+            a_mul_limbo_popup = "F O C U S (X#1# Blind size on failure)",
         }
     }
 }

@@ -287,7 +287,7 @@ function Multiverse.handle_undyne_drawing(x_factor, y_factor)
                 )
             end
         end
-    elseif G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" then
+    elseif G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" and not G.GAME.blind.disabled then
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.draw(
             Multiverse.UNDYING_INSTRUCTIONS_SPRITE,
