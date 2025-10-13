@@ -55,6 +55,7 @@ function G:update(dt)
     local ret = update_hook(self, dt)
     Multiverse.update_animations()
     Multiverse.update_spears()
+    Multiverse.update_transmutable_sticker_anim_state()
     return ret
 end
 

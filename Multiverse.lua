@@ -13,6 +13,7 @@ Multiverse.C.PRIMARY1 = HEX("89C41B")
 Multiverse.C.PRIMARY2 = HEX("C5CC41")
 Multiverse.config = SMODS.current_mod.config
 Multiverse.selected_music_page = 1
+Multiverse.transmutable_sticker_anim_state = 0
 
 ---@param path string
 function Multiverse.recursive_load(path)

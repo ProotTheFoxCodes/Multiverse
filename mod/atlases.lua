@@ -66,3 +66,9 @@ SMODS.Atlas {
     py = 34,
     path = "transmute_tag.png"
 }
+SMODS.Atlas {
+    key = "transmutable_sticker",
+    px = 71,
+    py = 95,
+    path = "transmutable.png"
+}
