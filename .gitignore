@@ -47,6 +47,9 @@ luac.out
 .luarc.json
 .emmyrc.json
 
+# Zed editor stuff i guess
+.zed
+
 # Definitions for Balatro functions
 .balatro-lsp
 .lovelyignore
