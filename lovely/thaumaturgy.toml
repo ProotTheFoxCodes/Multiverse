@@ -1,6 +1,7 @@
 [manifest]
 version = "0.0.8"
 priority = 0
+dump_lua = true
 
 [[patches]]
 [patches.pattern]

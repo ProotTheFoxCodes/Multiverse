@@ -56,6 +56,15 @@ function Game:update(dt)
     Multiverse.update_animations()
     Multiverse.update_spears()
     Multiverse.update_transmutable_sticker_anim_state()
+    if G.SPLASH_MULTIVERSE_LOGO and G.SPLASH_MULTIVERSE_LOGO.dissolve == 0 then
+        G.mul_loaded_timer = (G.mul_loaded_timer or 0) + G.real_dt
+        G.SPLASH_MULTIVERSE_LOGO:set_alignment({
+            major = G.title_top,
+            type = "cm",
+            bond = "Strong",
+            offset = { x = 8 * math.sin(G.mul_loaded_timer * 0.075), y = 3.7 * math.cos(G.mul_loaded_timer * 0.075) }
+        })
+    end
     return ret
 end
 
