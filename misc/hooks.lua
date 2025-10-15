@@ -50,8 +50,8 @@ function love.draw()
     return ret
 end
 
-local update_hook = G.update
-function G:update(dt)
+local update_hook = Game.update
+function Game:update(dt)
     local ret = update_hook(self, dt)
     Multiverse.update_animations()
     Multiverse.update_spears()
