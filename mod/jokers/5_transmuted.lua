@@ -52,8 +52,14 @@ SMODS.Joker {
             end
             if context.initial_scoring_step then
                 local has_call_card = false
-                for _, c in ipairs(G.playing_cards) do
+                for _, c in ipairs(G.hand.cards) do
                     if c.config.center.key == "m_mul_calling_card" then
+                        has_call_card = true
+                        break
+                    end
+                end
+                for _, c in ipairs(context.full_hand) do
+                    if c.config.center.key == "m_mul_calling_card" or has_call_card then
                         has_call_card = true
                         break
                     end
@@ -85,8 +91,14 @@ SMODS.Joker {
             end
             if context.after then
                 local has_call_card = false
-                for _, c in ipairs(G.playing_cards) do
+                for _, c in ipairs(G.hand.cards) do
                     if c.config.center.key == "m_mul_calling_card" then
+                        has_call_card = true
+                        break
+                    end
+                end
+                for _, c in ipairs(context.full_hand) do
+                    if c.config.center.key == "m_mul_calling_card" or has_call_card then
                         has_call_card = true
                         break
                     end
