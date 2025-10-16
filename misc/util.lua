@@ -375,7 +375,6 @@ function Multiverse.get_card_y_pos(card)
     return 127.5 * Multiverse.get_screen_y_scale() + card.children.center.CT.y * card.children.center.scale.y / 1.39
 end
 
-
 --- Basically just Card:start_dissolve but doesnt destroy the card
 function Card:mul_safe_dissolve(dissolve_colours, silent, dissolve_time_fac, no_juice)
     local dissolve_time = 0.7*(dissolve_time_fac or 1)

@@ -201,7 +201,7 @@ Multiverse.start_undyne_attack = function(i, p)
     local pattern = p or Multiverse.undyne_attacks[math.random(#Multiverse.undyne_attacks)]
     G.E_MANAGER:add_event(Event({
         trigger = "after",
-        delay = pattern[index][4] * (G.SPEEDFACTOR or 1),
+        delay = pattern[index][4] * G.SPEEDFACTOR,
         func = function()
             table.insert(Multiverse.undyne_spears, {
                 r = 850,
@@ -322,7 +322,7 @@ function Multiverse.update_spears()
                 spear.is_reversing = true
                 G.E_MANAGER:add_event(Event({
                     trigger = "ease",
-                    delay = math.min(0.2, 0.3 - spear.velocity / 10000) * (G.SPEEDFACTOR or 1),
+                    delay = math.min(0.2, 0.3 - spear.velocity / 10000) * G.SPEEDFACTOR,
                     ease_to = spear.theta + math.pi,
                     ref_table = spear,
                     ref_value = "theta",

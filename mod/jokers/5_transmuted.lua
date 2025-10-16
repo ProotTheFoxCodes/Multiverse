@@ -27,11 +27,28 @@ SMODS.Joker {
         end
         return { vars = { tarots_held.n } }
     end,
-    config = { extra = {} },
     calculate = function(self, card, context)
         if not context.blueprint then
             if context.before then
-                context.scoring_hand[1]:set_ability("m_mul_calling_card")
+                local changed_card = context.scoring_hand[1]
+                if not SMODS.has_enhancement(changed_card, "m_mul_calling_card") then
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            changed_card:mul_safe_dissolve(nil, false, 2)
+                            return true
+                        end
+                    }))
+                    delay(2)
+                    changed_card.mul_show_base = true
+                    changed_card:set_ability("m_mul_calling_card", false, true)
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            changed_card.mul_show_base = false
+                            changed_card:start_materialize(nil, false, 2)
+                            return true
+                        end
+                    }))
+                end
             end
             if context.initial_scoring_step then
                 local has_call_card = false
@@ -42,13 +59,13 @@ SMODS.Joker {
                     end
                 end
                 if has_call_card then
+                    delay(0.9)
                     G.E_MANAGER:add_event(Event({
                         trigger = "ease",
                         ref_table = G.GAME,
                         ref_value = "mul_call_card_anim_state",
-                        ease = "quad",
                         ease_to = 6,
-                        delay = 1
+                        delay = 1.2
                     }))
                 end
             end
@@ -63,7 +80,7 @@ SMODS.Joker {
                     end
                 end
                 if tarots_held.n > 0 then
-                    return { repetitions = card.ability.extra.tarots_held.n }
+                    return { repetitions = tarots_held.n }
                 end
             end
             if context.after then
@@ -79,10 +96,10 @@ SMODS.Joker {
                         trigger = "ease",
                         ref_table = G.GAME,
                         ref_value = "mul_call_card_anim_state",
-                        ease = "quad",
                         ease_to = 0,
-                        delay = 1
+                        delay = 1.8
                     }))
+                    delay(1)
                 end
             end
         end

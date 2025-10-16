@@ -21,6 +21,7 @@ function Multiverse.ease_thaumaturgy_energy(amt, args)
         local col = Multiverse.TRANSMUTED_GRADIENT
         if num < 0 then
             text = '-'
+            col = G.C.RED
         end
         G.GAME.mul_thaumaturgy_energy = G.GAME.mul_thaumaturgy_energy + num
         thaum_UI.config.object:update()

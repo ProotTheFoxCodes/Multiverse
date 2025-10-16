@@ -1,6 +1,6 @@
 <h1 align = "center"> Multiverse </h1>
 
-![The logo of the mod. Appears in-game to the bottom left of the Balatro logo in the main menu.](multiverse_logo_README.png)
+![The logo of the mod. Appears in-game orbiting the Balatro logo in the main menu.](multiverse_logo_README.png)
 
 A Balatro mod I made because I was bored and needed something to work on.
 This mod introduces:
@@ -14,7 +14,7 @@ This mod introduces:
 ## Future Steps
 
 - [ ] Get *human-made* art for everything in this mod
-- [ ] ~~Ensure compatibility with Talisman~~
+- [x] Ensure compatibility with Talisman
 - [ ] Create transmutations for other modded Jokers
 
 ## License

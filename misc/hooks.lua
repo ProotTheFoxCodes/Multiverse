@@ -3,6 +3,7 @@ function Card:is_face(from_boss)
     if self.config.center.key == "m_mul_calling_card" then
         if self.debuff and not from_boss then return end
         if next(SMODS.find_card("j_pareidolia")) then return true end
+        return false
     end
     if self.config.center.key == "m_mul_normal" then
         if self.debuff and not from_boss then return end

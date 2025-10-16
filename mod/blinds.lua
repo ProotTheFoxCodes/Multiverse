@@ -11,19 +11,19 @@ SMODS.Blind({
 		attention_text({
 			scale = 0.7,
 			text = localize({ type = "variable", key = "a_mul_limbo_popup", vars = { 10 } }),
-			hold = (G.SPEEDFACTOR or 1) * 1.4,
+			hold = G.SPEEDFACTOR * 1.4,
 			align = "cm",
 			offset = { x = 0, y = -1 },
 			major = G.play,
 		})
-        delay(1.6 * (G.SPEEDFACTOR or 1))
+        delay(1.6 * G.SPEEDFACTOR)
 		G.E_MANAGER:add_event(Event({
 			func = function()
 				Multiverse.limbo_keys_intro()
 				return true
 			end,
 		}))
-		delay(18.6 * (G.SPEEDFACTOR or 1))
+		delay(18.6 * G.SPEEDFACTOR)
 	end,
 	disable = function(self)
 		if to_big(get_blind_amount(G.GAME.round_resets.ante) * to_big(2)) < G.GAME.blind.chips then
@@ -66,7 +66,7 @@ SMODS.Blind({
 							trigger = "after",
 							blockable = false,
 							blocking = false,
-							delay = 0.5 * (G.SPEEDFACTOR or 1),
+							delay = 0.5 * G.SPEEDFACTOR,
 							func = function()
 								Multiverse.in_undyne = false
 								return true
