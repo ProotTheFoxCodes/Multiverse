@@ -165,6 +165,7 @@ SMODS.Joker {
         if context.individual and context.cardarea == G.play and
             #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
             if SMODS.pseudorandom_probability(card, "mul_victory_royale", 1, card.ability.extra.odds) then
+                G.GAME.consumeable_buffer = (G.GAME.consumeable_buffer or 0) + 1
                 card.ability.extra.odds = 100
                 G.E_MANAGER:add_event(Event({
                     func = function()
@@ -179,14 +180,22 @@ SMODS.Joker {
                 }))
                 return {
                     message = localize("k_plus_spectral"),
-                    colour = G.C.SECONDARY_SET.Spectral
+                    colour = G.C.SECONDARY_SET.Spectral,
+                    func = function()
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                G.GAME.consumeable_buffer = 0
+                                return true
+                            end
+                        }))
+                    end
                 }
             elseif card.ability.extra.odds > 2 and not context.blueprint then
                 SMODS.scale_card(card, {
                     ref_table = card.ability.extra,
                     ref_value = "odds",
                     scalar_value = "decrement",
-                    operation = "-"
+                    operation = "-",
                 })
             end
         end
