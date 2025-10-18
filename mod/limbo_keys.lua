@@ -5,6 +5,10 @@ local key_file = assert(NFS.newFileData(Multiverse.path .. "assets/misc/limbo_ke
 local key_data = assert(love.image.newImageData(key_file))
 Multiverse.LIMBO_KEY_SPRITE = assert(love.graphics.newImage(key_data))
 
+local blunder_file = assert(NFS.newFileData(Multiverse.path .. "assets/misc/blunder.png"))
+local blunder_data = assert(love.image.newImageData(blunder_file))
+Multiverse.BLUNDER_SPRITE = assert(love.graphics.newImage(blunder_data))
+
 local limbo_instructions_file = assert(NFS.newFileData(Multiverse.path .. "assets/misc/limbo_instructions.png"))
 local limbo_instructions_data = assert(love.image.newImageData(limbo_instructions_file))
 Multiverse.LIMBO_INSTRUCTIONS_SPRITE = assert(love.graphics.newImage(limbo_instructions_data))
@@ -299,14 +303,14 @@ function Multiverse.handle_limbo_drawing(x_factor, y_factor)
 			for _, key in ipairs(Multiverse.limbo_keys) do
 				love.graphics.setColor(key.end_color)
 				love.graphics.draw(
-					Multiverse.LIMBO_KEY_SPRITE,
+					Multiverse.secret_limbo and Multiverse.BLUNDER_SPRITE or Multiverse.LIMBO_KEY_SPRITE,
 					love.graphics.getWidth() / 2 + (key.x - 2.5) * 150 * x_factor,
 					love.graphics.getHeight() / 2 + (key.y - 1.5) * 150 * y_factor,
 					0,
-					x_factor,
-					y_factor,
-					30.5,
-					21.5,
+					x_factor * (Multiverse.secret_limbo and 1/9 or 1),
+					y_factor * (Multiverse.secret_limbo and 1/9 or 1),
+					Multiverse.secret_limbo and 237.5 or 30.5,
+					Multiverse.secret_limbo and 237.5 or 21.5,
 					0,
 					0
 				)
@@ -315,16 +319,16 @@ function Multiverse.handle_limbo_drawing(x_factor, y_factor)
 			for _, key in ipairs(Multiverse.limbo_keys) do
 				love.graphics.setColor(key.current_color)
 				love.graphics.draw(
-					Multiverse.LIMBO_KEY_SPRITE,
-					love.graphics.getWidth() / 2 + (key.x - 2.5) * 150 * x_factor,
-					love.graphics.getHeight() / 2 + (key.y - 1.5) * 150 * y_factor,
-					0,
-					x_factor,
-					y_factor,
-					30.5,
-					21.5,
-					0,
-					0
+    				Multiverse.secret_limbo and Multiverse.BLUNDER_SPRITE or Multiverse.LIMBO_KEY_SPRITE,
+    				love.graphics.getWidth() / 2 + (key.x - 2.5) * 150 * x_factor,
+    				love.graphics.getHeight() / 2 + (key.y - 1.5) * 150 * y_factor,
+    				0,
+    				x_factor * (Multiverse.secret_limbo and 1/9 or 1),
+    				y_factor * (Multiverse.secret_limbo and 1/9 or 1),
+    				Multiverse.secret_limbo and 237.5 or 30.5,
+    				Multiverse.secret_limbo and 237.5 or 21.5,
+    				0,
+    				0
 				)
 			end
 		end

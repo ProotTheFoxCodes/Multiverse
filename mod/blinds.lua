@@ -6,6 +6,13 @@ SMODS.Blind({
 	boss = { min = 1 },
 	mult = 2,
 	set_blind = function(self)
+    	if pseudorandom("mul_limbo", 1, 1000) < 999 then
+            Multiverse.secret_limbo = true
+            Multiverse.HIDDEN_KEY_COLOR = { 1, 1, 1, 1 }
+        else
+            Multiverse.secret_limbo = false
+            Multiverse.HIDDEN_KEY_COLOR = { 224 / 255, 85 / 255, 32 / 255, 1 }
+        end
 		Multiverse.add_limbo_keys()
 		ease_background_colour_blind(G.STATES.BLIND_SELECT)
 		attention_text({
