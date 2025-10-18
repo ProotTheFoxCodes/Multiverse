@@ -6,7 +6,7 @@ SMODS.Blind({
 	boss = { min = 1 },
 	mult = 2,
 	set_blind = function(self)
-    	if pseudorandom("mul_limbo", 1, 1000) < 10 then
+    	if pseudorandom("mul_limbo", 1, 1000) < 8 then
             Multiverse.secret_limbo = true
             Multiverse.HIDDEN_KEY_COLOR = { 1, 1, 1, 1 }
         else
