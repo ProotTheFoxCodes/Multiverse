@@ -391,6 +391,16 @@ return {
                         "{C:inactive,s:0.8}decapitate zombies"
                     }
                 }
+            },
+            j_mul_slime = {
+                name = "Slime",
+                text = {
+                    {
+                        "If played hand contains",
+                        "{C:attention}#1#{} scoring cards,",
+                        "earn {C:money}$#2#{}"
+                    }
+                }
             }
         },
         Spectral = {
