@@ -553,6 +553,25 @@ return {
         }
     },
     misc = {
+        poker_hands = {
+            mul_thunderstrike = "Thunderstrike",
+            mul_lightning = "Lightning",
+            mul_flush_thunderstrike = "Flush Thunderstrike"
+        },
+        poker_hand_descriptions = {
+            mul_thunderstrike = {
+                "A hand that contains a Lightning",
+                "and a Pair at the same time"
+            },
+            mul_lightning = {
+                "4 or more cards that form a",
+                "sequence of cards 2 ranks apart"
+            },
+            mul_flush_thunderstrike = {
+                "A Thunderstrike that is",
+                "also considered a Flush"
+            }
+        },
         dictionary = {
             k_mul_transmuted = "Transmuted",
             k_mul_missed_bus = "Missed the bus!",
