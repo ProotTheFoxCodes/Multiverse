@@ -308,8 +308,7 @@ function Multiverse.update_spears()
     for i, spear in pairs(Multiverse.undyne_spears) do
         if spear.active then
             if spear.r < 35 then
-                play_sound("mul_take_damage", 1, 0.7)
-                G.GAME.chips = G.GAME.chips - G.GAME.blind.chips / to_big(10)
+                Multiverse.process_undyne_hit(10)
                 spear.active = false
             elseif spear.r < 70 then
                 local check_dir = spear.is_reversed and Multiverse.opposite_sides[spear.dir] or spear.dir
@@ -333,4 +332,9 @@ function Multiverse.update_spears()
             spear.r = spear.r - G.real_dt * spear.velocity
         end
     end
+end
+
+function Multiverse.process_undyne_hit(percent)
+    play_sound("mul_take_damage", 1, 0.7)
+    G.GAME.chips = G.GAME.chips - G.GAME.blind.chips / to_big(percent)
 end
