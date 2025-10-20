@@ -337,4 +337,13 @@ end
 function Multiverse.process_undyne_hit(percent)
     play_sound("mul_take_damage", 1, 0.7)
     G.GAME.chips = G.GAME.chips - G.GAME.blind.chips / to_big(percent)
+    	if G.GAME.challenge == "c_mul_monsoon" then
+		num = -1
+	elseif G.GAME.challenge == "c_mul_merg" then
+		num = 0
+	end
+
+	if (G.GAME.challenge == "c_mul_monsoon" or G.GAME.challenge == "c_mul_merg") and G.GAME.chips < G.GAME.blind.chips * to_big(num) then
+		end_round()
+	end
 end
