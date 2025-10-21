@@ -580,7 +580,7 @@ return {
         },
         v_text = {
             ch_c_mul_waterfall1 = { "Every {C:attention}Boss Blind{} is replaced with {C:red}The Undying{}" },
-            ch_c_mul_waterfall2 = { "If {C:chips}score{} is below {X:attention,C:white}X-0.5{} {C:attention}Blind Size{}, {C:red}lose instantly{}" },
+            ch_c_mul_waterfall2 = { "If {C:chips}score{} is below {X:attention,C:white}X-1{} {C:attention}Blind Size{}, {C:red}lose instantly{}" },
             ch_c_mul_waterfall3 = { "If {C:chips}score{} is below 0, {C:red}lose instantly{}" }
         },
         dictionary = {
