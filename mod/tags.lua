@@ -2,6 +2,7 @@ SMODS.Tag {
     atlas = "transmute_tag",
     key = "magnum_opus",
     pos = {x = 0, y = 0},
+    config = {type = "immediate"},
     in_pool = function (self, args)
         return false
     end,
@@ -9,18 +10,14 @@ SMODS.Tag {
         table.insert(info_queue, G.P_CENTERS.c_mul_philosophers_stone)
     end,
     apply = function (self, tag, context)
-        if context.type == 'store_joker_create' then
-            local card = SMODS.create_card {
+        if context.type == "immediate" then
+            local card = SMODS.add_card {
                 key = "c_mul_philosophers_stone",
-                area = context.area,
-                key_append = "mul_magnum_opus"
+                key_append = "mul_magnum_opus",
             }
-            create_shop_card_ui(card, "Consumable", context.area)
             card.states.visible = false
             tag:yep("+", Multiverse.TRANSMUTED_GRADIENT, function()
                 card:start_materialize()
-                card.ability.couponed = true
-                card:set_cost()
                 return true
             end)
             tag.triggered = true

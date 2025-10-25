@@ -6,6 +6,7 @@ SMODS.Blind({
 	boss = { min = 1 },
 	mult = 2,
 	set_blind = function(self)
+        Multiverse.in_limbo = "pre_start"
     	if pseudorandom("mul_limbo", 1, 1000) < 8 then
             Multiverse.secret_limbo = true
             Multiverse.HIDDEN_KEY_COLOR = { 1, 1, 1, 1 }
@@ -18,12 +19,12 @@ SMODS.Blind({
 		attention_text({
 			scale = 0.7,
 			text = localize({ type = "variable", key = "a_mul_limbo_popup", vars = { 10 } }),
-			hold = G.SPEEDFACTOR * 1.4,
+			hold = G.SPEEDFACTOR * 2.4,
 			align = "cm",
 			offset = { x = 0, y = -1 },
 			major = G.play,
 		})
-        delay(1.6 * G.SPEEDFACTOR)
+        delay(2 * G.SPEEDFACTOR)
 		G.E_MANAGER:add_event(Event({
 			func = function()
 				Multiverse.limbo_keys_intro()

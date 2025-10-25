@@ -1,5 +1,4 @@
-Multiverse = {}
-Multiverse.path = "" .. SMODS.current_mod.path
+Multiverse = SMODS.current_mod
 Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient {
     key = "transmuted_gradient",
     colours = {
@@ -11,7 +10,6 @@ Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient {
 Multiverse.C = {}
 Multiverse.C.PRIMARY1 = HEX("89C41B")
 Multiverse.C.PRIMARY2 = HEX("C5CC41")
-Multiverse.config = SMODS.current_mod.config
 Multiverse.selected_music_page = 1
 Multiverse.transmutable_sticker_anim_state = 0
 

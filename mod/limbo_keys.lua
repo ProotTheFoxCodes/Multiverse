@@ -285,7 +285,7 @@ function Multiverse.detect_key_click(x, y)
 end
 
 function Multiverse.handle_limbo_drawing(x_factor, y_factor)
-	if Multiverse.in_limbo then
+	if Multiverse.in_limbo and not G.SETTINGS.paused then
 		love.graphics.setColor(1, 1, 1, 1)
 		love.graphics.draw(
 			Multiverse.LIMBO_INSTRUCTIONS_SPRITE,

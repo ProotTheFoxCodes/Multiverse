@@ -11,7 +11,7 @@ SMODS.Challenge {
 			{ id = "v_retcon"}
 		},
         banned_tags = {
-            {id = "tag_boss"}
+            { id = "tag_boss" }
         }
 	}
 }
@@ -21,7 +21,7 @@ function get_new_boss()
 
 	ret = _boss_old()
 
-	if G.GAME.challenge == "c_mul_waterfall" or G.GAME.challenge == "c_mul_monsoon" or G.GAME.challenge == "c_mul_merg" then
+	if G.GAME.challenge == "c_mul_waterfall" or G.GAME.challenge == "c_mul_monsoon" or G.GAME.challenge == "c_mul_cant_touch_this" then
 		ret = "bl_mul_undying"
 	end
 
@@ -33,26 +33,8 @@ SMODS.Challenge {
 	key = 'monsoon',
 	rules = {
 		custom = {
-			{id = "mul_waterfall1" },
-			{ id = "mul_waterfall2" }
-		}
-	},
-	restrictions = {
-		banned_cards = {
-			{ id = "v_directors_cut"},
-			{ id = "v_retcon"}
-		},
-        banned_tags = {
-            {id = "tag_boss"}
-        }
-	}
-}
-
-SMODS.Challenge {
-	key = 'merg',
-	rules = {
-		custom = {
-			{id = "mul_waterfall1" },
+		    { id = "mul_waterfall1" },
+			{ id = "mul_waterfall2" },
 			{ id = "mul_waterfall3" }
 		}
 	},
@@ -62,7 +44,26 @@ SMODS.Challenge {
 			{ id = "v_retcon"}
 		},
         banned_tags = {
-            {id = "tag_boss"}
+            { id = "tag_boss" }
+        }
+	}
+}
+
+SMODS.Challenge {
+	key = 'cant_touch_this',
+	rules = {
+		custom = {
+		    { id = "mul_waterfall1" },
+			{ id = "mul_waterfall4" }
+		}
+	},
+	restrictions = {
+		banned_cards = {
+			{ id = "v_directors_cut"},
+			{ id = "v_retcon"}
+		},
+        banned_tags = {
+            { id = "tag_boss" }
         }
 	}
 }

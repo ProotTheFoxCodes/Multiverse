@@ -429,10 +429,10 @@ return {
             tag_mul_magnum_opus = {
                 name = "Magnum Opus Tag",
                 text = {
-                    "The next shop",
-                    "will have a free",
+                    "Immediately creates a",
                     "{C:mul_transmuted}Philosopher's Stone{}",
-                    "{C:inactive,s:0.8}Cannot be duplicated{}"
+                    "{C:inactive,s:0.8}Cannot be duplicated{}",
+                    "{C:inactive,s:0.8}Ignores consumable limit{}"
                 }
             }
         },
@@ -575,13 +575,20 @@ return {
         challenge_names = {
             c_mul_waterfall = "Waterfall",
             c_mul_monsoon = "But The Earth Refused.",
-            c_mul_merg = "99999999999"
+            c_mul_cant_touch_this = "Can't Touch This"
 
         },
         v_text = {
             ch_c_mul_waterfall1 = { "Every {C:attention}Boss Blind{} is replaced with {C:red}The Undying{}" },
-            ch_c_mul_waterfall2 = { "If {C:chips}score{} is below {X:attention,C:white}X-0.5{} {C:attention}Blind Size{}, {C:red}lose instantly{}" },
-            ch_c_mul_waterfall3 = { "If {C:chips}score{} is below 0, {C:red}lose instantly{}" }
+            ch_c_mul_waterfall2 = {
+                "If {C:chips}score{} is below {X:attention,C:white}X-0.5{} {C:attention}Blind Size{}, {C:red}lose instantly{}",
+            },
+            ch_c_mul_waterfall3 = {
+                "You lose {C:attention}twice{} as many chips if hit by a spear"
+            },
+            ch_c_mul_waterfall4 = {
+                "If you get hit by {C:red}The Undying{}, {C:red}lose instantly{}",
+            },
         },
         dictionary = {
             k_mul_transmuted = "Transmuted",
