@@ -578,16 +578,11 @@ return {
     misc = {
         poker_hands = {
             mul_storm = "Storm",
-            mul_what_the_hell = "What the Hell"
         },
         poker_hand_descriptions = {
             mul_storm = {
                 "5 cards that each have different ranks",
                 "and have 4 distinct suits among them"
-            },
-            mul_what_the_hell = {
-                "A hand that contains a Storm and somehow",
-                "has 5 cards with the same suit"
             }
         },
         challenge_names = {

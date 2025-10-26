@@ -39,21 +39,3 @@ SMODS.PokerHand {
         return parts.mul_storm
     end
 }
-SMODS.PokerHand {
-    key = "what_the_hell",
-    mult = 20,
-    chips = 200,
-    l_mult = 5,
-    l_chips = 75,
-    example = {
-        {"H_2", true, enhancement = "m_wild"},
-        {"S_J", true, enhancement = "m_wild"},
-        {"C_A", true, enhancement = "m_wild"},
-        {"C_5", true, enhancement = "m_wild"},
-        {"D_9", true, enhancement = "m_wild"},
-    },
-    evaluate = function(parts, hand)
-        return {SMODS.merge_lists(parts._flush, parts.mul_storm)}
-    end,
-    visible = false
-}
