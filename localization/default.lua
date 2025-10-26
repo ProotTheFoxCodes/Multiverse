@@ -577,22 +577,17 @@ return {
     },
     misc = {
         poker_hands = {
-            mul_thunderstrike = "Thunderstrike",
-            mul_lightning = "Lightning",
-            mul_flush_thunderstrike = "Flush Thunderstrike"
+            mul_storm = "Storm",
+            mul_what_the_hell = "What the Hell"
         },
         poker_hand_descriptions = {
-            mul_thunderstrike = {
-                "A hand that contains a Lightning",
-                "and a Pair at the same time"
+            mul_storm = {
+                "5 cards that each have different ranks",
+                "and have 4 distinct suits among them"
             },
-            mul_lightning = {
-                "4 or more cards that form a",
-                "sequence of cards 2 ranks apart"
-            },
-            mul_flush_thunderstrike = {
-                "A Thunderstrike that is",
-                "also considered a Flush"
+            mul_what_the_hell = {
+                "A hand that contains a Storm and somehow",
+                "has 5 cards with the same suit"
             }
         },
         challenge_names = {
