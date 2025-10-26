@@ -100,6 +100,7 @@ SMODS.Consumable {
     config = { max_highlighted = 1 },
     discovered = true,
     cost = 6,
+    select_card = "",
     loc_vars = function(self, info_queue, card)
         table.insert(info_queue, {
             set = "Other",
@@ -140,7 +141,7 @@ SMODS.Consumable {
         Multiverse.update_card_anim(card, G.real_dt)
     end,
     pos = { x = 0, y = 0 },
-    config = { max_highlighted = 1, extra = { num_consumables = 3 } },
+    config = { max_highlighted = 1, extra = {num_consumables = 3} },
     discovered = true,
     cost = 6,
     loc_vars = function(self, info_queue, card)
@@ -151,7 +152,7 @@ SMODS.Consumable {
             G.jokers.highlighted[1] and
             Multiverse.transmutations[G.jokers.highlighted[1].config.center.key]
         ) ~= nil
-        -- in order to register a joker as transmutable,
+        -- in order for this card to be usable,
         -- the joker's key must be in Multiverse.transmutations
     end,
     use = function(self, card, area, copier)
@@ -159,5 +160,23 @@ SMODS.Consumable {
         if Multiverse.transmutations[j_key].other.grail then
             Multiverse.transmutations[j_key].other.grail()
         end
+    end
+}
+SMODS.Consumable {
+    key = "perpetual_motion",
+    set = "mul_Myth",
+    atlas = "temp_myth",
+    pos = {x = 0,y = 0},
+    discovered = true,
+    config = {extra = {max_thaum_energy = 50}},
+    cost = 6,
+    loc_vars = function (self, info_queue, card)
+        return {vars = {card.ability.extra.max_thaum_energy}}
+    end,
+    can_use = function(self, card)
+        return true
+    end,
+    use = function(self, card, area, copier)
+        Multiverse.ease_thaumaturgy_energy(Multiverse.clamp(G.GAME.mul_thaumaturgy_energy, 0, card.ability.extra.max_thaum_energy))
     end
 }

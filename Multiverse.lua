@@ -13,6 +13,11 @@ Multiverse.C.PRIMARY2 = HEX("C5CC41")
 Multiverse.selected_music_page = 1
 Multiverse.transmutable_sticker_anim_state = 0
 
+SMODS.ObjectType {
+    key = "mul_can_transmute",
+    default = "j_joker"
+}
+
 ---@param path string
 function Multiverse.recursive_load(path)
     local files = NFS.getDirectoryItems(Multiverse.path .. path)

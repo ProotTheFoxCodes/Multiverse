@@ -76,7 +76,7 @@ return {
             c_mul_philosophers_stone = {
                 name = "Philosopher\'s Stone",
                 text = {
-                    "{C:mul_transmuted,E:1}Transmutes{} {C:attention}#1#{} selected Joker",
+                    "{C:mul_transmuted,E:mul_unstable}Transmutes{} {C:attention}#1#{} selected Joker",
                     "that is currently {C:mul_transmuted}Transmutable{}",
                     "{C:inactive}(Must have room, bypasses Eternal){}"
                 }
@@ -86,7 +86,15 @@ return {
                 text = {
                     "Creates {C:attention}#1#{} {C:dark_edition}Negative{} consumables",
                     "relevant to the {C:mul_transmuted}transmutation{}",
-                    "of selected Joker"
+                    "of selected Joker",
+                }
+            },
+            c_mul_perpetual_motion = {
+                name = "Perpetual Motion Machine",
+                text = {
+                    "Doubles current",
+                    "{C:mul_transmuted}Thaumaturgy Energy{}",
+                    "{C:inactive}(Max of {C:mul_transmuted}+#1#{C:inactive})"
                 }
             }
         },
@@ -397,8 +405,23 @@ return {
                 text = {
                     {
                         "If played hand contains",
-                        "{C:attention}#1#{} scoring cards,",
-                        "earn {C:money}$#2#{}"
+                        "{C:attention}#1#{} scoring cards, earn {C:money}$#2#{}",
+                    },
+                    {
+                        "{C:inactive,s:0.8}Cute, squishy and flammable"
+                    }
+                }
+            },
+            j_mul_jack_frost = {
+                name = "Jack Frost",
+                text = {
+                    {
+                        "First scored card",
+                        "in played hand",
+                        "becomes a {C:attention}Jack{}"
+                    },
+                    {
+                        "{C:inactive,s:0.8}Hee Ho{}"
                     }
                 }
             }

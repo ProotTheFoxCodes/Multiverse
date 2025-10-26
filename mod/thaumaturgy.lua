@@ -10,7 +10,7 @@ end
 
 ---Changes the current amount of Thaumaturgy Energy, and also triggers the relevant context.
 ---@param amt number
----@param args {immediate: boolean?, silent: boolean?, from_magnum_opus: boolean?, from_charge: boolean?}
+---@param args? {immediate: boolean?, silent: boolean?, from_magnum_opus: boolean?, from_charge: boolean?}
 function Multiverse.ease_thaumaturgy_energy(amt, args)
     args = args or {}
     local function change_thaumaturgy_energy(num)

@@ -238,5 +238,6 @@ SMODS.Joker {
         if context.joker_main and card.ability.extra.progress >= card.ability.extra.transmute_req then
             card:add_sticker("mul_transmutable", true)
         end
-    end
+    end,
+    pools = {["mul_can_transmute"] = true}
 }

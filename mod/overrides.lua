@@ -22,7 +22,8 @@ SMODS.Joker:take_ownership("joker", {
                 -- another note to self: pass in true as 2nd argument to card:add_sticker()
             end
         end
-    end
+    end,
+    pools = {["mul_can_transmute"] = true}
 }, true)
 SMODS.Joker:take_ownership("pareidolia", {
     transmutable_compat = true,
@@ -43,5 +44,6 @@ SMODS.Joker:take_ownership("pareidolia", {
                 card:add_sticker("mul_transmutable", true)
             end
         end
-    end
+    end,
+    pools = {["mul_can_transmute"] = true}
 }, true)

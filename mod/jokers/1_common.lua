@@ -82,7 +82,8 @@ SMODS.Joker {
                 end
             }
         end
-    end
+    end,
+    pools = {["mul_can_transmute"] = true}
 }
 SMODS.Joker {
     key = "red_balloon",
@@ -232,6 +233,20 @@ SMODS.Joker {
                    }))
                end
             }
+        end
+    end,
+}
+SMODS.Joker {
+    key = "jack_frost",
+    atlas = "placeholder",
+    pos = {x = 0, y = 0},
+    config = {extra = {rank = "Jack"}},
+    rarity = 1,
+    cost = 5,
+    blueprint_compat = false,
+    calculate = function(self, card, context)
+        if context.before and not context.blueprint and context.scoring_hand[1] then
+            assert(SMODS.change_base(context.scoring_hand[1], nil, "Jack"))
         end
     end,
 }

@@ -32,6 +32,7 @@ SMODS.Joker {
             if context.before then
                 local changed_card = context.scoring_hand[1]
                 if not SMODS.has_enhancement(changed_card, "m_mul_calling_card") then
+                    assert(SMODS.change_base(changed_card, "Hearts", "Ace"))
                     G.E_MANAGER:add_event(Event({
                         func = function()
                             changed_card:mul_safe_dissolve(nil, false, 2)
@@ -39,11 +40,9 @@ SMODS.Joker {
                         end
                     }))
                     delay(2)
-                    changed_card.mul_show_base = true
                     changed_card:set_ability("m_mul_calling_card", false, true)
                     G.E_MANAGER:add_event(Event({
                         func = function()
-                            changed_card.mul_show_base = false
                             changed_card:start_materialize(nil, false, 2)
                             return true
                         end

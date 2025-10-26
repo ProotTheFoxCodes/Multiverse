@@ -1,42 +1,10 @@
 local is_face_hook = Card.is_face
 function Card:is_face(from_boss)
-    if self.config.center.key == "m_mul_calling_card" then
-        if self.debuff and not from_boss then return end
-        if next(SMODS.find_card("j_pareidolia")) then return true end
-        return false
-    end
     if self.config.center.key == "m_mul_normal" then
         if self.debuff and not from_boss then return end
         return true
     end
     return is_face_hook(self, from_boss)
-end
-
-local is_suit_hook = Card.is_suit
-function Card:is_suit(suit, bypass_debuff, flush_calc)
-    if self.config.center.key == "m_mul_calling_card" then
-        if flush_calc then
-            if next(SMODS.find_card("j_smeared")) then
-                return suit == "Hearts" or suit == "Diamonds"
-            end
-            return suit == "Hearts"
-        else
-            if self.debuff and not bypass_debuff then return end
-            if next(SMODS.find_card("j_smeared")) then
-                return suit == "Hearts" or suit == "Diamonds"
-            end
-            return suit == "Hearts"
-        end
-    end
-    return is_suit_hook(self, suit, bypass_debuff, flush_calc)
-end
-
-local get_id_hook = Card.get_id
-function Card:get_id()
-    if self.config.center.key == "m_mul_calling_card" and not self.vampired then
-        return 14
-    end
-    return get_id_hook(self)
 end
 
 local draw_hook = love.draw
@@ -89,6 +57,14 @@ function copy_card(other, new_card, card_scale, playing_card, strip_edition)
         card:set_ability("c_base", nil, true)
     end
     return card
+end
+
+local set_base_hook = Card.set_base
+function Card:set_base(card, initial, manual_sprites)
+    if self.playing_card and self.base and self.config.center.key == "m_mul_calling_card" then
+        return
+    end
+    set_base_hook(self, card, initial, manual_sprites)
 end
 
 local mousepressed_hook = love.mousepressed
