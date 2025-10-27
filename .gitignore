@@ -53,3 +53,6 @@ luac.out
 # Definitions for Balatro functions
 .balatro-lsp
 .lovelyignore
+
+# Debug
+debug.lua

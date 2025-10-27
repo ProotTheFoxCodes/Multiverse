@@ -293,7 +293,6 @@ end
 function Multiverse.handle_other_drawing(x_factor, y_factor)
     for key, anim in pairs(Multiverse.all_animations) do
         if anim.is_active then
-            --print(Multiverse.clamp(math.floor(anim.progress) + 1, 1, #anim.frames))
             love.graphics.setColor(1, 1, 1, 1)
             love.graphics.draw(
                 anim.image,
@@ -337,8 +336,6 @@ function Multiverse.update_animations()
                 if anim.progress >= #anim.frames then
                     anim.progress = anim.progress - #anim.frames
                 end
-                -- anim_progress \in [0, #anim_frames)
-                -- anim_progress + 1 \in [1, anim_frames + 1)
             else
                 if anim.progress < #anim.frames then
                     anim.progress = anim.progress + G.real_dt * #anim.frames / anim.duration
@@ -375,7 +372,7 @@ function Multiverse.get_card_y_pos(card)
     return 127.5 * Multiverse.get_screen_y_scale() + card.children.center.CT.y * card.children.center.scale.y / 1.39
 end
 
---- Basically just Card:start_dissolve but doesnt destroy the card
+---Basically just Card:start_dissolve but doesnt destroy the card
 function Card:mul_safe_dissolve(dissolve_colours, silent, dissolve_time_fac, no_juice)
     local dissolve_time = 0.7*(dissolve_time_fac or 1)
     self.dissolve = 0

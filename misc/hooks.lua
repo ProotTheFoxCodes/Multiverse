@@ -69,6 +69,7 @@ end
 
 local mousepressed_hook = love.mousepressed
 function love.mousepressed(x, y, button, istouch, presses)
+    if Multiverse.very_important_thing then return end
     mousepressed_hook(x, y, button, istouch, presses)
     if Multiverse.in_limbo == "end" and not Multiverse.has_guessed then
         local clicked = Multiverse.detect_key_click(x, y)
@@ -88,12 +89,19 @@ end
 
 local keypressed_hook = love.keypressed
 function love.keypressed(key, scancode, is_repeat)
+    if Multiverse.very_important_thing then return end
     keypressed_hook(key, scancode, is_repeat)
     if Multiverse.in_undyne then
         if key == "left" or key == "right" or key == "up" or key == "down" then
             Multiverse.shield_dir = key
         end
     end
+end
+
+local mouse_pressed_hook = love.keypressed
+function love.keypressed(key, scancode, is_repeat)
+    if Multiverse.very_important_thing then return end
+    mouse_pressed_hook(key, scancode, is_repeat)
 end
 
 local options_hook = G.FUNCS.options

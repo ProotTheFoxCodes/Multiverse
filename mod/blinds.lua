@@ -1,4 +1,4 @@
-SMODS.Blind({
+SMODS.Blind {
 	key = "limbo",
 	atlas = "multiverse_blinds",
 	pos = { x = 0, y = 0 },
@@ -44,12 +44,9 @@ SMODS.Blind({
 	end,
 	collection_loc_vars = function(self)
 		return { vars = { 10 } }
-	end,
-	in_pool = function(self)
-		return Multiverse.config.joke
-	end,
-})
-SMODS.Blind({
+	end
+}
+SMODS.Blind {
 	key = "undying",
 	atlas = "multiverse_blinds",
 	pos = { x = 0, y = 1 },
@@ -97,7 +94,4 @@ SMODS.Blind({
     collection_loc_vars = function(self)
 		return { vars = { 10 } }
 	end,
-	in_pool = function(self)
-		return Multiverse.config.joke
-	end,
-})
+}

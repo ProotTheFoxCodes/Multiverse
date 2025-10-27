@@ -205,7 +205,7 @@ SMODS.Joker {
     key = "hammer_bro",
     atlas = "placeholder",
     pos = { x = 1, y = 0 },
-    config = { extra = { mult = 5, xmult = 1.25, progress = 0, transmute_req = Multiverse.set_transmute_requirements(120) } },
+    config = { extra = { mult = 5, xmult = 1.25, transmute_progress = 0, transmute_req = Multiverse.set_transmute_requirements(120) } },
     rarity = 2,
     cost = 7,
     blueprint_compat = true,
@@ -213,21 +213,23 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         table.insert(info_queue, {
             set = "Other",
-            key = "mul_hammer_bro_hint"
+            key = "mul_hammer_bro_hint",
+            vars = {
+                card.ability.extra.transmute_progress,
+                card.ability.extra.transmute_req
+            }
         })
         return {
             vars = {
                 card.ability.extra.mult,
-                card.ability.extra.xmult,
-                card.ability.extra.progress,
-                card.ability.extra.transmute_req
+                card.ability.extra.xmult
             }
         }
     end,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
             if not context.blueprint then
-                card.ability.extra.progress = card.ability.extra.progress + 1
+                card.ability.extra.transmute_progress = card.ability.extra.transmute_progress + 1
             end
             if pseudorandom("hammer_bro", 1, 2) == 1 then
                 return { xmult = card.ability.extra.xmult }
@@ -235,7 +237,7 @@ SMODS.Joker {
                 return { mult = card.ability.extra.mult }
             end
         end
-        if context.joker_main and card.ability.extra.progress >= card.ability.extra.transmute_req then
+        if context.joker_main and card.ability.extra.transmute_progress >= card.ability.extra.transmute_req then
             card:add_sticker("mul_transmutable", true)
         end
     end,

@@ -34,10 +34,12 @@ SMODS.Consumable {
     use = function(self, card, area, copier)
         Multiverse.play_video("bad_apple")
         Multiverse.start_animation("black_bg")
+        Multiverse.very_important_thing = true
         G.E_MANAGER:add_event(Event({
             trigger = "after",
             delay = 218 * G.SPEEDFACTOR,
             func = function()
+                Multiverse.very_important_thing = false
                 Multiverse.stop_video("bad_apple")
                 Multiverse.end_animation("black_bg")
                 return true

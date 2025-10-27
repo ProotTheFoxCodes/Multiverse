@@ -12,6 +12,7 @@ Multiverse.C.PRIMARY1 = HEX("89C41B")
 Multiverse.C.PRIMARY2 = HEX("C5CC41")
 Multiverse.selected_music_page = 1
 Multiverse.transmutable_sticker_anim_state = 0
+Multiverse.debug = false
 
 SMODS.ObjectType {
     key = "mul_can_transmute",
@@ -34,3 +35,7 @@ end
 
 Multiverse.recursive_load("misc")
 Multiverse.recursive_load("mod")
+
+if SMODS.load_file("debug.lua") then
+    Multiverse.debug = true
+end

@@ -19,7 +19,7 @@ SMODS.Sticker({
 		)
         sprite.role.draw_major = card
         sprite:draw_shader('dissolve', nil, nil, nil, card.children.center)
-        -- sprite:draw_shader('voucher', nil, G.ARGS.send_to_shader, nil, card.children.center)
+        sprite:draw_shader('voucher', nil, G.ARGS.send_to_shader, nil, card.children.center)
 	end,
 	calculate = function(self, card, context)
 		if context.end_of_round and not context.blueprint and not context.game_over and context.main_eval then

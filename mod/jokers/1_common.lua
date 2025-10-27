@@ -29,9 +29,6 @@ SMODS.Joker {
     transmutable_compat = true,
     cost = 6,
     loc_vars = function(self, info_queue, card)
-        table.insert(info_queue, {
-            set = "Other", key = "mul_villager_hint"
-        })
         local count = 0
         if G.playing_cards then
             for _, v in ipairs(G.playing_cards) do
@@ -42,12 +39,16 @@ SMODS.Joker {
                 end
             end
         end
+        table.insert(info_queue, {
+            set = "Other", key = "mul_villager_hint", vars = {
+                count,
+                card.ability.extra.transmute_req
+            }
+        })
         return {
             vars = {
                 card.ability.extra.mult,
-                card.ability.extra.money_loss,
-                count,
-                card.ability.extra.transmute_req
+                card.ability.extra.money_loss
             }
         }
     end,

@@ -217,7 +217,6 @@ Multiverse.music_credits = {
         },
     },
 }
-
 function Multiverse.config_tab_definition()
     local mul_settings = {
         {
@@ -229,6 +228,11 @@ function Multiverse.config_tab_definition()
                     active_colour = Multiverse.TRANSMUTED_GRADIENT,
                     ref_table = Multiverse.config,
                     ref_value = "debug",
+                    callback = function()
+                        if not Multiverse.debug then
+                            Multiverse.config.debug = false
+                        end
+                    end
                 })
             }
         },
@@ -255,14 +259,11 @@ function Multiverse.config_tab_definition()
                     config = { align = "cm", padding = 0.1 },
                     nodes = {
                         {
-                            n = G.UIT.O,
+                            n = G.UIT.T,
                             config = {
-                                object = DynaText({
-                                    string = localize("mul_customization"),
-                                    colours = { G.C.WHITE },
-                                    scale = 0.4,
-                                    shadow = true
-                                })
+                                text = localize("mul_customization"),
+                                scale = 0.5,
+                                colour = G.C.WHITE
                             }
                         }
                     }
@@ -289,14 +290,11 @@ function Multiverse.config_tab_definition()
                     config = { align = "cm", padding = 0.05 },
                     nodes = {
                         {
-                            n = G.UIT.O,
+                            n = G.UIT.T,
                             config = {
-                                object = DynaText({
-                                    string = localize("mul_changes_warn"),
-                                    colours = { G.C.IMPORTANT },
-                                    scale = 0.4,
-                                    shadow = true
-                                })
+                                text = localize("mul_changes_warn"),
+                                scale = 0.4,
+                                colour = G.C.WHITE
                             }
                         }
                     }
@@ -312,14 +310,11 @@ function Multiverse.config_tab_definition()
                     config = { align = "cm", padding = 0.05 },
                     nodes = {
                         {
-                            n = G.UIT.O,
+                            n = G.UIT.T,
                             config = {
-                                object = DynaText({
-                                    string = localize("mul_changes_debug"),
-                                    colours = { G.C.IMPORTANT },
-                                    scale = 0.4,
-                                    shadow = true
-                                })
+                                text = localize("mul_changes_debug"),
+                                scale = 0.4,
+                                colour = G.C.WHITE
                             }
                         }
                     }
@@ -335,14 +330,11 @@ function Multiverse.config_tab_definition()
                     config = { align = "cm", padding = 0.05 },
                     nodes = {
                         {
-                            n = G.UIT.O,
+                            n = G.UIT.T,
                             config = {
-                                object = DynaText({
-                                    string = localize("mul_changes_pool1"),
-                                    colours = { G.C.IMPORTANT },
-                                    scale = 0.4,
-                                    shadow = true
-                                })
+                                text = localize("mul_changes_debug2"),
+                                scale = 0.4,
+                                colour = G.C.WHITE
                             }
                         }
                     }
@@ -358,14 +350,31 @@ function Multiverse.config_tab_definition()
                     config = { align = "cm", padding = 0.05 },
                     nodes = {
                         {
-                            n = G.UIT.O,
+                            n = G.UIT.T,
                             config = {
-                                object = DynaText({
-                                    string = localize("mul_changes_pool2"),
-                                    colours = { G.C.IMPORTANT },
-                                    scale = 0.4,
-                                    shadow = true
-                                })
+                                text = localize("mul_changes_pool1"),
+                                scale = 0.4,
+                                colour = G.C.WHITE
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            n = G.UIT.R,
+            config = { align = "cm" },
+            nodes = {
+                {
+                    n = G.UIT.C,
+                    config = { align = "cm", padding = 0.05 },
+                    nodes = {
+                        {
+                            n = G.UIT.T,
+                            config = {
+                                text = localize("mul_changes_pool2"),
+                                scale = 0.4,
+                                colour = G.C.WHITE
                             }
                         }
                     }
