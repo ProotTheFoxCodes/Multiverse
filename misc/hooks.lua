@@ -49,7 +49,7 @@ end
 local copy_card_hook = copy_card
 function copy_card(other, new_card, card_scale, playing_card, strip_edition)
     local card = copy_card_hook(other, new_card, card_scale, playing_card, strip_edition)
-    if card and SMODS.has_enhancement(card, "m_mul_waldo") and not G.VIEWING_DECK then
+    if card and card.config.center.key == "m_mul_waldo" and not G.VIEWING_DECK then
         if not Multiverse.all_animations["explosion"].is_active then
             Multiverse.start_animation("explosion")
             play_sound("mul_deltarune_explosion", 1, 0.7)
