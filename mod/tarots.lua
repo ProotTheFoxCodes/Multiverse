@@ -36,6 +36,7 @@ SMODS.Consumable {
         Multiverse.start_animation("black_bg")
         Multiverse.very_important_thing = true
         G.E_MANAGER:add_event(Event({
+            blockable = false,
             trigger = "after",
             delay = 218 * G.SPEEDFACTOR,
             func = function()

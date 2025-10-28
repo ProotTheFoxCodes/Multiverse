@@ -285,6 +285,7 @@ function Multiverse.stop_video(key)
     if Multiverse.all_videos[key] then
         Multiverse.all_videos[key].is_visible = false
         Multiverse.all_videos[key].video:pause()
+        Multiverse.all_videos[key].video:rewind()
     else
         error("No video for " .. key .. " exists")
     end
