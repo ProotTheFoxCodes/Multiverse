@@ -98,7 +98,12 @@ SMODS.Sound {
     key = "silent_music",
     path = "silence.ogg",
     select_music_track = function(self)
-        if Multiverse.all_videos["bad_apple"].is_visible or Multiverse.in_limbo then
+        for _, vid in pairs(Multiverse.all_videos) do
+            if vid.is_visible then
+                return 42069
+            end
+        end
+        if Multiverse.in_limbo then
             return 69420
         end
     end,
