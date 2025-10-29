@@ -78,7 +78,7 @@ return {
                 text = {
                     "{C:mul_transmuted,E:mul_unstable}Transmutes{} {C:attention}#1#{} selected Joker",
                     "that is currently {C:mul_transmuted}Transmutable{}",
-                    "{C:inactive}(Must have room, bypasses Eternal){}"
+                    "{C:inactive}(Preserves Joker modifications){}"
                 }
             },
             c_mul_holy_grail = {

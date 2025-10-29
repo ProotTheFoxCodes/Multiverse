@@ -35,15 +35,15 @@ SMODS.Joker {
                     assert(SMODS.change_base(changed_card, "Hearts", "Ace"))
                     G.E_MANAGER:add_event(Event({
                         func = function()
-                            changed_card:mul_safe_dissolve(nil, false, 2)
+                            changed_card:mul_safe_dissolve(nil, false, 1.6)
                             return true
                         end
                     }))
-                    delay(2)
+                    delay(1.75)
                     changed_card:set_ability("m_mul_calling_card", false, true)
                     G.E_MANAGER:add_event(Event({
                         func = function()
-                            changed_card:start_materialize(nil, false, 2)
+                            changed_card:start_materialize(nil, false, 1.6)
                             return true
                         end
                     }))
@@ -110,7 +110,7 @@ SMODS.Joker {
                         ease_to = 0,
                         delay = 1.8
                     }))
-                    delay(1)
+                    delay(0.5)
                 end
             end
         end
