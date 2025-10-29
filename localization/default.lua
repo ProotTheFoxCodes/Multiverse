@@ -76,9 +76,12 @@ return {
             c_mul_philosophers_stone = {
                 name = "Philosopher\'s Stone",
                 text = {
-                    "{C:mul_transmuted,E:mul_unstable}Transmutes{} {C:attention}#1#{} selected Joker",
-                    "that is currently {C:mul_transmuted}Transmutable{}",
-                    "{C:inactive}(Preserves Joker modifications){}"
+                    "Gain {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{}",
+                    "per {C:mul_transmuted}Transmuted{} Joker owned,",
+                    "then {C:mul_transmuted,E:2}Transmutes{} {C:attention}1{} selected Joker",
+                    "that is currently {C:mul_transmuted}Transmutable{},",
+                    "{C:inactive}(Preserves Joker modifications){}",
+                    "{C:inactive}(Currently {C:mul_transmuted}+#2#{C:inactive} Thaumaturgy Energy){}",
                 }
             },
             c_mul_holy_grail = {
@@ -93,16 +96,24 @@ return {
                 name = "Perpetual Motion Machine",
                 text = {
                     "Doubles current",
-                    "{C:mul_transmuted}Thaumaturgy Energy{}",
-                    "{C:inactive}(Max of {C:mul_transmuted}+#1#{C:inactive})"
+                    "Thaumaturgy Energy",
+                    "{C:inactive}(Max of {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{C:inactive})"
                 }
             },
             c_mul_voodoo_doll = {
                 name = "Voodoo Doll",
                 text = {
-                    "Creates a {C:attention}Joker{} card",
+                    "Creates a random {C:attention}Joker{} card",
                     "relevant to the {C:mul_transmuted}transmutation{}",
                     "of selected Joker",
+                }
+            },
+            c_mul_sphere = {
+                name = "Sphere of Annhilation",
+                text = {
+                    "Destroys selected Joker, then",
+                    "creates a random {C:attention}Joker{} that",
+                    "can become {C:mul_transmuted}Transmutable{}"
                 }
             }
         },
@@ -491,8 +502,7 @@ return {
                     "Can use {C:attention}Philosopher's Stone{}",
                     "on this card to create",
                     "{C:mul_transmuted,E:1}Transmuted{} Jokers",
-                    "{C:mul_transmuted}+#1#{} Thaumaturgy Energy",
-                    "at end of round"
+                    "{C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} at end of round",
                 }
             },
             mul_joker_hint = {

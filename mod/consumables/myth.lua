@@ -101,17 +101,24 @@ SMODS.Consumable({
 		Multiverse.update_card_anim(card, G.real_dt)
 	end,
 	pos = { x = 0, y = 0 },
-	config = { max_highlighted = 1 },
+	config = { extra = { energy_per_joker = 15 } },
 	discovered = true,
 	cost = 6,
-	select_card = "",
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",
 			key = "mul_transmutable",
 			vars = { G.GAME.mul_thaumaturgy_energy_per_joker or 10 },
 		})
-		return { vars = { card.ability.max_highlighted } }
+		local count = 0
+		if G.jokers then
+			for _, j in ipairs(G.jokers.cards) do
+				if j.config.center.rarity == "mul_transmuted" then
+					count = count + 1
+				end
+			end
+		end
+		return { vars = { card.ability.extra.energy_per_joker, count * card.ability.extra.energy_per_joker } }
 	end,
 	in_pool = function(self, args)
 		for _, c in ipairs(G.jokers.cards) do
@@ -142,8 +149,8 @@ SMODS.Consumable({
 			delay = 0.15,
 			func = function()
 				joker_to_transmute:flip()
-                play_sound('card1', 1.15)
-                joker_to_transmute:juice_up(0.3, 0.5)
+				play_sound("card1", 1.15)
+				joker_to_transmute:juice_up(0.3, 0.5)
 				return true
 			end,
 		}))
@@ -151,28 +158,28 @@ SMODS.Consumable({
 			trigger = "after",
 			delay = 1.65,
 			func = function()
-                joker_to_transmute:mul_safe_dissolve(nil, false, 1.6)
+				joker_to_transmute:mul_safe_dissolve(nil, false, 1.6)
 				return true
 			end,
 		}))
 		G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 1.5,
-            func = function()
-                joker_to_transmute:remove_sticker("mul_transmutable")
-                joker_to_transmute:set_ability(transmute_key)
-                play_sound('tarot2', 0.85, 0.6)
-                joker_to_transmute:start_materialize(nil, false, 1.6)
-                return true
-            end
-        }))
+			trigger = "after",
+			delay = 1.5,
+			func = function()
+				joker_to_transmute:remove_sticker("mul_transmutable")
+				joker_to_transmute:set_ability(transmute_key)
+				play_sound("tarot2", 0.85, 0.6)
+				joker_to_transmute:start_materialize(nil, false, 1.6)
+				return true
+			end,
+		}))
 		G.E_MANAGER:add_event(Event({
 			trigger = "after",
 			delay = 1.85,
 			func = function()
 				joker_to_transmute:flip()
-                play_sound('card1', 1.15)
-                joker_to_transmute:juice_up(0.3, 0.5)
+				play_sound("card1", 1.15)
+				joker_to_transmute:juice_up(0.3, 0.5)
 				return true
 			end,
 		}))
@@ -188,7 +195,7 @@ SMODS.Consumable({
 		Multiverse.update_card_anim(card, G.real_dt)
 	end,
 	pos = { x = 0, y = 0 },
-	config = { max_highlighted = 1, extra = { num_consumables = 3 } },
+	config = { extra = { num_consumables = 3 } },
 	discovered = true,
 	cost = 6,
 	loc_vars = function(self, info_queue, card)
@@ -276,16 +283,16 @@ SMODS.Consumable({
 				play_sound("tarot1")
 				local j_key = G.jokers.highlighted[1].config.center.key
 				if Multiverse.transmutations[j_key].other.voodoo_doll then
-    				SMODS.add_card({
-    					key = pseudorandom_element(
-    						Multiverse.transmutations[j_key].other.voodoo_doll,
-    						"mul_voodoo_doll"
-    					),
-    				})
+					SMODS.add_card({
+						key = pseudorandom_element(
+							Multiverse.transmutations[j_key].other.voodoo_doll,
+							"mul_voodoo_doll"
+						),
+					})
 				end
 				card:juice_up(0.3, 0.5)
 				return true
-			end
+			end,
 		}))
 		delay(0.6)
 	end,
