@@ -261,9 +261,9 @@ SMODS.Consumable({
 	can_use = function(self, card)
 		return (
 			#G.jokers.highlighted == 1
-			and #G.jokers.cards < #G.jokers.config.card_limit
-			and Multiverse.transmutations[G.jokers.highlighted[1].config.center.key]
-		) ~= nil
+			and #G.jokers.cards < G.jokers.config.card_limit
+			and Multiverse.transmutations[G.jokers.highlighted[1].config.center.key] ~= nil
+		)
 		-- in order for this card to be usable,
 		-- the joker's key must be in Multiverse.transmutations
 		-- and you must have space for a Joker

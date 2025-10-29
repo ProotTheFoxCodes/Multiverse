@@ -96,6 +96,14 @@ return {
                     "{C:mul_transmuted}Thaumaturgy Energy{}",
                     "{C:inactive}(Max of {C:mul_transmuted}+#1#{C:inactive})"
                 }
+            },
+            c_mul_voodoo_doll = {
+                name = "Voodoo Doll",
+                text = {
+                    "Creates a {C:attention}Joker{} card",
+                    "relevant to the {C:mul_transmuted}transmutation{}",
+                    "of selected Joker",
+                }
             }
         },
         Joker = {
