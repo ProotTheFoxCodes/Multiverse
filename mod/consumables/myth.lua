@@ -269,24 +269,24 @@ SMODS.Consumable({
 		-- and you must have space for a Joker
 	end,
 	use = function(self, card, area, copier)
-		local j_key = G.jokers.highlighted[1].config.center.key
-		if Multiverse.transmutations[j_key].other.voodoo_doll then
-			G.E_MANAGER:add_event(Event({
-				trigger = "after",
-				delay = 0.4,
-				func = function()
-					play_sound("tarot1")
-					SMODS.add_card({
-						key = pseudorandom_element(
-							Multiverse.transmutations[j_key].other.voodoo_doll,
-							"mul_voodoo_doll"
-						),
-					})
-					card:juice_up(0.3, 0.5)
-					return true
-				end,
-			}))
-			delay(0.6)
-		end
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.4,
+			func = function()
+				play_sound("tarot1")
+				local j_key = G.jokers.highlighted[1].config.center.key
+				if Multiverse.transmutations[j_key].other.voodoo_doll then
+    				SMODS.add_card({
+    					key = pseudorandom_element(
+    						Multiverse.transmutations[j_key].other.voodoo_doll,
+    						"mul_voodoo_doll"
+    					),
+    				})
+				end
+				card:juice_up(0.3, 0.5)
+				return true
+			end
+		}))
+		delay(0.6)
 	end,
 })
