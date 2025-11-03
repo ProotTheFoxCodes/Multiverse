@@ -1,13 +1,14 @@
-<h1 align = "center"> Multiverse </h1>
+<h1 align = "center"> ✧ Multiverse ✧ </h1>
 
 ![The logo of the mod. Appears in-game orbiting the Balatro logo in the main menu.](multiverse_logo_README.png)
 
-A Balatro mod I made because I was bored and needed something to work on.
+A Balatro mod where I add whatever I feel like to the game.
 This mod introduces:
  - New Jokers (mostly) based on references to other things, somewhat balanced compared to vanilla Jokers
  - A new "transmutation" mechanic that transmutes Jokers into more powerful Transmuted Jokers that exceed the power of Legendary jokers
  - Enhancements, Seals and Stickers associated with these Transmuted Jokers
  - New Tarot and Spectral cards to add more variety to the overall Balatro experience
+ - Myth Cards, a new consumable type to facilitate this transmutation mechanic
 
 > :page_facing_up: Note: Compatibility with other mods is **not** guaranteed.
 
