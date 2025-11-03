@@ -151,7 +151,11 @@ return {
             c_mul_shadow_crystal = {
                 name = "Shadow Crystal",
                 text = {
-                    
+                    "Set selected Joker's progress",
+                    "towards becoming {C:mul_transmuted}Transmutable{}",
+                    "to one less than its requirement",
+                    "and give the selected Joker",
+                    "Perishable"
                 }
             },
             c_mul_one_piece = {

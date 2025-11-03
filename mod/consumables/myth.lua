@@ -261,7 +261,7 @@ SMODS.Consumable({
 			local j_key = G.jokers.highlighted[1].config.center.key
 			if Multiverse.transmutations[j_key].other.tree_of_eden then
 				SMODS.add_card({
-					key = pseudorandom_element(Multiverse.transmutations[j_key].other.tree_of_eden, "mul_voodoo_doll"),
+					key = pseudorandom_element(Multiverse.transmutations[j_key].other.tree_of_eden, "mul_tree_of_eden"),
 				})
 			end
 		end)
@@ -365,6 +365,34 @@ SMODS.Consumable({
 				j:flip()
 			end
 			Multiverse.ease_thaumaturgy_energy(card.ability.extra.energy_per_joker * #G.jokers.cards)
+		end)
+	end,
+})
+
+SMODS.Consumable({
+	key = "shadow_crystal",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	can_use = function(self, card)
+		return G.jokers
+			and #G.jokers.highlighted == 1
+			and G.jokers.highlighted[1].config.center.perishable_compat
+			and type(G.jokers.highlighted[1].ability.extra) == "table"
+			and G.jokers.highlighted[1].ability.extra.transmute_req
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			local target = G.jokers.highlighted[1]
+			if type(target.ability.extra.transmute_progress) == "table" then
+				target.ability.extra.transmute_progress.n = target.ability.extra.transmute_req - 1
+			else
+				target.ability.extra.transmute_progress = target.ability.extra.transmute_req - 1
+			end
+			target:set_perishable(true)
+			target:juice_up(0.3,0.5)
 		end)
 	end,
 })

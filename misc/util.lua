@@ -432,8 +432,8 @@ function Card:mul_safe_dissolve(dissolve_colours, silent, dissolve_time_fac, no_
 end
 
 ---Animation + sfx for consumables
----@param card balatro.Card
----@param func fun(): nil
+---@param card balatro.Card The consumable that is applying its effect
+---@param func fun(): nil The effect to apply
 function Multiverse.consumable_effect(card, func)
 	G.E_MANAGER:add_event(Event({
 		trigger = "after",
