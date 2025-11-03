@@ -155,13 +155,16 @@ return {
                     "towards becoming {C:mul_transmuted}Transmutable{}",
                     "to one less than its requirement",
                     "and give the selected Joker",
-                    "Perishable"
+                    "{C:attention}Perishable{}"
                 }
             },
             c_mul_one_piece = {
                 name = "One Piece",
                 text = {
-
+                    "Gain Thaumaturgy Energy",
+                    "equal to the total sell",
+                    "value of all Jokers",
+                    "{C:inactive}(Currently {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{C:inactive}){}"
                 }
             },
             c_mul_gnosis = {

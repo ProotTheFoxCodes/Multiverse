@@ -15,6 +15,14 @@ Multiverse.selected_music_page = 1
 Multiverse.transmutable_sticker_anim_state = 0
 Multiverse.debug = false
 
+---Talisman compatibility?
+to_big = to_big or function(x)
+	return x
+end
+to_number = to_number or function(x)
+	return x
+end
+
 SMODS.ObjectType({
 	key = "mul_can_transmute",
 	default = "j_joker",

@@ -392,7 +392,42 @@ SMODS.Consumable({
 				target.ability.extra.transmute_progress = target.ability.extra.transmute_req - 1
 			end
 			target:set_perishable(true)
-			target:juice_up(0.3,0.5)
+			target:juice_up(0.3, 0.5)
+		end)
+	end,
+})
+
+SMODS.Consumable({
+	key = "one_piece",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	config = { extra = { max_thaum_energy = 100 } },
+	can_use = function(self, card)
+		return true
+	end,
+	loc_vars = function(self, info_queue, card)
+		local total = 0
+		if G.jokers then
+			for _, j in ipairs(G.jokers.cards) do
+				total = total + j.sell_cost
+			end
+		end
+		return { vars = { total } }
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			local total = 0
+			if G.jokers then
+				for _, j in ipairs(G.jokers.cards) do
+					total = total + j.sell_cost
+				end
+			end
+			Multiverse.ease_thaumaturgy_energy(
+				math.min(math.floor(to_number(total)), card.ability.extra.max_thaum_energy)
+			)
 		end)
 	end,
 })

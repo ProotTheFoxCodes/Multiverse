@@ -1,8 +1,3 @@
-Multiverse = Multiverse or {}
----Talisman compatibility?
-to_big = to_big or function(x)
-	return x
-end
 ---Checks if value is mapped to a key within a table t.
 ---@param table table
 ---@param value any
