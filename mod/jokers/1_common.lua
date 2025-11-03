@@ -24,29 +24,24 @@ SMODS.Joker({
 	key = "villager",
 	atlas = "placeholder",
 	pos = { x = 0, y = 0 },
-	config = { extra = { mult = 20, money_loss = 1, transmute_req = Multiverse.set_transmute_requirements(25) } },
+	config = {
+		extra = {
+			mult = 20,
+			money_loss = 1,
+			transmute_req = Multiverse.set_transmute_requirements(25),
+			transmute_progress = 0,
+		},
+	},
 	rarity = 1,
 	blueprint_compat = true,
 	transmutable_compat = true,
 	cost = 6,
 	loc_vars = function(self, info_queue, card)
-		local count = 0
-		if G.playing_cards then
-			for _, v in ipairs(G.playing_cards) do
-				if
-					SMODS.has_enhancement(v, "m_steel")
-					or SMODS.has_enhancement(v, "m_gold")
-					or SMODS.has_enhancement(v, "m_stone")
-				then
-					count = count + 1
-				end
-			end
-		end
 		table.insert(info_queue, {
 			set = "Other",
 			key = "mul_villager_hint",
 			vars = {
-				count,
+				card.ability.extra.transmute_progress,
 				card.ability.extra.transmute_req,
 			},
 		})
@@ -58,23 +53,6 @@ SMODS.Joker({
 		}
 	end,
 	calculate = function(self, card, context)
-		local count = 0
-		if not context.blueprint then
-			for _, c in ipairs(G.playing_cards) do
-				if
-					SMODS.has_enhancement(c, "m_steel")
-					or SMODS.has_enhancement(c, "m_gold")
-					or SMODS.has_enhancement(c, "m_stone")
-				then
-					count = count + 1
-				end
-			end
-			if count >= card.ability.extra.transmute_req then
-				card:add_sticker("mul_transmutable", true)
-			else
-				card:remove_sticker("mul_transmutable")
-			end
-		end
 		if context.joker_main then
 			G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) - card.ability.extra.money_loss
 			ease_dollars(-card.ability.extra.money_loss)
@@ -90,9 +68,41 @@ SMODS.Joker({
 				end,
 			}
 		end
+		if not context.blueprint then
+			if context.playing_card_added then
+				for _, c in ipairs(context.cards) do
+					if
+						SMODS.has_enhancement(c, "m_steel")
+						or SMODS.has_enhancement(c, "m_gold")
+						or SMODS.has_enhancement(c, "m_stone")
+					then
+						card.ability.extra.transmute_progress = card.ability.extra.transmute_progress + 1
+					end
+				end
+			end
+			if context.mul_villager_transmute_check then
+				card.ability.extra.transmute_progress = card.ability.extra.transmute_progress + 1
+			end
+		end
 	end,
 	pools = { ["mul_can_transmute"] = true },
 })
+
+local set_ability_hook = Card.set_ability
+function Card:set_ability(center, initial, delay_sprites)
+	set_ability_hook(self, center, initial, delay_sprites)
+	if
+		not initial
+		and self.playing_card
+		and (
+			SMODS.has_enhancement(self, "m_stone")
+			or SMODS.has_enhancement(self, "m_steel")
+			or SMODS.has_enhancement(self, "m_gold")
+		)
+	then
+		SMODS.calculate_context({ mul_villager_transmute_check = true })
+	end
+end
 
 SMODS.Joker({
 	key = "red_balloon",

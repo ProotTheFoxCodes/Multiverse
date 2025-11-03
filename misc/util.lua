@@ -430,3 +430,35 @@ function Card:mul_safe_dissolve(dissolve_colours, silent, dissolve_time_fac, no_
 		delay = 1.051 * dissolve_time,
 	}))
 end
+
+---Animation + sfx for consumables
+---@param card balatro.Card
+---@param func fun(): nil
+function Multiverse.consumable_effect(card, func)
+	G.E_MANAGER:add_event(Event({
+		trigger = "after",
+		delay = 0.4,
+		func = function()
+			play_sound("tarot1")
+			func()
+			card:juice_up(0.3, 0.5)
+			return true
+		end,
+	}))
+	delay(0.6)
+end
+
+function Multiverse.show_blind_instructions(key)
+	G.mul_instructions_HUD = UIBox({
+		definition = Multiverse.blind_instructions_HUD_def(key),
+		config = { align = "cri", offset = { x = 1.2, y = 0 }, major = G.ROOM_ATTACH },
+	})
+	G.mul_instructions_HUD:recalculate()
+end
+
+function Multiverse.remove_blind_instructions()
+	if G.mul_instructions_HUD then
+		G.mul_instructions_HUD:remove()
+		G.mul_instructions_HUD = nil
+	end
+end

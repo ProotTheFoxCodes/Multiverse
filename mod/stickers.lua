@@ -42,3 +42,19 @@ function Multiverse.update_transmutable_sticker_anim_state()
 		Multiverse.transmutable_sticker_anim_state = Multiverse.transmutable_sticker_anim_state - 18
 	end
 end
+
+SMODS.Sticker({
+	key = "traitorous",
+	atlas = "temp_sticker",
+	pos = { x = 0, y = 0 },
+	badge_colour = HEX("BF244C"),
+	default_compat = true,
+	needs_enabled_flag = true,
+	calculate = function(self, card, context)
+		if context.end_of_round and context.main_eval and not context.blueprint then
+			if G.jokers.cards[1] then
+				SMODS.destroy_cards(G.jokers.cards[1], true)
+			end
+		end
+	end,
+})

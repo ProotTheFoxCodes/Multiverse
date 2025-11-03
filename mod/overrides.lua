@@ -1,5 +1,5 @@
 ---Effectively a cleaner take_ownership that makes taking ownership of modded Jokers and making them transmutable more convenient
----Note that I do not adhere to the standards implied by this function.
+---Note that I adhere to the standards implied by this function due to consumable behavior.
 ---@param key string Note that the Joker with this key must satisfy `type(modded_joker.ability.extra) == "table"`
 ---@param tracker_var number | table If this is a table, it must contain a key called `n` that maps to an integer value.
 ---@param requirement integer The requirement needed for a Joker to receive the sticker.
@@ -32,6 +32,7 @@ function Multiverse.transmutable_override(key, tracker_var, requirement, calc)
 			table.insert(info_queue, {
 				set = "Other",
 				key = "mul_" .. no_joker_prefix_key .. "hint",
+				vars = transmute_vars
 			})
 		end,
 		calculate = function(self, card, context)
@@ -61,13 +62,13 @@ end
 SMODS.Joker:take_ownership("joker", {
 	transmutable_compat = true,
 	config = {
-		extra = { mult = 4, tarots_used = { n = 0 }, transmute_req = Multiverse.set_transmute_requirements(15) },
+		extra = { mult = 4, transmute_progress = { n = 0 }, transmute_req = Multiverse.set_transmute_requirements(15) },
 	},
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",
 			key = "mul_joker_hint",
-			vars = { card.ability.extra.tarots_used.n, card.ability.extra.transmute_req },
+			vars = { card.ability.extra.transmute_progress.n, card.ability.extra.transmute_req },
 		})
 		return { vars = { card.ability.extra.mult } }
 	end,
@@ -76,11 +77,11 @@ SMODS.Joker:take_ownership("joker", {
 			return { mult = card.ability.extra.mult }
 		end
 		if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == "Tarot" then
-			if not card.ability.extra.tarots_used[context.consumeable.config.center.key] then
-				card.ability.extra.tarots_used[context.consumeable.config.center.key] = true
-				card.ability.extra.tarots_used.n = card.ability.extra.tarots_used.n + 1
+			if not card.ability.extra.transmute_progress[context.consumeable.config.center.key] then
+				card.ability.extra.transmute_progress[context.consumeable.config.center.key] = true
+				card.ability.extra.transmute_progress.n = card.ability.extra.transmute_progress.n + 1
 			end
-			if card.ability.extra.tarots_used.n >= card.ability.extra.transmute_req then
+			if card.ability.extra.transmute_progress.n >= card.ability.extra.transmute_req then
 				-- note to self: when adding modded stickers, must add mod prefix before sticker key
 				card:add_sticker("mul_transmutable", true)
 				-- another note to self: pass in true as 2nd argument to card:add_sticker()
@@ -96,17 +97,17 @@ SMODS.Joker:take_ownership("pareidolia", {
 		table.insert(info_queue, {
 			set = "Other",
 			key = "mul_pareidolia_hint",
-			vars = { card.ability.extra.hands_played.n, card.ability.extra.transmute_req },
+			vars = { card.ability.extra.transmute_progress.n, card.ability.extra.transmute_req },
 		})
 	end,
-	config = { extra = { hands_played = { n = 0 }, transmute_req = Multiverse.set_transmute_requirements(5) } },
+	config = { extra = { transmute_progress = { n = 0 }, transmute_req = Multiverse.set_transmute_requirements(5) } },
 	calculate = function(self, card, context)
 		if context.before and not context.blueprint then
-			if not card.ability.extra.hands_played[context.scoring_name] then
-				card.ability.extra.hands_played[context.scoring_name] = true
-				card.ability.extra.hands_played.n = card.ability.extra.hands_played.n + 1
+			if not card.ability.extra.transmute_progress[context.scoring_name] then
+				card.ability.extra.transmute_progress[context.scoring_name] = true
+				card.ability.extra.transmute_progress.n = card.ability.extra.transmute_progress.n + 1
 			end
-			if card.ability.extra.hands_played.n >= card.ability.extra.transmute_req then
+			if card.ability.extra.transmute_progress.n >= card.ability.extra.transmute_req then
 				card:add_sticker("mul_transmutable", true)
 			end
 		end
@@ -138,3 +139,4 @@ SMODS.Joker:take_ownership("chicot", {
 	end,
 }, true)
 --#endregion
+

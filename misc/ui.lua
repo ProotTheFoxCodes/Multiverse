@@ -666,7 +666,9 @@ function Multiverse.create_thaumaturgy_ui()
 										n = G.UIT.O,
 										config = {
 											object = DynaText({
-												string = { { ref_table = G.GAME, ref_value = "mul_thaumaturgy_energy" } },
+												string = {
+													{ ref_table = G.GAME, ref_value = "mul_thaumaturgy_energy" },
+												},
 												colours = { Multiverse.TRANSMUTED_GRADIENT },
 												shadow = true,
 												scale = 1.5 * 0.4,
@@ -679,6 +681,54 @@ function Multiverse.create_thaumaturgy_ui()
 						},
 					},
 				},
+			},
+		},
+	}
+end
+
+function Multiverse.blind_instructions_HUD_def(key)
+	local loc_entry = G.localization.descriptions.Other["mul_" .. key .. "_inst"]
+	local rows = {}
+	table.insert(rows, {
+		n = G.UIT.R,
+		config = { align = "cm", padding = 0.05 },
+		nodes = {
+			{
+				n = G.UIT.C,
+				config = { align = "cm" },
+				nodes = {
+					{ n = G.UIT.T, config = { text = loc_entry.name, colour = G.C.UI.TEXT_LIGHT, scale = 0.4 } },
+				},
+			},
+		},
+	})
+	local text_rows = {}
+	for _, line in ipairs(loc_entry.text_parsed) do
+		table.insert(text_rows, {
+			n = G.UIT.R,
+			config = { align = "cm" },
+			nodes = SMODS.localize_box(line, { scale = 0.9 }),
+		})
+	end
+	table.insert(rows, {
+		n = G.UIT.R,
+		config = { align = "cm", padding = 0.05, colour = G.C.UI.BACKGROUND_WHITE, r = 0.1, emboss = 0.05 },
+		nodes = {
+			{
+				n = G.UIT.C,
+				config = { align = "cm", padding = 0.05 },
+				nodes = text_rows,
+			},
+		},
+	})
+	return {
+		n = G.UIT.ROOT,
+		config = { padding = 0.05, colour = G.C.JOKER_GREY, align = "cm", r = 0.1 },
+		nodes = {
+			{
+				n = G.UIT.C,
+				config = { padding = 0.05, colour = G.C.L_BLACK, align = "cm", r = 0.1, emboss = 0.05 },
+				nodes = rows,
 			},
 		},
 	}

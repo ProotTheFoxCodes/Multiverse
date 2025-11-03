@@ -219,7 +219,7 @@ SMODS.Joker({
 			mult = 5,
 			xmult = 1.25,
 			transmute_progress = 0,
-			transmute_req = Multiverse.set_transmute_requirements(120),
+			transmute_req = Multiverse.set_transmute_requirements(150),
 		},
 	},
 	rarity = 2,

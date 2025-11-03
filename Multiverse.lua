@@ -1,3 +1,4 @@
+Multiverse = {}
 Multiverse = SMODS.current_mod
 Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient({
 	key = "transmuted_gradient",

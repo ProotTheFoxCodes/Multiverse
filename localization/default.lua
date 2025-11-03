@@ -81,7 +81,7 @@ return {
                     "then {C:mul_transmuted,E:2}Transmutes{} {C:attention}1{} selected Joker",
                     "that is currently {C:mul_transmuted}Transmutable{},",
                     "{C:inactive}(Preserves Joker modifications){}",
-                    "{C:inactive}(Currently {C:mul_transmuted}+#2#{C:inactive} Thaumaturgy Energy){}",
+                    "{C:inactive}(Currently {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#2#{C:inactive}){}",
                 }
             },
             c_mul_holy_grail = {
@@ -100,10 +100,10 @@ return {
                     "{C:inactive}(Max of {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{C:inactive})"
                 }
             },
-            c_mul_voodoo_doll = {
-                name = "Voodoo Doll",
+            c_mul_tree_of_eden = {
+                name = "Tree of Eden",
                 text = {
-                    "Creates a random {C:attention}Joker{} card",
+                    "Creates a random {C:attention}Joker{} that is",
                     "relevant to the {C:mul_transmuted}transmutation{}",
                     "of selected Joker",
                 }
@@ -111,9 +111,155 @@ return {
             c_mul_sphere = {
                 name = "Sphere of Annhilation",
                 text = {
-                    "Destroys selected Joker, then",
-                    "creates a random {C:attention}Joker{} that",
-                    "can become {C:mul_transmuted}Transmutable{}"
+                    "Destroys all cards in hand",
+                    "Lose {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} per card destroyed",
+                    "{C:inactive}(Will lose {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#2#{C:inactive}){}"
+                }
+            },
+            c_mul_chaos_emeralds = {
+                name = "Chaos Emeralds",
+                text = {
+                    "Increase selected Joker's",
+                    "progress towards becoming",
+                    "{C:mul_transmuted}Transmutable{} by {C:attention}25%{}"
+                }
+            },
+            c_mul_one_ring = {
+                name = "One Ring",
+                text = {
+                    "Set Thaumaturgy Energy",
+                    "to {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}0{} and creates a",
+                    "random {C:red}Rare{} {C:attention}Joker{}"
+                }
+            },
+            c_mul_theory = {
+                name = "Theory of Everything",
+                text = {
+                    "Create a random {C:attention}Joker{}",
+                    "that can become {C:mul_transmuted}Transmutable{}"
+                }
+            },
+            c_mul_rosetta_stone = {
+                name = "Rosetta Stone",
+                text = {
+                    "{C:attention}Flips{} all Jokers",
+                    "Gain {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} per",
+                    "Joker flipped",
+                    "{C:inactive}(Will gain {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#2#{C:inactive}){}"
+                }
+            },
+            c_mul_shadow_crystal = {
+                name = "Shadow Crystal",
+                text = {
+                    
+                }
+            },
+            c_mul_one_piece = {
+                name = "One Piece",
+                text = {
+
+                }
+            },
+            c_mul_gnosis = {
+                name = "Archon's Gnosis",
+                text = {
+
+                }
+            },
+            c_mul_puzzle = {
+                name = "Millenium Puzzle",
+                text = {
+
+                }
+            },
+            c_mul_apotheosis = {
+                name = "Apotheosis",
+                text = {
+
+                }
+            },
+            c_mul_projection = {
+                name = "Astral Projection",
+                text = {
+
+                }
+            },
+            c_mul_stand_arrow = {
+                name = "Stand Arrow",
+                text = {
+
+                }
+            },
+            c_mul_moon_berry = {
+                name = "Moon Berry",
+                text = {
+
+                }
+            },
+            c_mul_elder_scroll = {
+                name = "Elder Scroll",
+                text = {
+
+                }
+            },
+            c_mul_master_ball = {
+                name = "Master Ball",
+                text = {
+
+                }
+            },
+            c_mul_unicorn_horn = {
+                name = "Unicorn's Horn",
+                text = {
+
+                }
+            },
+            c_mul_kryptonite = {
+                name = "Kryptonite",
+                text = {
+
+                }
+            },
+            c_mul_infinity_gauntlet = {
+                name = "Infinity Gauntlet",
+                text = {
+                    
+                }
+            },
+            c_mul_super_star = {
+                name = "Super Star",
+                text = {
+
+                }
+            },
+            c_mul_triforce = {
+                name = "Triforce",
+                text = {
+
+                }
+            },
+            c_mul_dragon_balls = {
+                name = "Dragon Balls",
+                text = {
+
+                }
+            },
+            c_mul_precognition = {
+                name = "Precognition",
+                text = {
+
+                }
+            },
+            c_mul_ley_lines = {
+                name = "Ley Lines",
+                text = {
+
+                }
+            },
+            c_mul_homunculus = {
+                name = "Homunculus",
+                text = {
+
                 }
             }
         },
@@ -447,13 +593,30 @@ return {
                     "{C:inactive}(Destroys all Jokers that",
                     "{C:inactive}cannot receive Eternal)"
                 }
+            },
+            c_mul_backstab = {
+                name = "Backstab",
+                text = {
+                    "Create a {C:dark_edition}Negative{} copy",
+                    "of a random Joker, then",
+                    "give {C:attention}Traitorous{} to the copy"
+                }
+            },
+            c_mul_scheme = {
+                name = "Pyramid Scheme",
+                text = {
+                    "Gives {C:attention}triple{} the total sell",
+                    "value of all Jokers, then",
+                    "gives all Jokers {C:attention}Rental{}",
+                    "{C:inactive}(Will give {C:money}$#1#{C:inactive}){}"
+                }
             }
         },
         Tag = {
             tag_mul_magnum_opus = {
                 name = "Magnum Opus Tag",
                 text = {
-                    "Immediately creates a",
+                    "Creates a",
                     "{C:mul_transmuted}Philosopher's Stone{}",
                     "{C:inactive,s:0.8}Cannot be duplicated{}",
                     "{C:inactive,s:0.8}Ignores consumable limit{}"
@@ -505,36 +668,44 @@ return {
                     "{C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} at end of round",
                 }
             },
+            mul_traitorous = {
+                name = "Traitorous",
+                text = {
+                    "{C:attention}Destroys{} leftmost Joker",
+                    "at end of round",
+                    "{C:inactive}(Bypasses Eternal){}"
+                }
+            },
             mul_joker_hint = {
                 name = "Hint",
                 text = {
-                    "Use a variety of",
+                    "Use {C:attention}#2#{} distinct",
                     "{C:tarot}Tarot{} cards",
-                    "{C:inactive}(#1#/#2#?){}"
+                    "{C:inactive}(#1#/#2#){}"
                 }
             },
             mul_villager_hint = {
                 name = "Hint",
                 text = {
-                    "Get lots of {C:attention}Gold{},",
+                    "Obtain {C:attention}#2#{} {C:attention}Gold{},",
                     "{C:attention}Stone{} and {C:attention}Steel{} cards",
-                    "{C:inactive}(#1#/#2#?){}"
+                    "{C:inactive}(#1#/#2#){}"
                 }
             },
             mul_hammer_bro_hint = {
                 name = "Hint",
                 text = {
                     "Trigger this card",
-                    "lots of times",
-                    "{C:inactive}(#1#/#2#?){}"
+                    "{C:attention}#2#{} times",
+                    "{C:inactive}(#1#/#2#){}"
                 }
             },
             mul_pareidolia_hint = {
                 name = "Hint",
                 text = {
-                    "Play some unique",
+                    "Play {C:attention}#2#{} unique",
                     "{C:attention}poker hands{}",
-                    "{C:inactive}(#1#/#2#?){}"
+                    "{C:inactive}(#1#/#2#){}"
                 }
             },
             undiscovered_mul_myth = {
@@ -555,6 +726,40 @@ return {
                     "{C:attention}100{} at end of round, Thaumaturgy",
                     "Energy is {C:red}reset{} to {C:attention}0{} and",
                     "a {C:mul_transmuted}Magnum Opus{} tag is created"
+                }
+            },
+            mul_limbo_inst = {
+                name = "Instructions",
+                text = {
+                    "When Blind is selected, {C:attention}8{} keys",
+                    "will appear on the screen",
+                    " ",
+                    "Pay attention to the {C:attention}key{}",
+                    "that is flashing {C:green}green{}",
+                    " ",
+                    "In a moment, the keys will",
+                    "start to {C:attention}shuffle{} around",
+                    " ",
+                    "When the keys stop shuffling,",
+                    "{C:attention}click{} the key that was flashing",
+                    "{C:green}green{} at the start of the blind"
+                }
+            },
+            mul_undying_inst = {
+                name = "Instructions",
+                text = {
+                    "When playing a hand, a",
+                    "{C:green}green{} heart will appear,",
+                    "as well as a {C:blue}blue{} shield",
+                    " ",
+                    "Use {C:attention}arrow keys{} to block",
+                    "the incoming spears by",
+                    "pointing the shield in",
+                    "the direction of the spear",
+                    " ",
+                    "Yellow spears will {C:attention}flip{}",
+                    "direction once they are",
+                    "about halfway to the heart"
                 }
             }
         },
@@ -667,6 +872,7 @@ return {
         },
         labels = {
             mul_transmutable = "Transmutable",
+            mul_traitorous = "Traitorous",
             myth = "Myth",
             k_mul_transmuted = "Transmuted",
         },

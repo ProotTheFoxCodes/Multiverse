@@ -2,7 +2,7 @@ local is_face_hook = Card.is_face
 function Card:is_face(from_boss)
 	if self.config.center.key == "m_mul_normal" then
 		if self.debuff and not from_boss then
-			return
+			return is_face_hook(self, from_boss)
 		end
 		return true
 	end
@@ -28,7 +28,10 @@ function Game:update(dt)
 	Multiverse.update_spears()
 	Multiverse.update_transmutable_sticker_anim_state()
 	if G.SPLASH_MULTIVERSE_LOGO and G.SPLASH_MULTIVERSE_LOGO.dissolve == 0 then
-		G.mul_loaded_timer = (G.mul_loaded_timer or 0) + G.real_dt
+		G.mul_loaded_timer = (G.mul_loaded_timer or 0)
+		if not G.SETTINGS.paused then
+			G.mul_loaded_timer = G.mul_loaded_timer + G.real_dt
+		end
 		G.SPLASH_MULTIVERSE_LOGO:set_alignment({
 			major = G.title_top,
 			type = "cm",
@@ -56,7 +59,7 @@ function copy_card(other, new_card, card_scale, playing_card, strip_edition)
 			Multiverse.start_animation("explosion")
 			play_sound("mul_deltarune_explosion", 1, 0.7)
 		end
-		card:set_ability("c_base", nil, true)
+		card:set_ability("c_base")
 	end
 	return card
 end
@@ -138,7 +141,7 @@ end
 
 local start_run_hook = Game.start_run
 function Game:start_run(args)
-	local ret = start_run_hook(self, args)
+	start_run_hook(self, args)
 	if not G.GAME.mul_thaumaturgy_energy then
 		G.GAME.mul_thaumaturgy_energy = 0
 	end
@@ -148,5 +151,7 @@ function Game:start_run(args)
 	if not G.GAME.mul_thaumaturgy_energy_per_joker then
 		G.GAME.mul_thaumaturgy_energy_per_joker = 10
 	end
-	return ret
+	if G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" then
+	    Multiverse.show_blind_instructions("undying")
+	end
 end

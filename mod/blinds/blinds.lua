@@ -1,4 +1,4 @@
-SMODS.Blind {
+SMODS.Blind({
 	key = "limbo",
 	atlas = "multiverse_blinds",
 	pos = { x = 0, y = 0 },
@@ -6,14 +6,15 @@ SMODS.Blind {
 	boss = { min = 1 },
 	mult = 2,
 	set_blind = function(self)
-        Multiverse.in_limbo = "pre_start"
-    	if pseudorandom("mul_limbo", 1, 1000) < 8 then
-            Multiverse.secret_limbo = true
-            Multiverse.HIDDEN_KEY_COLOR = { 1, 1, 1, 1 }
-        else
-            Multiverse.secret_limbo = false
-            Multiverse.HIDDEN_KEY_COLOR = { 224 / 255, 85 / 255, 32 / 255, 1 }
-        end
+		Multiverse.show_blind_instructions("limbo")
+		Multiverse.in_limbo = "pre_start"
+		if pseudorandom("mul_limbo", 1, 1000) < 8 then
+			Multiverse.secret_limbo = true
+			Multiverse.HIDDEN_KEY_COLOR = { 1, 1, 1, 1 }
+		else
+			Multiverse.secret_limbo = false
+			Multiverse.HIDDEN_KEY_COLOR = { 224 / 255, 85 / 255, 32 / 255, 1 }
+		end
 		Multiverse.add_limbo_keys()
 		ease_background_colour_blind(G.STATES.BLIND_SELECT)
 		attention_text({
@@ -24,7 +25,7 @@ SMODS.Blind {
 			offset = { x = 0, y = -1 },
 			major = G.play,
 		})
-        delay(2 * G.SPEEDFACTOR)
+		delay(2 * G.SPEEDFACTOR)
 		G.E_MANAGER:add_event(Event({
 			func = function()
 				Multiverse.limbo_keys_intro()
@@ -38,15 +39,19 @@ SMODS.Blind {
 			G.GAME.blind.chips = get_blind_amount(G.GAME.round_resets.ante) * 2
 			G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
 		end
+		Multiverse.remove_blind_instructions()
+	end,
+	defeat = function(self)
+		Multiverse.remove_blind_instructions()
 	end,
 	loc_vars = function(self)
 		return { vars = { 10 } }
 	end,
 	collection_loc_vars = function(self)
 		return { vars = { 10 } }
-	end
-}
-SMODS.Blind {
+	end,
+})
+SMODS.Blind({
 	key = "undying",
 	atlas = "multiverse_blinds",
 	pos = { x = 0, y = 1 },
@@ -55,6 +60,7 @@ SMODS.Blind {
 	mult = 2,
 	press_play = function(self)
 		if not G.GAME.blind.disabled then
+			Multiverse.remove_blind_instructions()
 			Multiverse.undyne_spears = {}
 			Multiverse.done_attacking = false
 			Multiverse.in_undyne = true
@@ -73,6 +79,7 @@ SMODS.Blind {
 							blocking = false,
 							delay = 0.5 * G.SPEEDFACTOR,
 							func = function()
+								Multiverse.show_blind_instructions("undying")
 								Multiverse.in_undyne = false
 								return true
 							end,
@@ -83,15 +90,22 @@ SMODS.Blind {
 			}))
 		end
 	end,
+	set_blind = function(self)
+		Multiverse.show_blind_instructions("undying")
+	end,
 	disable = function(self)
 		if G.GAME.chips < to_big(0) then
 			G.GAME.chips = to_big(0)
 		end
+		Multiverse.remove_blind_instructions()
+	end,
+	defeat = function(self)
+		Multiverse.remove_blind_instructions()
 	end,
 	loc_vars = function(self)
 		return { vars = { 10 } }
 	end,
-    collection_loc_vars = function(self)
+	collection_loc_vars = function(self)
 		return { vars = { 10 } }
 	end,
-}
+})
