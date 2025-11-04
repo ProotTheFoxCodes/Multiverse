@@ -410,7 +410,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { max_thaum_energy = 100 } },
+	config = { extra = { max_thaum_energy = 60 } },
 	loc_vars = function(self, info_queue, card)
 		local total = 0
 		if G.jokers then
@@ -418,7 +418,12 @@ SMODS.Consumable({
 				total = total + j.sell_cost
 			end
 		end
-		return { vars = { total } }
+		return {
+			vars = {
+				card.ability.extra.max_thaum_energy,
+				math.min(math.floor(to_number(total)), card.ability.extra.max_thaum_energy),
+			},
+		}
 	end,
 	can_use = function(self, card)
 		return true
@@ -445,7 +450,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { thaum_energy = 40 } },
+	config = { extra = { thaum_energy = 30 } },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.thaum_energy } }
 	end,

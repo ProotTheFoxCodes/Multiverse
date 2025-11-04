@@ -162,9 +162,10 @@ return {
                 name = "One Piece",
                 text = {
                     "Gain Thaumaturgy Energy",
-                    "equal to the total sell",
-                    "value of all Jokers",
-                    "{C:inactive}(Currently {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{C:inactive}){}"
+                    "equal to the total",
+                    "sell value of all Jokers",
+                    "{C:inactive}(Max of {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{C:inactive}){}",
+                    "{C:inactive}(Currently {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#2#{C:inactive}){}"
                 }
             },
             c_mul_gnosis = {
