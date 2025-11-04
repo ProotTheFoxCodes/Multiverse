@@ -222,7 +222,7 @@ SMODS.Consumable({
 	atlas = "temp_myth",
 	pos = { x = 0, y = 0 },
 	discovered = true,
-	config = { extra = { max_thaum_energy = 50 } },
+	config = { extra = { max_thaum_energy = 30 } },
 	cost = 6,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.max_thaum_energy } }
@@ -337,6 +337,7 @@ SMODS.Consumable({
 					+ math.floor(target.ability.extra.transmute_req / 4)
 			end
 			target:juice_up(0.3, 0.5)
+			Multiverse.transmute_check(target)
 		end)
 	end,
 })
@@ -349,15 +350,15 @@ SMODS.Consumable({
 	discovered = true,
 	cost = 6,
 	config = { extra = { energy_per_joker = 10 } },
-	can_use = function(self, card)
-		return G.jokers and #G.jokers.cards >= 1
-	end,
 	loc_vars = function(self, info_queue, card)
 		local count = 0
 		if G.jokers then
 			count = #G.jokers.cards
 		end
 		return { vars = { card.ability.extra.energy_per_joker, count * card.ability.extra.energy_per_joker } }
+	end,
+	can_use = function(self, card)
+		return G.jokers and #G.jokers.cards >= 1
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
@@ -376,10 +377,15 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
+	loc_vars = function(self, info_queue, card)
+		table.insert(info_queue, {
+			set = "Other",
+			key = "mul_traitorous",
+		})
+	end,
 	can_use = function(self, card)
 		return G.jokers
 			and #G.jokers.highlighted == 1
-			and G.jokers.highlighted[1].config.center.perishable_compat
 			and type(G.jokers.highlighted[1].ability.extra) == "table"
 			and G.jokers.highlighted[1].ability.extra.transmute_req
 	end,
@@ -391,7 +397,7 @@ SMODS.Consumable({
 			else
 				target.ability.extra.transmute_progress = target.ability.extra.transmute_req - 1
 			end
-			target:set_perishable(true)
+			target:add_sticker("mul_traitorous", true)
 			target:juice_up(0.3, 0.5)
 		end)
 	end,
@@ -405,9 +411,6 @@ SMODS.Consumable({
 	discovered = true,
 	cost = 6,
 	config = { extra = { max_thaum_energy = 100 } },
-	can_use = function(self, card)
-		return true
-	end,
 	loc_vars = function(self, info_queue, card)
 		local total = 0
 		if G.jokers then
@@ -416,6 +419,9 @@ SMODS.Consumable({
 			end
 		end
 		return { vars = { total } }
+	end,
+	can_use = function(self, card)
+		return true
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
@@ -428,6 +434,32 @@ SMODS.Consumable({
 			Multiverse.ease_thaumaturgy_energy(
 				math.min(math.floor(to_number(total)), card.ability.extra.max_thaum_energy)
 			)
+		end)
+	end,
+})
+
+SMODS.Consumable({
+	key = "gnosis",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	config = { extra = { thaum_energy = 40 } },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.thaum_energy } }
+	end,
+	can_use = function(self, card)
+		return G.jokers
+			and #G.jokers.highlighted == 1
+			and not SMODS.is_eternal(G.jokers.highlighted[1], card)
+			and type(G.jokers.highlighted[1].ability.extra) == "table"
+			and G.jokers.highlighted[1].ability.extra.transmute_req
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			SMODS.destroy_cards(G.jokers.highlighted[1])
+			Multiverse.ease_thaumaturgy_energy(card.ability.extra.thaum_energy)
 		end)
 	end,
 })

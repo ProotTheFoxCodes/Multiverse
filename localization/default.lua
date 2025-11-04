@@ -87,8 +87,8 @@ return {
             c_mul_holy_grail = {
                 name = "Holy Grail",
                 text = {
-                    "Creates {C:attention}#1#{} {C:dark_edition}Negative{} consumables",
-                    "relevant to the {C:mul_transmuted}transmutation{}",
+                    "Creates {C:attention}#1#{} {C:dark_edition}Negative{} consumables that",
+                    "are relevant to the {C:mul_transmuted}transmutation{}",
                     "of selected Joker",
                 }
             },
@@ -153,9 +153,9 @@ return {
                 text = {
                     "Set selected Joker's progress",
                     "towards becoming {C:mul_transmuted}Transmutable{}",
-                    "to one less than its requirement",
+                    "to its requirement minus {C:attention}1{}",
                     "and give the selected Joker",
-                    "{C:attention}Perishable{}"
+                    "{C:attention}Traitorous{}"
                 }
             },
             c_mul_one_piece = {
@@ -170,7 +170,9 @@ return {
             c_mul_gnosis = {
                 name = "Archon's Gnosis",
                 text = {
-
+                    "Destroy selected Joker",
+                    "that can become Transmutable",
+                    "and gain {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{}"
                 }
             },
             c_mul_puzzle = {
@@ -179,8 +181,8 @@ return {
 
                 }
             },
-            c_mul_apotheosis = {
-                name = "Apotheosis",
+            c_mul_three_goddesses = {
+                name = "Three Goddesses Statue",
                 text = {
 
                 }
@@ -362,7 +364,7 @@ return {
                     }
                 }
             },
-            j_mul_red_balloon = {
+            j_mul_red_bloon = {
                 name = "Red Bloon",
                 text = {
                     {

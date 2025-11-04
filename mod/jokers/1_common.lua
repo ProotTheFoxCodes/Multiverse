@@ -34,7 +34,6 @@ SMODS.Joker({
 	},
 	rarity = 1,
 	blueprint_compat = true,
-	transmutable_compat = true,
 	cost = 6,
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
@@ -77,11 +76,12 @@ SMODS.Joker({
 						or SMODS.has_enhancement(c, "m_stone")
 					then
 						card.ability.extra.transmute_progress = card.ability.extra.transmute_progress + 1
+						Multiverse.transmute_check(card)
 					end
 				end
 			end
 			if context.mul_villager_transmute_check then
-				card.ability.extra.transmute_progress = card.ability.extra.transmute_progress + 1
+				Multiverse.transmute_check(card)
 			end
 		end
 	end,
@@ -105,7 +105,7 @@ function Card:set_ability(center, initial, delay_sprites)
 end
 
 SMODS.Joker({
-	key = "red_balloon",
+	key = "red_bloon",
 	atlas = "placeholder",
 	pos = { x = 0, y = 0 },
 	config = { extra = { money = 1, rounds_held = 0, total_rounds = 3 } },

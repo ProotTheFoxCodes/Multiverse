@@ -225,7 +225,6 @@ SMODS.Joker({
 	rarity = 2,
 	cost = 7,
 	blueprint_compat = true,
-	transmutable_compat = true,
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",
@@ -246,15 +245,13 @@ SMODS.Joker({
 		if context.individual and context.cardarea == G.play then
 			if not context.blueprint then
 				card.ability.extra.transmute_progress = card.ability.extra.transmute_progress + 1
+				Multiverse.transmute_check(card)
 			end
 			if pseudorandom("hammer_bro", 1, 2) == 1 then
 				return { xmult = card.ability.extra.xmult }
 			else
 				return { mult = card.ability.extra.mult }
 			end
-		end
-		if context.joker_main and card.ability.extra.transmute_progress >= card.ability.extra.transmute_req then
-			card:add_sticker("mul_transmutable", true)
 		end
 	end,
 	pools = { ["mul_can_transmute"] = true },

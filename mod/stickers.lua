@@ -8,6 +8,7 @@ SMODS.Sticker({
 	loc_vars = function(self, info_queue, card)
 		return { vars = { G.GAME.mul_thaumaturgy_energy_per_joker or 10 } }
 	end,
+	sets = { Joker = true },
 	draw = function(self, card, layer)
 		local sprite = Sprite(
 			0,
@@ -50,6 +51,7 @@ SMODS.Sticker({
 	badge_colour = HEX("BF244C"),
 	default_compat = true,
 	needs_enabled_flag = true,
+	sets = { Joker = true },
 	calculate = function(self, card, context)
 		if context.end_of_round and context.main_eval and not context.blueprint then
 			if G.jokers.cards[1] then

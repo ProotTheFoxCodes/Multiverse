@@ -63,7 +63,7 @@ SMODS.Consumable({
 		Multiverse.consumable_effect(card, function()
 			local target = pseudorandom_element(G.jokers.cards, "mul_backstab")
 			local copied_joker = copy_card(target, nil, nil, nil, true)
-			copied_joker:add_sticker("mul_traitorous")
+			copied_joker:add_sticker("mul_traitorous", true)
 			copied_joker:set_edition("e_negative")
 			copied_joker:add_to_deck()
 			G.jokers:emplace(copied_joker)

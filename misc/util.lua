@@ -427,7 +427,7 @@ function Card:mul_safe_dissolve(dissolve_colours, silent, dissolve_time_fac, no_
 end
 
 ---Animation + sfx for consumables
----@param card balatro.Card The consumable that is applying its effect
+---@param card Card The consumable that is applying its effect
 ---@param func fun(): nil The effect to apply
 function Multiverse.consumable_effect(card, func)
 	G.E_MANAGER:add_event(Event({
@@ -455,5 +455,15 @@ function Multiverse.remove_blind_instructions()
 	if G.mul_instructions_HUD then
 		G.mul_instructions_HUD:remove()
 		G.mul_instructions_HUD = nil
+	end
+end
+
+---@param card Card
+function Multiverse.transmute_check(card)
+	local progress = (
+		type(card.ability.extra.transmute_progress) == "table" and card.ability.extra.transmute_progress.n
+	) or card.ability.extra.transmute_progress
+	if progress >= card.ability.extra.transmute_req and not card.ability.mul_transmutable then
+		card:add_sticker("mul_transmutable", true)
 	end
 end
