@@ -75,7 +75,7 @@ SMODS.Consumable({
 	key = "scheme",
 	set = "Spectral",
 	atlas = "placeholder",
-	pos = { x = 0, y = 1 },
+	pos = { x = 1, y = 1 },
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",

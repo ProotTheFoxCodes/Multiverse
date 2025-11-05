@@ -297,7 +297,7 @@ SMODS.Consumable({
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
 			local count = #G.hand.cards
-			SMODS.destroy_cards(G.hand.cards)
+			SMODS.destroy_cards(G.hand.cards, nil, true)
 			Multiverse.ease_thaumaturgy_energy(-count * card.ability.extra.energy_loss, { immediate = true })
 		end)
 	end,
@@ -344,7 +344,6 @@ SMODS.Consumable({
 				target.ability.extra.transmute_progress = target.ability.extra.transmute_progress
 					+ math.floor(target.ability.extra.transmute_req / 4)
 			end
-			Multiverse.consumable_effect(card, function() end)
 			target:juice_up(0.3, 0.5)
 			Multiverse.transmute_check(target)
 		end)
@@ -375,7 +374,7 @@ SMODS.Consumable({
 				j:flip()
 			end
 			Multiverse.ease_thaumaturgy_energy(
-			card.ability.extra.energy_per_joker * #G.jokers.cards,
+				card.ability.extra.energy_per_joker * #G.jokers.cards,
 				{ immediate = true }
 			)
 		end)
@@ -476,7 +475,7 @@ SMODS.Consumable({
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
-			SMODS.destroy_cards(G.jokers.highlighted[1])
+			SMODS.destroy_cards(G.jokers.highlighted[1], nil, true)
 			Multiverse.ease_thaumaturgy_energy(card.ability.extra.thaum_energy, { immediate = true })
 		end)
 	end,
@@ -501,7 +500,7 @@ SMODS.Consumable({
 	keep_on_use = function(self, card)
 		return not card.ability.extra.mul_is_active
 	end,
-	can_use = function (self, card)
+	can_use = function(self, card)
 		return true
 	end,
 	use = function(self, card, area, copier)
@@ -509,11 +508,48 @@ SMODS.Consumable({
 			card.ability.extra.mul_is_active = not card.ability.extra.mul_is_active
 			if card.ability.extra.mul_is_active then
 				G.GAME.mul_money_mult = G.GAME.mul_money_mult / card.ability.extra.money_penalty
-				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate + card.ability.extra.temp_recharge_boost
+				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
+					+ card.ability.extra.temp_recharge_boost
 			else
 				G.GAME.mul_money_mult = G.GAME.mul_money_mult * card.ability.extra.money_penalty
-				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate - card.ability.extra.temp_recharge_boost
+				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
+					- card.ability.extra.temp_recharge_boost
 			end
+		end)
+	end,
+})
+
+SMODS.Consumable({
+	key = "three_goddesses",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	config = { extra = { min_energy = 30 } },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.min_energy } }
+	end,
+	can_use = function(self, card)
+		return G.jokers
+			and #G.jokers.highlighted == 1
+			and type(G.jokers.highlighted[1].ability.extra) == "table"
+			and G.jokers.highlighted[1].ability.extra.transmute_req >= 2
+			and G.GAME.mul_thaumaturgy_energy >= 40
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { immediate = true })
+			local target = G.jokers.highlighted[1]
+			if type(target.ability.extra.transmute_progress) == "table" then
+				target.ability.extra.transmute_progress.n = target.ability.extra.transmute_progress.n
+					+ math.floor(target.ability.extra.transmute_req / 2)
+			else
+				target.ability.extra.transmute_progress = target.ability.extra.transmute_progress
+					+ math.floor(target.ability.extra.transmute_req / 2)
+			end
+			target:juice_up(0.3, 0.5)
+			Multiverse.transmute_check(target)
 		end)
 	end,
 })

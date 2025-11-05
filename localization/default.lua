@@ -76,8 +76,8 @@ return {
                 name = "Philosopher\'s Stone",
                 text = {
                     "Gain {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} per",
-                    "{C:mul_transmuted,E:1}Transmuted{} Joker owned,",
-                    "then {C:mul_transmuted,E:1}Transmutes{} selected Joker that",
+                    "{C:mul_transmuted,E:1}Transmuted{} Joker owned, then",
+                    "{C:mul_transmuted,E:1}Transmutes{} selected Joker that",
                     "is currently {C:mul_transmuted}Transmutable{},",
                     "{C:inactive}(Preserves Joker modifications){}",
                     "{C:inactive}(Currently {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#2#{C:inactive}){}",
@@ -191,7 +191,9 @@ return {
                     "Set Thaumaturgy Energy to",
                     "{C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}0{} and increase selected",
                     "Joker's progress towards",
-                    "becoming Transmutable by {C:attention}50%{}"
+                    "becoming {C:mul_transmuted}Transmutable{} by {C:attention}50%{}",
+                    "{C:inactive}(Cannot be used while Thaumaturgy{}",
+                    "{C:inactive}Energy is below {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{C:inactive}){}"
                 }
             },
             c_mul_atlantis = {
