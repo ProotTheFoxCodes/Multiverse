@@ -496,10 +496,13 @@ SMODS.Consumable({
 			key = "mul_active_consumable",
 		})
 		local active = card.ability.extra.mul_is_active and "active" or "inactive"
-		return { vars = { card } }
+		return { vars = { card.ability.extra.temp_recharge_boost, active } }
 	end,
 	keep_on_use = function(self, card)
 		return not card.ability.extra.mul_is_active
+	end,
+	can_use = function (self, card)
+		return true
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()

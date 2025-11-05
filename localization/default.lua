@@ -75,10 +75,10 @@ return {
             c_mul_philosophers_stone = {
                 name = "Philosopher\'s Stone",
                 text = {
-                    "Gain {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{}",
-                    "per {C:mul_transmuted}Transmuted{} Joker owned,",
-                    "then {C:mul_transmuted,E:2}Transmutes{} {C:attention}1{} selected Joker",
-                    "that is currently {C:mul_transmuted}Transmutable{},",
+                    "Gain {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} per",
+                    "{C:mul_transmuted,E:1}Transmuted{} Joker owned,",
+                    "then {C:mul_transmuted,E:1}Transmutes{} selected Joker that",
+                    "is currently {C:mul_transmuted}Transmutable{},",
                     "{C:inactive}(Preserves Joker modifications){}",
                     "{C:inactive}(Currently {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#2#{C:inactive}){}",
                 }
@@ -178,11 +178,11 @@ return {
             c_mul_puzzle = {
                 name = "Millenium Puzzle",
                 text = {
-                    "When active, increases base",
+                    "When active, increases {C:attention}base{}",
                     "Thaumaturgy Energy recharge",
-                    "rate by #1# but halves money",
+                    "rate by {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} but {C:attention}halves{} money",
                     "earned from all sources",
-                    "{C:inactive}(Currently #3#){}"
+                    "{C:inactive}(Currently #2#){}"
                 }
             },
             c_mul_three_goddesses = {
@@ -737,11 +737,11 @@ return {
             mul_thaumaturgy_desc = {
                 name = "Thaumaturgy Energy",
                 text = {
-                    "You gain {C:mul_transmuted}+#1#{} Thaumaturgy Energy",
-                    "at the end of each round",
+                    "You gain {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} at the",
+                    "end of each round",
                     "If Thaumaturgy Energy is at least",
-                    "{C:attention}100{} at end of round, Thaumaturgy",
-                    "Energy is {C:red}reset{} to {C:attention}0{} and",
+                    "{C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}100{} at end of round, Thaumaturgy",
+                    "Energy is {C:red}reset{} to {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}0{} and",
                     "a {C:mul_transmuted}Magnum Opus{} tag is created"
                 }
             },
@@ -800,7 +800,7 @@ return {
                     "A {C:attention}conceptually crazy{} but {C:attention}mechanically balanced{} Balatro mod.",
                     "This mod contains new {C:attention}Jokers{}, {C:tarot}Tarots{}, {C:spectral}Spectrals{}, {C:attention}Blinds{}, {C:attention}card",
                     "{C:attention}enhancements{}, and {C:mul_transmuted}Myths{} (a new consumable type).",
-                    "{C:mul_transmuted}Myth{} cards can help you obtain {C:mul_transmuted}Transmuted{} Jokers that enable",
+                    "{C:mul_transmuted}Myth{} cards can help you obtain {C:mul_transmuted,E:1}Transmuted{} Jokers that enable",
                     "your runs to reach into high {C:attention}Antes{} in {C:attention}Endless Mode{} while doing so in a",
                     "way that feels {C:attention}relatively vanilla{} and doesn't invalidate vanilla content.",
                     "A {C:red}warning{} for those with {C:attention}Talisman{} installed:",
