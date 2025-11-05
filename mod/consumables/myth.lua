@@ -488,7 +488,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { mul_is_active = false, temp_recharge_boost = 6, money_penalty = 2 } },
+	config = { extra = { mul_is_active = false, temp_recharge_boost = 8, money_penalty = 2 } },
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",
@@ -535,7 +535,7 @@ SMODS.Consumable({
 			and #G.jokers.highlighted == 1
 			and type(G.jokers.highlighted[1].ability.extra) == "table"
 			and G.jokers.highlighted[1].ability.extra.transmute_req >= 2
-			and G.GAME.mul_thaumaturgy_energy >= 40
+			and G.GAME.mul_thaumaturgy_energy >= card.ability.extra.min_energy
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
@@ -550,6 +550,44 @@ SMODS.Consumable({
 			end
 			target:juice_up(0.3, 0.5)
 			Multiverse.transmute_check(target)
+		end)
+	end,
+})
+
+SMODS.Consumable({
+	key = "ufo",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	config = { extra = { mul_is_active = false, temp_recharge_boost = 4, shop_penalty = 1 } },
+	loc_vars = function(self, info_queue, card)
+		table.insert(info_queue, {
+			set = "Other",
+			key = "mul_active_consumable",
+		})
+		local active = card.ability.extra.mul_is_active and "active" or "inactive"
+		return { vars = { card.ability.extra.temp_recharge_boost, card.ability.extra.shop_penalty, active } }
+	end,
+	keep_on_use = function(self, card)
+		return not card.ability.extra.mul_is_active
+	end,
+	can_use = function(self, card)
+		return card.ability.extra.mul_is_active or (G.STATE == G.STATES.SHOP and to_big(G.GAME.shop.joker_max) > to_big(1))
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			card.ability.extra.mul_is_active = not card.ability.extra.mul_is_active
+			if card.ability.extra.mul_is_active then
+				change_shop_size(-card.ability.extra.shop_penalty)
+				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
+					+ card.ability.extra.temp_recharge_boost
+			else
+				change_shop_size(card.ability.extra.shop_penalty)
+				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
+					- card.ability.extra.temp_recharge_boost
+			end
 		end)
 	end,
 })

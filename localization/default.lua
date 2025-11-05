@@ -178,7 +178,7 @@ return {
             c_mul_puzzle = {
                 name = "Millenium Puzzle",
                 text = {
-                    "When active, increases {C:attention}base{}",
+                    "While active, increases {C:attention}base{}",
                     "Thaumaturgy Energy recharge",
                     "rate by {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} but {C:attention}halves{} money",
                     "earned from all sources",
@@ -196,16 +196,20 @@ return {
                     "{C:inactive}Energy is below {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{C:inactive}){}"
                 }
             },
-            c_mul_atlantis = {
-                name = "Atlantis",
+            c_mul_ufo = {
+                name = "UFO",
                 text = {
-
+                    "While active, increases {C:attention}base{}",
+                    "Thaumaturgy Energy recharge",
+                    "rate by {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} but {C:attention}-#2#{} card",
+                    "slot available in shop",
+                    "{C:inactive}(Currently #3#){}"
                 }
             },
             c_mul_stand_arrow = {
                 name = "Stand Arrow",
                 text = {
-
+                    ""
                 }
             },
             c_mul_moon_berry = {
@@ -262,14 +266,14 @@ return {
 
                 }
             },
-            c_mul_human_souls = {
-                name = "Human Souls",
+            c_mul_palace_treasure = {
+                name = "Palace Treasure",
                 text = {
 
                 }
             },
-            c_mul_crop_circles = {
-                name = "Crop Circles",
+            c_mul_journal = {
+                name = "Journal",
                 text = {
 
                 }
