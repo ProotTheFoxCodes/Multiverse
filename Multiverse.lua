@@ -28,6 +28,17 @@ SMODS.ObjectType({
 	default = "j_joker",
 })
 
+SMODS.current_mod.calculate = function(self, context)
+	if context.end_of_round and not context.blueprint and not context.game_over and context.main_eval then
+		Multiverse.hide_blind_instructions()
+		Multiverse.ease_thaumaturgy_energy(G.GAME.mul_thaumaturgy_energy_rate, { from_charge = true })
+		if G.GAME.mul_thaumaturgy_energy >= 100 then
+			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { from_magnum_opus = true })
+			add_tag(Tag("tag_mul_magnum_opus", false, "Small"))
+		end
+	end
+end
+
 ---@param path string
 function Multiverse.recursive_load(path)
 	local files = NFS.getDirectoryItems(Multiverse.path .. path)

@@ -80,6 +80,7 @@ SMODS.Consumable({
 		table.insert(info_queue, {
 			set = "Other",
 			key = "rental",
+			vars = { G.GAME.rental_rate },
 		})
 		local total_value = 0
 		if G.jokers then
@@ -94,9 +95,9 @@ SMODS.Consumable({
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
-		    local total = 0
+			local total = 0
 			for _, j in ipairs(G.jokers.cards) do
-			    total = total + j.sell_cost
+				total = total + j.sell_cost
 				j:set_rental(true)
 				j:juice_up(0.3, 0.5)
 			end

@@ -29,11 +29,25 @@ SMODS.Enhancement({
 	key = "netherite",
 	atlas = "placeholder_modifiers",
 	pos = { x = 0, y = 0 },
-	config = { h_x_mult = 2, h_dollars = 5, bonus = 75, h_chips = 75 },
+	config = { h_dollars = 5, extra = { xmult = 0.1 } },
 	weight = 0,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.bonus, card.ability.h_x_mult, card.ability.h_dollars } }
+		local total = 0
+		if G.GAME.dollars then
+			total = total + G.GAME.dollars
+		end
+		if G.GAME.dollar_buffer then
+			total = total + G.GAME.dollar_buffer
+		end
+		return { vars = { card.ability.extra.xmult, card.ability.h_dollars, 1 + total * 0.1 } }
 	end,
+	calculate = function(self, card, context)
+		if context.main_scoring and context.cardarea == G.hand then
+			return {
+				xmult = 1 + card.ability.extra.xmult * (G.GAME.dollars + G.GAME.dollar_buffer),
+			}
+		end
+	end
 })
 
 SMODS.Enhancement({

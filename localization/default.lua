@@ -33,12 +33,11 @@ return {
             m_mul_netherite = {
                 name = "Netherite Card",
                 text = {
-                    "{C:chips}+#1#{} Chips when held in",
-                    "hand or played",
-                    "{X:mult,C:white}X#2#{} Mult when held",
-                    "in hand",
-                    "Gives {C:money}$#3#{} when held in",
+                    "{X:mult,C:white}X#1#{} Mult per {C:money}$1{}",
+                    "when held in hand",
+                    "Gives {C:money}$#2#{} when held in",
                     "hand at end of round",
+                    "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult){}"
                 }
             },
             m_mul_normal = {
@@ -179,8 +178,10 @@ return {
             c_mul_puzzle = {
                 name = "Millenium Puzzle",
                 text = {
-                    "When active",
-                    "",
+                    "When active, increases base",
+                    "Thaumaturgy Energy recharge",
+                    "rate by #1# but halves money",
+                    "earned from all sources",
                     "{C:inactive}(Currently #3#){}"
                 }
             },
@@ -405,9 +406,10 @@ return {
                 name = "Steve",
                 text = {
                     {
-                        "All played cards with {C:diamonds}#1#{}",
-                        "suit become {C:attention}Netherite{} cards",
-                        "{C:attention}+#2#{} hand size"
+                        "{C:attention}+#2#{} hand size",
+                        "When hand is played, convert",
+                        "all {C:attention}Enhanced{} cards in",
+                        "hand into {C:attention}Netherite{} cards"
                     },
                     {
                         "{C:inactive,s:0.8}L-l-l-lava,{}",

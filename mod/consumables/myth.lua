@@ -489,7 +489,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { mul_is_active = false, temp_recharge_boost = 5 } },
+	config = { extra = { mul_is_active = false, temp_recharge_boost = 6, money_penalty = 2 } },
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",
@@ -504,6 +504,13 @@ SMODS.Consumable({
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
 			card.ability.extra.mul_is_active = not card.ability.extra.mul_is_active
+			if card.ability.extra.mul_is_active then
+				G.GAME.mul_money_mult = G.GAME.mul_money_mult / card.ability.extra.money_penalty
+				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate + card.ability.extra.temp_recharge_boost
+			else
+				G.GAME.mul_money_mult = G.GAME.mul_money_mult * card.ability.extra.money_penalty
+				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate - card.ability.extra.temp_recharge_boost
+			end
 		end)
 	end,
 })

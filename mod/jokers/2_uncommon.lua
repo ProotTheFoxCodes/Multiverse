@@ -82,7 +82,10 @@ SMODS.Joker({
 	blueprint_compat = true,
 	cost = 8,
 	loc_vars = function(self, info_queue, card)
-		table.insert(info_queue, G.P_SEALS[card.ability.extra.seal])
+		table.insert(info_queue, {
+			set = "Other",
+			key = "gold_seal"
+		})
 		return { vars = { card.ability.extra.xmult } }
 	end,
 	calculate = function(self, card, context)

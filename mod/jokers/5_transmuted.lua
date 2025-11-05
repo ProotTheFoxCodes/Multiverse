@@ -131,9 +131,9 @@ SMODS.Joker({
 	cost = 40,
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, G.P_CENTERS.m_mul_netherite)
-		return { vars = { localize(card.ability.extra.suit, "suits_singular"), card.ability.extra.size_inc } }
+		return { vars = { card.ability.extra.size_inc } }
 	end,
-	config = { extra = { suit = "Diamonds", size_inc = 5 } },
+	config = { extra = { size_inc = 5 } },
 	add_to_deck = function(self, card, from_debuff)
 		G.hand:change_size(card.ability.extra.size_inc)
 	end,
@@ -142,9 +142,9 @@ SMODS.Joker({
 	end,
 	calculate = function(self, card, context)
 		if not context.blueprint then
-			if context.before and context.main_eval and context.full_hand then
-				for _, c in ipairs(context.full_hand) do
-					if c:is_suit(card.ability.extra.suit) then
+			if context.before and context.main_eval then
+				for _, c in ipairs(G.hand.cards) do
+					if next(SMODS.get_enhancements(card)) then
 						c:set_ability("m_mul_netherite")
 					end
 				end

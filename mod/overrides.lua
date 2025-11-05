@@ -85,7 +85,7 @@ SMODS.Joker:take_ownership("pareidolia", {
 			vars = { card.ability.extra.transmute_progress.n, card.ability.extra.transmute_req },
 		})
 	end,
-	config = { extra = { transmute_progress = { n = 0 }, transmute_req = Multiverse.set_transmute_requirements(5) } },
+	config = { extra = { transmute_progress = { n = 0 }, transmute_req = Multiverse.set_transmute_requirements(6) } },
 	calculate = function(self, card, context)
 		if context.before and not context.blueprint then
 			if not card.ability.extra.transmute_progress[context.scoring_name] then

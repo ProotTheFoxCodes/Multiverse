@@ -42,6 +42,8 @@ SMODS.Challenge({
 		banned_cards = {
 			{ id = "v_directors_cut" },
 			{ id = "v_retcon" },
+			{ id = "j_luchador" },
+			{ id = "j_chicot" },
 		},
 		banned_tags = {
 			{ id = "tag_boss" },
@@ -61,6 +63,8 @@ SMODS.Challenge({
 		banned_cards = {
 			{ id = "v_directors_cut" },
 			{ id = "v_retcon" },
+			{ id = "j_luchador" },
+			{ id = "j_chicot" },
 		},
 		banned_tags = {
 			{ id = "tag_boss" },

@@ -138,6 +138,7 @@ function Game:start_run(args)
 	G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate or 2
 	G.GAME.mul_thaumaturgy_energy_per_joker = G.GAME.mul_thaumaturgy_energy_per_joker or 10
 	G.GAME.mul_undyne_damage_mult = 1
+	G.GAME.mul_money_mult = G.GAME.mul_money_mult or 1
 	if G.GAME.challenge == "c_mul_monsoon" then
 		G.GAME.mul_undyne_damage_mult = 2
 	end
@@ -153,4 +154,13 @@ function Card:can_sell_card()
 		return false
 	end
 	return ret
+end
+
+local ease_dollars_hook = ease_dollars
+function ease_dollars(mod, instant)
+	local amt = mod * G.GAME.mul_money_mult
+	if amt < to_big(1e15) then
+		amt = math.floor(to_number(amt))
+	end
+	ease_dollars_hook(amt, instant)
 end
