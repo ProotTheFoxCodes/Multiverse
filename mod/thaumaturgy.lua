@@ -3,6 +3,19 @@
 ---@param args? {immediate: boolean?, silent: boolean?, from_magnum_opus: boolean?, from_charge: boolean?}
 function Multiverse.ease_thaumaturgy_energy(amt, args)
 	args = args or {}
+	if amt == 0 then return end
+	SMODS.calculate_context({
+		--True if the amount of Thaumaturgy Energy was changed.
+		mul_thaumaturgy_energy_altered = true,
+		amount = amt,
+		--True if the change in Thaumaturgy Energy came from generation of a Magnum Opus tag.
+		from_magnum_opus = args.from_magnum_opus,
+		--True if the change in Thaumaturgy Energy came from the natural end of round bonus.
+		from_charge = args.from_charge,
+		--True if this change occured while "Time Machine" is active.
+		active_time_machine = G.GAME.mul_time_machine_active
+	})
+	if G.GAME.mul_time_machine_active then return end
 	local function change_thaumaturgy_energy(num)
 		num = num or 0
 		if num == 0 then
@@ -34,17 +47,10 @@ function Multiverse.ease_thaumaturgy_energy(amt, args)
 		change_thaumaturgy_energy(amt)
 	else
 		G.E_MANAGER:add_event(Event({
-			trigger = "immediate",
 			func = function()
 				change_thaumaturgy_energy(amt)
 				return true
 			end,
 		}))
 	end
-	SMODS.calculate_context({
-		mul_thaumaturgy_charge_altered = true,
-		amount = amt,
-		from_magnum_opus = args.from_magnum_opus,
-		from_charge = args.from_charge,
-	})
 end

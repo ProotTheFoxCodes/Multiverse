@@ -139,11 +139,12 @@ function Game:start_run(args)
 	G.GAME.mul_thaumaturgy_energy_per_joker = G.GAME.mul_thaumaturgy_energy_per_joker or 10
 	G.GAME.mul_undyne_damage_mult = 1
 	G.GAME.mul_money_mult = G.GAME.mul_money_mult or 1
+	G.GAME.mul_time_machine_active = G.GAME.mul_time_machine_active or false
 	if G.GAME.challenge == "c_mul_monsoon" then
 		G.GAME.mul_undyne_damage_mult = 2
 	end
 	if G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" then
-	    Multiverse.show_blind_instructions("undying")
+		Multiverse.show_blind_instructions("undying")
 	end
 end
 

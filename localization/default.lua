@@ -112,7 +112,7 @@ return {
                 text = {
                     "Destroys all cards in hand",
                     "Lose {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} per card destroyed",
-                    "{C:inactive}(Will lose {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#2#{C:inactive}){}"
+                    "{C:inactive}(Currently {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#2#{C:inactive}){}"
                 }
             },
             c_mul_chaos_emeralds = {
@@ -144,7 +144,7 @@ return {
                     "{C:attention}Flips{} all Jokers",
                     "Gain {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} per",
                     "Joker flipped",
-                    "{C:inactive}(Will gain {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#2#{C:inactive}){}"
+                    "{C:inactive}(Currently {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#2#{C:inactive}){}"
                 }
             },
             c_mul_shadow_crystal = {
@@ -209,19 +209,23 @@ return {
             c_mul_stand_arrow = {
                 name = "Stand Arrow",
                 text = {
-                    ""
+                    "While active, "
                 }
             },
             c_mul_moon_berry = {
                 name = "Moon Berry",
                 text = {
-
+                    ""
                 }
             },
             c_mul_elder_scroll = {
                 name = "Elder Scroll",
                 text = {
-
+                    "While active, increases {C:attention}base{}",
+                    "Thaumaturgy Energy recharge",
+                    "rate by {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} but obscures",
+                    "all text that appears on cards",
+                    "{C:inactive}(Currently #2#){}"
                 }
             },
             c_mul_master_ball = {
@@ -251,37 +255,42 @@ return {
             c_mul_super_star = {
                 name = "Super Star",
                 text = {
-
+                    "While active, "
                 }
             },
             c_mul_triforce = {
                 name = "Triforce",
                 text = {
-
+                    ""
                 }
             },
-            c_mul_dragon_balls = {
-                name = "Dragon Balls",
+            c_mul_time_machine = {
+                name = "Time Machine",
                 text = {
-
+                    "While active,"
                 }
             },
             c_mul_palace_treasure = {
                 name = "Palace Treasure",
                 text = {
-
+                    "Set Thaumaturgy Energy",
+                    "to {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}0{} and earn {C:money}$1{} for",
+                    "every {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} lost",
+                    "{C:inactive}(Currently){}"
                 }
             },
             c_mul_journal = {
                 name = "Journal",
                 text = {
-
+                    "Every {C:attention}#1#{} {C:inactive}(#2#){} times this",
+                    "card is used, "
                 }
             },
             c_mul_homunculus = {
                 name = "Homunculus",
                 text = {
-
+                    "Create {C:attention}#1#{} random",
+                    "{C:mul_transmuted}Myth{} cards"
                 }
             }
         },
