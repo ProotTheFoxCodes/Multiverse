@@ -170,7 +170,6 @@ SMODS.Joker({
 		if
 			context.individual
 			and context.cardarea == G.play
-			and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit
 		then
 			if SMODS.pseudorandom_probability(card, "mul_victory_royale", 1, card.ability.extra.odds) then
 				G.GAME.consumeable_buffer = (G.GAME.consumeable_buffer or 0) + 1

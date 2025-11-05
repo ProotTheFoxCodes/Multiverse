@@ -179,17 +179,22 @@ return {
             c_mul_puzzle = {
                 name = "Millenium Puzzle",
                 text = {
-
+                    "When active",
+                    "",
+                    "{C:inactive}(Currently #3#){}"
                 }
             },
             c_mul_three_goddesses = {
                 name = "Three Goddesses Statue",
                 text = {
-
+                    "Set Thaumaturgy Energy to",
+                    "{C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}0{} and increase selected",
+                    "Joker's progress towards",
+                    "becoming Transmutable by {C:attention}50%{}"
                 }
             },
-            c_mul_projection = {
-                name = "Astral Projection",
+            c_mul_atlantis = {
+                name = "Atlantis",
                 text = {
 
                 }
@@ -254,14 +259,14 @@ return {
 
                 }
             },
-            c_mul_precognition = {
-                name = "Precognition",
+            c_mul_human_souls = {
+                name = "Human Souls",
                 text = {
 
                 }
             },
-            c_mul_ley_lines = {
-                name = "Ley Lines",
+            c_mul_crop_circles = {
+                name = "Crop Circles",
                 text = {
 
                 }
@@ -770,6 +775,19 @@ return {
                     "Yellow spears will {C:attention}flip{}",
                     "direction once they are",
                     "about halfway to the heart"
+                }
+            },
+            mul_active_consumable = {
+                name = "Active Consumable",
+                text = {
+                    "When used, this consumable will",
+                    "{C:attention}remain{} in your consumable slots",
+                    "and apply its {C:attention}active{} effects",
+                    "If used while active, this",
+                    "consumable is used like normal",
+                    "and will {C:attention}stop{} applying its effects",
+                    "{C:inactive}(Note that this card cannot{}",
+                    "{C:inactive}be sold while it is active){}"
                 }
             }
         },

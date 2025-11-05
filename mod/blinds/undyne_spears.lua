@@ -337,7 +337,6 @@ end
 
 function Multiverse.process_undyne_hit(percent)
 	play_sound("mul_take_damage", 1, 0.7)
-	percent = percent * ((G.GAME.challenge == "c_mul_monsoon" and 1) or 2)
 	G.GAME.chips = G.GAME.chips - G.GAME.blind.chips / percent
 	if
 		(G.GAME.challenge == "c_mul_monsoon" and G.GAME.chips < -G.GAME.blind.chips / 2)

@@ -29,7 +29,7 @@ SMODS.Sticker({
 				message = localize({
 					type = "variable",
 					key = "a_mul_thaumaturgy_energy",
-					vars = { G.GAME.mul_thaumaturgy_energy_per_joker or 10 },
+					vars = { G.GAME.mul_thaumaturgy_energy_per_joker },
 				}),
 				colour = Multiverse.TRANSMUTED_GRADIENT,
 			}

@@ -133,6 +133,12 @@ SMODS.Consumable({
 	end,
 	use = function(self, card, area, copier)
 		local joker_to_transmute = G.jokers.highlighted[1]
+		local count = 0
+		for _, j in ipairs(G.jokers.cards) do
+			if j.config.center.rarity == "mul_transmuted" then
+				count = count + 1
+			end
+		end
 		G.jokers:unhighlight_all()
 		local transmute_key = Multiverse.transmutations[joker_to_transmute.config.center.key].key
 		G.E_MANAGER:add_event(Event({
@@ -148,6 +154,7 @@ SMODS.Consumable({
 			trigger = "after",
 			delay = 0.15,
 			func = function()
+				Multiverse.ease_thaumaturgy_energy(count * card.ability.extra.energy_per_joker, { immediate = true })
 				joker_to_transmute:flip()
 				play_sound("card1", 1.15)
 				joker_to_transmute:juice_up(0.3, 0.5)
@@ -233,7 +240,8 @@ SMODS.Consumable({
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
 			Multiverse.ease_thaumaturgy_energy(
-				Multiverse.clamp(G.GAME.mul_thaumaturgy_energy, 0, card.ability.extra.max_thaum_energy)
+				Multiverse.clamp(G.GAME.mul_thaumaturgy_energy, 0, card.ability.extra.max_thaum_energy),
+				{ immediate = true }
 			)
 		end)
 	end,
@@ -290,7 +298,7 @@ SMODS.Consumable({
 		Multiverse.consumable_effect(card, function()
 			local count = #G.hand.cards
 			SMODS.destroy_cards(G.hand.cards)
-			Multiverse.ease_thaumaturgy_energy(-count * card.ability.extra.energy_loss)
+			Multiverse.ease_thaumaturgy_energy(-count * card.ability.extra.energy_loss, { immediate = true })
 		end)
 	end,
 })
@@ -308,7 +316,7 @@ SMODS.Consumable({
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
 			SMODS.add_card({ rarity = "Rare", set = "Joker", key_append = "mul_one_ring" })
-			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy)
+			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { immediate = true })
 		end)
 	end,
 })
@@ -336,6 +344,7 @@ SMODS.Consumable({
 				target.ability.extra.transmute_progress = target.ability.extra.transmute_progress
 					+ math.floor(target.ability.extra.transmute_req / 4)
 			end
+			Multiverse.consumable_effect(card, function() end)
 			target:juice_up(0.3, 0.5)
 			Multiverse.transmute_check(target)
 		end)
@@ -365,7 +374,10 @@ SMODS.Consumable({
 			for _, j in ipairs(G.jokers.cards) do
 				j:flip()
 			end
-			Multiverse.ease_thaumaturgy_energy(card.ability.extra.energy_per_joker * #G.jokers.cards)
+			Multiverse.ease_thaumaturgy_energy(
+			card.ability.extra.energy_per_joker * #G.jokers.cards,
+				{ immediate = true }
+			)
 		end)
 	end,
 })
@@ -437,7 +449,8 @@ SMODS.Consumable({
 				end
 			end
 			Multiverse.ease_thaumaturgy_energy(
-				math.min(math.floor(to_number(total)), card.ability.extra.max_thaum_energy)
+				math.min(math.floor(to_number(total)), card.ability.extra.max_thaum_energy),
+				{ immediate = true }
 			)
 		end)
 	end,
@@ -464,7 +477,33 @@ SMODS.Consumable({
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
 			SMODS.destroy_cards(G.jokers.highlighted[1])
-			Multiverse.ease_thaumaturgy_energy(card.ability.extra.thaum_energy)
+			Multiverse.ease_thaumaturgy_energy(card.ability.extra.thaum_energy, { immediate = true })
+		end)
+	end,
+})
+
+SMODS.Consumable({
+	key = "puzzle",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	config = { extra = { mul_is_active = false, temp_recharge_boost = 5 } },
+	loc_vars = function(self, info_queue, card)
+		table.insert(info_queue, {
+			set = "Other",
+			key = "mul_active_consumable",
+		})
+		local active = card.ability.extra.mul_is_active and "active" or "inactive"
+		return { vars = { card } }
+	end,
+	keep_on_use = function(self, card)
+		return not card.ability.extra.mul_is_active
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			card.ability.extra.mul_is_active = not card.ability.extra.mul_is_active
 		end)
 	end,
 })

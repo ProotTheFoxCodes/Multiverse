@@ -64,14 +64,6 @@ function copy_card(other, new_card, card_scale, playing_card, strip_edition)
 	return card
 end
 
-local set_base_hook = Card.set_base
-function Card:set_base(card, initial, manual_sprites)
-	if self.playing_card and self.base and self.config.center.key == "m_mul_calling_card" then
-		return
-	end
-	set_base_hook(self, card, initial, manual_sprites)
-end
-
 local mousepressed_hook = love.mousepressed
 function love.mousepressed(x, y, button, istouch, presses)
 	if Multiverse.very_important_thing then
@@ -142,16 +134,23 @@ end
 local start_run_hook = Game.start_run
 function Game:start_run(args)
 	start_run_hook(self, args)
-	if not G.GAME.mul_thaumaturgy_energy then
-		G.GAME.mul_thaumaturgy_energy = 0
-	end
-	if not G.GAME.mul_thaumaturgy_energy_rate then
-		G.GAME.mul_thaumaturgy_energy_rate = 2
-	end
-	if not G.GAME.mul_thaumaturgy_energy_per_joker then
-		G.GAME.mul_thaumaturgy_energy_per_joker = 10
+	G.GAME.mul_thaumaturgy_energy = G.GAME.mul_thaumaturgy_energy or 0
+	G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate or 2
+	G.GAME.mul_thaumaturgy_energy_per_joker = G.GAME.mul_thaumaturgy_energy_per_joker or 10
+	G.GAME.mul_undyne_damage_mult = 1
+	if G.GAME.challenge == "c_mul_monsoon" then
+		G.GAME.mul_undyne_damage_mult = 2
 	end
 	if G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" then
 	    Multiverse.show_blind_instructions("undying")
 	end
+end
+
+local can_sell_hook = Card.can_sell_card
+function Card:can_sell_card()
+	local ret = can_sell_hook(self)
+	if self.ability and type(self.ability.extra) == "table" and self.ability.extra.mul_is_active then
+		return false
+	end
+	return ret
 end

@@ -157,7 +157,6 @@ function Multiverse.limbo_keys_end()
 				Multiverse.in_limbo = nil
 				Multiverse.limbo_keys = {}
 				Multiverse.has_guessed = false
-				Multiverse.remove_blind_instructions()
 				return true
 			end,
 		}),

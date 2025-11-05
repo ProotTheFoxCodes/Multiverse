@@ -444,20 +444,21 @@ function Multiverse.consumable_effect(card, func)
 end
 
 function Multiverse.show_blind_instructions(key)
-	G.mul_instructions_HUD = UIBox({
+	G.mul_INSTRUCTIONS_HUD = UIBox({
 		definition = Multiverse.blind_instructions_HUD_def(key),
 		config = { align = "cri", offset = { x = 1.2, y = 0 }, major = G.ROOM_ATTACH },
 	})
-	G.mul_instructions_HUD:recalculate()
+	G.mul_INSTRUCTIONS_HUD:recalculate()
 end
 
-function Multiverse.remove_blind_instructions()
-	if G.mul_instructions_HUD then
-		G.mul_instructions_HUD:remove()
-		G.mul_instructions_HUD = nil
+function Multiverse.hide_blind_instructions()
+	if G.mul_INSTRUCTIONS_HUD then
+		G.mul_INSTRUCTIONS_HUD:remove()
+		G.mul_INSTRUCTIONS_HUD = nil
 	end
 end
 
+---Do not call this on a card that cannot become transmutable
 ---@param card Card
 function Multiverse.transmute_check(card)
 	local progress = (

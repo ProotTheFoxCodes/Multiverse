@@ -39,10 +39,7 @@ SMODS.Blind({
 			G.GAME.blind.chips = get_blind_amount(G.GAME.round_resets.ante) * 2
 			G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
 		end
-		Multiverse.remove_blind_instructions()
-	end,
-	defeat = function(self)
-		Multiverse.remove_blind_instructions()
+		Multiverse.hide_blind_instructions()
 	end,
 	loc_vars = function(self)
 		return { vars = { 10 } }
@@ -60,7 +57,6 @@ SMODS.Blind({
 	mult = 2,
 	press_play = function(self)
 		if not G.GAME.blind.disabled then
-			Multiverse.remove_blind_instructions()
 			Multiverse.undyne_spears = {}
 			Multiverse.done_attacking = false
 			Multiverse.in_undyne = true
@@ -79,7 +75,6 @@ SMODS.Blind({
 							blocking = false,
 							delay = 0.5 * G.SPEEDFACTOR,
 							func = function()
-								Multiverse.show_blind_instructions("undying")
 								Multiverse.in_undyne = false
 								return true
 							end,
@@ -97,15 +92,12 @@ SMODS.Blind({
 		if G.GAME.chips < to_big(0) then
 			G.GAME.chips = to_big(0)
 		end
-		Multiverse.remove_blind_instructions()
-	end,
-	defeat = function(self)
-		Multiverse.remove_blind_instructions()
+		Multiverse.hide_blind_instructions()
 	end,
 	loc_vars = function(self)
-		return { vars = { 10 } }
+		return { vars = { 10 * (G.GAME.mul_undyne_damage_mult or 1) } }
 	end,
 	collection_loc_vars = function(self)
-		return { vars = { 10 } }
+		return { vars = { 10 * (G.GAME.mul_undyne_damage_mult or 1) } }
 	end,
 })
