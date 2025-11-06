@@ -574,7 +574,8 @@ SMODS.Consumable({
 		return not card.ability.extra.mul_is_active
 	end,
 	can_use = function(self, card)
-		return card.ability.extra.mul_is_active or (G.STATE == G.STATES.SHOP and to_big(G.GAME.shop.joker_max) > to_big(1))
+		return card.ability.extra.mul_is_active
+			or (G.STATE == G.STATES.SHOP and to_big(G.GAME.shop.joker_max) > to_big(1))
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
@@ -585,6 +586,48 @@ SMODS.Consumable({
 					+ card.ability.extra.temp_recharge_boost
 			else
 				change_shop_size(card.ability.extra.shop_penalty)
+				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
+					- card.ability.extra.temp_recharge_boost
+			end
+		end)
+	end,
+})
+
+SMODS.Consumable({
+	key = "stand_arrow",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	config = { extra = { mul_is_active = false, temp_recharge_boost = 15 } },
+	loc_vars = function(self, info_queue, card)
+		table.insert(info_queue, {
+			set = "Other",
+			key = "mul_active_consumable",
+		})
+		local active = card.ability.extra.mul_is_active and "active" or "inactive"
+		return { vars = { card.ability.extra.temp_recharge_boost, active } }
+	end,
+	keep_on_use = function(self, card)
+		return not card.ability.extra.mul_is_active
+	end,
+	can_use = function(self, card)
+		return card.ability.extra.mul_is_active or not G.GAME.mul_stand_arrow_active
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			card.ability.extra.mul_is_active = not card.ability.extra.mul_is_active
+			if card.ability.extra.mul_is_active then
+				for _, c in ipairs(G.playing_cards) do
+					SMODS.debuff_card(c, true, "mul_stand_arrow")
+				end
+				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
+					+ card.ability.extra.temp_recharge_boost
+			else
+				for _, c in ipairs(G.playing_cards) do
+					SMODS.debuff_card(c, false, "mul_stand_arrow")
+				end
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					- card.ability.extra.temp_recharge_boost
 			end

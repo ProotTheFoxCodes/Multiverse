@@ -39,6 +39,22 @@ function Game:update(dt)
 			offset = { x = 8 * math.sin(G.mul_loaded_timer * 0.075), y = 3.7 * math.cos(G.mul_loaded_timer * 0.075) },
 		})
 	end
+	if G.GAME and G.GAME.mul_elder_scroll_active then
+		if G.hand then
+			for _, c in ipairs(G.hand.cards) do
+				if c.facing == "front" then
+					c:flip()
+				end
+			end
+		end
+		if G.jokers then
+			for _, j in ipairs(G.jokers.cards) do
+				if j.facing == "front" then
+					j:flip()
+				end
+			end
+		end
+	end
 	return ret
 end
 
@@ -138,14 +154,17 @@ function Game:start_run(args)
 	G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate or 2
 	G.GAME.mul_thaumaturgy_energy_per_joker = G.GAME.mul_thaumaturgy_energy_per_joker or 10
 	G.GAME.mul_undyne_damage_mult = 1
-	G.GAME.mul_money_mult = G.GAME.mul_money_mult or 1
-	G.GAME.mul_time_machine_active = G.GAME.mul_time_machine_active or false
 	if G.GAME.challenge == "c_mul_monsoon" then
 		G.GAME.mul_undyne_damage_mult = 2
 	end
 	if G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" then
 		Multiverse.show_blind_instructions("undying")
 	end
+	G.GAME.mul_money_mult = G.GAME.mul_money_mult or 1
+	G.GAME.mul_time_machine_active = G.GAME.mul_time_machine_active or false
+	G.GAME.mul_stand_arrow_active = G.GAME.mul_stand_arrow_active or false
+	G.GAME.mul_elder_scroll_active = G.GAME.mul_stand_arrow_active or false
+	G.GAME.mul_unicorn_protections = G.GAME.mul_unicorn_protections or 0
 end
 
 local can_sell_hook = Card.can_sell_card

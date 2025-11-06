@@ -3,7 +3,11 @@
 ---@param args? {immediate: boolean?, silent: boolean?, from_magnum_opus: boolean?, from_charge: boolean?}
 function Multiverse.ease_thaumaturgy_energy(amt, args)
 	args = args or {}
-	if amt == 0 then return end
+	if G.GAME.mul_time_machine_active and amt >= 0 then return end
+	if G.GAME.mul_unicorn_protections >= 1 and amt < 0 then
+		G.GAME.mul_unicorn_protections = G.GAME.mul_unicorn_protections - 1
+		return
+	end
 	SMODS.calculate_context({
 		--True if the amount of Thaumaturgy Energy was changed.
 		mul_thaumaturgy_energy_altered = true,
@@ -15,7 +19,6 @@ function Multiverse.ease_thaumaturgy_energy(amt, args)
 		--True if this change occured while "Time Machine" is active.
 		active_time_machine = G.GAME.mul_time_machine_active
 	})
-	if G.GAME.mul_time_machine_active then return end
 	local function change_thaumaturgy_energy(num)
 		num = num or 0
 		if num == 0 then
