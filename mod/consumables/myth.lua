@@ -229,7 +229,7 @@ SMODS.Consumable({
 	atlas = "temp_myth",
 	pos = { x = 0, y = 0 },
 	discovered = true,
-	config = { extra = { max_thaum_energy = 30 } },
+	config = { extra = { max_thaum_energy = 20 } },
 	cost = 6,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.max_thaum_energy } }
@@ -421,7 +421,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { max_thaum_energy = 60 } },
+	config = { extra = { max_thaum_energy = 75 } },
 	loc_vars = function(self, info_queue, card)
 		local total = 0
 		if G.jokers then
@@ -462,7 +462,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { thaum_energy = 30 } },
+	config = { extra = { thaum_energy = 50 } },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.thaum_energy } }
 	end,
@@ -488,7 +488,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { mul_is_active = false, temp_recharge_boost = 8, money_penalty = 2 } },
+	config = { extra = { mul_is_active = false, temp_recharge_boost = 10, money_penalty = 2 } },
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",
@@ -526,7 +526,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { min_energy = 30 } },
+	config = { extra = { min_energy = 50 } },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.min_energy } }
 	end,
@@ -561,7 +561,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { mul_is_active = false, temp_recharge_boost = 4, shop_penalty = 1 } },
+	config = { extra = { mul_is_active = false, temp_recharge_boost = 6, shop_penalty = 1 } },
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",
@@ -600,7 +600,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { mul_is_active = false, temp_recharge_boost = 15 } },
+	config = { extra = { mul_is_active = false, temp_recharge_boost = 16 } },
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",
@@ -631,6 +631,46 @@ SMODS.Consumable({
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					- card.ability.extra.temp_recharge_boost
 			end
+		end)
+	end,
+})
+
+SMODS.Consumable({
+	key = "moon_berry",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	config = { extra = { thaum_energy_cost = 25 } },
+	loc_vars = function(self, info_queue, card)
+		table.insert(info_queue, G.P_CENTERS.e_polychrome)
+		return { vars = { card.ability.extra.thaum_energy_cost } }
+	end,
+	can_use = function(self, card)
+		local valid_targets = {}
+		if G.jokers then
+			for _, j in ipairs(G.jokers.cards) do
+				if not j.edition then
+					valid_targets[#valid_targets + 1] = j
+				end
+			end
+		end
+		return G.jokers
+			and #valid_targets >= 1
+			and G.GAME.mul_thaumaturgy_energy >= card.ability.extra.thaum_energy_cost
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			local valid_targets = {}
+			for _, j in ipairs(G.jokers.cards) do
+				if not j.edition then
+					valid_targets[#valid_targets + 1] = j
+				end
+			end
+			local target = pseudorandom_element(valid_targets, "mul_moon_berry")
+			target:set_edition("e_polychrome", true)
+			Multiverse.ease_thaumaturgy_energy(-card.ability.extra.thaum_energy_cost, { immediate = true })
 		end)
 	end,
 })
