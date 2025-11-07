@@ -3,5 +3,5 @@ SMODS.Font({
     path = "thaum_energy_icon.ttf",
     render_scale = 300,
     FONTSCALE = 0.05,
-    TEXT_HEIGHT_SCALE = 0.8,
+    TEXT_HEIGHT_SCALE = 0.85,
 })

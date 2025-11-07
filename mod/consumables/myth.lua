@@ -747,6 +747,31 @@ SMODS.Consumable({
 })
 
 SMODS.Consumable({
+	key = "unicorn_horn",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	loc_vars = function(self, info_queue, card)
+		local nullifications = 0
+		if G.GAME then
+			nullifications = G.GAME.mul_unicorn_protections
+		end
+		return { vars = { card.ability.extra.energy_per_sticker, nullifications } }
+	end,
+	can_use = function(self, card)
+		return true
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			play_sound("tarot1")
+			G.GAME.mul_unicorn_protections = G.GAME.mul_unicorn_protections + 1
+		end)
+	end,
+})
+
+SMODS.Consumable({
 	key = "journal",
 	set = "mul_Myth",
 	atlas = "temp_myth",
