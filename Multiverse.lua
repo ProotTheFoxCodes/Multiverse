@@ -1,5 +1,4 @@
-Multiverse = {}
-Multiverse = SMODS.current_mod
+Multiverse = Multiverse or SMODS.current_mod
 Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient({
 	key = "transmuted_gradient",
 	colours = {
@@ -37,6 +36,38 @@ SMODS.current_mod.calculate = function(self, context)
 			add_tag(Tag("tag_mul_magnum_opus", false, "Small"))
 		end
 	end
+end
+
+local function set_foddian_suit()
+	G.GAME.current_round.mul_foddian_suit = "Hearts"
+	local valid = {}
+	for _, c in ipairs(G.playing_cards) do
+		if not SMODS.has_no_suit(c) then
+			table.insert(valid, c)
+		end
+	end
+	local foddian_card = pseudorandom_element(valid, "mul_foddian" .. G.GAME.round_resets.ante)
+	if foddian_card then
+		G.GAME.current_round.mul_foddian_suit = foddian_card.base.suit
+	end
+end
+
+local function set_stand_arrow_suit()
+	G.GAME.current_round.mul_stand_arrow_suit = G.GAME.current_round.mul_stand_arrow_suit or "Spades"
+	local valid = {}
+	for suit, _ in ipairs(SMODS.Suits) do
+		if suit ~= G.GAME.current_round.mul_stand_arrow_suit then
+			valid[#valid + 1] = suit
+		end
+	end
+	if next(valid) then
+		G.GAME.current_round.mul_stand_arrow_suit = pseudorandom_element(valid, "mul_arrow" .. G.GAME.round_resets.ante)
+	end
+end
+
+function SMODS.current_mod.reset_game_globals()
+	set_foddian_suit()
+	set_stand_arrow_suit()
 end
 
 ---@param path string

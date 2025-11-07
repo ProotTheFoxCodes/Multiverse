@@ -620,7 +620,15 @@ SMODS.Consumable({
 			key = "mul_active_consumable",
 		})
 		local active = card.ability.extra.mul_is_active and "active" or "inactive"
-		return { vars = { card.ability.extra.temp_recharge_boost, active } }
+		local suit = G.GAME.current_round.mul_stand_arrow_suit or "Spades"
+		return {
+			vars = {
+				card.ability.extra.temp_recharge_boost,
+				localize(suit, "suits_plural"),
+				active,
+				colours = { G.C.SUITS[suit] },
+			},
+		}
 	end,
 	keep_on_use = function(self, card)
 		return not card.ability.extra.mul_is_active
@@ -634,15 +642,9 @@ SMODS.Consumable({
 			card.ability.extra.mul_is_active = not card.ability.extra.mul_is_active
 			G.GAME.mul_stand_arrow_active = card.ability.extra.mul_is_active
 			if card.ability.extra.mul_is_active then
-				for _, c in ipairs(G.playing_cards) do
-					SMODS.debuff_card(c, true, "mul_stand_arrow")
-				end
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					+ card.ability.extra.temp_recharge_boost
 			else
-				for _, c in ipairs(G.playing_cards) do
-					SMODS.debuff_card(c, false, "mul_stand_arrow")
-				end
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					- card.ability.extra.temp_recharge_boost
 			end
@@ -706,7 +708,6 @@ SMODS.Consumable({
 			play_sound("tarot1")
 			card.ability.extra.mul_is_active = not card.ability.extra.mul_is_active
 			G.GAME.mul_elder_scroll_active = card.ability.extra.mul_is_active
-			--flipping handled in update function
 			if card.ability.extra.mul_is_active then
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					+ card.ability.extra.temp_recharge_boost
@@ -725,7 +726,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { energy_per_sticker = 20 } },
+	config = { extra = { energy_per_sticker = 15 } },
 	loc_vars = function(self, info_queue, card)
 		local total = 0
 		if G.jokers and #G.jokers.highlighted == 1 then
@@ -755,10 +756,10 @@ SMODS.Consumable({
 	cost = 6,
 	loc_vars = function(self, info_queue, card)
 		local nullifications = 0
-		if G.GAME then
+		if G.GAME and G.GAME.mul_unicorn_protections then
 			nullifications = G.GAME.mul_unicorn_protections
 		end
-		return { vars = { card.ability.extra.energy_per_sticker, nullifications } }
+		return { vars = { nullifications } }
 	end,
 	can_use = function(self, card)
 		return true
@@ -767,6 +768,44 @@ SMODS.Consumable({
 		Multiverse.consumable_effect(card, function()
 			play_sound("tarot1")
 			G.GAME.mul_unicorn_protections = G.GAME.mul_unicorn_protections + 1
+		end)
+	end,
+})
+
+SMODS.Consumable({
+	key = "kryptonite",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	config = { extra = { mul_is_active = false, temp_recharge_boost = 24 } },
+	loc_vars = function(self, info_queue, card)
+		table.insert(info_queue, {
+			set = "Other",
+			key = "mul_active_consumable",
+		})
+		local active = card.ability.extra.mul_is_active and "active" or "inactive"
+		return { vars = { card.ability.extra.temp_recharge_boost, active } }
+	end,
+	keep_on_use = function(self, card)
+		return not card.ability.extra.mul_is_active
+	end,
+	can_use = function(self, card)
+		return card.ability.extra.mul_is_active or not G.GAME.mul_kryptonite_active
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			play_sound("tarot1")
+			card.ability.extra.mul_is_active = not card.ability.extra.mul_is_active
+			G.GAME.mul_kryptonite_active = card.ability.extra.mul_is_active
+			if card.ability.extra.mul_is_active then
+				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
+					+ card.ability.extra.temp_recharge_boost
+			else
+				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
+					- card.ability.extra.temp_recharge_boost
+			end
 		end)
 	end,
 })

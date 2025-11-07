@@ -39,21 +39,26 @@ function Game:update(dt)
 			offset = { x = 8 * math.sin(G.mul_loaded_timer * 0.075), y = 3.7 * math.cos(G.mul_loaded_timer * 0.075) },
 		})
 	end
-	if G.GAME and G.GAME.mul_elder_scroll_active then
-		if G.hand then
-			for _, c in ipairs(G.hand.cards) do
-				if c.facing == "front" then
-					c:flip()
-				end
+	if G.GAME then
+		Multiverse.apply_to_jokers(function(card)
+			if card.facing == "front" and not card.flipping and G.GAME.mul_elder_scroll_active then
+				card:flip()
 			end
-		end
-		if G.jokers then
-			for _, j in ipairs(G.jokers.cards) do
-				if j.facing == "front" then
-					j:flip()
-				end
+			SMODS.debuff_card(card, G.GAME.mul_kryptonite_active, "mul_kryptonite")
+		end)
+		Multiverse.apply_to_playing_cards(function(card)
+			if card.facing == "front" and not card.flipping and G.GAME.mul_elder_scroll_active then
+				card:flip()
 			end
-		end
+			SMODS.debuff_card(
+				card,
+				G.GAME.mul_stand_arrow_active
+					and card:is_suit(
+						G.GAME.current_round and G.GAME.current_round.mul_stand_arrow_suit or "Spades"
+					),
+				"mul_stand_arrow"
+			)
+		end)
 	end
 	return ret
 end
@@ -150,9 +155,13 @@ end
 local start_run_hook = Game.start_run
 function Game:start_run(args)
 	start_run_hook(self, args)
+	---@type integer
 	G.GAME.mul_thaumaturgy_energy = G.GAME.mul_thaumaturgy_energy or 0
+	---@type integer
 	G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate or 2
+	---@type integer
 	G.GAME.mul_thaumaturgy_energy_per_joker = G.GAME.mul_thaumaturgy_energy_per_joker or 10
+	---@type number
 	G.GAME.mul_undyne_damage_mult = 1
 	if G.GAME.challenge == "c_mul_monsoon" then
 		G.GAME.mul_undyne_damage_mult = 2
@@ -160,11 +169,19 @@ function Game:start_run(args)
 	if G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" then
 		Multiverse.show_blind_instructions("undying")
 	end
+	---@type number
 	G.GAME.mul_money_mult = G.GAME.mul_money_mult or 1
+	---@type boolean
 	G.GAME.mul_time_machine_active = G.GAME.mul_time_machine_active or false
+	---@type boolean
 	G.GAME.mul_stand_arrow_active = G.GAME.mul_stand_arrow_active or false
+	---@type boolean
 	G.GAME.mul_elder_scroll_active = G.GAME.mul_stand_arrow_active or false
+	---@type integer
 	G.GAME.mul_unicorn_protections = G.GAME.mul_unicorn_protections or 0
+	---@type boolean
+	G.GAME.mul_kryptonite_active = G.GAME.mul_kryptonite_active or false
+	---@type string?
 	G.GAME.mul_last_myth_used = G.GAME.mul_last_myth_used or nil
 end
 

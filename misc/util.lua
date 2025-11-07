@@ -473,8 +473,26 @@ function Multiverse.get_stickers(card)
 	local stickers = {}
 	for key, sticker in SMODS.Stickers do
 		if card.ability[key] then
-			stickers[#stickers+1] = key
+			stickers[#stickers + 1] = key
 		end
 	end
 	return stickers
+end
+
+---@param func fun(card: Card): nil
+function Multiverse.apply_to_jokers(func)
+	if G.jokers then
+		for _, j in ipairs(G.jokers.cards) do
+			func(j)
+		end
+	end
+end
+
+---@param func fun(card: Card): nil
+function Multiverse.apply_to_playing_cards(func)
+	if G.playing_cards then
+		for _, p in ipairs(G.playing_cards) do
+			func(p)
+		end
+	end
 end

@@ -75,12 +75,12 @@ return {
             c_mul_philosophers_stone = {
                 name = "Philosopher\'s Stone",
                 text = {
-                    "Gain{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} per",
+                    "Gain{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} per",
                     "{C:mul_transmuted}Transmuted{} Joker owned",
                     "{C:mul_transmuted,E:1}Transmutes{} selected Joker that",
                     "is currently {C:mul_transmuted}Transmutable{}",
                     "{C:inactive}(Preserves Joker modifications){}",
-                    "{C:inactive}(Currently{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{C:inactive}){}",
+                    "{C:inactive}(Currently{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{C:inactive}){}",
                 }
             },
             c_mul_holy_grail = {
@@ -96,7 +96,7 @@ return {
                 text = {
                     "Doubles current",
                     "Thaumaturgy Energy",
-                    "{C:inactive}(Max of{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{C:inactive})"
+                    "{C:inactive}(Max of{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{C:inactive})"
                 }
             },
             c_mul_tree_of_eden = {
@@ -111,8 +111,8 @@ return {
                 name = "Sphere of Annhilation",
                 text = {
                     "{C:attention}Destroys{} all cards in hand",
-                    "Lose{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} per card destroyed",
-                    "{C:inactive}(Currently{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{C:inactive}){}"
+                    "Lose{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} per card destroyed",
+                    "{C:inactive}(Currently{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{C:inactive}){}"
                 }
             },
             c_mul_chaos_emeralds = {
@@ -127,7 +127,7 @@ return {
                 name = "One Ring",
                 text = {
                     "Sets Thaumaturgy",
-                    "Energy to{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{}",
+                    "Energy to{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{}",
                     "Creates a random",
                     "{C:red}Rare{} {C:attention}Joker{}"
                 }
@@ -143,9 +143,9 @@ return {
                 name = "Rosetta Stone",
                 text = {
                     "{C:attention}Flips{} all Jokers",
-                    "Gain{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} per",
+                    "Gain{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} per",
                     "Joker flipped",
-                    "{C:inactive}(Currently{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{C:inactive}){}"
+                    "{C:inactive}(Currently{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{C:inactive}){}"
                 }
             },
             c_mul_shadow_crystal = {
@@ -164,8 +164,8 @@ return {
                     "Gain Thaumaturgy Energy",
                     "equal to the total",
                     "{C:attention}sell value{} of all Jokers",
-                    "{C:inactive}(Max of{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{C:inactive}){}",
-                    "{C:inactive}(Currently{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{C:inactive}){}"
+                    "{C:inactive}(Max of{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{C:inactive}){}",
+                    "{C:inactive}(Currently{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{C:inactive}){}"
                 }
             },
             c_mul_gnosis = {
@@ -173,15 +173,15 @@ return {
                 text = {
                     "{C:attention}Destroys{} selected Joker that",
                     "can become {C:mul_transmuted}Transmutable{}",
-                    "Gain{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{}"
+                    "Gain{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{}"
                 }
             },
             c_mul_puzzle = {
                 name = "Millenium Puzzle",
                 text = {
-                    "While active, increases {C:attention}base{}",
-                    "Thaumaturgy Energy recharge",
-                    "rate by{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} but {C:attention}halves{} money",
+                    "While active, increases",
+                    "{C:attention}base{} Thaumaturgy Energy",
+                    "recharge rate by{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} but {C:attention}halves{} money",
                     "earned from all sources",
                     "{C:inactive}(Currently #2#){}"
                 }
@@ -189,32 +189,33 @@ return {
             c_mul_three_goddesses = {
                 name = "Three Goddesses Statue",
                 text = {
-                    "Sets Thaumaturgy Energy to{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{}",
+                    "Sets Thaumaturgy Energy to{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{}",
                     "{C:attention}Increases{} selected Joker's",
                     "progress towards becoming",
                     "{C:mul_transmuted}Transmutable{} by {C:attention}50%{}",
                     "{C:inactive}(Cannot be used while Thaumaturgy{}",
-                    "{C:inactive}Energy is below{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{C:inactive}){}",
+                    "{C:inactive}Energy is below{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{C:inactive}){}",
                 }
             },
             c_mul_ufo = {
                 name = "UFO",
                 text = {
-                    "While active, increases {C:attention}base{}",
-                    "Thaumaturgy Energy recharge",
-                    "rate by{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} but {C:attention}-#2#{} card",
-                    "slot available in shop",
+                    "While active, increases",
+                    "{C:attention}base{} Thaumaturgy Energy",
+                    "recharge rate by{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} but {C:attention}-#2#{}",
+                    "card slots available in shop",
                     "{C:inactive}(Currently #3#){}"
                 }
             },
             c_mul_stand_arrow = {
                 name = "Stand Arrow",
                 text = {
-                    "While active, increases {C:attention}base{}",
-                    "Thaumaturgy Energy recharge",
-                    "rate by{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} but",
-                    "{C:red}debuffs{} all playing cards",
-                    "{C:inactive}(Currently #2#){}"
+                    "While active, increases",
+                    "{C:attention}base{} Thaumaturgy Energy",
+                    "recharge rate by{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} but",
+                    "{C:red}debuffs{} all {V:1}#2#{}",
+                    "{C:inactive}(Suit changes at end of round){}",
+                    "{C:inactive}(Currently #3#){}"
                 }
             },
             c_mul_moon_berry = {
@@ -222,7 +223,7 @@ return {
                 text = {
                     "Adds {C:dark_edition}Polychrome{} to",
                     "selected Joker",
-                    "Lose{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{}"
+                    "Lose{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{}"
                 }
             },
             c_mul_elder_scroll = {
@@ -230,9 +231,8 @@ return {
                 text = {
                     "While active, increases {C:attention}base{}",
                     "Thaumaturgy Energy recharge",
-                    "rate by{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} but",
-                    "all playing cards and Jokers",
-                    "are {C:attention}flipped{} facedown",
+                    "rate by{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} but",
+                    "all playing cards are {C:attention}facedown{}",
                     "{C:inactive}(Currently #2#){}"
                 }
             },
@@ -241,10 +241,10 @@ return {
                 text = {
                     "{C:attention}Destroys{} selected Joker",
                     "with at least {C:attention}1{} sticker",
-                    "Gain{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} per sticker",
+                    "Gain{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} per sticker",
                     "on selected Joker",
                     "{C:inactive}(Can bypass Eternal){}",
-                    "{C:inactive}(Currently{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#2#{C:inactive}){}"
+                    "{C:inactive}(Currently{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{C:inactive}){}"
                 }
             },
             c_mul_unicorn_horn = {
@@ -260,8 +260,8 @@ return {
                 text = {
                     "While active, increases {C:attention}base{}",
                     "Thaumaturgy Energy recharge",
-                    "rate by{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} but",
-                    "{C:red}debuffs{} all Jokers",
+                    "rate by{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} but",
+                    "{C:red}debuffs{} all {C:blue}Common{} Jokers",
                     "{C:inactive}(Currently #2#){}"
                 }
             },
@@ -281,7 +281,7 @@ return {
                     "While active, {C:blue}+#1#{} hands and",
                     "{C:red}+#2#{} discards but decreases",
                     "{C:attention}base{} Thaumaturgy Energy",
-                    "recharge rate by {s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#3#{}"
+                    "recharge rate by {s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#3#{}"
                 }
             },
             c_mul_matrix = {
@@ -290,7 +290,7 @@ return {
                     "While active, {C:attention}+#1#{} Joker",
                     "slots but decreases",
                     "{C:attention}base{} Thaumaturgy Energy",
-                    "recharge rate by {s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#3#{}"
+                    "recharge rate by {s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#3#{}"
                 }
             },
             c_mul_time_machine = {
@@ -307,8 +307,8 @@ return {
             c_mul_palace_treasure = {
                 name = "Palace Treasure",
                 text = {
-                    "Sets Thaumaturgy Energy to{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{}",
-                    "Earn {C:money}$1{} for every{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} lost",
+                    "Sets Thaumaturgy Energy to{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{}",
+                    "Earn {C:money}$1{} for every{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} lost",
                     "{C:inactive}(Currently {C:money}#2#{C:inactive}){}"
                 }
             },
@@ -585,10 +585,10 @@ return {
                 name = "Foddian Struggle",
                 text = {
                     {
-                        "This Joker gains",
-                        "{C:mult}+#2#{} Mult per",
-                        "consecutive hand played",
-                        "without a {V:1}#1#{}",
+                        "This Joker gains {C:mult}+#2#{} Mult",
+                        "per consecutive hand",
+                        "played without a {V:1}#1#{}",
+                        "{C:inactive}(Suit changes at end of round){}",
                         "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)"
                     },
                     {
@@ -733,7 +733,7 @@ return {
                     "Can use {C:attention}Philosopher's Stone{}",
                     "on this card to create",
                     "{C:mul_transmuted,E:1}Transmuted{} Jokers",
-                    "{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} at end of round",
+                    "{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} at end of round",
                 }
             },
             mul_traitorous = {
@@ -788,11 +788,11 @@ return {
             mul_thaumaturgy_desc = {
                 name = "Thaumaturgy Energy",
                 text = {
-                    "You gain{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} at the",
+                    "You gain{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} at the",
                     "end of each round",
                     "If Thaumaturgy Energy is at least",
-                    "{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}100{} at end of round, Thaumaturgy",
-                    "Energy is {C:red}reset{} to{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{} and",
+                    "{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}100{} at end of round, Thaumaturgy",
+                    "Energy is {C:red}reset{} to{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{} and",
                     "a {C:mul_transmuted}Magnum Opus{} tag is created"
                 }
             },
