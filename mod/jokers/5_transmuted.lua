@@ -141,12 +141,10 @@ SMODS.Joker({
 		G.hand:change_size(-card.ability.extra.size_inc)
 	end,
 	calculate = function(self, card, context)
-		if not context.blueprint then
-			if context.before and context.main_eval then
-				for _, c in ipairs(G.hand.cards) do
-					if next(SMODS.get_enhancements(card)) then
-						c:set_ability("m_mul_netherite")
-					end
+		if not context.blueprint and context.before then
+			for _, c in ipairs(G.hand.cards) do
+				if next(SMODS.get_enhancements(card)) then
+					c:set_ability("m_mul_netherite")
 				end
 			end
 		end

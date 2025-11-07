@@ -218,6 +218,7 @@ SMODS.Consumable({
 		Multiverse.consumable_effect(card, function()
 			local j_key = G.jokers.highlighted[1].config.center.key
 			if Multiverse.transmutations[j_key].other.grail then
+				play_sound("timpani")
 				Multiverse.transmutations[j_key].other.grail()
 			end
 		end)
@@ -239,6 +240,7 @@ SMODS.Consumable({
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
+			play_sound("timpani")
 			Multiverse.ease_thaumaturgy_energy(
 				Multiverse.clamp(G.GAME.mul_thaumaturgy_energy, 0, card.ability.extra.max_thaum_energy),
 				{ immediate = true }
@@ -268,6 +270,7 @@ SMODS.Consumable({
 		Multiverse.consumable_effect(card, function()
 			local j_key = G.jokers.highlighted[1].config.center.key
 			if Multiverse.transmutations[j_key].other.tree_of_eden then
+				play_sound("timpani")
 				SMODS.add_card({
 					key = pseudorandom_element(Multiverse.transmutations[j_key].other.tree_of_eden, "mul_tree_of_eden"),
 				})
@@ -292,12 +295,13 @@ SMODS.Consumable({
 		return { vars = { card.ability.extra.energy_loss, count * card.ability.extra.energy_loss } }
 	end,
 	can_use = function(self, card)
-		return G.hand and #G.hand.cards > 0 and G.GAME.mul_thaumaturgy_energy > 0
+		return G.hand and #G.hand.cards > 0
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
 			local count = #G.hand.cards
 			SMODS.destroy_cards(G.hand.cards, nil, true)
+			play_sound("timpani")
 			Multiverse.ease_thaumaturgy_energy(-count * card.ability.extra.energy_loss, { immediate = true })
 		end)
 	end,
@@ -315,6 +319,7 @@ SMODS.Consumable({
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
+			play_sound("timpani")
 			SMODS.add_card({ rarity = "Rare", set = "Joker", key_append = "mul_one_ring" })
 			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { immediate = true })
 		end)
@@ -373,6 +378,7 @@ SMODS.Consumable({
 			for _, j in ipairs(G.jokers.cards) do
 				j:flip()
 			end
+			play_sound("timpani")
 			Multiverse.ease_thaumaturgy_energy(
 				card.ability.extra.energy_per_joker * #G.jokers.cards,
 				{ immediate = true }
@@ -447,6 +453,7 @@ SMODS.Consumable({
 					total = total + j.sell_cost
 				end
 			end
+			play_sound("timpani")
 			Multiverse.ease_thaumaturgy_energy(
 				math.min(math.floor(to_number(total)), card.ability.extra.max_thaum_energy),
 				{ immediate = true }
@@ -476,6 +483,7 @@ SMODS.Consumable({
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
 			SMODS.destroy_cards(G.jokers.highlighted[1], nil, true)
+			play_sound("timpani")
 			Multiverse.ease_thaumaturgy_energy(card.ability.extra.thaum_energy, { immediate = true })
 		end)
 	end,
@@ -643,7 +651,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { thaum_energy_cost = 25 } },
+	config = { extra = { thaum_energy_cost = 35 } },
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, G.P_CENTERS.e_polychrome)
 		return { vars = { card.ability.extra.thaum_energy_cost } }
@@ -651,24 +659,13 @@ SMODS.Consumable({
 	can_use = function(self, card)
 		local valid_targets = {}
 		if G.jokers then
-			for _, j in ipairs(G.jokers.cards) do
-				if not j.edition then
-					valid_targets[#valid_targets + 1] = j
-				end
-			end
+			valid_targets = SMODS.Edition:get_edition_cards(G.jokers, true)
 		end
-		return G.jokers
-			and #valid_targets >= 1
-			and G.GAME.mul_thaumaturgy_energy >= card.ability.extra.thaum_energy_cost
+		return G.jokers and #valid_targets >= 1
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
-			local valid_targets = {}
-			for _, j in ipairs(G.jokers.cards) do
-				if not j.edition then
-					valid_targets[#valid_targets + 1] = j
-				end
-			end
+			local valid_targets = SMODS.Edition:get_edition_cards(G.jokers, true)
 			local target = pseudorandom_element(valid_targets, "mul_moon_berry")
 			target:set_edition("e_polychrome", true)
 			Multiverse.ease_thaumaturgy_energy(-card.ability.extra.thaum_energy_cost, { immediate = true })
@@ -683,7 +680,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { mul_is_active = false, temp_recharge_boost = 16 } },
+	config = { extra = { mul_is_active = false, temp_recharge_boost = 20 } },
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",
@@ -709,6 +706,62 @@ SMODS.Consumable({
 			else
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					- card.ability.extra.temp_recharge_boost
+			end
+		end)
+	end,
+})
+
+SMODS.Consumable({
+	key = "journal",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	loc_vars = function(self, info_queue, card)
+		local journal_card = G.GAME.mul_last_myth_used and G.P_CENTERS[G.GAME.mul_last_myth_used] or nil
+		local last_myth = journal_card and localize({ type = "name_text", key = journal_card.key, set = "mul_Myth" })
+			or localize("k_none")
+		local colour = (not journal_card or journal_card.name == "Journal") and G.C.RED or G.C.GREEN
+		if not (not journal_card or journal_card.name == "Journal") then
+			info_queue[#info_queue + 1] = journal_card
+		end
+		local main_end = {
+			{
+				n = G.UIT.C,
+				config = { align = "bm", padding = 0.02 },
+				nodes = {
+					{
+						n = G.UIT.C,
+						config = { align = "m", colour = colour, r = 0.05, padding = 0.05 },
+						nodes = {
+							{
+								n = G.UIT.T,
+								config = {
+									text = " " .. last_myth .. " ",
+									colour = G.C.UI.TEXT_LIGHT,
+									scale = 0.3,
+									shadow = true,
+								},
+							},
+						},
+					},
+				},
+			},
+		}
+		return { vars = { last_myth }, main_end = main_end }
+	end,
+	can_use = function(self, card)
+		return (#G.consumeables.cards < G.consumeables.config.card_limit or card.area == G.consumeables)
+			and G.GAME.mul_last_myth_used
+			and G.GAME.mul_last_myth_used ~= "c_mul_journal"
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			if G.consumeables.config.card_limit > #G.consumeables.cards then
+				play_sound("timpani")
+				SMODS.add_card({ key = G.GAME.last_tarot_planet })
+				card:juice_up(0.3, 0.5)
 			end
 		end)
 	end,

@@ -434,7 +434,6 @@ function Multiverse.consumable_effect(card, func)
 		trigger = "after",
 		delay = 0.4,
 		func = function()
-			play_sound("tarot1")
 			func()
 			card:juice_up(0.3, 0.5)
 			return true
@@ -467,4 +466,15 @@ function Multiverse.transmute_check(card)
 	if progress >= card.ability.extra.transmute_req and not card.ability.mul_transmutable then
 		card:add_sticker("mul_transmutable", true)
 	end
+end
+
+---@param card Card
+function Multiverse.get_stickers(card)
+	local stickers = {}
+	for key, sticker in SMODS.Stickers do
+		if card.ability[key] then
+			stickers[#stickers+1] = key
+		end
+	end
+	return stickers
 end

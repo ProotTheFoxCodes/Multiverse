@@ -165,6 +165,7 @@ function Game:start_run(args)
 	G.GAME.mul_stand_arrow_active = G.GAME.mul_stand_arrow_active or false
 	G.GAME.mul_elder_scroll_active = G.GAME.mul_stand_arrow_active or false
 	G.GAME.mul_unicorn_protections = G.GAME.mul_unicorn_protections or 0
+	G.GAME.mul_last_myth_used = G.GAME.mul_last_myth_used or nil
 end
 
 local can_sell_hook = Card.can_sell_card
