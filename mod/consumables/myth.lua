@@ -349,6 +349,7 @@ SMODS.Consumable({
 				target.ability.extra.transmute_progress = target.ability.extra.transmute_progress
 					+ math.floor(target.ability.extra.transmute_req / 4)
 			end
+			play_sound("tarot1")
 			target:juice_up(0.3, 0.5)
 			Multiverse.transmute_check(target)
 		end)
@@ -414,6 +415,7 @@ SMODS.Consumable({
 			else
 				target.ability.extra.transmute_progress = target.ability.extra.transmute_req - 1
 			end
+			play_sound("tarot1")
 			target:add_sticker("mul_traitorous", true)
 			target:juice_up(0.3, 0.5)
 		end)
@@ -513,6 +515,7 @@ SMODS.Consumable({
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
+			play_sound("tarot1")
 			card.ability.extra.mul_is_active = not card.ability.extra.mul_is_active
 			if card.ability.extra.mul_is_active then
 				G.GAME.mul_money_mult = G.GAME.mul_money_mult / card.ability.extra.money_penalty
@@ -547,6 +550,7 @@ SMODS.Consumable({
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
+			play_sound("timpani")
 			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { immediate = true })
 			local target = G.jokers.highlighted[1]
 			if type(target.ability.extra.transmute_progress) == "table" then
@@ -587,6 +591,7 @@ SMODS.Consumable({
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
+			play_sound("tarot1")
 			card.ability.extra.mul_is_active = not card.ability.extra.mul_is_active
 			if card.ability.extra.mul_is_active then
 				change_shop_size(-card.ability.extra.shop_penalty)
@@ -625,6 +630,7 @@ SMODS.Consumable({
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
+			play_sound("tarot1")
 			card.ability.extra.mul_is_active = not card.ability.extra.mul_is_active
 			G.GAME.mul_stand_arrow_active = card.ability.extra.mul_is_active
 			if card.ability.extra.mul_is_active then
@@ -697,6 +703,7 @@ SMODS.Consumable({
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
+			play_sound("tarot1")
 			card.ability.extra.mul_is_active = not card.ability.extra.mul_is_active
 			G.GAME.mul_elder_scroll_active = card.ability.extra.mul_is_active
 			--flipping handled in update function
@@ -707,6 +714,34 @@ SMODS.Consumable({
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					- card.ability.extra.temp_recharge_boost
 			end
+		end)
+	end,
+})
+
+SMODS.Consumable({
+	key = "master_sword",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	config = { extra = { energy_per_sticker = 20 } },
+	loc_vars = function(self, info_queue, card)
+		local total = 0
+		if G.jokers and #G.jokers.highlighted == 1 then
+			total = #Multiverse.get_stickers(G.jokers.highlighted[1]) * card.ability.extra.energy_per_sticker
+		end
+		return { vars = { card.ability.extra.energy_per_sticker, total } }
+	end,
+	can_use = function(self, card)
+		return G.jokers and #G.jokers.highlighted == 1 and #Multiverse.get_stickers(G.jokers.highlighted[1]) >= 1
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			local target = G.jokers.highlighted[1]
+			play_sound("timpani")
+			Multiverse.ease_thaumaturgy_energy(#Multiverse.get_stickers(target), { immediate = true })
+			SMODS.destroy_cards(target)
 		end)
 	end,
 })

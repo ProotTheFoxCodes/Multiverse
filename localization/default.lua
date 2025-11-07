@@ -243,7 +243,8 @@ return {
                     "with at least {C:attention}1{} sticker",
                     "Gain{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#1#{} per sticker",
                     "on selected Joker",
-                    "{C:inactive}(Can bypass Eternal){}"
+                    "{C:inactive}(Can bypass Eternal){}",
+                    "{C:inactive}(Currently{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}*{C:mul_transmuted}#2#{C:inactive}){}"
                 }
             },
             c_mul_unicorn_horn = {
