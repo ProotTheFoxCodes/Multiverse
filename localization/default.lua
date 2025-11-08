@@ -281,7 +281,8 @@ return {
                     "While active, {C:blue}+#1#{} hands and",
                     "{C:red}+#2#{} discards but decreases",
                     "{C:attention}base{} Thaumaturgy Energy",
-                    "recharge rate by {s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#3#{}"
+                    "recharge rate by {s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#3#{}",
+                    "{C:inactive}(Currently #4#){}"
                 }
             },
             c_mul_matrix = {
@@ -290,7 +291,8 @@ return {
                     "While active, {C:attention}+#1#{} Joker",
                     "slots but decreases",
                     "{C:attention}base{} Thaumaturgy Energy",
-                    "recharge rate by {s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#3#{}"
+                    "recharge rate by {s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#3#{}",
+                    "{C:inactive}(Currently #4#){}"
                 }
             },
             c_mul_time_machine = {
@@ -301,7 +303,8 @@ return {
                     "gain {C:attention}#1#{} progress towards",
                     "becoming {C:mul_transmuted}Transmutable{} at",
                     "end of round but {C:red}nullify{}",
-                    "all Thaumaturgy Energy gain"
+                    "all Thaumaturgy Energy gain",
+                    "{C:inactive}(Currently #2#){}"
                 }
             },
             c_mul_palace_treasure = {
