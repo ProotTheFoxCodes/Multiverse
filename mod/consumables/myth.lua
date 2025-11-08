@@ -342,6 +342,7 @@ SMODS.Consumable({
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
 			local target = G.jokers.highlighted[1]
+			play_sound("timpani")
 			if type(target.ability.extra.transmute_progress) == "table" then
 				target.ability.extra.transmute_progress.n = target.ability.extra.transmute_progress.n
 					+ math.floor(target.ability.extra.transmute_req / 4)
@@ -349,7 +350,6 @@ SMODS.Consumable({
 				target.ability.extra.transmute_progress = target.ability.extra.transmute_progress
 					+ math.floor(target.ability.extra.transmute_req / 4)
 			end
-			play_sound("tarot1")
 			target:juice_up(0.3, 0.5)
 			Multiverse.transmute_check(target)
 		end)
@@ -742,7 +742,7 @@ SMODS.Consumable({
 			local target = G.jokers.highlighted[1]
 			play_sound("timpani")
 			Multiverse.ease_thaumaturgy_energy(#Multiverse.get_stickers(target), { immediate = true })
-			SMODS.destroy_cards(target)
+			SMODS.destroy_cards(target, nil, true)
 		end)
 	end,
 })
@@ -811,6 +811,57 @@ SMODS.Consumable({
 })
 
 SMODS.Consumable({
+	key = "infinity_gauntlet",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.min_energy } }
+	end,
+	can_use = function(self, card)
+		return G.jokers
+			and #G.jokers.highlighted == 1
+			and type(G.jokers.highlighted[1].ability.extra) == "table"
+			and G.jokers.highlighted[1].ability.extra.transmute_req >= 2
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			play_sound("timpani")
+			local target = G.jokers.highlighted[1]
+			if type(target.ability.extra.transmute_progress) == "table" then
+				target.ability.extra.transmute_progress.n = target.ability.extra.transmute_progress.n
+					+ math.floor(target.ability.extra.transmute_req / 2)
+			else
+				target.ability.extra.transmute_progress = target.ability.extra.transmute_progress
+					+ math.floor(target.ability.extra.transmute_req / 2)
+			end
+			local target_index = 0
+			for i, j in ipairs(G.jokers.cards) do
+				if j == target then target_index = i; break end
+			end
+			target:juice_up(0.3, 0.5)
+			local targets = {}
+			local n = 0
+			while n < (#G.jokers.cards - 1) / 2 do
+				local indices = {}
+				for i = 1, #G.jokers.cards do
+					if i ~= target_index and not Multiverse.contains_value(targets, i) then
+						indices[#indices + 1] = i
+					end
+				end
+				local index = pseudorandom_element(indices, "mul_infinity_gauntlet")
+				targets[#targets+1] = G.jokers.cards[index]
+				n = n + 1
+			end
+			SMODS.destroy_cards(targets, nil, true)
+			Multiverse.transmute_check(target)
+		end)
+	end,
+})
+
+SMODS.Consumable({
 	key = "journal",
 	set = "mul_Myth",
 	atlas = "temp_myth",
@@ -859,7 +910,7 @@ SMODS.Consumable({
 		Multiverse.consumable_effect(card, function()
 			if G.consumeables.config.card_limit > #G.consumeables.cards then
 				play_sound("timpani")
-				SMODS.add_card({ key = G.GAME.last_tarot_planet })
+				SMODS.add_card({ key = G.GAME.mul_last_myth_used })
 				card:juice_up(0.3, 0.5)
 			end
 		end)
