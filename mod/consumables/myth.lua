@@ -891,7 +891,7 @@ SMODS.Consumable({
 		return not card.ability.extra.mul_is_active
 	end,
 	can_use = function(self, card)
-		return not card.ability.extra.mul_is_active or (G.GAME.round_resets.hands > 2 and G.GAME.round_resets.discards > 2)
+		return not card.ability.extra.mul_is_active or (G.GAME.round_resets.hands > 3 and G.GAME.round_resets.discards > 2)
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
@@ -909,6 +909,51 @@ SMODS.Consumable({
 				ease_hands_played(-card.ability.extra.hands)
 				G.GAME.round_resets.discards = G.GAME.round_resets.discards - card.ability.extra.discards
 				ease_discard(-card.ability.extra.discards)
+				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
+					+ card.ability.extra.temp_recharge_penalty
+			end
+		end)
+	end,
+})
+
+SMODS.Consumable({
+	key = "matrix",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	config = { extra = { mul_is_active = false, temp_recharge_penalty = 12, joker_slots = 1 } },
+	loc_vars = function(self, info_queue, card)
+		table.insert(info_queue, {
+			set = "Other",
+			key = "mul_active_consumable",
+		})
+		local active = card.ability.extra.mul_is_active and "active" or "inactive"
+		return {
+			vars = {
+				card.ability.extra.joker_slots,
+				card.ability.extra.temp_recharge_penalty,
+				active,
+			},
+		}
+	end,
+	keep_on_use = function(self, card)
+		return not card.ability.extra.mul_is_active
+	end,
+	can_use = function(self, card)
+		return not card.ability.extra.mul_is_active or G.jokers.config.card_limit > 0
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			play_sound("tarot1")
+			card.ability.extra.mul_is_active = not card.ability.extra.mul_is_active
+			if card.ability.extra.mul_is_active then
+				G.jokers.config.card_limit = G.jokers.config.card_limit + card.ability.extra.joker_slots
+				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
+					- card.ability.extra.temp_recharge_penalty
+			else
+				G.jokers.config.card_limit = G.jokers.config.card_limit - card.ability.extra.joker_slots
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					+ card.ability.extra.temp_recharge_penalty
 			end

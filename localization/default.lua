@@ -291,8 +291,8 @@ return {
                     "While active, {C:attention}+#1#{} Joker",
                     "slots but decreases",
                     "{C:attention}base{} Thaumaturgy Energy",
-                    "recharge rate by {s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#3#{}",
-                    "{C:inactive}(Currently #4#){}"
+                    "recharge rate by {s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{}",
+                    "{C:inactive}(Currently #3#){}"
                 }
             },
             c_mul_time_machine = {
