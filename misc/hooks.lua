@@ -39,27 +39,6 @@ function Game:update(dt)
 			offset = { x = 8 * math.sin(G.mul_loaded_timer * 0.075), y = 3.7 * math.cos(G.mul_loaded_timer * 0.075) },
 		})
 	end
-	if G.GAME then
-		Multiverse.apply_to_jokers(function(card)
-			if card.facing == "front" and not card.flipping and G.GAME.mul_elder_scroll_active then
-				card:flip()
-			end
-			SMODS.debuff_card(card, G.GAME.mul_kryptonite_active, "mul_kryptonite")
-		end)
-		Multiverse.apply_to_playing_cards(function(card)
-			if card.facing == "front" and not card.flipping and G.GAME.mul_elder_scroll_active then
-				card:flip()
-			end
-			SMODS.debuff_card(
-				card,
-				G.GAME.mul_stand_arrow_active
-					and card:is_suit(
-						G.GAME.current_round and G.GAME.current_round.mul_stand_arrow_suit or "Spades"
-					),
-				"mul_stand_arrow"
-			)
-		end)
-	end
 	return ret
 end
 
@@ -188,7 +167,7 @@ end
 local can_sell_hook = Card.can_sell_card
 function Card:can_sell_card()
 	local ret = can_sell_hook(self)
-	if self.ability and type(self.ability.extra) == "table" and self.ability.extra.mul_is_active then
+	if self.ability and type(self.ability.extra) == "table" and self.ability.extra.is_active then
 		return false
 	end
 	return ret

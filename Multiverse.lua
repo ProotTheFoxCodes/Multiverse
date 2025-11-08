@@ -1,4 +1,5 @@
-Multiverse = Multiverse or SMODS.current_mod
+Multiverse = {}
+Multiverse = SMODS.current_mod
 Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient({
 	key = "transmuted_gradient",
 	colours = {
@@ -55,7 +56,7 @@ end
 local function set_stand_arrow_suit()
 	G.GAME.current_round.mul_stand_arrow_suit = G.GAME.current_round.mul_stand_arrow_suit or "Spades"
 	local valid = {}
-	for suit, _ in ipairs(SMODS.Suits) do
+	for suit, _ in pairs(SMODS.Suits) do
 		if suit ~= G.GAME.current_round.mul_stand_arrow_suit then
 			valid[#valid + 1] = suit
 		end

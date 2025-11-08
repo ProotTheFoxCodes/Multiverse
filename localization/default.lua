@@ -181,7 +181,8 @@ return {
                 text = {
                     "While active, increases",
                     "{C:attention}base{} Thaumaturgy Energy",
-                    "recharge rate by{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} but {C:attention}halves{} money",
+                    "recharge rate by{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{}",
+                    "but {C:attention}halves{} money",
                     "earned from all sources",
                     "{C:inactive}(Currently #2#){}"
                 }
@@ -213,7 +214,7 @@ return {
                     "While active, increases",
                     "{C:attention}base{} Thaumaturgy Energy",
                     "recharge rate by{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} but",
-                    "{C:red}debuffs{} all {V:1}#2#{}",
+                    "{C:red}debuffs{} all {V:1}#2#{} cards",
                     "{C:inactive}(Suit changes at end of round){}",
                     "{C:inactive}(Currently #3#){}"
                 }
@@ -261,7 +262,7 @@ return {
                     "While active, increases {C:attention}base{}",
                     "Thaumaturgy Energy recharge",
                     "rate by{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} but",
-                    "{C:red}debuffs{} all {C:blue}Common{} Jokers",
+                    "{C:red}debuffs{} all {C:red}Rare{} Jokers",
                     "{C:inactive}(Currently #2#){}"
                 }
             },
@@ -281,7 +282,7 @@ return {
                     "While active, {C:blue}+#1#{} hands and",
                     "{C:red}+#2#{} discards but decreases",
                     "{C:attention}base{} Thaumaturgy Energy",
-                    "recharge rate by {s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#3#{}",
+                    "recharge rate by{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#3#{}",
                     "{C:inactive}(Currently #4#){}"
                 }
             },
@@ -291,7 +292,7 @@ return {
                     "While active, {C:attention}+#1#{} Joker",
                     "slots but decreases",
                     "{C:attention}base{} Thaumaturgy Energy",
-                    "recharge rate by {s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{}",
+                    "recharge rate by{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{}",
                     "{C:inactive}(Currently #3#){}"
                 }
             },
@@ -318,11 +319,9 @@ return {
             c_mul_journal = {
                 name = "Journal",
                 text = {
-                    "Creates the last",
-                    "{C:mul_transmuted}Myth{} Card used",
-                    "during this run",
-                    "{C:inactive}(Cannot create{}",
-                    "{C:inactive}another Journal){}"
+                    "Creates the last {C:mul_transmuted}Myth{}",
+                    "Card used during this run",
+                    "{s:0.8,C:mul_transmuted}Journal{s:0.8} excluded",
                 }
             },
             c_mul_homunculus = {

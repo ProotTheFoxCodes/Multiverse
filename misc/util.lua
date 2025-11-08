@@ -426,7 +426,7 @@ function Card:mul_safe_dissolve(dissolve_colours, silent, dissolve_time_fac, no_
 	}))
 end
 
----Animation + sfx for consumables
+---Animation for consumables
 ---@param card Card The consumable that is applying its effect
 ---@param func fun(): nil The effect to apply
 function Multiverse.consumable_effect(card, func)
@@ -471,7 +471,7 @@ end
 ---@param card Card
 function Multiverse.get_stickers(card)
 	local stickers = {}
-	for key, sticker in SMODS.Stickers do
+	for key, sticker in pairs(SMODS.Sticker) do
 		if card.ability[key] then
 			stickers[#stickers + 1] = key
 		end
@@ -479,7 +479,7 @@ function Multiverse.get_stickers(card)
 	return stickers
 end
 
----@param func fun(card: Card): nil
+---@param func fun(joker: Card): nil
 function Multiverse.apply_to_jokers(func)
 	if G.jokers then
 		for _, j in ipairs(G.jokers.cards) do
@@ -488,10 +488,19 @@ function Multiverse.apply_to_jokers(func)
 	end
 end
 
----@param func fun(card: Card): nil
+---@param func fun(playing_card: Card): nil
 function Multiverse.apply_to_playing_cards(func)
 	if G.playing_cards then
 		for _, p in ipairs(G.playing_cards) do
+			func(p)
+		end
+	end
+end
+
+---@param func fun(playing_card: Card): nil
+function Multiverse.apply_to_hand(func)
+	if G.hand then
+		for _, p in ipairs(G.hand.cards) do
 			func(p)
 		end
 	end
