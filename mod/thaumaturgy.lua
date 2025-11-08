@@ -15,9 +15,7 @@ function Multiverse.ease_thaumaturgy_energy(amt, args)
 		--True if the change in Thaumaturgy Energy came from generation of a Magnum Opus tag.
 		from_magnum_opus = args.from_magnum_opus,
 		--True if the change in Thaumaturgy Energy came from the natural end of round bonus.
-		from_charge = args.from_charge,
-		--True if this change occured while "Time Machine" is active.
-		active_time_machine = G.GAME.mul_time_machine_active
+		from_charge = args.from_charge
 	})
 	local function change_thaumaturgy_energy(num)
 		num = num or 0

@@ -891,7 +891,8 @@ SMODS.Consumable({
 		return not card.ability.extra.mul_is_active
 	end,
 	can_use = function(self, card)
-		return not card.ability.extra.mul_is_active or (G.GAME.round_resets.hands > 3 and G.GAME.round_resets.discards > 2)
+		return not card.ability.extra.mul_is_active
+			or (G.GAME.round_resets.hands > 3 and G.GAME.round_resets.discards > 2)
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.consumable_effect(card, function()
@@ -958,6 +959,57 @@ SMODS.Consumable({
 					+ card.ability.extra.temp_recharge_penalty
 			end
 		end)
+	end,
+})
+
+SMODS.Consumable({
+	key = "time_machine",
+	set = "mul_Myth",
+	atlas = "temp_myth",
+	pos = { x = 0, y = 0 },
+	discovered = true,
+	cost = 6,
+	config = { extra = { mul_is_active = false, progress_boost = 1 } },
+	loc_vars = function(self, info_queue, card)
+		table.insert(info_queue, {
+			set = "Other",
+			key = "mul_active_consumable",
+		})
+		local active = card.ability.extra.mul_is_active and "active" or "inactive"
+		return { vars = { card.ability.extra.progress_boost, active } }
+	end,
+	keep_on_use = function(self, card)
+		return not card.ability.extra.mul_is_active
+	end,
+	can_use = function(self, card)
+		return card.ability.extra.mul_is_active or not G.GAME.mul_time_machine_active
+	end,
+	use = function(self, card, area, copier)
+		Multiverse.consumable_effect(card, function()
+			play_sound("tarot1")
+			card.ability.extra.mul_is_active = not card.ability.extra.mul_is_active
+			G.GAME.mul_time_machine_active = card.ability.extra.mul_is_active
+		end)
+	end,
+	calculate = function(self, card, context)
+		if
+			G.GAME.mul_time_machine_active
+			and context.end_of_round
+			and not context.blueprint
+			and not context.game_over
+			and context.main_eval
+		then
+			for _, j in ipairs(G.jokers.cards) do
+				if type(j.ability.extra) == "table" and j.ability.extra.transmute_progress then
+					if type(j.ability.extra.transmute_progress) == "table" then
+						j.ability.extra.transmute_progress.n = j.ability.extra.transmute_progress.n + 1
+					else
+						j.ability.extra.transmute_progress = j.ability.extra.transmute_progress + 1
+					end
+					j:juice_up(0.3, 0.5)
+				end
+			end
+		end
 	end,
 })
 
