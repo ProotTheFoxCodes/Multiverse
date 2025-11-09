@@ -790,7 +790,7 @@ return {
             mul_thaumaturgy_desc = {
                 name = "Thaumaturgy Energy",
                 text = {
-                    "You gain{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} at the",
+                    "You #1#{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{} at the",
                     "end of each round",
                     "If Thaumaturgy Energy is at least",
                     "{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}100{} at end of round, Thaumaturgy",

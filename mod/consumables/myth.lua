@@ -516,7 +516,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { is_active = false, temp_recharge_boost = 10, money_penalty = 2 } },
+	config = { extra = { is_active = false, temp_recharge_boost = 12, money_penalty = 2 } },
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",
@@ -720,7 +720,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { is_active = false, temp_recharge_boost = 20 } },
+	config = { extra = { is_active = false, temp_recharge_boost = 16 } },
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",
@@ -983,7 +983,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { is_active = false, temp_recharge_penalty = 10, joker_slots = 1 } },
+	config = { extra = { is_active = false, temp_recharge_penalty = 12, joker_slots = 1 } },
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",
