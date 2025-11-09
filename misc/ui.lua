@@ -734,18 +734,18 @@ function Multiverse.blind_instructions_HUD_def(key)
 	}
 end
 
--- local blind_HUD_hook = create_UIBox_HUD_blind
--- function create_UIBox_HUD_blind()
--- 	local ret = blind_HUD_hook()
--- 	table.insert(ret.nodes[2].nodes, {
--- 		n = G.UIT.R,
--- 		config = {align = "cm", padding = 0.1},
--- 		nodes = {
--- 			{
--- 				n = G.UIT.T,
--- 				config = {align = "cm", text = "Hello World", colour = G.C.WHITE, scale = 0.3}
--- 			}
--- 		}
--- 	})
--- 	return ret
--- end
+local blind_HUD_hook = create_UIBox_HUD_blind
+function create_UIBox_HUD_blind()
+	local ret = blind_HUD_hook()
+	table.insert(ret.nodes[2].nodes, {
+		n = G.UIT.R,
+		config = {align = "cm", padding = 0.1},
+		nodes = {
+			{
+				n = G.UIT.T,
+				config = {align = "cm", text = "Hello World", colour = G.C.WHITE, scale = 0.3}
+			}
+		}
+	})
+	return ret
+end

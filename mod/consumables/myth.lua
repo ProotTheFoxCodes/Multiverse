@@ -201,6 +201,7 @@ SMODS.Consumable({
 			func = function()
 				joker_to_transmute:remove_sticker("mul_transmutable")
 				joker_to_transmute:set_ability(transmute_key)
+				joker_to_transmute:set_cost()
 				play_sound("tarot2", 0.85, 0.6)
 				joker_to_transmute:mul_no_juice_materialize(nil, false, 1.6)
 				return true
