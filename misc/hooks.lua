@@ -175,9 +175,12 @@ end
 
 local ease_dollars_hook = ease_dollars
 function ease_dollars(mod, instant)
-	local amt = mod * G.GAME.mul_money_mult
-	if to_big(amt) < to_big(1e15) then
-		amt = math.floor(to_number(amt))
+	local amt = mod
+	if to_big(mod) > to_big(0) then
+		amt = amt * G.GAME.mul_money_mult
+		if to_big(amt) < to_big(1e15) then
+			amt = math.floor(to_number(amt))
+		end
 	end
 	ease_dollars_hook(amt, instant)
 end
