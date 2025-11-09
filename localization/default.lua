@@ -102,7 +102,7 @@ return {
             c_mul_tree_of_eden = {
                 name = "Tree of Eden",
                 text = {
-                    "Creates a random {C:attention}Joker{} that is",
+                    "Creates a random Joker that is",
                     "relevant to the {C:mul_transmuted}transmutation{}",
                     "of selected Joker",
                 }

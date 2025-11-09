@@ -157,7 +157,6 @@ SMODS.Consumable({
 				Multiverse.ease_thaumaturgy_energy(count * card.ability.extra.energy_per_joker, { immediate = true })
 				joker_to_transmute:flip()
 				play_sound("card1", 1.15)
-				joker_to_transmute:juice_up(0.3, 0.5)
 				return true
 			end,
 		}))
@@ -165,7 +164,34 @@ SMODS.Consumable({
 			trigger = "after",
 			delay = 1.65,
 			func = function()
-				joker_to_transmute:mul_safe_dissolve(nil, false, 1.6)
+				joker_to_transmute:juice_up(0.3, 0.5)
+				card:juice_up(0.3, 0.5)
+				return true
+			end
+		}))
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 1.65,
+			func = function()
+				joker_to_transmute:juice_up(0.3, 0.5)
+				card:juice_up(0.3, 0.5)
+				return true
+			end
+		}))
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 1.65,
+			func = function()
+				joker_to_transmute:juice_up(0.3, 0.5)
+				card:juice_up(0.3, 0.5)
+				return true
+			end
+		}))
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 1.65,
+			func = function()
+				joker_to_transmute:mul_safe_dissolve(nil, false, 1.6, true)
 				return true
 			end,
 		}))
@@ -176,7 +202,7 @@ SMODS.Consumable({
 				joker_to_transmute:remove_sticker("mul_transmutable")
 				joker_to_transmute:set_ability(transmute_key)
 				play_sound("tarot2", 0.85, 0.6)
-				joker_to_transmute:start_materialize(nil, false, 1.6)
+				joker_to_transmute:mul_no_juice_materialize(nil, false, 1.6)
 				return true
 			end,
 		}))
@@ -186,7 +212,6 @@ SMODS.Consumable({
 			func = function()
 				joker_to_transmute:flip()
 				play_sound("card1", 1.15)
-				joker_to_transmute:juice_up(0.3, 0.5)
 				return true
 			end,
 		}))
