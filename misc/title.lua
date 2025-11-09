@@ -22,6 +22,7 @@ function Game.main_menu(change_context)
     G.SPLASH_MULTIVERSE_LOGO.tilt_var = { mx = 0, my = 0, dx = 0, dy = 0, amt = 0 }
     G.SPLASH_MULTIVERSE_LOGO.states.collide.can = true
     G.SPLASH_MULTIVERSE_LOGO.dissolve = 1
+    G.mul_loaded_timer = 0
     G.E_MANAGER:add_event(Event({
         trigger = 'after',
         delay = change_context == 'splash' and 3.6 or change_context == 'game' and 4 or 1,

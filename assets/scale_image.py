@@ -8,9 +8,11 @@ if __name__ == "__main__":
         window = Tk()
         window.withdraw()
         small = askopenfilename(filetypes=[("Image files", ".png")],title="Select an image to upscale",initialdir="assets/1x/")
-        if not os.path.isfile(small): raise FileNotFoundError()
+        if not os.path.isfile(small):
+            raise FileNotFoundError()
         big = "assets/2x/" + os.path.basename(small)
-        if os.path.isfile(big): raise FileExistsError()
+        if os.path.isfile(big):
+            raise FileExistsError()
         small_image = Image.open(small)
         new_dims = (small_image.width * 2, small_image.height * 2)
         big_image = small_image.resize(new_dims, Image.NEAREST)

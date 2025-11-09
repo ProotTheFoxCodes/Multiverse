@@ -34,6 +34,7 @@ Multiverse.UNDYING_INSTRUCTIONS_SPRITE = assert(love.graphics.newImage(undying_i
 ---@field r number
 ---@field theta number
 ---@field active boolean
+---@field opacity number
 
 Multiverse.in_undyne = false
 Multiverse.shield_dir = nil
@@ -211,6 +212,7 @@ Multiverse.start_undyne_attack = function(i, p)
                 active = true,
                 is_reversing = false,
                 dir = pattern[index][2],
+                opacity = 1,
             })
             if pattern[index + 1] then
                 Multiverse.start_undyne_attack(index + 1, pattern)
@@ -222,7 +224,7 @@ Multiverse.start_undyne_attack = function(i, p)
 end
 
 function Multiverse.handle_undyne_drawing(x_factor, y_factor)
-    if Multiverse.in_undyne then
+    if Multiverse.in_undyne and not G.SETTINGS.paused and G.STATE ~= G.STATES.GAME_OVER then
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.draw(
             Multiverse.SOUL_BACKGROUND_SPRITE,
@@ -264,7 +266,7 @@ function Multiverse.handle_undyne_drawing(x_factor, y_factor)
         )
         for _, spear in ipairs(Multiverse.undyne_spears) do
             if spear.active then
-                love.graphics.setColor(1, 1, 1, 1)
+                love.graphics.setColor(1, 1, 1, spear.opacity)
                 local current_sprite
                 if spear.is_reversed then
                     current_sprite = Multiverse.REVERSE_SPEAR_SPRITE
@@ -287,7 +289,9 @@ function Multiverse.handle_undyne_drawing(x_factor, y_factor)
                 )
             end
         end
-    elseif G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" and not G.GAME.blind.disabled then
+    elseif G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying"
+            and not G.GAME.blind.disabled and G.STATE ~= G.STATES.GAME_OVER
+            and not Multiverse.in_undyne then
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.draw(
             Multiverse.UNDYING_INSTRUCTIONS_SPRITE,
@@ -306,7 +310,7 @@ end
 
 function Multiverse.update_spears()
     for i, spear in pairs(Multiverse.undyne_spears) do
-        if spear.active then
+        if spear.active and not G.SETTINGS.paused then
             if spear.r < 35 then
                 Multiverse.process_undyne_hit(10)
                 spear.active = false
@@ -329,21 +333,23 @@ function Multiverse.update_spears()
                     blocking = false
                 }), "other", true)
             end
-            spear.r = spear.r - G.real_dt * spear.velocity
+            if G.STATE ~= G.STATES.GAME_OVER then
+                spear.r = spear.r - G.real_dt * spear.velocity
+            end
         end
     end
 end
 
 function Multiverse.process_undyne_hit(percent)
     play_sound("mul_take_damage", 1, 0.7)
-    G.GAME.chips = G.GAME.chips - G.GAME.blind.chips / to_big(percent)
-    	if G.GAME.challenge == "c_mul_monsoon" then
-		num = -1
-	elseif G.GAME.challenge == "c_mul_merg" then
-		num = 0
-	end
-
-	if (G.GAME.challenge == "c_mul_monsoon" or G.GAME.challenge == "c_mul_merg") and G.GAME.chips < G.GAME.blind.chips * to_big(num) then
-		end_round()
-	end
+    percent = percent * ((G.GAME.challenge == "c_mul_monsoon" and 1) or 2)
+    G.GAME.chips = G.GAME.chips - G.GAME.blind.chips / percent
+    if (G.GAME.challenge == "c_mul_monsoon" and G.GAME.chips < -G.GAME.blind.chips / 2) or G.GAME.challenge == "c_mul_cant_touch_this"then
+        Multiverse.in_undyne = nil
+        Multiverse.undyne_spears = {}
+       	G.STATE = G.STATES.GAME_OVER
+        G:save_settings()
+        G.FILE_HANDLER.force = true
+        G.STATE_COMPLETE = false
+    end
 end

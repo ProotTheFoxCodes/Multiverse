@@ -76,9 +76,9 @@ return {
             c_mul_philosophers_stone = {
                 name = "Philosopher\'s Stone",
                 text = {
-                    "{C:mul_transmuted,E:1}Transmutes{} {C:attention}#1#{} selected Joker",
+                    "{C:mul_transmuted,E:mul_unstable}Transmutes{} {C:attention}#1#{} selected Joker",
                     "that is currently {C:mul_transmuted}Transmutable{}",
-                    "{C:inactive}(Must have room, bypasses Eternal){}"
+                    "{C:inactive}(Preserves Joker modifications){}"
                 }
             },
             c_mul_holy_grail = {
@@ -86,7 +86,23 @@ return {
                 text = {
                     "Creates {C:attention}#1#{} {C:dark_edition}Negative{} consumables",
                     "relevant to the {C:mul_transmuted}transmutation{}",
-                    "of selected Joker"
+                    "of selected Joker",
+                }
+            },
+            c_mul_perpetual_motion = {
+                name = "Perpetual Motion Machine",
+                text = {
+                    "Doubles current",
+                    "{C:mul_transmuted}Thaumaturgy Energy{}",
+                    "{C:inactive}(Max of {C:mul_transmuted}+#1#{C:inactive})"
+                }
+            },
+            c_mul_voodoo_doll = {
+                name = "Voodoo Doll",
+                text = {
+                    "Creates a {C:attention}Joker{} card",
+                    "relevant to the {C:mul_transmuted}transmutation{}",
+                    "of selected Joker",
                 }
             }
         },
@@ -163,7 +179,6 @@ return {
                     {
                         "{C:mult}+#1#{} Mult, lose {C:money}$#2#{}",
                         "when hand is played",
-                        "{C:inactive}(#3#/#4#?){}"
                     },
                     {
                         "{C:inactive,s:0.8}Oh, them? They're the villagers!"
@@ -212,13 +227,6 @@ return {
                     {
                         "{C:inactive,s:0.8}You never see it coming"
                     }
-                }
-            },
-            j_joker = {
-                name = "Joker",
-                text = {
-                    "{C:mult}+#1#{} Mult",
-                    "{C:inactive}(#2#/#3#?){}"
                 }
             },
             j_mul_steve = {
@@ -293,7 +301,6 @@ return {
                         "Scored cards {C:attention}randomly{} give",
                         "either {C:mult}+#1#{} Mult",
                         "or {X:mult,C:white}X#2#{} Mult",
-                        "{C:inactive}(#3#/#4#?){}"
                     },
                     {
                         "{C:inactive,s:0.8}These turtles always",
@@ -331,15 +338,6 @@ return {
                         "{C:inactive,s:0.8}could be anyone"
                     }
                 }
-            },
-            j_pareidolia = {
-                name = "Pareidolia",
-                text = {
-                    "All cards are",
-                    "considered",
-                    "{C:attention}face{} cards",
-                    "{C:inactive}(#1#/#2#?){}"
-                },
             },
             j_mul_waldo = {
                 name = "Waldo",
@@ -397,8 +395,23 @@ return {
                 text = {
                     {
                         "If played hand contains",
-                        "{C:attention}#1#{} scoring cards,",
-                        "earn {C:money}$#2#{}"
+                        "{C:attention}#1#{} scoring cards, earn {C:money}$#2#{}",
+                    },
+                    {
+                        "{C:inactive,s:0.8}Cute, squishy and flammable"
+                    }
+                }
+            },
+            j_mul_jack_frost = {
+                name = "Jack Frost",
+                text = {
+                    {
+                        "First scored card",
+                        "in played hand",
+                        "becomes a {C:attention}Jack{}"
+                    },
+                    {
+                        "{C:inactive,s:0.8}Hee Ho{}"
                     }
                 }
             }
@@ -429,10 +442,10 @@ return {
             tag_mul_magnum_opus = {
                 name = "Magnum Opus Tag",
                 text = {
-                    "The next shop",
-                    "will have a free",
+                    "Immediately creates a",
                     "{C:mul_transmuted}Philosopher's Stone{}",
-                    "{C:inactive,s:0.8}Cannot be duplicated{}"
+                    "{C:inactive,s:0.8}Cannot be duplicated{}",
+                    "{C:inactive,s:0.8}Ignores consumable limit{}"
                 }
             }
         },
@@ -464,9 +477,10 @@ return {
             c_mul_burger = {
                 name = "The Burger",
                 text = {
-                    "Plays an animation",
-                    "of a person with a",
-                    "burger for {C:attention}1{} minute"
+                    "Plays an {C:attention}animation{} of a",
+                    "member of the official",
+                    "Balatro Discord server eating",
+                    "a {C:attention}burger{} for {C:attention}1{} minute"
                 }
             }
         },
@@ -485,28 +499,32 @@ return {
                 name = "Hint",
                 text = {
                     "Use a variety of",
-                    "{C:tarot}Tarot{} cards"
+                    "{C:tarot}Tarot{} cards",
+                    "{C:inactive}(#1#/#2#?){}"
                 }
             },
             mul_villager_hint = {
                 name = "Hint",
                 text = {
                     "Get lots of {C:attention}Gold{},",
-                    "{C:attention}Stone{} and {C:attention}Steel{}"
+                    "{C:attention}Stone{} and {C:attention}Steel{} cards",
+                    "{C:inactive}(#1#/#2#?){}"
                 }
             },
             mul_hammer_bro_hint = {
                 name = "Hint",
                 text = {
                     "Trigger this card",
-                    "lots of times"
+                    "lots of times",
+                    "{C:inactive}(#1#/#2#?){}"
                 }
             },
             mul_pareidolia_hint = {
                 name = "Hint",
                 text = {
                     "Play some unique",
-                    "{C:attention}poker hands{}"
+                    "{C:attention}poker hands{}",
+                    "{C:inactive}(#1#/#2#?){}"
                 }
             },
             undiscovered_mul_myth = {
@@ -554,34 +572,31 @@ return {
     },
     misc = {
         poker_hands = {
-            mul_thunderstrike = "Thunderstrike",
-            mul_lightning = "Lightning",
-            mul_flush_thunderstrike = "Flush Thunderstrike"
+            mul_storm = "Storm",
         },
         poker_hand_descriptions = {
-            mul_thunderstrike = {
-                "A hand that contains a Lightning",
-                "and a Pair at the same time"
-            },
-            mul_lightning = {
-                "4 or more cards that form a",
-                "sequence of cards 2 ranks apart"
-            },
-            mul_flush_thunderstrike = {
-                "A Thunderstrike that is",
-                "also considered a Flush"
+            mul_storm = {
+                "5 cards that each have different ranks",
+                "and have 4 distinct suits among them"
             }
         },
         challenge_names = {
             c_mul_waterfall = "Waterfall",
             c_mul_monsoon = "But The Earth Refused.",
-            c_mul_merg = "99999999999"
+            c_mul_cant_touch_this = "Can't Touch This"
 
         },
         v_text = {
             ch_c_mul_waterfall1 = { "Every {C:attention}Boss Blind{} is replaced with {C:red}The Undying{}" },
-            ch_c_mul_waterfall2 = { "If {C:chips}score{} is below {X:attention,C:white}X-1{} {C:attention}Blind Size{}, {C:red}lose instantly{}" },
-            ch_c_mul_waterfall3 = { "If {C:chips}score{} is below 0, {C:red}lose instantly{}" }
+            ch_c_mul_waterfall2 = {
+                "If {C:chips}score{} is below {X:attention,C:white}X-0.5{} {C:attention}Blind Size{}, {C:red}lose instantly{}",
+            },
+            ch_c_mul_waterfall3 = {
+                "You lose {C:attention}twice{} as many chips if hit by a spear"
+            },
+            ch_c_mul_waterfall4 = {
+                "If you get hit by {C:red}The Undying{}, {C:red}lose instantly{}",
+            },
         },
         dictionary = {
             k_mul_transmuted = "Transmuted",
@@ -602,9 +617,10 @@ return {
             mul_stand_user = "Saved by Stand User via time reversal",
             mul_customization = "You can enable or disable certain aspects of Multiverse here",
             mul_changes_warn = "It is recommended to restart the game after making config changes",
-            mul_changes_debug = "Debug Mode affects several elements of the mod",
-            mul_changes_pool1 = "Enabling/disabling certain types of content affects",
-            mul_changes_pool2 = "whether or not cards of those types can spawn",
+            mul_changes_debug = "Debug Mode affects several elements of the mod for easier debugging",
+            mul_changes_debug2 = "Debug Mode cannot be enabled, except if a certain file is loaded",
+            mul_changes_pool1 = "Enabling/disabling certain types of content affects whether or not",
+            mul_changes_pool2 = "cards of those types can spawn, but will still show in collection",
             mul_music_customization1 = "Enable or disable certain songs that this mod uses",
             mul_music_customization2 = "Hover over the song details to see when the song plays",
             mul_debug = "Enable Debug Mode",
