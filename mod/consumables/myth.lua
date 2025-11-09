@@ -667,18 +667,22 @@ SMODS.Consumable({
 			end
 		end)
 	end,
-	calculate = function(self, card, context)
-		if
-			card.ability.extra.is_active
-			and context.debuff_card
-			and context.debuff_card.area ~= G.jokers
-			and context.debuff_card:is_suit(
-				G.GAME.current_round and G.GAME.current_round.mul_stand_arrow_suit or "Spades"
-			)
-		then
-			return {
-				debuff = true,
-			}
+	update = function(self, card, dt)
+		if card.ability.extra.is_active and card.added_to_deck then
+			if G.deck and card.added_to_deck then
+				for i, v in pairs(G.deck.cards) do
+					if v:is_suit(G.GAME.current_round.mul_stand_arrow_suit) and not v.debuff then
+						v:set_debuff(true)
+					end
+				end
+			end
+			if G.hand and card.added_to_deck then
+				for i, v in pairs(G.hand.cards) do
+					if v:is_suit(G.GAME.current_round.mul_stand_arrow_suit) and not v.debuff then
+						v:set_debuff(true)
+					end
+				end
+			end
 		end
 	end,
 })
