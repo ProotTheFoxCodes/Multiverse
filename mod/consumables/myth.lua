@@ -931,7 +931,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { is_active = false, temp_recharge_penalty = 6, hands = 2, discards = 2 } },
+	config = { extra = { is_active = false, temp_recharge_penalty = 8, hands = 2, discards = 2 } },
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",
