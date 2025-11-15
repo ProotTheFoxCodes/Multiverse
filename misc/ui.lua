@@ -233,7 +233,15 @@ function Multiverse.config_tab_definition()
 					callback = function()
 						if not Multiverse.debug then
 							Multiverse.config.debug = false
+							return
 						end
+						SMODS.save_all_config()
+						G.E_MANAGER:add_event(Event({
+							func = function()
+								SMODS.restart_game()
+								return true
+							end,
+						}))
 					end,
 				}),
 			},
@@ -247,12 +255,21 @@ function Multiverse.config_tab_definition()
 					active_colour = Multiverse.TRANSMUTED_GRADIENT,
 					ref_table = Multiverse.config,
 					ref_value = "joke",
+					callback = function()
+					    SMODS.save_all_config()
+						G.E_MANAGER:add_event(Event({
+							func = function()
+								SMODS.restart_game()
+								return true
+							end,
+						}))
+					end,
 				}),
 			},
 		},
 	}
 	local mul_nodes = Multiverse.create_localized_rows(nil, "mul_config_menu_title", 1.5)
-	mul_nodes[#mul_nodes+1] = {
+	mul_nodes[#mul_nodes + 1] = {
 		n = G.UIT.R,
 		config = { align = "cm" },
 		nodes = {
