@@ -844,7 +844,7 @@ return {
                     "{C:inactive}(Note that this card cannot{}",
                     "{C:inactive}be sold while it is active){}"
                 }
-            }
+            },
         },
         Mod = {
             Multiverse = {
@@ -913,14 +913,22 @@ return {
             b_mul_discord_server = "My Discord Server",
             b_mul_landing_page = "About Me",
             mul_stand_user = "Saved by Stand User via time reversal",
-            mul_customization = "You can enable or disable certain aspects of Multiverse here",
-            mul_changes_warn = "It is recommended to restart the game after making config changes",
-            mul_changes_debug = "Debug Mode affects several elements of the mod for easier debugging",
-            mul_changes_debug2 = "Debug Mode cannot be enabled, except if a certain file is loaded",
-            mul_changes_pool1 = "Enabling/disabling certain types of content affects whether or not",
-            mul_changes_pool2 = "cards of those types can spawn, but will still show in collection",
-            mul_music_customization1 = "Enable or disable certain songs that this mod uses",
-            mul_music_customization2 = "Hover over the song details to see when the song plays",
+            mul_config_menu_text = {
+                "Debug Mode affects several elements of the mod for easier debugging",
+                "Debug Mode cannot be enabled, except if a certain file is loaded",
+                "{C:inactive}(If you wish to help me debug this mod, DM me and I will send{}",
+                "{C:inactive}you a copy of the file that allows you to enable Debug Mode){}",
+                "If you change a setting here, the game will {C:attention}automatically{} restart",
+                "and apply any changes associated with the setting, such as loading",
+                "or unloading joke content and allowing debug functions to be called"
+            },
+            mul_config_menu_title = {
+                "Change Multiverse's settings here"
+            },
+            mul_music_menu_text = {
+                "Enable or disable certain songs that this mod uses",
+                "Hover over the song details to see when the song plays",
+            },
             mul_debug = "Enable Debug Mode",
             mul_joke = "Enable Joke Content",
             ["mul_Prophecy"] = {

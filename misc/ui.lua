@@ -251,139 +251,22 @@ function Multiverse.config_tab_definition()
 			},
 		},
 	}
-	local mul_nodes = {
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { align = "cm", padding = 0.1 },
-					nodes = {
-						{
-							n = G.UIT.T,
-							config = {
-								text = localize("mul_customization"),
-								scale = 0.5,
-								colour = G.C.WHITE,
-							},
-						},
-					},
-				},
-			},
-		},
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { align = "cm", padding = 0.05 },
-					nodes = mul_settings,
-				},
-			},
-		},
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { align = "cm", padding = 0.05 },
-					nodes = {
-						{
-							n = G.UIT.T,
-							config = {
-								text = localize("mul_changes_warn"),
-								scale = 0.4,
-								colour = G.C.WHITE,
-							},
-						},
-					},
-				},
-			},
-		},
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { align = "cm", padding = 0.05 },
-					nodes = {
-						{
-							n = G.UIT.T,
-							config = {
-								text = localize("mul_changes_debug"),
-								scale = 0.4,
-								colour = G.C.WHITE,
-							},
-						},
-					},
-				},
-			},
-		},
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { align = "cm", padding = 0.05 },
-					nodes = {
-						{
-							n = G.UIT.T,
-							config = {
-								text = localize("mul_changes_debug2"),
-								scale = 0.4,
-								colour = G.C.WHITE,
-							},
-						},
-					},
-				},
-			},
-		},
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { align = "cm", padding = 0.05 },
-					nodes = {
-						{
-							n = G.UIT.T,
-							config = {
-								text = localize("mul_changes_pool1"),
-								scale = 0.4,
-								colour = G.C.WHITE,
-							},
-						},
-					},
-				},
-			},
-		},
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { align = "cm", padding = 0.05 },
-					nodes = {
-						{
-							n = G.UIT.T,
-							config = {
-								text = localize("mul_changes_pool2"),
-								scale = 0.4,
-								colour = G.C.WHITE,
-							},
-						},
-					},
-				},
+	local mul_nodes = Multiverse.create_localized_rows(nil, "mul_config_menu_title", 1.5)
+	mul_nodes[#mul_nodes+1] = {
+		n = G.UIT.R,
+		config = { align = "cm" },
+		nodes = {
+			{
+				n = G.UIT.C,
+				config = { align = "cm", padding = 0.05 },
+				nodes = mul_settings,
 			},
 		},
 	}
+	local rows = Multiverse.create_localized_rows(nil, "mul_config_menu_text", 1.25)
+	for _, r in ipairs(rows) do
+		mul_nodes[#mul_nodes + 1] = r
+	end
 	return {
 		n = G.UIT.ROOT,
 		config = { align = "cm", colour = G.C.BLACK, padding = 0.1 },
@@ -462,48 +345,8 @@ function Multiverse.display_songs(page)
 	}
 end
 
-function Multiverse.music_tab_text()
-	local n = {
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.O,
-					config = {
-						object = DynaText({
-							string = localize("mul_music_customization1"),
-							colours = { G.C.WHITE },
-							shadow = true,
-							scale = 0.4,
-						}),
-					},
-				},
-			},
-		},
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.O,
-					config = {
-						object = DynaText({
-							string = localize("mul_music_customization2"),
-							colours = { G.C.WHITE },
-							shadow = true,
-							scale = 0.4,
-						}),
-					},
-				},
-			},
-		},
-	}
-	return n
-end
-
 function Multiverse.music_tab_definition(page)
-	local mul_nodes = Multiverse.music_tab_text()
+	local mul_nodes = Multiverse.create_localized_rows(nil, "mul_music_menu_text", 1.5)
 	table.insert(mul_nodes, Multiverse.display_songs(page))
 	local pages = {}
 	for i, _ in ipairs(Multiverse.music_credits) do
@@ -687,40 +530,6 @@ function Multiverse.create_thaumaturgy_ui()
 end
 
 function Multiverse.blind_instructions_HUD_def(key)
-	local loc_entry = G.localization.descriptions.Other["mul_" .. key .. "_inst"]
-	local rows = {}
-	table.insert(rows, {
-		n = G.UIT.R,
-		config = { align = "cm", padding = 0.05 },
-		nodes = {
-			{
-				n = G.UIT.C,
-				config = { align = "cm" },
-				nodes = {
-					{ n = G.UIT.T, config = { text = loc_entry.name, colour = G.C.UI.TEXT_LIGHT, scale = 0.4 } },
-				},
-			},
-		},
-	})
-	local text_rows = {}
-	for _, line in ipairs(loc_entry.text_parsed) do
-		table.insert(text_rows, {
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = SMODS.localize_box(line, { scale = 0.9 }),
-		})
-	end
-	table.insert(rows, {
-		n = G.UIT.R,
-		config = { align = "cm", padding = 0.05, colour = G.C.UI.BACKGROUND_WHITE, r = 0.1, emboss = 0.05 },
-		nodes = {
-			{
-				n = G.UIT.C,
-				config = { align = "cm", padding = 0.05 },
-				nodes = text_rows,
-			},
-		},
-	})
 	return {
 		n = G.UIT.ROOT,
 		config = { padding = 0.05, colour = G.C.JOKER_GREY, align = "cm", r = 0.1 },
@@ -728,10 +537,76 @@ function Multiverse.blind_instructions_HUD_def(key)
 			{
 				n = G.UIT.C,
 				config = { padding = 0.05, colour = G.C.L_BLACK, align = "cm", r = 0.1, emboss = 0.05 },
-				nodes = rows,
+				nodes = Multiverse.create_localized_rows("Other", "mul_" .. key .. "_inst"),
 			},
 		},
 	}
+end
+
+function Multiverse.create_localized_rows(set, key, text_scale)
+	local loc_entry
+	text_scale = text_scale or 1
+	if set then
+		loc_entry = G.localization.descriptions[set][key]
+	else
+		loc_entry = G.localization.misc.dictionary[key]
+	end
+	local rows = {}
+	if set then
+		table.insert(rows, {
+			n = G.UIT.R,
+			config = { align = "cm", padding = 0.05 },
+			nodes = {
+				{
+					n = G.UIT.C,
+					config = { align = "cm" },
+					nodes = {
+						{ n = G.UIT.T, config = { text = loc_entry.name, colour = G.C.UI.TEXT_LIGHT, scale = 0.4 } },
+					},
+				},
+			},
+		})
+		local text_rows = {}
+		for _, line in ipairs(loc_entry.text_parsed) do
+			table.insert(text_rows, {
+				n = G.UIT.R,
+				config = { align = "cm" },
+				nodes = SMODS.localize_box(line, { scale = 0.9 * text_scale }),
+			})
+		end
+		table.insert(rows, {
+			n = G.UIT.R,
+			config = { align = "cm", padding = 0.05, colour = G.C.UI.BACKGROUND_WHITE, r = 0.1, emboss = 0.05 },
+			nodes = {
+				{
+					n = G.UIT.C,
+					config = { align = "cm", padding = 0.05 },
+					nodes = text_rows,
+				},
+			},
+		})
+	else
+		local text_rows = {}
+		for _, line in ipairs(loc_entry) do
+			table.insert(text_rows, {
+				n = G.UIT.R,
+				config = { align = "cm" },
+				nodes = SMODS.localize_box(loc_parse_string(line), { scale = 0.9 * text_scale }),
+			})
+		end
+		table.insert(rows, {
+			n = G.UIT.R,
+			config = { align = "cm", padding = 0.05, colour = G.C.UI.BACKGROUND_WHITE, r = 0.1, emboss = 0.05 },
+			nodes = {
+				{
+					n = G.UIT.C,
+					config = { align = "cm", padding = 0.05 },
+					nodes = text_rows,
+				},
+			},
+		})
+	end
+	return rows
 end
 
 local blind_HUD_hook = create_UIBox_HUD_blind
@@ -739,13 +614,13 @@ function create_UIBox_HUD_blind()
 	local ret = blind_HUD_hook()
 	table.insert(ret.nodes[2].nodes, {
 		n = G.UIT.R,
-		config = {align = "cm", padding = 0.1},
+		config = { align = "cm", padding = 0.1 },
 		nodes = {
 			{
 				n = G.UIT.T,
-				config = {align = "cm", text = "Hello World", colour = G.C.WHITE, scale = 0.3}
-			}
-		}
+				config = { align = "cm", text = "Hello World", colour = G.C.WHITE, scale = 0.3 },
+			},
+		},
 	})
 	return ret
 end

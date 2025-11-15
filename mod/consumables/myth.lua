@@ -6,6 +6,7 @@ SMODS.ConsumableType({
 	shop_rate = 2,
 	default = "c_mul_holy_grail",
 })
+
 ---@type table<string, {key: string, other: table<string, table | function>}>
 Multiverse.transmutations = {
 	["j_joker"] = {
@@ -121,11 +122,6 @@ SMODS.Consumable({
 		return { vars = { card.ability.extra.energy_per_joker, count * card.ability.extra.energy_per_joker } }
 	end,
 	in_pool = function(self, args)
-		for _, c in ipairs(G.jokers.cards) do
-			if c.ability.mul_transmutable then
-				return true
-			end
-		end
 		return false
 	end,
 	can_use = function(self, card)
@@ -145,8 +141,8 @@ SMODS.Consumable({
 			trigger = "after",
 			delay = 0.4,
 			func = function()
-				play_sound("tarot1")
-				card:juice_up(0.3, 0.5)
+				play_sound("timpani")
+				Multiverse.ease_thaumaturgy_energy(count * card.ability.extra.energy_per_joker, { immediate = true })
 				return true
 			end,
 		}))
@@ -154,8 +150,6 @@ SMODS.Consumable({
 			trigger = "after",
 			delay = 0.15,
 			func = function()
-				Multiverse.ease_thaumaturgy_energy(count * card.ability.extra.energy_per_joker, { immediate = true })
-				joker_to_transmute:flip()
 				play_sound("card1", 1.15)
 				return true
 			end,
@@ -167,7 +161,7 @@ SMODS.Consumable({
 				joker_to_transmute:juice_up(0.3, 0.5)
 				card:juice_up(0.3, 0.5)
 				return true
-			end
+			end,
 		}))
 		G.E_MANAGER:add_event(Event({
 			trigger = "after",
@@ -176,7 +170,7 @@ SMODS.Consumable({
 				joker_to_transmute:juice_up(0.3, 0.5)
 				card:juice_up(0.3, 0.5)
 				return true
-			end
+			end,
 		}))
 		G.E_MANAGER:add_event(Event({
 			trigger = "after",
@@ -185,7 +179,7 @@ SMODS.Consumable({
 				joker_to_transmute:juice_up(0.3, 0.5)
 				card:juice_up(0.3, 0.5)
 				return true
-			end
+			end,
 		}))
 		G.E_MANAGER:add_event(Event({
 			trigger = "after",
@@ -211,7 +205,6 @@ SMODS.Consumable({
 			trigger = "after",
 			delay = 1.85,
 			func = function()
-				joker_to_transmute:flip()
 				play_sound("card1", 1.15)
 				return true
 			end,
@@ -561,6 +554,7 @@ SMODS.Consumable({
 		Multiverse.consumable_effect(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
+			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
 				G.GAME.mul_money_mult = G.GAME.mul_money_mult / card.ability.extra.money_penalty
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
@@ -636,6 +630,7 @@ SMODS.Consumable({
 		Multiverse.consumable_effect(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
+			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
 				change_shop_size(-card.ability.extra.shop_penalty)
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
@@ -684,6 +679,7 @@ SMODS.Consumable({
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			G.GAME.mul_stand_arrow_active = card.ability.extra.is_active
+			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					+ card.ability.extra.temp_recharge_boost
@@ -766,6 +762,7 @@ SMODS.Consumable({
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			G.GAME.mul_elder_scroll_active = card.ability.extra.is_active
+			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
 				Multiverse.apply_to_hand(function(playing_card)
 					if playing_card.facing == "front" then
@@ -875,6 +872,7 @@ SMODS.Consumable({
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			G.GAME.mul_kryptonite_active = card.ability.extra.is_active
+			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
 				Multiverse.apply_to_jokers(function(j)
 					SMODS.debuff_card(j, j:is_rarity(3), "mul_kryptonite")
@@ -923,28 +921,17 @@ SMODS.Consumable({
 				target.ability.extra.transmute_progress = target.ability.extra.transmute_progress
 					+ math.floor(target.ability.extra.transmute_req / 2)
 			end
-			local target_index = 0
-			for i, j in ipairs(G.jokers.cards) do
-				if j == target then
-					target_index = i
-					break
-				end
-			end
-			target:juice_up(0.3, 0.5)
 			local targets = {}
-			local n = 0
-			while n < (#G.jokers.cards - 1) / 2 do
-				local indices = {}
-				for i = 1, #G.jokers.cards do
-					if i ~= target_index and not Multiverse.contains_value(targets, i) then
-						indices[#indices + 1] = i
-					end
+			for _, j in ipairs(G.jokers.cards) do
+				if j ~= target then
+					targets[#targets + 1] = j
 				end
-				local index = pseudorandom_element(indices, "mul_infinity_gauntlet")
-				targets[#targets + 1] = G.jokers.cards[index]
-				n = n + 1
 			end
-			SMODS.destroy_cards(targets, nil, true)
+			SMODS.destroy_cards(
+				Multiverse.get_unique_pseudorandom_elements(targets, math.floor(#targets / 2), "mul_infinity_gauntlet"),
+				nil,
+				true
+			)
 			Multiverse.transmute_check(target)
 		end)
 	end,
@@ -983,6 +970,7 @@ SMODS.Consumable({
 		Multiverse.consumable_effect(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
+			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
 				G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
 				ease_hands_played(card.ability.extra.hands)
@@ -1034,6 +1022,7 @@ SMODS.Consumable({
 		Multiverse.consumable_effect(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
+			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
 				G.jokers.config.card_limit = G.jokers.config.card_limit + card.ability.extra.joker_slots
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
@@ -1074,6 +1063,7 @@ SMODS.Consumable({
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			G.GAME.mul_time_machine_active = card.ability.extra.is_active
+			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 		end)
 	end,
 	calculate = function(self, card, context)

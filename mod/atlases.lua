@@ -72,3 +72,9 @@ SMODS.Atlas({
 	py = 95,
 	path = "transmutable.png",
 })
+SMODS.Atlas({
+    key = "3d_banana",
+    px = 95,
+    py = 95,
+    path = "3d_cavendish.png"
+})

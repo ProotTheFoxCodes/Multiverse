@@ -179,7 +179,7 @@ function ease_dollars(mod, instant)
 	if to_big(mod) > to_big(0) then
 		amt = amt * G.GAME.mul_money_mult
 		if to_big(amt) < to_big(1e15) then
-			amt = math.floor(to_number(amt))
+			amt = math.floor(to_number(amt) + 0.5)
 		end
 	end
 	ease_dollars_hook(amt, instant)
