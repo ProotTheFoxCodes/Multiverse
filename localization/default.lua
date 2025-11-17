@@ -795,7 +795,8 @@ return {
                     "If Thaumaturgy Energy is at least",
                     "{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}100{} at end of round, Thaumaturgy",
                     "Energy is {C:red}reset{} to{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{} and",
-                    "a {C:mul_transmuted}Magnum Opus{} tag is created"
+                    "creates a {C:mul_transmuted}Philosopher's Stone{}",
+                    "{C:inactive}(Must have room){}"
                 }
             },
             mul_limbo_inst = {

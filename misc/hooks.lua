@@ -145,7 +145,7 @@ function Game:start_run(args)
 	if G.GAME.challenge == "c_mul_monsoon" then
 		G.GAME.mul_undyne_damage_mult = 2
 	end
-	if G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" then
+	if G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" and not G.GAME.blind.disabled then
 		Multiverse.show_blind_instructions("undying")
 	end
 	---@type number
@@ -162,6 +162,10 @@ function Game:start_run(args)
 	G.GAME.mul_kryptonite_active = G.GAME.mul_kryptonite_active or false
 	---@type string?
 	G.GAME.mul_last_myth_used = G.GAME.mul_last_myth_used or nil
+	---@type integer
+	G.GAME.mul_TP = G.GAME.mul_TP or 0
+	---@type integer
+	G.GAME.mul_TP_max = G.GAME.mul_TP_max or 100
 end
 
 local can_sell_hook = Card.can_sell_card

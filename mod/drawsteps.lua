@@ -3,6 +3,7 @@ SMODS.DrawStep({
 	order = 200,
 	func = function(card, layer)
 		if card.ability and type(card.ability.extra) == "table" and card.ability.extra.is_active then
+		    Multiverse.check_active_particles(card, true)
 			card.children.center:draw_shader("booster", nil, card.ARGS.send_to_shader)
 		end
 	end,

@@ -263,7 +263,7 @@ end
 ---@param state boolean
 function Multiverse.check_active_particles(card, state)
 	if state then
-		card.children.particles = Particles(0, 0, G.CARD_W, G.CARD_H, {
+		card.children.active_particles = card.children.active_particles or Particles(0, 0, G.CARD_W, G.CARD_H, {
 			timer_type = "TOTAL",
 			timer = 0.025,
 			scale = 0.2,
@@ -273,9 +273,9 @@ function Multiverse.check_active_particles(card, state)
 			colours = {G.C.SET[card.ability.set], G.C.SECONDARY_SET[card.ability.set]},
 			fill = true,
 		})
-	elseif card.children.particles then
-		card.children.particles:remove()
-		card.children.particles = nil
+	elseif card.children.active_particles then
+		card.children.active_particles:remove()
+		card.children.active_particles = nil
 	end
 end
 

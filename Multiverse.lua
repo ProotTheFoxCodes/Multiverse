@@ -29,14 +29,55 @@ SMODS.ObjectType({
 })
 
 SMODS.current_mod.calculate = function(self, context)
-	if context.end_of_round and not context.blueprint and not context.game_over and context.main_eval then
+	if context.end_of_round and not context.game_over and context.main_eval then
 		Multiverse.hide_blind_instructions()
 		Multiverse.ease_thaumaturgy_energy(G.GAME.mul_thaumaturgy_energy_rate, { from_charge = true })
 		if G.GAME.mul_thaumaturgy_energy >= 100 then
-			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { from_magnum_opus = true })
-			add_tag(Tag("tag_mul_magnum_opus", false, "Small"))
+			if #G.consumeables.cards < G.consumeables.config.card_limit then
+				Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { from_magnum_opus = true })
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						SMODS.add_card({
+							key = "c_mul_philosophers_stone",
+							key_append = "mul_thaumaturgy_charge",
+						})
+						return true
+					end,
+				}))
+			else
+				attention_text({
+					scale = 0.7,
+					text = localize("k_no_room_ex"),
+					hold = G.SPEEDFACTOR * 2,
+					align = "cm",
+					offset = { x = 0, y = -1 },
+					major = G.play,
+				})
+			end
 		end
 	end
+	if context.debuff_card then
+		if Multiverse.is_kryptonite_debuffed(context.debuff_card) then
+			return {
+				debuff = true,
+			}
+		end
+		if Multiverse.is_stand_arrow_debuffed(context.debuff_card) then
+			return {
+				debuff = true,
+			}
+		end
+	end
+end
+
+function Multiverse.is_kryptonite_debuffed(card)
+	return card.area == G.jokers and G.GAME.mul_kryptonite_active and card:is_rarity(3)
+end
+
+function Multiverse.is_stand_arrow_debuffed(card)
+	return card.playing_card
+		and G.GAME.mul_stand_arrow_active
+		and card:is_suit(G.GAME.current_round.mul_stand_arrow_suit)
 end
 
 local function set_foddian_suit()
@@ -54,13 +95,14 @@ local function set_foddian_suit()
 end
 
 local function set_stand_arrow_suit()
-	G.GAME.current_round.mul_stand_arrow_suit = G.GAME.current_round.mul_stand_arrow_suit or "Spades"
-	local valid = {}
-	for suit, _ in pairs(SMODS.Suits) do
-		if suit ~= G.GAME.current_round.mul_stand_arrow_suit then
-			valid[#valid + 1] = suit
-		end
+	if not G.GAME.current_round.mul_stand_arrow_suit then
+		G.GAME.current_round.mul_stand_arrow_suit =
+			pseudorandom_element(SMODS.Suit.obj_buffer, "mul_arrow" .. G.GAME.round_resets.ante)
+		return
 	end
+	local valid = Multiverse.filter(SMODS.Suit.obj_buffer, function(item)
+		return item ~= G.GAME.current_round.mul_stand_arrow_suit
+	end)
 	if next(valid) then
 		G.GAME.current_round.mul_stand_arrow_suit = pseudorandom_element(valid, "mul_arrow" .. G.GAME.round_resets.ante)
 	end
@@ -92,6 +134,11 @@ end
 Multiverse.recursive_load("misc")
 Multiverse.recursive_load("mod")
 
-if SMODS.load_file("debug.lua") then
+Multiverse.debug = false
+local debug, err = SMODS.load_file("debug.lua")
+if debug then
+	debug()
 	Multiverse.debug = true
 end
+
+Multiverse.debug_info = { ["Debug Mode"] = (Multiverse.debug and "Enabled" or "Disabled") }

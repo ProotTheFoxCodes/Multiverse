@@ -681,31 +681,21 @@ SMODS.Consumable({
 			G.GAME.mul_stand_arrow_active = card.ability.extra.is_active
 			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
+				-- Multiverse.apply_to_playing_cards(function(playing_card)
+				-- 	if playing_card:is_suit(G.GAME.current_round.mul_stand_arrow_suit) then
+				-- 		SMODS.debuff_card(playing_card, true, "mul_stand_arrow")
+				-- 	end
+				-- end)
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					+ card.ability.extra.temp_recharge_boost
 			else
+				-- Multiverse.apply_to_playing_cards(function(playing_card)
+				-- 	SMODS.debuff_card(playing_card, false, "mul_stand_arrow")
+				-- end)
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					- card.ability.extra.temp_recharge_boost
 			end
 		end)
-	end,
-	update = function(self, card, dt)
-		if card.ability.extra.is_active and card.added_to_deck then
-			if G.deck and card.added_to_deck then
-				for i, v in pairs(G.deck.cards) do
-					if v:is_suit(G.GAME.current_round.mul_stand_arrow_suit) and not v.debuff then
-						v:set_debuff(true)
-					end
-				end
-			end
-			if G.hand and card.added_to_deck then
-				for i, v in pairs(G.hand.cards) do
-					if v:is_suit(G.GAME.current_round.mul_stand_arrow_suit) and not v.debuff then
-						v:set_debuff(true)
-					end
-				end
-			end
-		end
 	end,
 })
 
@@ -874,14 +864,16 @@ SMODS.Consumable({
 			G.GAME.mul_kryptonite_active = card.ability.extra.is_active
 			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
-				Multiverse.apply_to_jokers(function(j)
-					SMODS.debuff_card(j, j:is_rarity(3), "mul_kryptonite")
+				Multiverse.apply_to_jokers(function(joker)
+					if joker:is_rarity(3) then
+						SMODS.debuff_card(joker, true, "mul_kryptonite")
+					end
 				end)
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					+ card.ability.extra.temp_recharge_boost
 			else
-				Multiverse.apply_to_jokers(function(j)
-					SMODS.debuff_card(j, false, "mul_kryptonite")
+				Multiverse.apply_to_jokers(function(joker)
+					SMODS.debuff_card(joker, false, "mul_kryptonite")
 				end)
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					- card.ability.extra.temp_recharge_boost

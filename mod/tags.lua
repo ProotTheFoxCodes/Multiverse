@@ -4,6 +4,13 @@ SMODS.Tag({
 	pos = { x = 0, y = 0 },
 	config = { type = "immediate" },
 	in_pool = function(self, args)
+		if G.jokers then
+			for _, j in ipairs(G.jokers.cards) do
+				if type(j.ability.extra) == "table" and j.ability.extra.transmute_req then
+					return true
+				end
+			end
+		end
 		return false
 	end,
 	loc_vars = function(self, info_queue, tag)
