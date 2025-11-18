@@ -554,7 +554,6 @@ SMODS.Consumable({
 		Multiverse.consumable_effect(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
-			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
 				G.GAME.mul_money_mult = G.GAME.mul_money_mult / card.ability.extra.money_penalty
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
@@ -630,7 +629,6 @@ SMODS.Consumable({
 		Multiverse.consumable_effect(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
-			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
 				change_shop_size(-card.ability.extra.shop_penalty)
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
@@ -679,23 +677,35 @@ SMODS.Consumable({
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			G.GAME.mul_stand_arrow_active = card.ability.extra.is_active
-			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
 				-- Multiverse.apply_to_playing_cards(function(playing_card)
 				-- 	if playing_card:is_suit(G.GAME.current_round.mul_stand_arrow_suit) then
 				-- 		SMODS.debuff_card(playing_card, true, "mul_stand_arrow")
 				-- 	end
 				-- end)
+				Multiverse.apply_to_playing_cards(function(playing_card)
+					SMODS.recalc_debuff(playing_card)
+				end)
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					+ card.ability.extra.temp_recharge_boost
 			else
 				-- Multiverse.apply_to_playing_cards(function(playing_card)
 				-- 	SMODS.debuff_card(playing_card, false, "mul_stand_arrow")
 				-- end)
+				Multiverse.apply_to_playing_cards(function(playing_card)
+					SMODS.recalc_debuff(playing_card)
+				end)
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					- card.ability.extra.temp_recharge_boost
 			end
 		end)
+	end,
+	update = function(self, card, dt)
+		if card.ability.extra.is_active then
+			Multiverse.apply_to_playing_cards(function(playing_card)
+				SMODS.recalc_debuff(playing_card)
+			end)
+		end
 	end,
 })
 
@@ -752,7 +762,6 @@ SMODS.Consumable({
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			G.GAME.mul_elder_scroll_active = card.ability.extra.is_active
-			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
 				Multiverse.apply_to_hand(function(playing_card)
 					if playing_card.facing == "front" then
@@ -862,28 +871,34 @@ SMODS.Consumable({
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			G.GAME.mul_kryptonite_active = card.ability.extra.is_active
-			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
-				Multiverse.apply_to_jokers(function(joker)
-					if joker:is_rarity(3) then
-						SMODS.debuff_card(joker, true, "mul_kryptonite")
-					end
-				end)
+				-- Multiverse.apply_to_jokers(function(joker)
+				-- 	if joker:is_rarity(3) then
+				-- 		SMODS.debuff_card(joker, true, "mul_kryptonite")
+				-- 	end
+				-- end)
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					+ card.ability.extra.temp_recharge_boost
 			else
+				-- Multiverse.apply_to_jokers(function(joker)
+				-- 	SMODS.debuff_card(joker, false, "mul_kryptonite")
+				-- end)
 				Multiverse.apply_to_jokers(function(joker)
-					SMODS.debuff_card(joker, false, "mul_kryptonite")
+					if joker:is_rarity(3) then
+						SMODS.recalc_debuff(joker)
+					end
 				end)
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					- card.ability.extra.temp_recharge_boost
 			end
 		end)
 	end,
-	calculate = function(self, card, context)
-		if card.ability.extra.is_active and context.card_added and context.card.ability.set == "Joker" then
-			Multiverse.apply_to_jokers(function(j)
-				SMODS.debuff_card(j, j:is_rarity(3), "mul_kryptonite")
+	update = function(self, card, dt)
+		if card.ability.extra.is_active then
+			Multiverse.apply_to_jokers(function(joker)
+				if joker:is_rarity(3) then
+					SMODS.recalc_debuff(joker)
+				end
 			end)
 		end
 	end,
@@ -962,7 +977,6 @@ SMODS.Consumable({
 		Multiverse.consumable_effect(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
-			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
 				G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
 				ease_hands_played(card.ability.extra.hands)
@@ -1014,7 +1028,6 @@ SMODS.Consumable({
 		Multiverse.consumable_effect(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
-			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 			if card.ability.extra.is_active then
 				G.jokers.config.card_limit = G.jokers.config.card_limit + card.ability.extra.joker_slots
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
@@ -1055,7 +1068,6 @@ SMODS.Consumable({
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			G.GAME.mul_time_machine_active = card.ability.extra.is_active
-			Multiverse.check_active_particles(card, card.ability.extra.is_active)
 		end)
 	end,
 	calculate = function(self, card, context)

@@ -129,13 +129,13 @@ return {
                     "Sets Thaumaturgy",
                     "Energy to{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{}",
                     "Creates a random",
-                    "{C:red}Rare{} {C:attention}Joker{}"
+                    "{C:red}Rare{} Joker"
                 }
             },
             c_mul_theory = {
                 name = "Theory of Everything",
                 text = {
-                    "Creates a random {C:attention}Joker{}",
+                    "Creates a random Joker",
                     "that can become {C:mul_transmuted}Transmutable{}"
                 }
             },

@@ -74,10 +74,11 @@ function Multiverse.is_kryptonite_debuffed(card)
 	return card.area == G.jokers and G.GAME.mul_kryptonite_active and card:is_rarity(3)
 end
 
+---@param card Card
 function Multiverse.is_stand_arrow_debuffed(card)
 	return card.playing_card
 		and G.GAME.mul_stand_arrow_active
-		and card:is_suit(G.GAME.current_round.mul_stand_arrow_suit)
+		and card:is_suit(G.GAME.current_round.mul_stand_arrow_suit, true)
 end
 
 local function set_foddian_suit()
