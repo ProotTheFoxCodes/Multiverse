@@ -3,7 +3,9 @@
 ---@param args? {immediate: boolean?, silent: boolean?, from_magnum_opus: boolean?, from_charge: boolean?}
 function Multiverse.ease_thaumaturgy_energy(amt, args)
 	args = args or {}
-	if G.GAME.mul_time_machine_active and amt >= 0 then return end
+	if G.GAME.mul_time_machine_active and amt >= 0 then
+		return
+	end
 	if G.GAME.mul_unicorn_protections >= 1 and amt < 0 then
 		G.GAME.mul_unicorn_protections = G.GAME.mul_unicorn_protections - 1
 		return
@@ -15,7 +17,7 @@ function Multiverse.ease_thaumaturgy_energy(amt, args)
 		--True if the change in Thaumaturgy Energy came from generation of a Magnum Opus tag.
 		from_magnum_opus = args.from_magnum_opus,
 		--True if the change in Thaumaturgy Energy came from the natural end of round bonus.
-		from_charge = args.from_charge
+		from_charge = args.from_charge,
 	})
 	local function change_thaumaturgy_energy(num)
 		num = num or 0
@@ -54,4 +56,84 @@ function Multiverse.ease_thaumaturgy_energy(amt, args)
 			end,
 		}))
 	end
+end
+
+function Multiverse.thaumaturgy_UI_row(temp_col, temp_col2, scale)
+	return {
+		n = G.UIT.R,
+		config = { align = "cm", id = "row_thaumaturgy" },
+		nodes = {
+			{
+				n = G.UIT.C,
+				config = {
+					align = "cm",
+					padding = 0.05,
+					minw = 1.45,
+					minh = 0.55,
+					colour = temp_col,
+					emboss = 0.05,
+					r = 0.1,
+					detailed_tooltip = { set = "Other", key = "mul_thaumaturgy_desc" },
+				},
+				nodes = {
+					{
+						n = G.UIT.R,
+						config = { align = "cm", padding = 0.05 },
+						nodes = {
+							{
+								n = G.UIT.T,
+								config = {
+									text = localize("k_mul_thaumaturgy_energy") .. ":",
+									minh = 0.33,
+									scale = 0.85 * scale,
+									colour = G.C.UI.TEXT_LIGHT,
+									shadow = true,
+								},
+							},
+							{ n = G.UIT.C, config = { minw = 0.05 } },
+							{
+								n = G.UIT.C,
+								config = {
+									align = "cm",
+									r = 0.1,
+									minw = 1.2,
+									colour = temp_col2,
+									id = "col_thaumaturgy_text",
+								},
+								nodes = {
+									{
+										n = G.UIT.O,
+										config = {
+											object = DynaText({
+												string = "+",
+												colours = { Multiverse.TRANSMUTED_GRADIENT },
+												shadow = true,
+												scale = 1.4 * scale,
+												text_effect = "mul_rotate",
+												font = SMODS.Fonts["mul_thaum_icon"],
+												y_offset = -10,
+											}),
+										},
+									},
+									{ n = G.UIT.B, config = { h = 0.08, w = 0.08 } },
+									{
+										n = G.UIT.O,
+										config = {
+											object = DynaText({
+												string = { { ref_table = G.GAME, ref_value = "mul_thaumaturgy_energy" } },
+												colours = { Multiverse.TRANSMUTED_GRADIENT },
+												shadow = true,
+												scale = 1.4 * scale,
+											}),
+											id = "thaumaturgy_UI_count",
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
 end

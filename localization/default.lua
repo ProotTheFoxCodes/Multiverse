@@ -793,7 +793,7 @@ return {
                     "#1#{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{} at end of round",
                     "If Thaumaturgy Energy exceeds{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}100{} at",
                     "end of round, set Thaumaturgy Energy",
-                    "to{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{} and create a Philosopher's Stone",
+                    "to{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{} and create a {C:attention}Philosopher's Stone",
                     "{C:inactive}(Must have room){}"
                 }
             },
