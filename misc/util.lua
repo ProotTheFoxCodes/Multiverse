@@ -263,16 +263,17 @@ end
 ---@param state boolean
 function Multiverse.check_active_particles(card, state)
 	if state then
-		card.children.active_particles = card.children.active_particles or Particles(0, 0, G.CARD_W, G.CARD_H, {
-			timer_type = "TOTAL",
-			timer = 0.025,
-			scale = 0.2,
-			speed = 1.5,
-			lifespan = 0.7,
-			attach = card,
-			colours = {G.C.SET[card.ability.set], G.C.SECONDARY_SET[card.ability.set]},
-			fill = true,
-		})
+		card.children.active_particles = card.children.active_particles
+			or Particles(0, 0, G.CARD_W, G.CARD_H, {
+				timer_type = "TOTAL",
+				timer = 0.025,
+				scale = 0.2,
+				speed = 1.5,
+				lifespan = 0.7,
+				attach = card,
+				colours = { G.C.SET[card.ability.set], G.C.SECONDARY_SET[card.ability.set] },
+				fill = true,
+			})
 	elseif card.children.active_particles then
 		card.children.active_particles:remove()
 		card.children.active_particles = nil
@@ -282,15 +283,52 @@ end
 function Multiverse.show_blind_instructions(key)
 	G.mul_INSTRUCTIONS_HUD = UIBox({
 		definition = Multiverse.blind_instructions_HUD_def(key),
-		config = { align = "cri", offset = { x = 1.2, y = 0 }, major = G.ROOM_ATTACH },
+		config = { align = "cri", offset = { x = 5.3, y = 0.25 }, major = G.ROOM_ATTACH },
 	})
+	ease_value(G.mul_INSTRUCTIONS_HUD.config.offset, "x", -4, nil, nil, true, 0.6, "quad")
 	G.mul_INSTRUCTIONS_HUD:recalculate()
+end
+
+function Multiverse.show_TP_meter()
+	G.mul_TP_meter = UIBox({
+		definition = Multiverse.create_TP_ui(),
+		config = { align = "tri", offset = { x = 5.3, y = -0.55 }, major = G.ROOM_ATTACH },
+	})
+	ease_value(G.mul_TP_meter.config.offset, "x", -4, nil, nil, true, 0.6, "quad")
+	G.mul_TP_meter:recalculate()
 end
 
 function Multiverse.hide_blind_instructions()
 	if G.mul_INSTRUCTIONS_HUD then
-		G.mul_INSTRUCTIONS_HUD:remove()
-		G.mul_INSTRUCTIONS_HUD = nil
+		ease_value(G.mul_INSTRUCTIONS_HUD.config.offset, "x", 4, nil, nil, true, 0.6, "quad")
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 1,
+			blocking = false,
+			blockable = false,
+			func = function()
+				G.mul_INSTRUCTIONS_HUD:remove()
+				G.mul_INSTRUCTIONS_HUD = nil
+				return true
+			end,
+		}))
+	end
+end
+
+function Multiverse.hide_TP_meter()
+	if G.mul_TP_meter then
+		ease_value(G.mul_TP_meter.config.offset, "x", 4, nil, nil, true, 0.6, "quad")
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 1,
+			blocking = false,
+			blockable = false,
+			func = function()
+				G.mul_TP_meter:remove()
+				G.mul_TP_meter = nil
+				return true
+			end,
+		}))
 	end
 end
 

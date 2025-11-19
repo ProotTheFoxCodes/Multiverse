@@ -1,0 +1,36 @@
+[manifest]
+version = "0.0.9"
+priority = 0
+dump_lua = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+if _c.set == 'Other' then
+'''
+position = "after"
+payload = '''
+if _c.key == "mul_TP_desc" then specific_vars = {G.GAME.mul_TP_min_gain, G.GAME.mul_TP_max_gain} end
+'''
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "engine/ui.lua"
+pattern = '''
+self.config.h_popup = create_UIBox_detailed_tooltip(self.config.detailed_tooltip)
+self.config.h_popup_config ={align="tm", offset = {x=0,y=-0.1}, parent = self}
+'''
+position = "after"
+payload = '''
+if self.config.detailed_tooltip_align then
+    self.config.h_popup_config.align = self.config.detailed_tooltip_align
+end
+if self.config.detailed_tooltip_offset then
+    self.config.h_popup_config.offset = self.config.detailed_tooltip_offset
+end
+'''
+match_indent = true
+times = 1

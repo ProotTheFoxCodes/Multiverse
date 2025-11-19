@@ -8,6 +8,18 @@ Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient({
 	},
 	cycle = 1.5,
 })
+Multiverse.RAINBOW_GRADIENT = SMODS.Gradient({
+	key = "rainbow_gradient",
+	colours = {
+		G.C.RED,
+		G.C.ORANGE,
+		G.C.YELLOW,
+		G.C.GREEN,
+		G.C.BLUE,
+		G.C.PURPLE,
+	},
+	cycle = 3,
+})
 Multiverse.C = {}
 Multiverse.C.PRIMARY1 = HEX("89C41B")
 Multiverse.C.PRIMARY2 = HEX("C5CC41")
@@ -31,6 +43,7 @@ SMODS.ObjectType({
 SMODS.current_mod.calculate = function(self, context)
 	if context.end_of_round and not context.game_over and context.main_eval then
 		Multiverse.hide_blind_instructions()
+		Multiverse.hide_TP_meter()
 		Multiverse.ease_thaumaturgy_energy(G.GAME.mul_thaumaturgy_energy_rate, { from_charge = true })
 		if G.GAME.mul_thaumaturgy_energy >= 100 then
 			if #G.consumeables.cards < G.consumeables.config.card_limit then
@@ -45,12 +58,29 @@ SMODS.current_mod.calculate = function(self, context)
 					end,
 				}))
 			else
+				delay(2.2 * G.SPEEDFACTOR)
+				attention_text({
+					scale = 1.4,
+					text = localize("k_no_room_ex"),
+					hold = 2 * G.SPEEDFACTOR,
+					align = "cm",
+					offset = { x = 0, y = -1.7 },
+					major = G.play,
+				})
 				attention_text({
 					scale = 0.7,
-					text = localize("k_no_room_ex"),
-					hold = G.SPEEDFACTOR * 2,
+					text = localize("k_mul_make_room"),
+					hold = 2 * G.SPEEDFACTOR,
 					align = "cm",
-					offset = { x = 0, y = -1 },
+					offset = { x = 0, y = -0.5 },
+					major = G.play,
+				})
+				attention_text({
+					scale = 0.7,
+					text = localize("k_mul_make_room2"),
+					hold = 2 * G.SPEEDFACTOR,
+					align = "cm",
+					offset = { x = 0, y = 0.3 },
 					major = G.play,
 				})
 			end
@@ -67,6 +97,9 @@ SMODS.current_mod.calculate = function(self, context)
 				debuff = true,
 			}
 		end
+	end
+	if context.setting_blind then
+		Multiverse.show_TP_meter()
 	end
 end
 

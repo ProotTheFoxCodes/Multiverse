@@ -52,7 +52,7 @@ SMODS.Blind({
 	key = "undying",
 	atlas = "multiverse_blinds",
 	pos = { x = 0, y = 1 },
-	boss_colour = HEX("344245"),
+	boss_colour = lighten(G.C.BLACK, 0.1),
 	boss = { min = 1 },
 	mult = 2,
 	press_play = function(self)

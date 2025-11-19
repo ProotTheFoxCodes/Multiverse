@@ -107,9 +107,13 @@ function love.keypressed(key, scancode, is_repeat)
 	mouse_pressed_hook(key, scancode, is_repeat)
 end
 
+function Multiverse.cannot_interrupt()
+	return Multiverse.in_limbo or Multiverse.in_undyne or Multiverse.very_important_thing
+end
+
 local options_hook = G.FUNCS.options
 function G.FUNCS.options()
-	if Multiverse.in_limbo or Multiverse.in_undyne then
+	if Multiverse.cannot_interrupt() then
 		return
 	end
 	options_hook()
@@ -117,7 +121,7 @@ end
 
 local info_hook = G.FUNCS.run_info
 function G.FUNCS.run_info()
-	if Multiverse.in_limbo or Multiverse.in_undyne then
+	if Multiverse.cannot_interrupt() then
 		return
 	end
 	info_hook()
@@ -125,7 +129,7 @@ end
 
 local deck_info_hook = G.FUNCS.deck_info
 function G.FUNCS.deck_info()
-	if Multiverse.in_limbo or Multiverse.in_undyne then
+	if Multiverse.cannot_interrupt() then
 		return
 	end
 	deck_info_hook()
@@ -145,8 +149,11 @@ function Game:start_run(args)
 	if G.GAME.challenge == "c_mul_monsoon" then
 		G.GAME.mul_undyne_damage_mult = 2
 	end
-	if G.GAME.blind and G.GAME.blind.config.blind.key == "bl_mul_undying" and not G.GAME.blind.disabled then
-		Multiverse.show_blind_instructions("undying")
+	if G.GAME.blind.blind_set then
+		Multiverse.show_TP_meter()
+		if G.GAME.blind.config.blind.key == "bl_mul_undying" and not G.GAME.blind.disabled then
+			Multiverse.show_blind_instructions("undying")
+		end
 	end
 	---@type number
 	G.GAME.mul_money_mult = G.GAME.mul_money_mult or 1
@@ -165,7 +172,9 @@ function Game:start_run(args)
 	---@type integer
 	G.GAME.mul_TP = G.GAME.mul_TP or 0
 	---@type integer
-	G.GAME.mul_TP_max = G.GAME.mul_TP_max or 100
+	G.GAME.mul_TP_max_gain = G.GAME.mul_TP_max_gain or 6
+	---@type integer
+	G.GAME.mul_TP_min_gain = G.GAME.mul_TP_min_gain or 3
 end
 
 local can_sell_hook = Card.can_sell_card

@@ -256,7 +256,7 @@ function Multiverse.config_tab_definition()
 					ref_table = Multiverse.config,
 					ref_value = "joke",
 					callback = function()
-					    SMODS.save_all_config()
+						SMODS.save_all_config()
 						G.E_MANAGER:add_event(Event({
 							func = function()
 								SMODS.restart_game()
@@ -480,76 +480,10 @@ SMODS.current_mod.extra_tabs = function()
 	}
 end
 
-function Multiverse.create_thaumaturgy_ui()
-	return {
-		n = G.UIT.R,
-		config = { align = "cm", id = "row_thaumaturgy" },
-		nodes = {
-			{
-				n = G.UIT.C,
-				config = {
-					align = "cm",
-					padding = 0.05,
-					minw = 1.45,
-					minh = 0.6,
-					colour = G.C.DYN_UI.BOSS_MAIN,
-					emboss = 0.05,
-					r = 0.1,
-				},
-				nodes = {
-					{
-						n = G.UIT.R,
-						config = { align = "cm", padding = 0.05 },
-						nodes = {
-							{
-								n = G.UIT.T,
-								config = {
-									text = localize("k_mul_thaumaturgy_energy"),
-									minh = 0.33,
-									scale = 0.85 * 0.4,
-									colour = G.C.UI.TEXT_LIGHT,
-									shadow = true,
-								},
-							},
-							{ n = G.UIT.C, config = { minw = 0.05 } },
-							{
-								n = G.UIT.C,
-								config = {
-									align = "cm",
-									r = 0.1,
-									minw = 1.2,
-									colour = G.C.DYN_UI.BOSS_DARK,
-									id = "col_thaumaturgy_text",
-								},
-								nodes = {
-									{
-										n = G.UIT.O,
-										config = {
-											object = DynaText({
-												string = {
-													{ ref_table = G.GAME, ref_value = "mul_thaumaturgy_energy" },
-												},
-												colours = { Multiverse.TRANSMUTED_GRADIENT },
-												shadow = true,
-												scale = 1.5 * 0.4,
-											}),
-											id = "thaumaturgy_UI_count",
-										},
-									},
-								},
-							},
-						},
-					},
-				},
-			},
-		},
-	}
-end
-
 function Multiverse.blind_instructions_HUD_def(key)
 	return {
 		n = G.UIT.ROOT,
-		config = { padding = 0.05, colour = G.C.JOKER_GREY, align = "cm", r = 0.1 },
+		config = { padding = 0.05, colour = lighten(G.C.JOKER_GREY, 0.5), align = "cm", r = 0.1 },
 		nodes = {
 			{
 				n = G.UIT.C,
@@ -560,7 +494,8 @@ function Multiverse.blind_instructions_HUD_def(key)
 	}
 end
 
-function Multiverse.create_localized_rows(set, key, text_scale)
+function Multiverse.create_localized_rows(set, key, text_scale, bg_colour)
+	bg_colour = bg_colour or G.C.WHITE
 	local loc_entry
 	text_scale = text_scale or 1
 	if set then
@@ -593,7 +528,7 @@ function Multiverse.create_localized_rows(set, key, text_scale)
 		end
 		table.insert(rows, {
 			n = G.UIT.R,
-			config = { align = "cm", padding = 0.05, colour = G.C.UI.BACKGROUND_WHITE, r = 0.1, emboss = 0.05 },
+			config = { align = "cm", padding = 0.05, colour = bg_colour, r = 0.1, emboss = 0.05 },
 			nodes = {
 				{
 					n = G.UIT.C,
@@ -613,7 +548,7 @@ function Multiverse.create_localized_rows(set, key, text_scale)
 		end
 		table.insert(rows, {
 			n = G.UIT.R,
-			config = { align = "cm", padding = 0.05, colour = G.C.UI.BACKGROUND_WHITE, r = 0.1, emboss = 0.05 },
+			config = { align = "cm", padding = 0.05, colour = bg_colour, r = 0.1, emboss = 0.05 },
 			nodes = {
 				{
 					n = G.UIT.C,
@@ -624,20 +559,4 @@ function Multiverse.create_localized_rows(set, key, text_scale)
 		})
 	end
 	return rows
-end
-
-local blind_HUD_hook = create_UIBox_HUD_blind
-function create_UIBox_HUD_blind()
-	local ret = blind_HUD_hook()
-	table.insert(ret.nodes[2].nodes, {
-		n = G.UIT.R,
-		config = { align = "cm", padding = 0.1 },
-		nodes = {
-			{
-				n = G.UIT.T,
-				config = { align = "cm", text = "Hello World", colour = G.C.WHITE, scale = 0.3 },
-			},
-		},
-	})
-	return ret
 end

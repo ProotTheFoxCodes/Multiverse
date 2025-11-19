@@ -790,13 +790,21 @@ return {
             mul_thaumaturgy_desc = {
                 name = "Thaumaturgy Energy",
                 text = {
-                    "You #1#{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{} at the",
-                    "end of each round",
-                    "If Thaumaturgy Energy is at least",
-                    "{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}100{} at end of round, Thaumaturgy",
-                    "Energy is {C:red}reset{} to{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{} and",
-                    "creates a {C:mul_transmuted}Philosopher's Stone{}",
+                    "#1#{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{} at end of round",
+                    "If Thaumaturgy Energy exceeds{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}100{} at",
+                    "end of round, set Thaumaturgy Energy",
+                    "to{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{} and create a Philosopher's Stone",
                     "{C:inactive}(Must have room){}"
+                }
+            },
+            mul_TP_desc = {
+                name = "TP",
+                text = {
+                    "If total score of played",
+                    "hand does not exceed current",
+                    "blind size, {C:attention}TP{} increases by",
+                    "a random amount from {C:attention}#1#%{} to {C:attention}#2#%{}",
+                    "{C:inactive}({C:attention}TP{C:inactive} is capped at 100%){}"
                 }
             },
             mul_limbo_inst = {
@@ -909,6 +917,9 @@ return {
             k_mul_won_fifty_fifty = "Won!",
             k_mul_lost_fifty_fifty = "Lost...",
             k_mul_thaumaturgy_energy = "Thaumaturgy Energy",
+            k_mul_make_room = "Must have at least 1 available consumable slot",
+            k_mul_make_room2 = "in order to create a Philosopher's Stone...",
+            k_mul_TP = "TP",
             k_mul_myth = "Myth",
             b_mul_myth_cards = "Myth Cards",
             b_mul_discord_server = "My Discord Server",
