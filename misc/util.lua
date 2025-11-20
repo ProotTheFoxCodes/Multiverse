@@ -332,9 +332,10 @@ function Multiverse.hide_TP_meter()
 	end
 end
 
----Do not call this on a card that cannot become transmutable
+---Will now safely return and do nothing if the card cannot become transmutable
 ---@param card Card
 function Multiverse.transmute_check(card)
+	if type(card.ability.extra) ~= table or not card.ability.extra.transmute_req then return end
 	local progress = (
 		type(card.ability.extra.transmute_progress) == "table" and card.ability.extra.transmute_progress.n
 	) or card.ability.extra.transmute_progress
