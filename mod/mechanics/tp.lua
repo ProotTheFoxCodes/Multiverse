@@ -1,3 +1,29 @@
+function Multiverse.show_TP_meter()
+	G.mul_TP_meter = UIBox({
+		definition = Multiverse.create_TP_ui(),
+		config = { align = "tri", offset = { x = 5.3, y = -0.55 }, major = G.ROOM_ATTACH },
+	})
+	ease_value(G.mul_TP_meter.config.offset, "x", -4, nil, nil, true, 0.6, "quad")
+	G.mul_TP_meter:recalculate()
+end
+
+function Multiverse.hide_TP_meter()
+	if G.mul_TP_meter then
+		ease_value(G.mul_TP_meter.config.offset, "x", 4, nil, nil, true, 0.6, "quad")
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 1,
+			blocking = false,
+			blockable = false,
+			func = function()
+				G.mul_TP_meter:remove()
+				G.mul_TP_meter = nil
+				return true
+			end,
+		}))
+	end
+end
+
 ---Changes the current amount of TP, and also triggers the relevant context.
 ---This function will automatically adjust the amount of TP earned/lost if doing the modification would cause TP to be negative or more than 100.
 ---This function will also not do anything if called outside of a blind.
