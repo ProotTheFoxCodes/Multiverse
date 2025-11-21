@@ -55,7 +55,7 @@ if _c.set == 'Other' then
 '''
 position = "after"
 payload = '''
-if _c.key == "mul_thaumaturgy_desc" then specific_vars = {G.GAME.mul_thaumaturgy_energy_rate >= 0 and "gain" or "lose", math.abs(G.GAME.mul_thaumaturgy_energy_rate)} end
+if _c.key == "mul_thaumaturgy_desc" then specific_vars = {G.GAME.mul_thaumaturgy_energy_rate >= 0 and "Gain" or "Lose", math.abs(G.GAME.mul_thaumaturgy_energy_rate)} end
 '''
 match_indent = true
 times = 1
