@@ -113,14 +113,44 @@ function Multiverse.create_TP_ui()
 						config = { colour = G.C.DYN_UI.BOSS_MAIN, padding = 0.05, align = "cm", minw = 0.7, r = 0.05 },
 						nodes = {
 							{
-								n = G.UIT.O,
-								config = {
-									object = DynaText({
-										string = { { ref_table = G.GAME, ref_value = "mul_TP" } },
-										colours = { G.C.IMPORTANT },
-										scale = 0.35,
-									}),
-									id = "TP_display",
+								n = G.UIT.C,
+								config = { padding = 0.01, align = "cm" },
+								nodes = {
+									{
+										n = G.UIT.R,
+										config = { align = "cm" },
+										nodes = {
+											{
+												n = G.UIT.O,
+												config = {
+													object = DynaText({
+														string = { { ref_table = G.GAME, ref_value = "mul_TP" } },
+														colours = { G.C.IMPORTANT },
+														scale = 0.35,
+													}),
+													id = "TP_display",
+													align = "cm",
+												},
+											},
+										},
+									},
+									{
+										n = G.UIT.R,
+										config = { align = "cm" },
+										nodes = {
+											{
+												n = G.UIT.O,
+												config = {
+													object = DynaText({
+														string = { "%" },
+														colours = { G.C.IMPORTANT },
+														scale = 0.35,
+													}),
+													align = "cm",
+												},
+											},
+										},
+									},
 								},
 							},
 						},
@@ -169,8 +199,8 @@ function Multiverse.create_TP_ui()
 							},
 						},
 					},
-				}
-			}
+				},
+			},
 		},
 	}
 end

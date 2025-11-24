@@ -71,6 +71,15 @@ return {
                 }
             }
         },
+        Edition = {
+            e_mul_hyperdimensional = {
+                name = "Hyperdimensional",
+                text = {
+                    "{C:attention}+#1#{} card area slot",
+                    
+                }
+            },
+        },
         mul_Myth = {
             c_mul_philosophers_stone = {
                 name = "Philosopher\'s Stone",
@@ -978,6 +987,7 @@ return {
             mul_traitorous = "Traitorous",
             myth = "Myth",
             k_mul_transmuted = "Transmuted",
+            mul_hyperdimensional = "Hyperdimensional"
         },
         v_dictionary = {
             a_mul_thaumaturgy_energy = "+#1# Energy",

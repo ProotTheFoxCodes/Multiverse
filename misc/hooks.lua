@@ -149,7 +149,7 @@ function Game:start_run(args)
 	if G.GAME.challenge == "c_mul_monsoon" then
 		G.GAME.mul_undyne_damage_mult = 2
 	end
-	if G.GAME.blind.blind_set then
+	if G.GAME.blind and G.GAME.facing_blind then
 		Multiverse.show_TP_meter()
 		if G.GAME.blind.config.blind.key == "bl_mul_undying" and not G.GAME.blind.disabled then
 			Multiverse.show_blind_instructions("undying")
@@ -196,4 +196,9 @@ function ease_dollars(mod, instant)
 		end
 	end
 	ease_dollars_hook(amt, instant)
+end
+
+local calc_main_hook = SMODS.calculate_main_scoring
+function SMODS.calculate_main_scoring(context, scoring_hand)
+	
 end

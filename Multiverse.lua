@@ -40,63 +40,73 @@ SMODS.ObjectType({
 	default = "j_joker",
 })
 
+SMODS.draw_ignore_keys.mul_draw_use_buttons = true
+
+function Multiverse.check_philosophers_stone()
+	if G.GAME.mul_thaumaturgy_energy >= 100 then
+		if #G.consumeables.cards < G.consumeables.config.card_limit then
+			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { from_magnum_opus = true })
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					SMODS.add_card({
+						key = "c_mul_philosophers_stone",
+						key_append = "mul_thaumaturgy_charge",
+					})
+					return true
+				end,
+			}))
+		else
+			delay(2.2 * G.SPEEDFACTOR)
+			attention_text({
+				scale = 1.4,
+				text = localize("k_no_room_ex"),
+				hold = 2 * G.SPEEDFACTOR,
+				align = "cm",
+				offset = { x = 0, y = -1.7 },
+				major = G.play,
+			})
+			attention_text({
+				scale = 0.7,
+				text = localize("k_mul_make_room"),
+				hold = 2 * G.SPEEDFACTOR,
+				align = "cm",
+				offset = { x = 0, y = -0.5 },
+				major = G.play,
+			})
+			attention_text({
+				scale = 0.7,
+				text = localize("k_mul_make_room2"),
+				hold = 2 * G.SPEEDFACTOR,
+				align = "cm",
+				offset = { x = 0, y = 0.3 },
+				major = G.play,
+			})
+		end
+	end
+end
+
+function Multiverse.handle_debuffs(card)
+	if Multiverse.is_kryptonite_debuffed(card) then
+			return {
+				debuff = true,
+			}
+		end
+		if Multiverse.is_stand_arrow_debuffed(card) then
+			return {
+				debuff = true,
+			}
+		end
+end
+
 SMODS.current_mod.calculate = function(self, context)
 	if context.end_of_round and not context.game_over and context.main_eval then
 		Multiverse.hide_blind_instructions()
 		Multiverse.hide_TP_meter()
 		Multiverse.ease_thaumaturgy_energy(G.GAME.mul_thaumaturgy_energy_rate, { from_charge = true })
-		if G.GAME.mul_thaumaturgy_energy >= 100 then
-			if #G.consumeables.cards < G.consumeables.config.card_limit then
-				Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { from_magnum_opus = true })
-				G.E_MANAGER:add_event(Event({
-					func = function()
-						SMODS.add_card({
-							key = "c_mul_philosophers_stone",
-							key_append = "mul_thaumaturgy_charge",
-						})
-						return true
-					end,
-				}))
-			else
-				delay(2.2 * G.SPEEDFACTOR)
-				attention_text({
-					scale = 1.4,
-					text = localize("k_no_room_ex"),
-					hold = 2 * G.SPEEDFACTOR,
-					align = "cm",
-					offset = { x = 0, y = -1.7 },
-					major = G.play,
-				})
-				attention_text({
-					scale = 0.7,
-					text = localize("k_mul_make_room"),
-					hold = 2 * G.SPEEDFACTOR,
-					align = "cm",
-					offset = { x = 0, y = -0.5 },
-					major = G.play,
-				})
-				attention_text({
-					scale = 0.7,
-					text = localize("k_mul_make_room2"),
-					hold = 2 * G.SPEEDFACTOR,
-					align = "cm",
-					offset = { x = 0, y = 0.3 },
-					major = G.play,
-				})
-			end
-		end
+		Multiverse.check_philosophers_stone()
 	end
 	if context.debuff_card then
-		if Multiverse.is_kryptonite_debuffed(context.debuff_card) then
-			return {
-				debuff = true,
-			}
-		end
-		if Multiverse.is_stand_arrow_debuffed(context.debuff_card) then
-			return {
-				debuff = true,
-			}
-		end
+		return Multiverse.handle_debuffs(context.debuff_card)
 	end
 	if context.setting_blind then
 		Multiverse.show_TP_meter()
