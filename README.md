@@ -1,6 +1,8 @@
 <h1 align = "center"> ✧ Multiverse ✧ </h1>
 
-![The mod's name plastered onto an image of a planet.](ModBanner.png)
+<p align="center">
+ <img width="750" height="525" alt="The logo for the mod." src="https://github.com/user-attachments/assets/4bc4d0f5-ad79-4286-9221-72b6e3287496" />
+</p>
 
 A Balatro mod where I add whatever I feel like to the game.
 This mod introduces:
