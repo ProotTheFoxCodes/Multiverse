@@ -172,9 +172,9 @@ function Game:start_run(args)
 	---@type integer
 	G.GAME.mul_TP = G.GAME.mul_TP or 0
 	---@type integer
-	G.GAME.mul_TP_max_gain = G.GAME.mul_TP_max_gain or 6
+	G.GAME.mul_TP_max_gain = G.GAME.mul_TP_max_gain or 8
 	---@type integer
-	G.GAME.mul_TP_min_gain = G.GAME.mul_TP_min_gain or 3
+	G.GAME.mul_TP_min_gain = G.GAME.mul_TP_min_gain or 4
 end
 
 local can_sell_hook = Card.can_sell_card
@@ -196,9 +196,4 @@ function ease_dollars(mod, instant)
 		end
 	end
 	ease_dollars_hook(amt, instant)
-end
-
-local calc_main_hook = SMODS.calculate_main_scoring
-function SMODS.calculate_main_scoring(context, scoring_hand)
-	
 end

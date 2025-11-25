@@ -111,6 +111,9 @@ SMODS.current_mod.calculate = function(self, context)
 	if context.setting_blind then
 		Multiverse.show_TP_meter()
 	end
+	if context.after and not SMODS.last_hand_oneshot then
+		Multiverse.ease_TP(pseudorandom("mul_TP_gen", G.GAME.mul_TP_min_gain, G.GAME.mul_TP_max_gain))
+	end
 end
 
 function Multiverse.is_kryptonite_debuffed(card)
