@@ -1,7 +1,7 @@
 <h1 align = "center"> ✧ Multiverse ✧ </h1>
 
 <p align="center">
- <img width="750" height="525" alt="The logo for the mod." src="https://github.com/user-attachments/assets/4bc4d0f5-ad79-4286-9221-72b6e3287496" />
+ <img width="500" height="350" alt="The logo for the mod." src="https://github.com/user-attachments/assets/4bc4d0f5-ad79-4286-9221-72b6e3287496" />
 </p>
 
 A Balatro mod where I add whatever I feel like to the game.
