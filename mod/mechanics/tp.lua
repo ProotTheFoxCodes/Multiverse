@@ -26,11 +26,9 @@ end
 
 ---Changes the current amount of TP, and also triggers the relevant context.
 ---This function will automatically adjust the amount of TP earned/lost if doing the modification would cause TP to be negative or more than 100.
----This function will also not do anything if called outside of a blind.
+---@param amt integer
+---@param args {from_hand: boolean?, instant: boolean?}
 function Multiverse.ease_TP(amt, args)
-	if not G.GAME.blind.blind_set then
-		return
-	end
 	local actual_change = Multiverse.clamp(amt, -G.GAME.mul_TP, 100 - G.GAME.mul_TP)
 	args = args or {}
 	SMODS.calculate_context({
@@ -40,23 +38,15 @@ function Multiverse.ease_TP(amt, args)
 		--True if the change in TP came from a played hand.
 		from_hand = args.from_scored_hand,
 	})
-	local TP_UI = G.mul_TP_meter:get_UIE_by_ID("TP_display")
 	if args.instant then
 		G.GAME.mul_TP = G.GAME.mul_TP + actual_change
-		TP_UI.config.object:update()
 		G.HUD:recalculate()
 	else
 		G.E_MANAGER:add_event(Event({
-			trigger = "ease",
-			ref_table = G.GAME,
-			ref_value = "mul_TP",
-			ease_to = G.GAME.mul_TP + actual_change,
-			delay = 1.5,
-			ease = "quad",
-			func = function(n)
-				TP_UI.config.object:update()
+			func = function()
+				G.GAME.mul_TP = G.GAME.mul_TP + actual_change
 				G.HUD:recalculate()
-				return math.floor(n)
+				return true
 			end,
 		}))
 	end
@@ -86,11 +76,11 @@ function Multiverse.create_TP_ui()
 	end
 	local display = {
 		n = G.UIT.R,
-		config = { padding = 0.05, align = "cr" },
+		config = { padding = 0.05, align = "cm" },
 		nodes = {
 			{
 				n = G.UIT.C,
-				config = { colour = G.C.DYN_UI.BOSS_DARK, r = 0.1, padding = 0.05, align = "cm", minw = 0.85 },
+				config = { padding = 0.05, align = "cm" },
 				nodes = {
 					{
 						n = G.UIT.R,
@@ -110,7 +100,7 @@ function Multiverse.create_TP_ui()
 					},
 					{
 						n = G.UIT.R,
-						config = { colour = G.C.DYN_UI.BOSS_MAIN, padding = 0.05, align = "cm", minw = 0.7, r = 0.05 },
+						config = { colour = G.C.DYN_UI.BOSS_DARK, padding = 0.05, align = "cm", minw = 0.75, r = 0.05 },
 						nodes = {
 							{
 								n = G.UIT.C,
@@ -182,17 +172,16 @@ function Multiverse.create_TP_ui()
 							r = 0.1,
 							colour = G.C.DYN_UI.BOSS_MAIN,
 							emboss = 0.05,
-							padding = 0.01,
 						},
 						nodes = {
 							display,
 							{
 								n = G.UIT.R,
-								config = { align = "cr", padding = 0.01 },
+								config = { align = "cm", padding = 0.01 },
 								nodes = {
 									{
 										n = G.UIT.C,
-										config = { align = "r", func = "mul_update_TP_bar", padding = 0.05 },
+										config = { align = "cm", func = "mul_update_TP_bar", padding = 0.05 },
 										nodes = col,
 									},
 								},

@@ -1,12 +1,67 @@
 local is_face_hook = Card.is_face
 function Card:is_face(from_boss)
-	if self.config.center.key == "m_mul_normal" then
+	if SMODS.has_enhancement(self, "m_mul_normal") then
 		if self.debuff and not from_boss then
 			return is_face_hook(self, from_boss)
 		end
 		return true
 	end
 	return is_face_hook(self, from_boss)
+end
+
+local is_suit_hook = Card.is_suit
+function Card:is_suit(suit, bypass_debuff, flush_calc)
+	if SMODS.has_enhancement(self, "m_mul_calling_card") then
+		if flush_calc then
+			if SMODS.has_no_suit(self) then
+				return false
+			end
+			if SMODS.has_any_suit(self) and self:can_calculate() then
+				return true
+			end
+			if SMODS.smeared_check({ base = { suit = "Hearts" } }, suit) then
+				return true
+			end
+			return "Hearts" == suit
+		else
+			if self.debuff and not bypass_debuff then
+				return
+			end
+			if SMODS.has_no_suit(self) then
+				return false
+			end
+			if SMODS.has_any_suit(self) then
+				return true
+			end
+			if SMODS.smeared_check({ base = { suit = "Hearts" } }, suit) then
+				return true
+			end
+			return "Hearts" == suit
+		end
+	end
+end
+
+local get_id_hook = Card.get_id
+function Card:get_id()
+	if SMODS.has_enhancement(self, "m_mul_calling_card") then
+		return 14
+	end
+	return get_id_hook(self)
+end
+
+local get_nominal_hook = Card.get_nominal
+function Card:get_nominal(mod)
+	local ret = get_nominal_hook(self, mod)
+	local mult = 1
+	if self.ability.effect == "Stone Card" or (self.config.center.no_suit and self.config.center.no_rank) then
+		mult = -10000
+	elseif self.config.center.no_suit then
+		mult = 0
+	end
+	if SMODS.has_enhancement(self, "m_mul_calling_card") then
+		ret = ret - self.base.suit_nominal * mult + 0.03 * mult
+	end
+	return ret
 end
 
 local draw_hook = love.draw

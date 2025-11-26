@@ -59,3 +59,14 @@ if _c.key == "mul_thaumaturgy_desc" then specific_vars = {G.GAME.mul_thaumaturgy
 '''
 match_indent = true
 times = 1
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '''            SMODS.calculate_context({end_of_round = true, game_over = game_over, beat_boss = G.GAME.blind.boss })'''
+position = "after"
+payload = '''
+SMODS.calculate_context({mul_philosophers_stone_check = true, game_over = game_over, beat_boss = G.GAME.blind.boss })
+'''
+match_indent = true
+times = 1

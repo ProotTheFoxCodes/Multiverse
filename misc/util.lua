@@ -280,10 +280,14 @@ function Multiverse.check_active_particles(card, state)
 	end
 end
 
+function Multiverse.can_become_transmutable(card)
+	return not (type(card.ability.extra) ~= table or not card.ability.extra.transmute_req)
+end
+
 ---Will now safely return and do nothing if the card cannot become transmutable
 ---@param card Card
 function Multiverse.transmute_check(card)
-	if type(card.ability.extra) ~= table or not card.ability.extra.transmute_req then return end
+	if not Multiverse.can_become_transmutable(card) then return end
 	local progress = (
 		type(card.ability.extra.transmute_progress) == "table" and card.ability.extra.transmute_progress.n
 	) or card.ability.extra.transmute_progress
@@ -328,4 +332,73 @@ function Multiverse.apply_to_hand(func)
 			func(p)
 		end
 	end
+end
+
+function Multiverse.check_philosophers_stone()
+	if G.GAME.mul_thaumaturgy_energy >= 100 then
+		if #G.consumeables.cards < G.consumeables.config.card_limit then
+			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { from_magnum_opus = true })
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					SMODS.add_card({
+						key = "c_mul_philosophers_stone",
+						key_append = "mul_thaumaturgy_charge",
+					})
+					return true
+				end,
+			}))
+		else
+			delay(2.2 * G.SPEEDFACTOR)
+			attention_text({
+				scale = 1.4,
+				text = localize("k_no_room_ex"),
+				hold = 2 * G.SPEEDFACTOR,
+				align = "cm",
+				offset = { x = 0, y = -1.7 },
+				major = G.play,
+			})
+			attention_text({
+				scale = 0.7,
+				text = localize("k_mul_make_room"),
+				hold = 2 * G.SPEEDFACTOR,
+				align = "cm",
+				offset = { x = 0, y = -0.5 },
+				major = G.play,
+			})
+			attention_text({
+				scale = 0.7,
+				text = localize("k_mul_make_room2"),
+				hold = 2 * G.SPEEDFACTOR,
+				align = "cm",
+				offset = { x = 0, y = 0.3 },
+				major = G.play,
+			})
+		end
+	end
+end
+
+---@param card Card
+function Multiverse.handle_debuffs(card)
+	if Multiverse.is_kryptonite_debuffed(card) then
+		return {
+			debuff = true,
+		}
+	end
+	if Multiverse.is_stand_arrow_debuffed(card) then
+		return {
+			debuff = true,
+		}
+	end
+end
+
+---@param card Card
+function Multiverse.is_kryptonite_debuffed(card)
+	return card.area == G.jokers and G.GAME.mul_kryptonite_active and card:is_rarity(3)
+end
+
+---@param card Card
+function Multiverse.is_stand_arrow_debuffed(card)
+	return card.playing_card
+		and G.GAME.mul_stand_arrow_active
+		and card:is_suit(G.GAME.current_round.mul_stand_arrow_suit, true)
 end

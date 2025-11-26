@@ -76,7 +76,8 @@ return {
                 name = "Hyperdimensional",
                 text = {
                     "{C:attention}+#1#{} card area slot",
-                    
+                    "Gain {C:attention}#2#%{} TP and{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#3#{} Thaumaturgy",
+                    "Energy at end of round"
                 }
             },
         },
@@ -744,7 +745,7 @@ return {
                     "Can use {C:attention}Philosopher's Stone{}",
                     "on this card to create",
                     "{C:mul_transmuted,E:1}Transmuted{} Jokers",
-                    "{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} at end of round",
+                    "Gain {s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} at end of round",
                 }
             },
             mul_traitorous = {
@@ -811,9 +812,8 @@ return {
                 text = {
                     "If total score of played",
                     "hand does not exceed current",
-                    "blind size, {C:attention}TP{} increases by",
-                    "a random amount from {C:attention}#1#%{} to {C:attention}#2#%{}",
-                    "{C:inactive}({C:attention}TP{C:inactive} is capped at 100%){}"
+                    "blind size, gain {C:attention}#1#-#2#%{} TP",
+                    "{C:inactive}(TP is capped at 100%){}"
                 }
             },
             mul_limbo_inst = {
@@ -991,6 +991,7 @@ return {
         },
         v_dictionary = {
             a_mul_thaumaturgy_energy = "+#1# Energy",
+            a_mul_TP = "+#1# TP",
             a_mul_limbo_popup = "F O C U S (X#1# Blind size on failure)",
         }
     }

@@ -1,7 +1,7 @@
 function Multiverse.show_blind_instructions(key)
 	G.mul_INSTRUCTIONS_HUD = UIBox({
 		definition = Multiverse.blind_instructions_HUD_def(key),
-		config = { align = "cri", offset = { x = 5.3, y = 0.25 }, major = G.ROOM_ATTACH },
+		config = { align = "cri", offset = { x = 5.3, y = 0.5 }, major = G.ROOM_ATTACH },
 	})
 	ease_value(G.mul_INSTRUCTIONS_HUD.config.offset, "x", -4, nil, nil, true, 0.6, "quad")
 	G.mul_INSTRUCTIONS_HUD:recalculate()

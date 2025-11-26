@@ -42,68 +42,22 @@ SMODS.ObjectType({
 
 SMODS.draw_ignore_keys.mul_draw_use_buttons = true
 
-function Multiverse.check_philosophers_stone()
-	if G.GAME.mul_thaumaturgy_energy >= 100 then
-		if #G.consumeables.cards < G.consumeables.config.card_limit then
-			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { from_magnum_opus = true })
-			G.E_MANAGER:add_event(Event({
-				func = function()
-					SMODS.add_card({
-						key = "c_mul_philosophers_stone",
-						key_append = "mul_thaumaturgy_charge",
-					})
-					return true
-				end,
-			}))
-		else
-			delay(2.2 * G.SPEEDFACTOR)
-			attention_text({
-				scale = 1.4,
-				text = localize("k_no_room_ex"),
-				hold = 2 * G.SPEEDFACTOR,
-				align = "cm",
-				offset = { x = 0, y = -1.7 },
-				major = G.play,
-			})
-			attention_text({
-				scale = 0.7,
-				text = localize("k_mul_make_room"),
-				hold = 2 * G.SPEEDFACTOR,
-				align = "cm",
-				offset = { x = 0, y = -0.5 },
-				major = G.play,
-			})
-			attention_text({
-				scale = 0.7,
-				text = localize("k_mul_make_room2"),
-				hold = 2 * G.SPEEDFACTOR,
-				align = "cm",
-				offset = { x = 0, y = 0.3 },
-				major = G.play,
-			})
-		end
-	end
-end
-
-function Multiverse.handle_debuffs(card)
-	if Multiverse.is_kryptonite_debuffed(card) then
-			return {
-				debuff = true,
-			}
-		end
-		if Multiverse.is_stand_arrow_debuffed(card) then
-			return {
-				debuff = true,
-			}
-		end
-end
-
 SMODS.current_mod.calculate = function(self, context)
 	if context.end_of_round and not context.game_over and context.main_eval then
+		Multiverse.ease_thaumaturgy_energy(G.GAME.mul_thaumaturgy_energy_rate, { from_charge = true })
+	end
+	if context.mul_philosophers_stone_check and not context.game_over and context.main_eval then
+		print("hi")
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				Multiverse.check_philosophers_stone()
+				return true
+			end
+		}))
+	end
+	if context.starting_shop then
 		Multiverse.hide_blind_instructions()
 		Multiverse.hide_TP_meter()
-		Multiverse.ease_thaumaturgy_energy(G.GAME.mul_thaumaturgy_energy_rate, { from_charge = true })
-		Multiverse.check_philosophers_stone()
 	end
 	if context.debuff_card then
 		return Multiverse.handle_debuffs(context.debuff_card)
@@ -111,20 +65,16 @@ SMODS.current_mod.calculate = function(self, context)
 	if context.setting_blind then
 		Multiverse.show_TP_meter()
 	end
-	if context.after and not SMODS.last_hand_oneshot then
-		Multiverse.ease_TP(pseudorandom("mul_TP_gen", G.GAME.mul_TP_min_gain, G.GAME.mul_TP_max_gain))
+	if context.after then
+		if SMODS.last_hand_oneshot then
+			if next(SMODS.find_card("j_mul_ren_amamiya")) then
+				-- Hold off on this until some dedicated artist gets this animation done
+				-- Multiverse.start_animation("ren_cut_in")
+			end
+		else
+			Multiverse.ease_TP(pseudorandom("mul_TP_gen", G.GAME.mul_TP_min_gain, G.GAME.mul_TP_max_gain))
+		end
 	end
-end
-
-function Multiverse.is_kryptonite_debuffed(card)
-	return card.area == G.jokers and G.GAME.mul_kryptonite_active and card:is_rarity(3)
-end
-
----@param card Card
-function Multiverse.is_stand_arrow_debuffed(card)
-	return card.playing_card
-		and G.GAME.mul_stand_arrow_active
-		and card:is_suit(G.GAME.current_round.mul_stand_arrow_suit, true)
 end
 
 local function set_foddian_suit()
@@ -166,12 +116,7 @@ function Multiverse.recursive_load(path)
 	for _, item in ipairs(files) do
 		if string.sub(item, -4) == ".lua" then
 			print("Multiverse: Loading " .. item:gsub("%d+_", ""))
-			local f, err = SMODS.load_file(path .. "/" .. item)
-			if err then
-				error(err)
-			elseif f then
-				f()
-			end
+			assert(SMODS.load_file(path .. "/" .. item), string.format("File %s failed to load", path))()
 		elseif path:find("%.") == nil then
 			Multiverse.recursive_load(path .. "/" .. item)
 		end
