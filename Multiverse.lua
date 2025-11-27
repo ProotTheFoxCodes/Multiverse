@@ -128,9 +128,11 @@ Multiverse.recursive_load("mod")
 
 Multiverse.debug = false
 local debug, err = SMODS.load_file("debug.lua")
-if debug and Multiverse.config.debug then
-	debug()
+if debug then
 	Multiverse.debug = true
+	if Multiverse.config.debug then
+		debug()
+	end
 end
 
 Multiverse.debug_info = { ["Debug Mode"] = (Multiverse.debug and "Enabled" or "Disabled") }
