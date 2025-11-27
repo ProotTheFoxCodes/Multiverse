@@ -14,8 +14,19 @@ SMODS.Edition({
 		},
 	},
 	extra_cost = 6,
-	weight = 3,
+	weight = 4,
 	in_shop = true,
+	in_pool = function(self, args)
+		if args.source == "sta" then return false end
+		if G.jokers then
+			for _, j in ipairs(G.jokers.cards) do
+				if j:is_rarity("mul_transmuted") or j.ability.mul_transmutable then
+					return true
+				end
+			end
+		end
+		return false
+	end,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.edition.card_limit, card.edition.extra.tp, card.edition.extra.thaum_energy } }
 	end,
