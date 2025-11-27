@@ -40,7 +40,7 @@ SMODS.ObjectType({
 	default = "j_joker",
 })
 
-SMODS.draw_ignore_keys.mul_draw_use_buttons = true
+SMODS.draw_ignore_keys.mul_joker_use_button = true
 
 SMODS.current_mod.calculate = function(self, context)
 	if context.end_of_round and not context.game_over and context.main_eval then
@@ -128,7 +128,7 @@ Multiverse.recursive_load("mod")
 
 Multiverse.debug = false
 local debug, err = SMODS.load_file("debug.lua")
-if debug then
+if debug and Multiverse.config.debug then
 	debug()
 	Multiverse.debug = true
 end

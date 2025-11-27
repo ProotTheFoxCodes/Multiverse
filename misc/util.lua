@@ -287,7 +287,9 @@ end
 ---Will now safely return and do nothing if the card cannot become transmutable
 ---@param card Card
 function Multiverse.transmute_check(card)
-	if not Multiverse.can_become_transmutable(card) then return end
+	if not Multiverse.can_become_transmutable(card) then
+		return
+	end
 	local progress = (
 		type(card.ability.extra.transmute_progress) == "table" and card.ability.extra.transmute_progress.n
 	) or card.ability.extra.transmute_progress

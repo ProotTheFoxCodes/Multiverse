@@ -11,6 +11,16 @@ SMODS.DrawStep({
 })
 
 SMODS.DrawStep({
+	key = "joker_use",
+	order = -30,
+	func = function(card, layer)
+		if card.children.mul_joker_use_button and card.highlighted then
+			card.children.mul_joker_use_button:draw()
+		end
+	end
+})
+
+SMODS.DrawStep({
 	key = "transmutable_sticker",
 	order = 96,
 	func = function(card, layer)

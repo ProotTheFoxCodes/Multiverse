@@ -268,7 +268,7 @@ function Multiverse.config_tab_definition()
 			},
 		},
 	}
-	local mul_nodes = Multiverse.create_localized_rows(nil, "mul_config_menu_title", 1.5)
+	local mul_nodes = Multiverse.create_localized_rows(nil, "mul_config_menu_title", { text_scale = 1.5 })
 	mul_nodes[#mul_nodes + 1] = {
 		n = G.UIT.R,
 		config = { align = "cm" },
@@ -280,7 +280,7 @@ function Multiverse.config_tab_definition()
 			},
 		},
 	}
-	local rows = Multiverse.create_localized_rows(nil, "mul_config_menu_text", 1.25)
+	local rows = Multiverse.create_localized_rows(nil, "mul_config_menu_text", { text_scale = 1.25 })
 	for _, r in ipairs(rows) do
 		mul_nodes[#mul_nodes + 1] = r
 	end
@@ -363,7 +363,7 @@ function Multiverse.display_songs(page)
 end
 
 function Multiverse.music_tab_definition(page)
-	local mul_nodes = Multiverse.create_localized_rows(nil, "mul_music_menu_text", 1.5)
+	local mul_nodes = Multiverse.create_localized_rows(nil, "mul_music_menu_text", { text_scale = 1.5 })
 	table.insert(mul_nodes, Multiverse.display_songs(page))
 	local pages = {}
 	for i, _ in ipairs(Multiverse.music_credits) do
@@ -494,10 +494,16 @@ function Multiverse.blind_instructions_HUD_def(key)
 	}
 end
 
-function Multiverse.create_localized_rows(set, key, text_scale, bg_colour)
-	bg_colour = bg_colour or G.C.WHITE
+---Creates a fancy UI that displays text from a loc table
+---@param set string
+---@param key string
+---@param args? {bg_colour: ColorHex?, text_scale: number?, loc_vars: table?}
+---@return table
+function Multiverse.create_localized_rows(set, key, args)
+	args = args or {}
+	args.bg_colour = args.bg_colour or G.C.WHITE
 	local loc_entry
-	text_scale = text_scale or 1
+	args.text_scale = args.text_scale or 1
 	if set then
 		loc_entry = G.localization.descriptions[set][key]
 	else
@@ -523,12 +529,12 @@ function Multiverse.create_localized_rows(set, key, text_scale, bg_colour)
 			table.insert(text_rows, {
 				n = G.UIT.R,
 				config = { align = "cm" },
-				nodes = SMODS.localize_box(line, { scale = 0.9 * text_scale }),
+				nodes = SMODS.localize_box(line, { scale = 0.9 * args.text_scale, vars = args.loc_vars }),
 			})
 		end
 		table.insert(rows, {
 			n = G.UIT.R,
-			config = { align = "cm", padding = 0.05, colour = bg_colour, r = 0.1, emboss = 0.05 },
+			config = { align = "cm", padding = 0.05, colour = args.bg_colour, r = 0.1, emboss = 0.05 },
 			nodes = {
 				{
 					n = G.UIT.C,
@@ -543,12 +549,12 @@ function Multiverse.create_localized_rows(set, key, text_scale, bg_colour)
 			table.insert(text_rows, {
 				n = G.UIT.R,
 				config = { align = "cm" },
-				nodes = SMODS.localize_box(loc_parse_string(line), { scale = 0.9 * text_scale }),
+				nodes = SMODS.localize_box(loc_parse_string(line), { scale = 0.9 * args.text_scale, vars = args.loc_vars }),
 			})
 		end
 		table.insert(rows, {
 			n = G.UIT.R,
-			config = { align = "cm", padding = 0.05, colour = bg_colour, r = 0.1, emboss = 0.05 },
+			config = { align = "cm", padding = 0.05, colour = args.bg_colour, r = 0.1, emboss = 0.05 },
 			nodes = {
 				{
 					n = G.UIT.C,

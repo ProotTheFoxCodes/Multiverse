@@ -78,3 +78,9 @@ SMODS.Atlas({
     py = 95,
     path = "3d_cavendish.png"
 })
+SMODS.Atlas({
+	key = "ability_placeholder",
+	px = 34,
+	py = 34,
+	path = "ability_placeholder.png"
+})
