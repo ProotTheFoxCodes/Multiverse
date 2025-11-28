@@ -756,6 +756,16 @@ return {
 					"{C:inactive}(Bypasses Eternal){}",
 				},
 			},
+            undiscovered_mul_myth = {
+				name = "Not Discovered",
+				text = {
+					"Purchase or use",
+					"this card in an",
+					"unseeded run to",
+					"learn what it does",
+				},
+			},
+            --#region Transmutation hints
 			mul_joker_hint = {
 				name = "Hint",
 				text = {
@@ -788,15 +798,8 @@ return {
 					"{C:inactive}(#1#/#2#){}",
 				},
 			},
-			undiscovered_mul_myth = {
-				name = "Not Discovered",
-				text = {
-					"Purchase or use",
-					"this card in an",
-					"unseeded run to",
-					"learn what it does",
-				},
-			},
+            --#endregion
+            --#region Mechanic descriptions
 			mul_thaumaturgy_desc = {
 				name = "Thaumaturgy Energy",
 				text = {
@@ -816,6 +819,21 @@ return {
 					"{C:inactive}(TP is capped at 100%){}",
 				},
 			},
+            mul_active_consumable = {
+				name = "Active Consumable",
+				text = {
+					"When used, this consumable will",
+					"{C:attention}remain{} in your consumable slots",
+					"and apply its {C:attention}active{} effects",
+					"If used while active, this",
+					"consumable is used like normal",
+					"and will {C:attention}stop{} applying its effects",
+					"{C:inactive}(Note that this card will receive{}",
+					"{C:inactive}Eternal while it is active){}",
+				},
+			},
+            --#endregion
+            --#region Blind instructions
 			mul_limbo_inst = {
 				name = "Instructions",
 				text = {
@@ -850,19 +868,7 @@ return {
 					"about halfway to the heart",
 				},
 			},
-			mul_active_consumable = {
-				name = "Active Consumable",
-				text = {
-					"When used, this consumable will",
-					"{C:attention}remain{} in your consumable slots",
-					"and apply its {C:attention}active{} effects",
-					"If used while active, this",
-					"consumable is used like normal",
-					"and will {C:attention}stop{} applying its effects",
-					"{C:inactive}(Note that this card cannot{}",
-					"{C:inactive}be sold while it is active){}",
-				},
-			},
+            --#endregion
 		},
 		Abilities = {},
 		Mod = {
