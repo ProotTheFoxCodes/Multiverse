@@ -242,10 +242,10 @@ function Card:mul_no_juice_materialize(dissolve_colours, silent, timefac)
 	}))
 end
 
----Animation for consumables
----@param card Card The consumable that is applying its effect
+---Animation for consumable-like effects
+---@param card Card The card that is applying its effect
 ---@param func fun(): nil The effect to apply
-function Multiverse.consumable_effect(card, func)
+function Multiverse.effect_animation(card, func)
 	G.E_MANAGER:add_event(Event({
 		trigger = "after",
 		delay = 0.4,

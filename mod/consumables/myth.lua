@@ -234,7 +234,7 @@ SMODS.Consumable({
 		-- the joker's key must be in Multiverse.transmutations
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			local j_key = G.jokers.highlighted[1].config.center.key
 			if Multiverse.transmutations[j_key].other.grail then
 				play_sound("timpani")
@@ -258,7 +258,7 @@ SMODS.Consumable({
 		return true
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("timpani")
 			Multiverse.ease_thaumaturgy_energy(
 				Multiverse.clamp(G.GAME.mul_thaumaturgy_energy, 0, card.ability.extra.max_thaum_energy),
@@ -286,7 +286,7 @@ SMODS.Consumable({
 		-- and you must have space for a Joker
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			local j_key = G.jokers.highlighted[1].config.center.key
 			if Multiverse.transmutations[j_key].other.tree_of_eden then
 				play_sound("timpani")
@@ -317,7 +317,7 @@ SMODS.Consumable({
 		return G.hand and #G.hand.cards > 0
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			local count = #G.hand.cards
 			SMODS.destroy_cards(G.hand.cards, nil, true)
 			play_sound("timpani")
@@ -337,7 +337,7 @@ SMODS.Consumable({
 		return G.jokers and G.jokers.config.card_limit > #G.jokers.cards
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("timpani")
 			SMODS.add_card({ rarity = "Rare", set = "Joker", key_append = "mul_one_ring" })
 			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { immediate = true })
@@ -356,7 +356,7 @@ SMODS.Consumable({
 		return G.jokers and G.jokers.config.card_limit > #G.jokers.cards
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("timpani")
 			SMODS.add_card({ set = "mul_can_transmute", key_append = "mul_one_ring" })
 		end)
@@ -377,7 +377,7 @@ SMODS.Consumable({
 			and G.jokers.highlighted[1].ability.extra.transmute_req >= 4
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			local target = G.jokers.highlighted[1]
 			play_sound("timpani")
 			if type(target.ability.extra.transmute_progress) == "table" then
@@ -412,7 +412,7 @@ SMODS.Consumable({
 		return G.jokers and #G.jokers.cards >= 1
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			for _, j in ipairs(G.jokers.cards) do
 				j:flip()
 			end
@@ -445,7 +445,7 @@ SMODS.Consumable({
 			and G.jokers.highlighted[1].ability.extra.transmute_req
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			local target = G.jokers.highlighted[1]
 			if type(target.ability.extra.transmute_progress) == "table" then
 				target.ability.extra.transmute_progress.n = target.ability.extra.transmute_req - 1
@@ -485,7 +485,7 @@ SMODS.Consumable({
 		return true
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			local total = 0
 			if G.jokers then
 				for _, j in ipairs(G.jokers.cards) do
@@ -520,7 +520,7 @@ SMODS.Consumable({
 			and G.jokers.highlighted[1].ability.extra.transmute_req
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			SMODS.destroy_cards(G.jokers.highlighted[1], nil, true)
 			play_sound("timpani")
 			Multiverse.ease_thaumaturgy_energy(card.ability.extra.thaum_energy, { immediate = true })
@@ -551,7 +551,7 @@ SMODS.Consumable({
 		return true
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			if card.ability.extra.is_active then
@@ -586,7 +586,7 @@ SMODS.Consumable({
 			and G.GAME.mul_thaumaturgy_energy >= card.ability.extra.min_energy
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("timpani")
 			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { immediate = true })
 			local target = G.jokers.highlighted[1]
@@ -626,7 +626,7 @@ SMODS.Consumable({
 		return card.ability.extra.is_active or (G.STATE == G.STATES.SHOP and to_big(G.GAME.shop.joker_max) > to_big(1))
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			if card.ability.extra.is_active then
@@ -673,7 +673,7 @@ SMODS.Consumable({
 		return card.ability.extra.is_active or not G.GAME.mul_stand_arrow_active
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			G.GAME.mul_stand_arrow_active = card.ability.extra.is_active
@@ -728,7 +728,7 @@ SMODS.Consumable({
 			and G.GAME.mul_thaumaturgy_energy >= card.ability.extra.thaum_energy_cost
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			G.jokers.highlighted[1]:set_edition("e_polychrome", true)
 			Multiverse.ease_thaumaturgy_energy(-card.ability.extra.thaum_energy_cost, { immediate = true })
 		end)
@@ -758,7 +758,7 @@ SMODS.Consumable({
 		return card.ability.extra.is_active or not G.GAME.mul_elder_scroll_active
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			G.GAME.mul_elder_scroll_active = card.ability.extra.is_active
@@ -807,7 +807,7 @@ SMODS.Consumable({
 		return G.jokers and #G.jokers.highlighted == 1 and #Multiverse.get_stickers(G.jokers.highlighted[1]) >= 1
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			local target = G.jokers.highlighted[1]
 			play_sound("timpani")
 			Multiverse.ease_thaumaturgy_energy(
@@ -837,7 +837,7 @@ SMODS.Consumable({
 		return true
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("tarot1")
 			G.GAME.mul_unicorn_protections = G.GAME.mul_unicorn_protections + 1
 		end)
@@ -867,7 +867,7 @@ SMODS.Consumable({
 		return card.ability.extra.is_active or not G.GAME.mul_kryptonite_active
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			G.GAME.mul_kryptonite_active = card.ability.extra.is_active
@@ -918,7 +918,7 @@ SMODS.Consumable({
 			and G.jokers.highlighted[1].ability.extra.transmute_req >= 2
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("timpani")
 			local target = G.jokers.highlighted[1]
 			if type(target.ability.extra.transmute_progress) == "table" then
@@ -974,7 +974,7 @@ SMODS.Consumable({
 		return not card.ability.extra.is_active or (G.GAME.round_resets.hands > 3 and G.GAME.round_resets.discards > 2)
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			if card.ability.extra.is_active then
@@ -1025,7 +1025,7 @@ SMODS.Consumable({
 		return not card.ability.extra.is_active or G.jokers.config.card_limit > 0
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			if card.ability.extra.is_active then
@@ -1064,7 +1064,7 @@ SMODS.Consumable({
 		return card.ability.extra.is_active or not G.GAME.mul_time_machine_active
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			G.GAME.mul_time_machine_active = card.ability.extra.is_active
@@ -1114,7 +1114,7 @@ SMODS.Consumable({
 		return G.GAME.mul_thaumaturgy_energy > 0
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			play_sound("timpani")
 			total = math.floor(G.GAME.mul_thaumaturgy_energy / card.ability.extra.conversion_rate)
 			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { immediate = true })
@@ -1169,7 +1169,7 @@ SMODS.Consumable({
 			and G.GAME.mul_last_myth_used ~= "c_mul_journal"
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			if G.consumeables.config.card_limit > #G.consumeables.cards then
 				play_sound("timpani")
 				SMODS.add_card({ key = G.GAME.mul_last_myth_used })

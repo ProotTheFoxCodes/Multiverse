@@ -122,7 +122,7 @@ SMODS.Joker({
 	end,
 })
 
-SMODS.Joker({
+Multiverse.UsableJoker({
 	key = "steve",
 	atlas = "placeholder",
 	pos = { x = 4, y = 0 },
@@ -131,9 +131,16 @@ SMODS.Joker({
 	cost = 40,
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, G.P_CENTERS.m_mul_netherite)
+		table.insert(info_queue, {
+			set = "Other",
+			key = "j_mul_steve_ability",
+			vars = {
+				card.ability.extra.tp_cost,
+			},
+		})
 		return { vars = { card.ability.extra.size_inc } }
 	end,
-	config = { extra = { size_inc = 5 } },
+	config = { extra = { size_inc = 5, tp_cost = 20 } },
 	add_to_deck = function(self, card, from_debuff)
 		G.hand:change_size(card.ability.extra.size_inc)
 	end,
@@ -148,6 +155,25 @@ SMODS.Joker({
 				end
 			end
 		end
+	end,
+	use_ability = function(self, card)
+		local cards_to_create = #G.hand.highlighted
+		Multiverse.effect_animation(card, function()
+			Multiverse.ease_TP(-card.ability.extra.tp_cost, { instant = true })
+			SMODS.destroy_cards(G.hand.highlighted)
+			for i = 1, cards_to_create do
+				SMODS.add_card({
+					set = "Enhanced",
+					key = "m_mul_netherite",
+					edition = SMODS.poll_edition({ no_negative = true, guaranteed = true, key = "mul_steve" }),
+					seal = SMODS.poll_seal({ guaranteed = true, key = "mul_steve" }),
+					area = G.hand,
+				})
+			end
+		end)
+	end,
+	can_use_ability = function(self, card)
+		return G.hand and #G.hand.highlighted > 0 and G.GAME.mul_TP >= card.ability.extra.tp_cost
 	end,
 })
 

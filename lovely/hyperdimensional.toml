@@ -1,0 +1,17 @@
+[manifest]
+version = "0.0.9"
+priority = 0
+dump_lua = true
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS _ "src/overrides.lua"]'''
+pattern = '''
+			if not (v.name == 'e_negative' and _no_neg) then -- skip return if negative is selected and _no_neg is true
+'''
+position = "at"
+payload = '''
+			if not ((v.name == 'e_negative' or v.name == 'e_mul_hyperdimensional') and _no_neg) then -- skip return if negative is selected and _no_neg is true
+'''
+match_indent = true
+times = 1

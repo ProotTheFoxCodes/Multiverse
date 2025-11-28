@@ -23,16 +23,6 @@ Multiverse.joker_use_ui_def = function(card)
 	} })
 	ability_sprite.tilt_var = { mx = 0, my = 0, dx = 0, dy = 0, amt = 0 }
 	ability_sprite.states.collide.can = true
-	function ability_sprite:update(dt)
-		Node.update(self, dt)
-		local locked = (G.play and #G.play.cards > 0)
-			or G.CONTROLLER.locked
-			or (G.GAME.STOP_USE and G.GAME.STOP_USE > 0)
-				and not (G.STATE ~= G.STATES.HAND_PLAYED and G.STATE ~= G.STATES.DRAW_TO_HAND and G.STATE ~= G.STATES.PLAY_TAROT)
-		if locked or not obj:can_use_ability(card) then
-			self:draw_shader("debuff", nil, card.ARGS.send_to_shader)
-		end
-	end
 	function ability_sprite:hover()
 		self:juice_up(0.1, 0.1)
 		Node.hover(self)
@@ -56,6 +46,14 @@ Multiverse.joker_use_ui_def = function(card)
 			}))
 		end
 	end
+	local col = G.C.UI.BACKGROUND_INACTIVE
+	local locked = (G.play and #G.play.cards > 0)
+		or G.CONTROLLER.locked
+		or (G.GAME.STOP_USE and G.GAME.STOP_USE > 0)
+			and not (G.STATE ~= G.STATES.HAND_PLAYED and G.STATE ~= G.STATES.DRAW_TO_HAND and G.STATE ~= G.STATES.PLAY_TAROT)
+	if obj:can_use_ability(card) and not locked then
+		col = G.C.GREEN
+	end
 	return {
 		n = G.UIT.ROOT,
 		config = { colour = G.C.CLEAR, align = "cm" },
@@ -68,11 +66,13 @@ Multiverse.joker_use_ui_def = function(card)
 					padding = 0.1,
 					hover = true,
 					shadow = true,
-					colour = G.C.GREEN,
-                    minw = 1.63
+					colour = col,
+					minw = 1.63,
+					func = "mul_check_usable",
+					ref_table = card,
 				},
 				nodes = {
-                    {
+					{
 						n = G.UIT.R,
 						config = { align = "cm" },
 						nodes = {
@@ -119,6 +119,20 @@ Multiverse.joker_use_ui_def = function(card)
 	}
 end
 
+function G.FUNCS.mul_check_usable(e)
+	local card = e.config.ref_table
+	local obj = card.config.center
+	local locked = (G.play and #G.play.cards > 0)
+		or G.CONTROLLER.locked
+		or (G.GAME.STOP_USE and G.GAME.STOP_USE > 0)
+			and not (G.STATE ~= G.STATES.HAND_PLAYED and G.STATE ~= G.STATES.DRAW_TO_HAND and G.STATE ~= G.STATES.PLAY_TAROT)
+	if obj:can_use_ability(card) and not locked then
+		e.config.colour = G.C.GREEN
+	else
+		e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+	end
+end
+
 local highlight_hook = Card.highlight
 function Card:highlight(is_highlighted)
 	highlight_hook(self, is_highlighted)
@@ -134,6 +148,7 @@ function Card:highlight(is_highlighted)
 		and type(obj.highlight_ui) == "function"
 		and self.ability.set == "Joker"
 	then
+		---@type UIBox
 		self.children.mul_joker_use_button = obj:highlight_ui(self)
 	end
 end

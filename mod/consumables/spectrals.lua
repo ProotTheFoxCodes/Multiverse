@@ -24,7 +24,7 @@ SMODS.Consumable({
 		return G.hand and #G.hand.highlighted == 1 and G.jokers and #G.jokers.cards > 0
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			local cards_to_destroy = {}
 			for _, playing_card in ipairs(G.hand.cards) do
 				if not playing_card.highlighted then
@@ -60,7 +60,7 @@ SMODS.Consumable({
 		return G.jokers and #G.jokers.cards >= 1
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			local target = pseudorandom_element(G.jokers.cards, "mul_backstab")
 			local copied_joker = copy_card(target, nil, nil, nil, true)
 			copied_joker:add_sticker("mul_traitorous", true)
@@ -94,7 +94,7 @@ SMODS.Consumable({
 		return G.jokers and #G.jokers.cards > 0
 	end,
 	use = function(self, card, area, copier)
-		Multiverse.consumable_effect(card, function()
+		Multiverse.effect_animation(card, function()
 			local total = 0
 			for _, j in ipairs(G.jokers.cards) do
 				total = total + j.sell_cost

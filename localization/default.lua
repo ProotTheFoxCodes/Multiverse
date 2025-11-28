@@ -765,6 +765,19 @@ return {
 					"learn what it does",
 				},
 			},
+            --#region Activated ability descriptions
+            j_mul_steve_ability = {
+                name = "Crafting",
+                text = {
+                    "Cost: {C:attention}#1#{} TP",
+                    "Effect: Destroy any number",
+                    "of selected cards, then",
+                    "create an equal number",
+                    "of {C:attention}Netherite Cards{} with",
+                    "a random {C:attention}Seal{} and {C:attention}Edition{}",
+                }
+            },
+            --#endregion
             --#region Transmutation hints
 			mul_joker_hint = {
 				name = "Hint",
