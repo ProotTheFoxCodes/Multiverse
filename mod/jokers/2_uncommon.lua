@@ -24,7 +24,7 @@ SMODS.Joker({
 	key = "magic_school_bus",
 	atlas = "placeholder",
 	pos = { x = 1, y = 0 },
-	config = { extra = { mult = 0, mult_gain = 1 } },
+	config = { extra = { mult = 0, mult_inc = 1 } },
 	rarity = 2,
 	blueprint_compat = true,
 	perishable_compat = false,
@@ -32,7 +32,7 @@ SMODS.Joker({
 	loc_vars = function(self, info_queue, card)
 		return {
 			vars = {
-				card.ability.extra.mult_gain,
+				card.ability.extra.mult_inc,
 				card.ability.extra.mult,
 			},
 		}
@@ -47,7 +47,7 @@ SMODS.Joker({
 							SMODS.scale_card(card, {
 								ref_table = card.ability.extra,
 								ref_value = "mult",
-								scalar_value = "mult_gain",
+								scalar_value = "mult_inc",
 							})
 							SMODS.calculate_effect({
 								message = localize("k_upgrade_ex"),

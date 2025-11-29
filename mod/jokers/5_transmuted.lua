@@ -150,7 +150,7 @@ Multiverse.UsableJoker({
 	calculate = function(self, card, context)
 		if not context.blueprint and context.before then
 			for _, c in ipairs(G.hand.cards) do
-				if next(SMODS.get_enhancements(card)) then
+				if next(SMODS.get_enhancements(c)) and not SMODS.has_enhancement(c, "m_mul_netherite") then
 					c:set_ability("m_mul_netherite")
 				end
 			end

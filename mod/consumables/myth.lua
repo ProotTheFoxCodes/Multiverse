@@ -29,7 +29,7 @@ Multiverse.transmutations = {
 			tree_of_eden = { "j_cartomancer", "j_hallucination", "j_vagabond" },
 		},
 	},
-	["j_mul_villager"] = {
+	["j_mul_dragon"] = {
 		key = "j_mul_steve",
 		other = {
 			grail = function()
@@ -137,15 +137,20 @@ SMODS.Consumable({
 		end
 		G.jokers:unhighlight_all()
 		local transmute_key = Multiverse.transmutations[joker_to_transmute.config.center.key].key
-		G.E_MANAGER:add_event(Event({
-			trigger = "after",
-			delay = 0.4,
-			func = function()
-				play_sound("timpani")
-				Multiverse.ease_thaumaturgy_energy(count * card.ability.extra.energy_per_joker, { immediate = true })
-				return true
-			end,
-		}))
+		if count > 0 then
+			G.E_MANAGER:add_event(Event({
+				trigger = "after",
+				delay = 0.4,
+				func = function()
+					play_sound("timpani")
+					Multiverse.ease_thaumaturgy_energy(
+						count * card.ability.extra.energy_per_joker,
+						{ immediate = true }
+					)
+					return true
+				end,
+			}))
+		end
 		G.E_MANAGER:add_event(Event({
 			trigger = "after",
 			delay = 0.15,

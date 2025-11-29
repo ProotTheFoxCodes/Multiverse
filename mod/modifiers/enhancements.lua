@@ -28,7 +28,7 @@ SMODS.Enhancement({
 	key = "netherite",
 	atlas = "placeholder_modifiers",
 	pos = { x = 0, y = 0 },
-	config = { h_dollars = 5, extra = { xmult = 0.05 } },
+	config = { h_dollars = 5, extra = { xmult = 0.01 } },
 	weight = 0,
 	loc_vars = function(self, info_queue, card)
 		local total = 0

@@ -280,14 +280,14 @@ function Multiverse.check_active_particles(card, state)
 	end
 end
 
-function Multiverse.can_become_transmutable(card)
-	return not (type(card.ability.extra) ~= table or not card.ability.extra.transmute_req)
+function Multiverse.can_receive_transmutable(card)
+	return not (type(card.ability.extra) ~= table and not card.ability.extra.transmute_req)
 end
 
 ---Will now safely return and do nothing if the card cannot become transmutable
 ---@param card Card
 function Multiverse.transmute_check(card)
-	if not Multiverse.can_become_transmutable(card) then
+	if not Multiverse.can_receive_transmutable(card) then
 		return
 	end
 	local progress = (

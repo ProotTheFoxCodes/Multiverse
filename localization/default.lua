@@ -351,7 +351,8 @@ return {
 						"scored on {C:attention}last hand{} of round",
 					},
 					{
-						"{C:inactive,s:0.8}I hate the Michigun ufo part",
+						"{C:inactive,s:0.8}The Michigun UFO part",
+						"{C:inactive,s:0.8}gives me nightmares",
 					},
 				},
 			},
@@ -364,18 +365,6 @@ return {
 					},
 					{
 						"{C:inactive,s:0.8}That first wave part is so stupid",
-					},
-				},
-			},
-			j_mul_aftermath = {
-				name = "Aftermath",
-				text = {
-					{
-						"All cards give {C:chips}+#1#{} Chips when",
-						"scored on {C:attention}last hand{} of round",
-					},
-					{
-						"{C:inactive,s:0.8}Who even remembers this level?",
 					},
 				},
 			},
@@ -652,6 +641,21 @@ return {
 					},
 				},
 			},
+			j_mul_dragon = {
+				name = "Dragon",
+				text = {
+					{
+						"Destroy all discarded",
+						"{C:attention}Kings{} and gain {X:mult,C:white}X#1#{} per",
+						"{C:attention}King{} discarded",
+						"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}"
+					},
+					{
+						"{C:inactive,s:0.8}Currently in a romantic",
+						"{C:inactive,s:0.8}relationship with a donkey"
+					},
+				},
+			},
 		},
 		Spectral = {
 			c_mul_eternity = {
@@ -756,7 +760,7 @@ return {
 					"{C:inactive}(Bypasses Eternal){}",
 				},
 			},
-            undiscovered_mul_myth = {
+			undiscovered_mul_myth = {
 				name = "Not Discovered",
 				text = {
 					"Purchase or use",
@@ -765,20 +769,20 @@ return {
 					"learn what it does",
 				},
 			},
-            --#region Activated ability descriptions
-            j_mul_steve_ability = {
-                name = "Crafting",
-                text = {
-                    "Cost: {C:attention}#1#{} TP",
-                    "Effect: Destroy any number",
-                    "of selected cards, then",
-                    "create an equal number",
-                    "of {C:attention}Netherite Cards{} with",
-                    "a random {C:attention}Seal{} and {C:attention}Edition{}",
-                }
-            },
-            --#endregion
-            --#region Transmutation hints
+			--#region Activated ability descriptions
+			j_mul_steve_ability = {
+				name = "Crafting",
+				text = {
+					"Cost: {C:attention}#1#{} TP",
+					"Effect: Destroy any number",
+					"of selected cards, then",
+					"create an equal number",
+					"of {C:attention}Netherite Cards{} with",
+					"a random {C:attention}Seal{} and {C:attention}Edition{}",
+				},
+			},
+			--#endregion
+			--#region Transmutation hints
 			mul_joker_hint = {
 				name = "Hint",
 				text = {
@@ -787,7 +791,7 @@ return {
 					"{C:inactive}(#1#/#2#){}",
 				},
 			},
-			mul_villager_hint = {
+			mul_dragon_hint = {
 				name = "Hint",
 				text = {
 					"Obtain {C:attention}#2#{} {C:attention}Gold{},",
@@ -811,8 +815,8 @@ return {
 					"{C:inactive}(#1#/#2#){}",
 				},
 			},
-            --#endregion
-            --#region Mechanic descriptions
+			--#endregion
+			--#region Mechanic descriptions
 			mul_thaumaturgy_desc = {
 				name = "Thaumaturgy Energy",
 				text = {
@@ -832,7 +836,7 @@ return {
 					"{C:inactive}(TP is capped at 100%){}",
 				},
 			},
-            mul_active_consumable = {
+			mul_active_consumable = {
 				name = "Active Consumable",
 				text = {
 					"When used, this consumable will",
@@ -845,8 +849,8 @@ return {
 					"{C:inactive}Eternal while it is active){}",
 				},
 			},
-            --#endregion
-            --#region Blind instructions
+			--#endregion
+			--#region Blind instructions
 			mul_limbo_inst = {
 				name = "Instructions",
 				text = {
@@ -881,7 +885,7 @@ return {
 					"about halfway to the heart",
 				},
 			},
-            --#endregion
+			--#endregion
 		},
 		Abilities = {},
 		Mod = {
@@ -949,8 +953,8 @@ return {
 			k_mul_make_room2 = "in order to create a Philosopher's Stone...",
 			k_mul_TP = "TP",
 			k_mul_myth = "Myth",
-            k_mul_activate = "Activate",
-            k_mul_ability = "Ability",
+			k_mul_activate = "Activate",
+			k_mul_ability = "Ability",
 			b_mul_myth_cards = "Myth Cards",
 			b_mul_discord_server = "My Discord Server",
 			b_mul_landing_page = "About Me",

@@ -109,3 +109,75 @@ SMODS.Joker({
 		end
 	end,
 })
+
+SMODS.Joker({
+	key = "dragon",
+	atlas = "placeholder",
+	pos = { x = 2, y = 0 },
+	config = {
+		extra = {
+			xmult = 1,
+			xmult_inc = 0.5,
+			transmute_progress = 0,
+			transmute_req = Multiverse.set_transmute_requirements(25),
+		},
+	},
+	rarity = 3,
+	cost = 8,
+	blueprint_compat = true,
+	loc_vars = function(self, info_queue, card)
+		table.insert(info_queue, {
+			set = "Other",
+			key = "mul_dragon_hint",
+			vars = {
+				card.ability.extra.transmute_progress,
+				card.ability.extra.transmute_req,
+			},
+		})
+		table.insert(info_queue, G.P_CENTERS.m_gold)
+		table.insert(info_queue, G.P_CENTERS.m_steel)
+		table.insert(info_queue, G.P_CENTERS.m_stone)
+		return {
+			vars = { card.ability.extra.xmult_inc, card.ability.extra.xmult },
+		}
+	end,
+	calculate = function(self, card, context)
+		if not context.blueprint then
+			if context.mul_dragon_transmute_check then
+				card.ability.extra.transmute_progress = card.ability.extra.transmute_progress + 1
+				Multiverse.transmute_check(card)
+			end
+			if context.discard and context.other_card:get_id() == 13 then
+				SMODS.scale_card(card, {
+					ref_table = card.ability.extra,
+					ref_value = "xmult",
+					scalar_value = "xmult_inc",
+				})
+				return {
+					destroy = true,
+				}
+			end
+		end
+		if context.joker_main then
+			return {
+				xmult = card.ability.extra.xmult,
+			}
+		end
+	end,
+	pools = { ["mul_can_transmute"] = true },
+})
+
+local set_ability_hook = Card.set_ability
+function Card:set_ability(center, initial, delay_sprites)
+	set_ability_hook(self, center, initial, delay_sprites)
+	if
+		self.playing_card
+		and (
+			SMODS.has_enhancement(self, "m_stone")
+			or SMODS.has_enhancement(self, "m_steel")
+			or SMODS.has_enhancement(self, "m_gold")
+		)
+	then
+		SMODS.calculate_context({ mul_dragon_transmute_check = true })
+	end
+end

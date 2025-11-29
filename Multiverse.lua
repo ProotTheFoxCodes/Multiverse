@@ -47,7 +47,6 @@ SMODS.current_mod.calculate = function(self, context)
 		Multiverse.ease_thaumaturgy_energy(G.GAME.mul_thaumaturgy_energy_rate, { from_charge = true })
 	end
 	if context.mul_philosophers_stone_check and not context.game_over and context.main_eval then
-		print("hi")
 		G.E_MANAGER:add_event(Event({
 			func = function()
 				Multiverse.check_philosophers_stone()
