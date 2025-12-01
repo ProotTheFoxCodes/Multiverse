@@ -648,14 +648,46 @@ return {
 						"Destroy all discarded",
 						"{C:attention}Kings{} and gain {X:mult,C:white}X#1#{} per",
 						"{C:attention}King{} discarded",
-						"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}"
+						"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
 					},
 					{
 						"{C:inactive,s:0.8}Currently in a romantic",
-						"{C:inactive,s:0.8}relationship with a donkey"
+						"{C:inactive,s:0.8}relationship with a donkey",
 					},
 				},
 			},
+			j_mul_arms_dealer = {
+				name = "Arms Dealer",
+				text = {
+					{
+						"If played hand contains",
+						"exactly {C:attention}5{} cards, destroy",
+						"a random card in hand",
+					},
+					{
+						"{C:inactive,s:0.8}\"I see you're eyeballin' the",
+						"{C:inactive,s:0.8}Minishark... You really don't",
+						'{C:inactive,s:0.8}want to know how it was made."',
+					},
+				},
+			},
+			j_mul_heavy = {
+				name = "Heavy",
+				text = {
+					{
+						"{C:blue}+#1#{} hands",
+						"Distribute {C:attention}#2#{} retriggers",
+						"across all scored cards",
+						"Increases retriggers",
+						"by {C:attention}#3#{} per hand remaining",
+						"{C:inactive}(Currently {C:attention}#4#{C:inactive} retriggers){}"
+					},
+					{
+						"{C:inactive,s:0.8}It costs 400,000 dollars to",
+						"{C:inactive,s:0.8}fire this gun for 6 seconds"
+					}
+				}
+			}
 		},
 		Spectral = {
 			c_mul_eternity = {
@@ -749,7 +781,7 @@ return {
 					"Can use {C:attention}Philosopher's Stone{}",
 					"on this card to create",
 					"{C:mul_transmuted,E:1}Transmuted{} Jokers",
-					"Gain {s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} at end of round",
+					"Gain{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} at end of round",
 				},
 			},
 			mul_traitorous = {
@@ -769,9 +801,20 @@ return {
 					"learn what it does",
 				},
 			},
+			mul_distributed_retriggers = {
+				name = "Distributed Retriggers",
+				text = {
+					"Evenly {C:attention}divides{} the number",
+					"of retriggers across the",
+					"relevant area as much as",
+					"possible, distributing any",
+					"leftover retriggers to the",
+					"{C:attention}leftmost{} cards in the area"
+				}
+			},
 			--#region Activated ability descriptions
-			j_mul_steve_ability = {
-				name = "Crafting",
+			mul_steve_ability = {
+				name = "Ability: Crafting",
 				text = {
 					"Cost: {C:attention}#1#{} TP",
 					"Effect: Destroy any number",
@@ -780,6 +823,13 @@ return {
 					"of {C:attention}Netherite Cards{} with",
 					"a random {C:attention}Seal{} and {C:attention}Edition{}",
 				},
+			},
+			mul_heavy_ability = {
+				name = "Ability: Sandvich",
+				text = {
+					"Cost: {C:attention}#1#{} TP",
+					"Effect: {C:blue}+#2#{} hands",
+				}
 			},
 			--#endregion
 			--#region Transmutation hints
@@ -812,6 +862,14 @@ return {
 				text = {
 					"Play {C:attention}#2#{} unique",
 					"{C:attention}poker hands{}",
+					"{C:inactive}(#1#/#2#){}",
+				},
+			},
+			mul_arms_dealer_hint = {
+				name = "Hint",
+				text = {
+					"Spend {C:money}$#2#{} while",
+					"in the {C:attention}shop{}",
 					"{C:inactive}(#1#/#2#){}",
 				},
 			},

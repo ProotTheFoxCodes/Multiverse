@@ -133,7 +133,7 @@ Multiverse.UsableJoker({
 		table.insert(info_queue, G.P_CENTERS.m_mul_netherite)
 		table.insert(info_queue, {
 			set = "Other",
-			key = "j_mul_steve_ability",
+			key = "mul_steve_ability",
 			vars = {
 				card.ability.extra.tp_cost,
 			},
@@ -269,5 +269,75 @@ SMODS.Joker({
 				xmult = card.ability.extra.xmult_inc * #G.playing_cards + 1,
 			}
 		end
+	end,
+})
+
+Multiverse.UsableJoker({
+	key = "heavy",
+	atlas = "placeholder",
+	pos = { x = 4, y = 0 },
+	rarity = "mul_transmuted",
+	blueprint_compat = false,
+	cost = 40,
+	loc_vars = function(self, info_queue, card)
+		table.insert(info_queue, {
+			set = "Other",
+			key = "mul_heavy_ability",
+			vars = {
+				card.ability.extra.tp_cost,
+				card.ability.extra.hand_boost,
+			},
+		})
+		table.insert(info_queue, {
+			set = "Other",
+			key = "mul_distributed_retriggers",
+		})
+		local hands = G.GAME and G.GAME.current_round.hands_left or 0
+		return {
+			vars = {
+				card.ability.extra.hands,
+				card.ability.extra.retriggers,
+				card.ability.extra.retriggers_per_hand,
+				card.ability.extra.retriggers + card.ability.extra.retriggers_per_hand * hands,
+			},
+		}
+	end,
+	config = { extra = { retriggers = 8, retriggers_per_hand = 4, hands = 2, hand_boost = 4, tp_cost = 30 } },
+	calculate = function(self, card, context)
+		if not context.blueprint and context.repetition and context.cardarea == G.play then
+			local amt = card.ability.extra.retriggers
+				+ (G.GAME.current_round.hands_left + 1) * card.ability.extra.retriggers_per_hand
+			-- adjusted for the -1 hand that happens when hand is played
+			local current_index = 1
+			for i, c in ipairs(context.scoring_hand) do
+				if c == context.other_card then
+					current_index = i
+					break
+				end
+			end
+			return {
+				repetitions = math.floor(amt / #context.scoring_hand)
+					+ ((current_index <= amt % #context.scoring_hand) and 1 or 0),
+			}
+		end
+	end,
+	use_ability = function(self, card)
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				ease_hands_played(card.ability.extra.hand_boost)
+				return true
+			end,
+		}))
+	end,
+	can_use_ability = function(self, card)
+		return G.GAME.mul_TP >= card.ability.extra.tp_cost
+	end,
+	add_to_deck = function(self, card, from_debuff)
+		G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
+		ease_hands_played(card.ability.extra.hands)
+	end,
+	remove_from_deck = function(self, card, from_debuff)
+		G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+		ease_hands_played(-card.ability.extra.hands)
 	end,
 })

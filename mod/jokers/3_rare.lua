@@ -143,9 +143,24 @@ SMODS.Joker({
 	end,
 	calculate = function(self, card, context)
 		if not context.blueprint then
-			if context.mul_dragon_transmute_check then
-				card.ability.extra.transmute_progress = card.ability.extra.transmute_progress + 1
-				Multiverse.transmute_check(card)
+			if context.mul_dragon_transmute_check or context.playing_card_added then
+				local amt = 1
+				if context.cards then
+					amt = 0
+					for _, c in ipairs(context.cards) do
+						if
+							SMODS.has_enhancement(c, "m_stone")
+							or SMODS.has_enhancement(c, "m_steel")
+							or SMODS.has_enhancement(c, "m_gold")
+						then
+							amt = amt + 1
+						end
+					end
+				end
+				if amt > 0 then
+					card.ability.extra.transmute_progress = card.ability.extra.transmute_progress + amt
+					Multiverse.transmute_check(card)
+				end
 			end
 			if context.discard and context.other_card:get_id() == 13 then
 				SMODS.scale_card(card, {
@@ -169,15 +184,12 @@ SMODS.Joker({
 
 local set_ability_hook = Card.set_ability
 function Card:set_ability(center, initial, delay_sprites)
-	set_ability_hook(self, center, initial, delay_sprites)
 	if
 		self.playing_card
-		and (
-			SMODS.has_enhancement(self, "m_stone")
-			or SMODS.has_enhancement(self, "m_steel")
-			or SMODS.has_enhancement(self, "m_gold")
-		)
+		and (center.key == "m_stone" or center.key == "m_steel" or center.key == "m_gold")
+		and self.config.center.key ~= center.key
 	then
 		SMODS.calculate_context({ mul_dragon_transmute_check = true })
 	end
+	set_ability_hook(self, center, initial, delay_sprites)
 end

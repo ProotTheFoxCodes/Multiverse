@@ -4,92 +4,44 @@ SMODS.ConsumableType({
 	secondary_colour = HEX("89C41B"),
 	collection_rows = { 3, 4 },
 	shop_rate = 2,
-	default = "c_mul_holy_grail",
+	default = "c_mul_homunculus",
 })
 
----@type table<string, {key: string, other: table<string, table | function>}>
+---@type table<string, {key: string, other: table<string, string[]>}>
 Multiverse.transmutations = {
 	["j_joker"] = {
 		key = "j_mul_ren_amamiya",
 		other = {
-			grail = function()
-				for i = 1, 3 do
-					G.E_MANAGER:add_event(Event({
-						func = function()
-							SMODS.add_card({
-								key = "c_emperor",
-								edition = "e_negative",
-								key_append = "mul_holy_grail",
-							})
-							return true
-						end,
-					}))
-				end
-			end,
+			grail = { "c_emperor" },
 			tree_of_eden = { "j_cartomancer", "j_hallucination", "j_vagabond" },
 		},
 	},
 	["j_mul_dragon"] = {
 		key = "j_mul_steve",
 		other = {
-			grail = function()
-				for i = 1, 3 do
-					G.E_MANAGER:add_event(Event({
-						func = function()
-							local card_pool = { "c_tower", "c_chariot", "c_devil" }
-							SMODS.add_card({
-								key = pseudorandom_element(card_pool, "mul_holy_grail"),
-								edition = "e_negative",
-								key_append = "mul_holy_grail",
-							})
-							return true
-						end,
-					}))
-				end
-			end,
+			grail = { "c_tower", "c_chariot", "c_devil" },
 			tree_of_eden = { "j_midas_mask", "j_marble" },
 		},
 	},
 	["j_mul_hammer_bro"] = {
 		key = "j_mul_gerson",
 		other = {
-			grail = function()
-				for i = 1, 3 do
-					G.E_MANAGER:add_event(Event({
-						func = function()
-							local card_pool = { "c_deja_vu", "c_mul_chair" }
-							SMODS.add_card({
-								key = pseudorandom_element(card_pool, "mul_holy_grail"),
-								edition = "e_negative",
-								key_append = "mul_holy_grail",
-							})
-							return true
-						end,
-					}))
-				end
-			end,
+			grail = { "c_deja_vu", "c_mul_chair" },
 			tree_of_eden = { "j_hanging_chad", "j_hack", "j_sock_and_buskin" },
 		},
 	},
 	["j_pareidolia"] = {
 		key = "j_mul_waldo",
 		other = {
-			grail = function()
-				for i = 1, 3 do
-					G.E_MANAGER:add_event(Event({
-						func = function()
-							local card_pool = { "c_lovers", "c_strength", "c_death", "c_hanged_man" }
-							SMODS.add_card({
-								key = pseudorandom_element(card_pool, "mul_holy_grail"),
-								edition = "e_negative",
-								key_append = "mul_holy_grail",
-							})
-							return true
-						end,
-					}))
-				end
-			end,
+			grail = { "c_lovers", "c_strength", "c_death", "c_hanged_man" },
 			voodoo_doll = { "j_mul_jack_frost", "j_smeared", "j_shortcut" },
+		},
+	},
+	["j_mul_arms_dealer"] = {
+		key = "j_mul_heavy",
+		other = {
+			grail = { "c_immolate", "c_hermit", "c_temperance" },
+			voodoo_doll = { "j_golden", "j_cloud_9", "j_satellite", "j_todo_list", "j_mul_red_bloon", "j_mul_slime" },
 		},
 	},
 }
@@ -242,8 +194,22 @@ SMODS.Consumable({
 		Multiverse.effect_animation(card, function()
 			local j_key = G.jokers.highlighted[1].config.center.key
 			if Multiverse.transmutations[j_key].other.grail then
-				play_sound("timpani")
-				Multiverse.transmutations[j_key].other.grail()
+				for i = 1, 3 do
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							play_sound("timpani")
+							SMODS.add_card({
+								key = pseudorandom_element(
+									Multiverse.transmutations[j_key].other.grail,
+									"mul_holy_grail"
+								),
+								edition = "e_negative",
+								key_append = "mul_holy_grail",
+							})
+							return true
+						end,
+					}))
+				end
 			end
 		end)
 	end,

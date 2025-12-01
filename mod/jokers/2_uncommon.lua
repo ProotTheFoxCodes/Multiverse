@@ -84,7 +84,7 @@ SMODS.Joker({
 	loc_vars = function(self, info_queue, card)
 		table.insert(info_queue, {
 			set = "Other",
-			key = "gold_seal"
+			key = "gold_seal",
 		})
 		return { vars = { card.ability.extra.xmult } }
 	end,
@@ -170,10 +170,7 @@ SMODS.Joker({
 		return { vars = { num, denom, card.ability.extra.decrement } }
 	end,
 	calculate = function(self, card, context)
-		if
-			context.individual
-			and context.cardarea == G.play
-		then
+		if context.individual and context.cardarea == G.play then
 			if SMODS.pseudorandom_probability(card, "mul_victory_royale", 1, card.ability.extra.odds) then
 				G.GAME.consumeable_buffer = (G.GAME.consumeable_buffer or 0) + 1
 				card.ability.extra.odds = 100
@@ -257,4 +254,33 @@ SMODS.Joker({
 		end
 	end,
 	pools = { ["mul_can_transmute"] = true },
+})
+
+SMODS.Joker({
+	key = "arms_dealer",
+	atlas = "placeholder",
+	pos = { x = 1, y = 0 },
+	config = { extra = { transmute_progress = 0, transmute_req = Multiverse.set_transmute_requirements(400) } },
+	rarity = 2,
+	cost = 7,
+	blueprint_compat = true,
+	loc_vars = function(self, info_queue, card)
+		table.insert(info_queue, {
+			set = "Other",
+			key = "mul_arms_dealer_hint",
+			vars = {
+				card.ability.extra.transmute_progress,
+				card.ability.extra.transmute_req
+			},
+		})
+	end,
+	calculate = function(self, card, context)
+		if not context.blueprint and context.money_altered and context.from_shop and context.amount < 0 then
+			card.ability.extra.transmute_progress = card.ability.extra.transmute_progress - context.amount
+			Multiverse.transmute_check(card)
+		end
+		if context.before and #G.hand.cards > 0 then
+			SMODS.destroy_cards(pseudorandom_element(G.hand.cards, "mul_arms_dealer"))
+		end
+	end,
 })
