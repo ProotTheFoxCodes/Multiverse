@@ -9,7 +9,6 @@ SMODS.Joker({
 		},
 	},
 	rarity = 1,
-	blueprint_compat = true,
 	cost = 6,
 	loc_vars = function(self, info_queue, card)
 		return {
@@ -22,8 +21,8 @@ SMODS.Joker({
 	calculate = function(self, card, context)
 		if context.joker_main then
 			G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) - card.ability.extra.money_loss
-			ease_dollars(-card.ability.extra.money_loss)
 			return {
+				dollars = -card.ability.extra.money_loss,
 				mult = card.ability.extra.mult,
 				func = function()
 					G.E_MANAGER:add_event(Event({
@@ -43,7 +42,6 @@ SMODS.Joker({
 	atlas = "placeholder",
 	pos = { x = 0, y = 0 },
 	config = { extra = { money = 1, rounds_held = 0, total_rounds = 3 } },
-	blueprint_compat = true,
 	eternal_compat = false,
 	cost = 4,
 	loc_vars = function(self, info_queue, card)
@@ -83,7 +81,6 @@ SMODS.Joker({
 	config = { extra = { mult = 0, mult_inc = 2 } },
 	rarity = 1,
 	cost = 6,
-	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		local suit = G.GAME.current_round.mul_foddian_suit or "Hearts"
 		return {
@@ -126,7 +123,6 @@ SMODS.Joker({
 	config = { extra = { mult = 0, mult_inc = 1 } },
 	rarity = 1,
 	cost = 6,
-	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult_inc, card.ability.extra.mult } }
 	end,
@@ -155,7 +151,6 @@ SMODS.Joker({
 	config = { extra = { dollars = 2, min_cards = 5 } },
 	rarity = 1,
 	cost = 6,
-	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.min_cards, card.ability.extra.dollars } }
 	end,
@@ -186,7 +181,7 @@ SMODS.Joker({
 	cost = 5,
 	blueprint_compat = false,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint and context.scoring_hand[1] then
+		if context.before and context.scoring_hand[1] then
 			assert(SMODS.change_base(context.scoring_hand[1], nil, "Jack"))
 		end
 	end,

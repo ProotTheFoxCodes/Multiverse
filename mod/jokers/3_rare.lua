@@ -4,7 +4,6 @@ SMODS.Joker({
 	pos = { x = 2, y = 0 },
 	config = { extra = { xmult = 1.9 } },
 	rarity = 3,
-	blueprint_compat = true,
 	cost = 9,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.xmult } }
@@ -26,7 +25,6 @@ SMODS.Joker({
 	pos = { x = 2, y = 0 },
 	config = { extra = { mult = 1, dim1 = 1, dim2 = 1, rounds_held = 0 } },
 	rarity = 3,
-	blueprint_compat = true,
 	perishable_compat = false,
 	cost = 7,
 	loc_vars = function(self, info_queue, card)
@@ -90,7 +88,6 @@ SMODS.Joker({
 			and context.game_over
 			and context.main_eval
 			and card.ability.extra.in_boss
-			and not context.blueprint
 		then
 			ease_ante(-card.ability.extra.ante_change)
 			G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
@@ -124,7 +121,6 @@ SMODS.Joker({
 	},
 	rarity = 3,
 	cost = 8,
-	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		Multiverse.transmute_info_queue(card, info_queue)
 		table.insert(info_queue, G.P_CENTERS.m_gold)

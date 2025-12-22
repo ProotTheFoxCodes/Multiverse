@@ -1013,6 +1013,7 @@ return {
 			k_mul_popped = "Popped!",
 			k_mul_won_fifty_fifty = "Won!",
 			k_mul_lost_fifty_fifty = "Lost...",
+			k_mul_eliminated = "Eliminated!",
 			k_mul_thaumaturgy_energy = "Thaumaturgy Energy",
 			k_mul_make_room = "Must have at least 1 available consumable slot",
 			k_mul_make_room2 = "in order to create a Philosopher's Stone...",

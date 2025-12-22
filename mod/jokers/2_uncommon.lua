@@ -4,7 +4,6 @@ SMODS.Joker({
 	pos = { x = 1, y = 0 },
 	config = { extra = { mult = 19 } },
 	rarity = 2,
-	blueprint_compat = true,
 	cost = 6,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
@@ -26,7 +25,6 @@ SMODS.Joker({
 	pos = { x = 1, y = 0 },
 	config = { extra = { mult = 0, mult_inc = 1 } },
 	rarity = 2,
-	blueprint_compat = true,
 	perishable_compat = false,
 	cost = 6,
 	loc_vars = function(self, info_queue, card)
@@ -49,9 +47,6 @@ SMODS.Joker({
 								ref_value = "mult",
 								scalar_value = "mult_inc",
 							})
-							SMODS.calculate_effect({
-								message = localize("k_upgrade_ex"),
-							}, card)
 							return true
 						end,
 					}))
@@ -107,7 +102,6 @@ SMODS.Joker({
 	config = { extra = { xmult = 2.5 } },
 	rarity = 2,
 	cost = 7,
-	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.xmult } }
 	end,
@@ -135,7 +129,6 @@ SMODS.Joker({
 	config = { extra = { xmult = 3, mult = 3, odds = 2 } },
 	rarity = 2,
 	cost = 6,
-	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "mul_fifty_fifty")
 		return { vars = { num, denom, card.ability.extra.xmult, card.ability.extra.mult } }
@@ -164,7 +157,6 @@ SMODS.Joker({
 	config = { extra = { odds = 100, decrement = 2 } },
 	rarity = 2,
 	cost = 7,
-	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "mul_victory_royale")
 		return { vars = { num, denom, card.ability.extra.decrement } }
@@ -180,22 +172,14 @@ SMODS.Joker({
 							set = "Spectral",
 							edition = "e_negative",
 							key_append = "mul_victory_royale",
-							skip_materialize = true,
 						})
+						G.GAME.consumeable_buffer = 0
 						return true
 					end,
 				}))
 				return {
 					message = localize("k_plus_spectral"),
 					colour = G.C.SECONDARY_SET.Spectral,
-					func = function()
-						G.E_MANAGER:add_event(Event({
-							func = function()
-								G.GAME.consumeable_buffer = 0
-								return true
-							end,
-						}))
-					end,
 				}
 			elseif card.ability.extra.odds > 2 and not context.blueprint then
 				SMODS.scale_card(card, {
@@ -203,6 +187,9 @@ SMODS.Joker({
 					ref_value = "odds",
 					scalar_value = "decrement",
 					operation = "-",
+					scaling_message = {
+						message = localize("k_mul_eliminated"),
+					},
 				})
 			end
 		end
@@ -223,7 +210,6 @@ SMODS.Joker({
 	},
 	rarity = 2,
 	cost = 7,
-	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		Multiverse.transmute_info_queue(card, info_queue)
 		return {
@@ -259,7 +245,6 @@ SMODS.Joker({
 	config = { extra = { transmute_progress = 0, transmute_req = Multiverse.set_transmute_requirements(400) } },
 	rarity = 2,
 	cost = 7,
-	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		Multiverse.transmute_info_queue(card, info_queue)
 	end,

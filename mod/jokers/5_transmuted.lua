@@ -29,94 +29,92 @@ SMODS.Joker({
 		return { vars = { tarots_held.n } }
 	end,
 	calculate = function(self, card, context)
-		if not context.blueprint then
-			if context.before then
-				local changed_card = context.scoring_hand[1]
-				if not SMODS.has_enhancement(changed_card, "m_mul_calling_card") then
-					assert(SMODS.change_base(changed_card, "Hearts", "Ace"))
-					G.E_MANAGER:add_event(Event({
-						func = function()
-							changed_card:mul_safe_dissolve(nil, false, 1.6)
-							return true
-						end,
-					}))
-					delay(1.75)
-					changed_card:set_ability("m_mul_calling_card", false, true)
-					G.E_MANAGER:add_event(Event({
-						func = function()
-							changed_card:start_materialize(nil, false, 1.6)
-							return true
-						end,
-					}))
+		if context.before then
+			local changed_card = context.scoring_hand[1]
+			if not SMODS.has_enhancement(changed_card, "m_mul_calling_card") then
+				assert(SMODS.change_base(changed_card, "Hearts", "Ace"))
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						changed_card:mul_safe_dissolve(nil, false, 1.6)
+						return true
+					end,
+				}))
+				delay(1.75)
+				changed_card:set_ability("m_mul_calling_card", false, true)
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						changed_card:start_materialize(nil, false, 1.6)
+						return true
+					end,
+				}))
+			end
+		end
+		if context.initial_scoring_step then
+			local has_call_card = false
+			for _, c in ipairs(G.hand.cards) do
+				if c.config.center.key == "m_mul_calling_card" then
+					has_call_card = true
+					break
 				end
 			end
-			if context.initial_scoring_step then
-				local has_call_card = false
-				for _, c in ipairs(G.hand.cards) do
-					if c.config.center.key == "m_mul_calling_card" then
-						has_call_card = true
-						break
-					end
-				end
-				for _, c in ipairs(context.full_hand) do
-					if c.config.center.key == "m_mul_calling_card" or has_call_card then
-						has_call_card = true
-						break
-					end
-				end
-				if has_call_card then
-					delay(0.9)
-					G.E_MANAGER:add_event(Event({
-						trigger = "ease",
-						ref_table = G.GAME,
-						ref_value = "mul_call_card_anim_state",
-						ease_to = 6,
-						delay = 1.2,
-					}))
+			for _, c in ipairs(context.full_hand) do
+				if c.config.center.key == "m_mul_calling_card" or has_call_card then
+					has_call_card = true
+					break
 				end
 			end
-			if
-				context.repetition
-				and context.cardarea == G.play
-				and SMODS.has_enhancement(context.other_card, "m_mul_calling_card")
-			then
-				local tarots_held = { n = 0 }
-				if G.consumeables then
-					for _, c in ipairs(G.consumeables.cards) do
-						if not tarots_held[c.config.center.key] and c.ability.set == "Tarot" then
-							tarots_held[c.config.center.key] = 1
-							tarots_held.n = tarots_held.n + 1
-						end
+			if has_call_card then
+				delay(0.9)
+				G.E_MANAGER:add_event(Event({
+					trigger = "ease",
+					ref_table = G.GAME,
+					ref_value = "mul_call_card_anim_state",
+					ease_to = 6,
+					delay = 1.2,
+				}))
+			end
+		end
+		if
+			context.repetition
+			and context.cardarea == G.play
+			and SMODS.has_enhancement(context.other_card, "m_mul_calling_card")
+		then
+			local tarots_held = { n = 0 }
+			if G.consumeables then
+				for _, c in ipairs(G.consumeables.cards) do
+					if not tarots_held[c.config.center.key] and c.ability.set == "Tarot" then
+						tarots_held[c.config.center.key] = 1
+						tarots_held.n = tarots_held.n + 1
 					end
-				end
-				if tarots_held.n > 0 then
-					return { repetitions = tarots_held.n }
 				end
 			end
-			if context.after then
-				local has_call_card = false
-				for _, c in ipairs(G.hand.cards) do
-					if c.config.center.key == "m_mul_calling_card" then
-						has_call_card = true
-						break
-					end
+			if tarots_held.n > 0 then
+				return { repetitions = tarots_held.n }
+			end
+		end
+		if context.after then
+			local has_call_card = false
+			for _, c in ipairs(G.hand.cards) do
+				if c.config.center.key == "m_mul_calling_card" then
+					has_call_card = true
+					break
 				end
-				for _, c in ipairs(context.full_hand) do
-					if c.config.center.key == "m_mul_calling_card" or has_call_card then
-						has_call_card = true
-						break
-					end
+			end
+			for _, c in ipairs(context.full_hand) do
+				if c.config.center.key == "m_mul_calling_card" or has_call_card then
+					has_call_card = true
+					break
 				end
-				if has_call_card then
-					G.E_MANAGER:add_event(Event({
-						trigger = "ease",
-						ref_table = G.GAME,
-						ref_value = "mul_call_card_anim_state",
-						ease_to = 0,
-						delay = 1.8,
-					}))
-					delay(0.5)
-				end
+			end
+			if has_call_card then
+				G.E_MANAGER:add_event(Event({
+					trigger = "ease",
+					ref_table = G.GAME,
+					ref_value = "mul_call_card_anim_state",
+					ease_to = 0,
+					delay = 1.8,
+				}))
+				delay(0.5)
 			end
 		end
 	end,
@@ -148,7 +146,7 @@ Multiverse.UsableJoker({
 		G.hand:change_size(-card.ability.extra.size_inc)
 	end,
 	calculate = function(self, card, context)
-		if not context.blueprint and context.before then
+		if context.before then
 			for _, c in ipairs(G.hand.cards) do
 				if next(SMODS.get_enhancements(c)) and not SMODS.has_enhancement(c, "m_mul_netherite") then
 					c:set_ability("m_mul_netherite")
@@ -208,7 +206,7 @@ SMODS.Joker({
 		end
 	end,
 	calculate = function(self, card, context)
-		if context.setting_blind and context.blind.boss and not context.blueprint then
+		if context.setting_blind and context.blind.boss then
 			card.ability.extra.joker_xmult = card.ability.extra.joker_xmult + card.ability.extra.increment
 			card:juice_up(0.4, 0.4)
 			G.E_MANAGER:add_event(Event({
@@ -226,7 +224,7 @@ SMODS.Joker({
 				end,
 			}))
 		end
-		if context.other_joker and not context.blueprint and card.ability.extra.joker_xmult > 1 then
+		if context.other_joker and card.ability.extra.joker_xmult > 1 then
 			return {
 				xmult = card.ability.extra.joker_xmult,
 			}
@@ -260,11 +258,7 @@ SMODS.Joker({
 		end
 	end,
 	calculate = function(self, card, context)
-		if
-			context.individual
-			and not context.blueprint
-			and SMODS.has_enhancement(context.other_card, "m_mul_waldo")
-		then
+		if context.individual and SMODS.has_enhancement(context.other_card, "m_mul_waldo") then
 			return {
 				xmult = card.ability.extra.xmult_inc * #G.playing_cards + 1,
 			}
@@ -304,7 +298,7 @@ Multiverse.UsableJoker({
 	end,
 	config = { extra = { retriggers = 8, retriggers_per_hand = 4, hands = 2, hand_boost = 4, tp_cost = 30 } },
 	calculate = function(self, card, context)
-		if not context.blueprint and context.repetition and context.cardarea == G.play then
+		if context.repetition and context.cardarea == G.play then
 			local amt = card.ability.extra.retriggers
 				+ (G.GAME.current_round.hands_left + 1) * card.ability.extra.retriggers_per_hand
 			-- adjusted for the -1 hand that happens when hand is played
@@ -342,11 +336,11 @@ Multiverse.UsableJoker({
 	end,
 })
 
--- Multiverse.UsableJoker({
--- 	key = "impostor",
--- 	atlas = "placeholder",
--- 	pos = { x = 4, y = 0 },
--- 	rarity = "mul_transmuted",
--- 	blueprint_compat = false,
--- 	cost = 40,
--- })
+Multiverse.UsableJoker({
+	key = "impostor",
+	atlas = "placeholder",
+	pos = { x = 4, y = 0 },
+	rarity = "mul_transmuted",
+	blueprint_compat = false,
+	cost = 40,
+})
