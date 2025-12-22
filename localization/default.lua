@@ -374,6 +374,7 @@ return {
 					{
 						"This Joker gains {C:mult}+#1#{} Mult per",
 						"{C:attention}face{} card held in hand",
+						"at end of round",
 						"Resets if there are no",
 						"{C:attention}face cards{} held in hand",
 						"{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
@@ -1014,6 +1015,7 @@ return {
 			k_mul_won_fifty_fifty = "Won!",
 			k_mul_lost_fifty_fifty = "Lost...",
 			k_mul_eliminated = "Eliminated!",
+			k_mul_boom = "Boom!",
 			k_mul_thaumaturgy_energy = "Thaumaturgy Energy",
 			k_mul_make_room = "Must have at least 1 available consumable slot",
 			k_mul_make_room2 = "in order to create a Philosopher's Stone...",

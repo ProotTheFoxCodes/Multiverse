@@ -36,20 +36,21 @@ SMODS.Joker({
 		}
 	end,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint and context.main_eval then
+		if context.end_of_round and not context.blueprint and context.main_eval and not context.game_over then
 			local has_face_card = false
 			for _, playing_card in ipairs(G.hand.cards) do
-				if playing_card:is_face() then
+				if playing_card:is_face(true) then
 					G.E_MANAGER:add_event(Event({
 						func = function()
-							SMODS.scale_card(card, {
-								ref_table = card.ability.extra,
-								ref_value = "mult",
-								scalar_value = "mult_inc",
-							})
+							playing_card:juice_up()
 							return true
 						end,
 					}))
+					SMODS.scale_card(card, {
+						ref_table = card.ability.extra,
+						ref_value = "mult",
+						scalar_value = "mult_inc",
+					})
 					has_face_card = true
 				end
 			end
@@ -88,7 +89,7 @@ SMODS.Joker({
 			for _, c in ipairs(context.scoring_hand) do
 				if c:is_suit("Hearts") then
 					c:set_seal(card.ability.extra.seal)
-					break
+					c:juice_up()
 				end
 			end
 		end
@@ -255,6 +256,9 @@ SMODS.Joker({
 		end
 		if context.before and #G.hand.cards > 0 then
 			SMODS.destroy_cards(pseudorandom_element(G.hand.cards, "mul_arms_dealer"))
+			return {
+				message = localize("k_mul_boom"),
+			}
 		end
 	end,
 	pools = { ["mul_can_transmute"] = true },

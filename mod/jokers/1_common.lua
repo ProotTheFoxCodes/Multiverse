@@ -106,6 +106,7 @@ SMODS.Joker({
 				ref_table = card.ability.extra,
 				ref_value = "mult",
 				scalar_value = "mult_inc",
+				message_key = "a_mult"
 			})
 		end
 		if context.joker_main and card.ability.extra.mult > 0 then
@@ -133,6 +134,7 @@ SMODS.Joker({
 					ref_table = card.ability.extra,
 					ref_value = "mult",
 					scalar_value = "mult_inc",
+					message_key = "a_mult"
 				})
 			end
 		end
@@ -183,6 +185,7 @@ SMODS.Joker({
 	calculate = function(self, card, context)
 		if context.before and context.scoring_hand[1] then
 			assert(SMODS.change_base(context.scoring_hand[1], nil, "Jack"))
+			context.scoring_hand[1]:juice_up()
 		end
 	end,
 })
