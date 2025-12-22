@@ -25,6 +25,7 @@ Multiverse.C.PRIMARY1 = HEX("89C41B")
 Multiverse.C.PRIMARY2 = HEX("C5CC41")
 Multiverse.selected_music_page = 1
 Multiverse.transmutable_sticker_anim_state = 0
+Multiverse.transmutable_target_anim_state = 0
 Multiverse.debug = false
 
 ---Talisman compatibility?
@@ -38,6 +39,11 @@ end
 SMODS.ObjectType({
 	key = "mul_can_transmute",
 	default = "j_joker",
+	cards = {
+		["j_joker"] = true,
+		["j_pareidolia"] = true,
+		["j_invisible"] = true,
+	},
 })
 
 SMODS.draw_ignore_keys.mul_joker_use_button = true
@@ -51,7 +57,7 @@ SMODS.current_mod.calculate = function(self, context)
 			func = function()
 				Multiverse.check_philosophers_stone()
 				return true
-			end
+			end,
 		}))
 	end
 	if context.starting_shop then
@@ -75,6 +81,8 @@ SMODS.current_mod.calculate = function(self, context)
 		end
 	end
 end
+
+SMODS.draw_ignore_keys["transmutable_target"] = true
 
 local function set_foddian_suit()
 	G.GAME.current_round.mul_foddian_suit = "Hearts"

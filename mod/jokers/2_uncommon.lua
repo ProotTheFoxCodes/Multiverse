@@ -225,14 +225,7 @@ SMODS.Joker({
 	cost = 7,
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
-		table.insert(info_queue, {
-			set = "Other",
-			key = "mul_hammer_bro_hint",
-			vars = {
-				card.ability.extra.transmute_progress,
-				card.ability.extra.transmute_req,
-			},
-		})
+		Multiverse.transmute_info_queue(card, info_queue)
 		return {
 			vars = {
 				card.ability.extra.mult,
@@ -254,6 +247,9 @@ SMODS.Joker({
 		end
 	end,
 	pools = { ["mul_can_transmute"] = true },
+	transmutes_into = "j_mul_gerson",
+	mul_grail = { "c_deja_vu", "c_mul_chair" },
+	mul_tree_of_eden = { "j_hanging_chad", "j_hack", "j_sock_and_buskin", "j_selzer" },
 })
 
 SMODS.Joker({
@@ -265,14 +261,7 @@ SMODS.Joker({
 	cost = 7,
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
-		table.insert(info_queue, {
-			set = "Other",
-			key = "mul_arms_dealer_hint",
-			vars = {
-				card.ability.extra.transmute_progress,
-				card.ability.extra.transmute_req
-			},
-		})
+		Multiverse.transmute_info_queue(card, info_queue)
 	end,
 	calculate = function(self, card, context)
 		if not context.blueprint and context.money_altered and context.from_shop and context.amount < 0 then
@@ -283,4 +272,7 @@ SMODS.Joker({
 			SMODS.destroy_cards(pseudorandom_element(G.hand.cards, "mul_arms_dealer"))
 		end
 	end,
+	pools = { ["mul_can_transmute"] = true },
+	mul_grail = { "c_immolate", "c_hermit", "c_temperance" },
+	mul_tree_of_eden = { "j_golden", "j_cloud_9", "j_satellite", "j_todo_list", "j_mul_red_bloon", "j_mul_slime" },
 })

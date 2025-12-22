@@ -11,6 +11,62 @@ SMODS.DrawStep({
 })
 
 SMODS.DrawStep({
+	key = "transmutable_target",
+	order = 201,
+	func = function(card, layer)
+		-- We dont want the effect to show if we are not in a run (G.consumeables does not exist outside a run)
+		if not G.consumeables then
+			return
+		end
+		-- We do a simple check for whether or not a certain consumable is highlighted here
+		local philosophers_stone_highlighted = false
+		for _, v in ipairs(G.consumeables.highlighted) do
+			if v.config.center.key == "c_mul_philosophers_stone" then
+				philosophers_stone_highlighted = true
+				break
+			end
+		end
+		-- If the card has a certain sticker and the correct consumable is highlighted,
+		-- only then should the sprite be drawn
+		-- This check can be changed as needed
+		if card.ability and card.ability.mul_transmutable and philosophers_stone_highlighted then
+			-- Slowly oscillating the scale of the card
+			-- Change the constant factor to increase the overall size of the sprite
+			local scale_mod = 0.32 + 0.02 * math.sin(1.8 * G.TIMERS.REAL)
+			-- Rotates the sprite
+			-- Multiply the rightmost G.TIMERS.REAL term to increase the rate of rotation
+			local rotate_mod = 0.05 * math.sin(1.219 * G.TIMERS.REAL) + G.TIMERS.REAL
+			-- Draws the shadow with a dissolve shader
+			card.children.transmutable_target:draw_shader(
+				"dissolve",
+				0,
+				nil,
+				nil,
+				card.children.center, -- Where we should draw the sprite relative to
+				scale_mod,
+				rotate_mod,
+				nil,
+				nil,
+				nil,
+				0.2 -- affects the tilt of the shadow, smaller number means a bigger tilt downwards
+			)
+			-- Draws the actual sprite
+			card.children.transmutable_target:draw_shader(
+				"dissolve",
+				nil,
+				nil,
+				nil,
+				card.children.center, -- Where we should draw the sprite relative to
+				scale_mod,
+				rotate_mod
+			)
+		end
+	end,
+	conditions = { vortex = false }, -- Do not draw on the main menu intro (not that it ever should)
+	-- Will draw regardless of whether or not the card is facing frontwards or backwards
+})
+
+SMODS.DrawStep({
 	key = "joker_use",
 	order = -30,
 	func = function(card, layer)
@@ -32,18 +88,22 @@ SMODS.DrawStep({
 					G.CARD_W,
 					G.CARD_H,
 					G.ASSET_ATLAS["mul_transmutable_sticker"],
-					{ x = Multiverse.clamp(math.floor(Multiverse.transmutable_sticker_anim_state), 0, 18), y = 0 }
+					{ x = Multiverse.clamp(math.floor(Multiverse.transmutable_sticker_anim_state), 0, 17), y = 0 }
 				)
 			end
+			Multiverse.transmutable_sticker:set_sprite_pos({
+				x = Multiverse.clamp(math.floor(Multiverse.transmutable_sticker_anim_state), 0, 17),
+				y = 0,
+			})
 			Multiverse.transmutable_sticker.role.draw_major = card
 			Multiverse.transmutable_sticker:draw_shader("dissolve", nil, nil, nil, card.children.center)
-			Multiverse.transmutable_sticker:draw_shader(
-				"voucher",
-				nil,
-				G.ARGS.send_to_shader,
-				nil,
-				card.children.center
-			)
+			-- Multiverse.transmutable_sticker:draw_shader(
+			-- 	"voucher",
+			-- 	nil,
+			-- 	G.ARGS.send_to_shader,
+			-- 	nil,
+			-- 	card.children.center
+			-- )
 		end
 	end,
 	conditions = { vortex = false, facing = "front" },

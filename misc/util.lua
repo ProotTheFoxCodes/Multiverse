@@ -49,7 +49,7 @@ end
 ---@return T[]
 function Multiverse.filter(t, func)
 	local ret = {}
-	for _, v in ipairs(t) do
+	for _, v in pairs(t) do
 		if func(v) then
 			table.insert(ret, v)
 		end
@@ -75,26 +75,6 @@ function Multiverse.get_unique_pseudorandom_elements(t, n, seed)
 		table.remove(eligible, eligible_index)
 	end
 	return ret
-end
-
----Updates the animation state of a given card.
----Make sure to pass in `G.real_dt` for the dt argument.
----@param card Card
----@param dt number
----@param vertical? boolean
-function Multiverse.update_card_anim(card, dt, vertical)
-	local dir = (vertical and "y") or "x"
-	if card.config.center.anim_info then
-		local data = card.config.center.anim_info
-		card.config.center.anim_info.anim_progress = card.config.center.anim_info.anim_progress or 0
-		card.config.center.anim_info.anim_progress = card.config.center.anim_info.anim_progress
-			+ (dt * data.frames / data.anim_time)
-		if card.config.center.anim_info.anim_progress >= data.frames then
-			card.config.center.anim_info.anim_progress = card.config.center.anim_info.anim_progress - data.frames
-		end
-		card.config.center.pos[dir] =
-			Multiverse.clamp(math.floor(card.config.center.anim_info.anim_progress), 0, data.frames)
-	end
 end
 
 function Multiverse.set_transmute_requirements(base)
@@ -281,7 +261,7 @@ function Multiverse.check_active_particles(card, state)
 end
 
 function Multiverse.can_receive_transmutable(card)
-	return not (type(card.ability.extra) ~= table and not card.ability.extra.transmute_req)
+	return card and card.ability and type(card.ability.extra) == "table" and card.ability.extra.transmute_req
 end
 
 ---Will now safely return and do nothing if the card cannot become transmutable
@@ -294,6 +274,19 @@ function Multiverse.transmute_check(card)
 		type(card.ability.extra.transmute_progress) == "table" and card.ability.extra.transmute_progress.n
 	) or card.ability.extra.transmute_progress
 	if progress >= card.ability.extra.transmute_req and not card.ability.mul_transmutable then
+		if not card.children.transmutable_target then
+			card.children.transmutable_target = AnimatedSprite(
+				card.T.x,
+				card.T.y,
+				card.T.w,
+				card.T.h,
+				G.ANIMATION_ATLAS["mul_transmutable_target"],
+				{ x = 0, y = 0 }
+			)
+			card.children.transmutable_target.role.draw_major = card
+			card.children.transmutable_target.states.hover.can = false
+			card.children.transmutable_target.states.click.can = false
+		end
 		card:add_sticker("mul_transmutable", true)
 	end
 end
@@ -301,7 +294,7 @@ end
 ---@param card Card
 function Multiverse.get_stickers(card)
 	local stickers = {}
-	for key, sticker in pairs(SMODS.Sticker) do
+	for key, _ in pairs(SMODS.Stickers) do
 		if card.ability[key] then
 			stickers[#stickers + 1] = key
 		end
@@ -403,4 +396,23 @@ function Multiverse.is_stand_arrow_debuffed(card)
 	return card.playing_card
 		and G.GAME.mul_stand_arrow_active
 		and card:is_suit(G.GAME.current_round.mul_stand_arrow_suit, true)
+end
+
+---@param card Card
+---@param info_queue table
+function Multiverse.transmute_info_queue(card, info_queue)
+	if Multiverse.can_receive_transmutable(card) then
+		local transmute_vars = {}
+		if type(card.ability.extra.transmute_progress) == "table" then
+			transmute_vars[#transmute_vars + 1] = card.ability.extra.transmute_progress.n
+		else
+			transmute_vars[#transmute_vars + 1] = card.ability.extra.transmute_progress
+		end
+		transmute_vars[#transmute_vars + 1] = card.ability.extra.transmute_req
+		info_queue[#info_queue + 1] = {
+			set = "Other",
+			key = string.sub(card.config.center.key, 3) .. "_hint",
+			vars = transmute_vars,
+		}
+	end
 end

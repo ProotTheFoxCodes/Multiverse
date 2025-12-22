@@ -684,7 +684,7 @@ return {
 					},
 					{
 						"{C:inactive,s:0.8}It costs 400,000 dollars to",
-						"{C:inactive,s:0.8}fire this gun for 6 seconds"
+						"{C:inactive,s:0.8}fire this gun for 12 seconds"
 					}
 				}
 			}
@@ -833,7 +833,7 @@ return {
 			},
 			--#endregion
 			--#region Transmutation hints
-			mul_joker_hint = {
+			joker_hint = {
 				name = "Hint",
 				text = {
 					"Use {C:attention}#2#{} distinct",
@@ -857,7 +857,7 @@ return {
 					"{C:inactive}(#1#/#2#){}",
 				},
 			},
-			mul_pareidolia_hint = {
+			pareidolia_hint = {
 				name = "Hint",
 				text = {
 					"Play {C:attention}#2#{} unique",
@@ -872,6 +872,14 @@ return {
 					"in the {C:attention}shop{}",
 					"{C:inactive}(#1#/#2#){}",
 				},
+			},
+			invisible_hint = {
+				name = "Hint",
+				text = {
+					"Obtain {C:attention}#2#{} different",
+					"Jokers while owned",
+					"{C:inactive}(#1#/#2#){}",
+				}
 			},
 			--#endregion
 			--#region Mechanic descriptions
@@ -945,7 +953,6 @@ return {
 			},
 			--#endregion
 		},
-		Abilities = {},
 		Mod = {
 			Multiverse = {
 				name = "Multiverse",

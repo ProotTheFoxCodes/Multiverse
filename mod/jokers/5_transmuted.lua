@@ -341,3 +341,12 @@ Multiverse.UsableJoker({
 		ease_hands_played(-card.ability.extra.hands)
 	end,
 })
+
+-- Multiverse.UsableJoker({
+-- 	key = "impostor",
+-- 	atlas = "placeholder",
+-- 	pos = { x = 4, y = 0 },
+-- 	rarity = "mul_transmuted",
+-- 	blueprint_compat = false,
+-- 	cost = 40,
+-- })

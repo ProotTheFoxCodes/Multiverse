@@ -1,6 +1,5 @@
 return {
 	["debug"] = false,
-	["crossmod"] = true,
 	["joke"] = true,
 	["music"] = {
 		["Prophecy"] = true,

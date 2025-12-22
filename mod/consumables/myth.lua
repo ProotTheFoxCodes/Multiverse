@@ -10,38 +10,52 @@ SMODS.ConsumableType({
 ---@type table<string, {key: string, other: table<string, string[]>}>
 Multiverse.transmutations = {
 	["j_joker"] = {
-		key = "j_mul_ren_amamiya",
+		transmutes_into = "j_mul_ren_amamiya",
 		other = {
-			grail = { "c_emperor" },
-			tree_of_eden = { "j_cartomancer", "j_hallucination", "j_vagabond" },
+			mul_grail = { "c_emperor" },
+			mul_tree_of_eden = { "j_cartomancer", "j_hallucination", "j_vagabond" },
 		},
 	},
 	["j_mul_dragon"] = {
-		key = "j_mul_steve",
+		transmutes_into = "j_mul_steve",
 		other = {
-			grail = { "c_tower", "c_chariot", "c_devil" },
-			tree_of_eden = { "j_midas_mask", "j_marble" },
+			mul_grail = { "c_tower", "c_chariot", "c_devil" },
+			mul_tree_of_eden = { "j_midas_mask", "j_marble" },
 		},
 	},
 	["j_mul_hammer_bro"] = {
-		key = "j_mul_gerson",
+		transmutes_into = "j_mul_gerson",
 		other = {
-			grail = { "c_deja_vu", "c_mul_chair" },
-			tree_of_eden = { "j_hanging_chad", "j_hack", "j_sock_and_buskin" },
+			mul_grail = { "c_deja_vu", "c_mul_chair" },
+			mul_tree_of_eden = { "j_hanging_chad", "j_hack", "j_sock_and_buskin", "j_selzer" },
 		},
 	},
 	["j_pareidolia"] = {
-		key = "j_mul_waldo",
+		transmutes_into = "j_mul_impostor",
 		other = {
-			grail = { "c_lovers", "c_strength", "c_death", "c_hanged_man" },
-			voodoo_doll = { "j_mul_jack_frost", "j_smeared", "j_shortcut" },
+			mul_grail = { "c_lovers", "c_strength", "c_death", "c_hanged_man" },
+			mul_tree_of_eden = { "j_mul_jack_frost", "j_smeared", "j_shortcut" },
+		},
+	},
+	["j_invisible"] = {
+		transmutes_into = "j_mul_waldo",
+		other = {
+			mul_grail = { "c_judgement", "c_wraith" },
+			mul_tree_of_eden = { "j_riff_raff", "j_chaos", "j_diet_cola" },
 		},
 	},
 	["j_mul_arms_dealer"] = {
-		key = "j_mul_heavy",
+		transmutes_into = "j_mul_heavy",
 		other = {
-			grail = { "c_immolate", "c_hermit", "c_temperance" },
-			voodoo_doll = { "j_golden", "j_cloud_9", "j_satellite", "j_todo_list", "j_mul_red_bloon", "j_mul_slime" },
+			mul_grail = { "c_immolate", "c_hermit", "c_temperance" },
+			mul_tree_of_eden = {
+				"j_golden",
+				"j_cloud_9",
+				"j_satellite",
+				"j_todo_list",
+				"j_mul_red_bloon",
+				"j_mul_slime",
+			},
 		},
 	},
 }
@@ -49,10 +63,6 @@ SMODS.Consumable({
 	key = "philosophers_stone",
 	set = "mul_Myth",
 	atlas = "p_stone",
-	anim_info = { anim_time = 0.9, frames = 18, anim_progress = 0 },
-	update = function(self, card, dt)
-		Multiverse.update_card_anim(card, G.real_dt)
-	end,
 	pos = { x = 0, y = 0 },
 	config = { extra = { energy_per_joker = 15 } },
 	discovered = true,
@@ -88,7 +98,7 @@ SMODS.Consumable({
 			end
 		end
 		G.jokers:unhighlight_all()
-		local transmute_key = Multiverse.transmutations[joker_to_transmute.config.center.key].key
+		local transmute_key = joker_to_transmute.config.center.transmutes_into
 		if count > 0 then
 			G.E_MANAGER:add_event(Event({
 				trigger = "after",
@@ -173,10 +183,6 @@ SMODS.Consumable({
 	key = "holy_grail",
 	set = "mul_Myth",
 	atlas = "holy_grail",
-	anim_info = { anim_time = 0.9, frames = 18, anim_progress = 0 },
-	update = function(self, card, dt)
-		Multiverse.update_card_anim(card, G.real_dt)
-	end,
 	pos = { x = 0, y = 0 },
 	config = { extra = { num_consumables = 3 } },
 	discovered = true,
@@ -185,31 +191,23 @@ SMODS.Consumable({
 		return { vars = { card.ability.extra.num_consumables } }
 	end,
 	can_use = function(self, card)
-		return #G.jokers.highlighted == 1
-			and (Multiverse.transmutations[G.jokers.highlighted[1].config.center.key] ~= nil)
-		-- in order for this card to be usable,
-		-- the joker's key must be in Multiverse.transmutations
+		return #G.jokers.highlighted == 1 and G.jokers.highlighted[1].config.center.mul_grail
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.effect_animation(card, function()
-			local j_key = G.jokers.highlighted[1].config.center.key
-			if Multiverse.transmutations[j_key].other.grail then
-				for i = 1, 3 do
-					G.E_MANAGER:add_event(Event({
-						func = function()
-							play_sound("timpani")
-							SMODS.add_card({
-								key = pseudorandom_element(
-									Multiverse.transmutations[j_key].other.grail,
-									"mul_holy_grail"
-								),
-								edition = "e_negative",
-								key_append = "mul_holy_grail",
-							})
-							return true
-						end,
-					}))
-				end
+			local pool = G.jokers.highlighted[1].config.center.mul_grail
+			for i = 1, 3 do
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						play_sound("timpani")
+						SMODS.add_card({
+							key = pseudorandom_element(pool, "mul_holy_grail"),
+							edition = "e_negative",
+							key_append = "mul_holy_grail",
+						})
+						return true
+					end,
+				}))
 			end
 		end)
 	end,
@@ -250,7 +248,7 @@ SMODS.Consumable({
 			G.jokers
 			and #G.jokers.highlighted == 1
 			and #G.jokers.cards < G.jokers.config.card_limit
-			and Multiverse.transmutations[G.jokers.highlighted[1].config.center.key] ~= nil
+			and G.jokers.highlighted[1].config.center.mul_tree_of_eden
 		)
 		-- in order for this card to be usable,
 		-- the joker's key must be in Multiverse.transmutations
@@ -258,13 +256,12 @@ SMODS.Consumable({
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.effect_animation(card, function()
-			local j_key = G.jokers.highlighted[1].config.center.key
-			if Multiverse.transmutations[j_key].other.tree_of_eden then
-				play_sound("timpani")
-				SMODS.add_card({
-					key = pseudorandom_element(Multiverse.transmutations[j_key].other.tree_of_eden, "mul_tree_of_eden"),
-				})
-			end
+			local pool = G.jokers.highlighted[1].config.center.mul_tree_of_eden
+			play_sound("timpani")
+			SMODS.add_card({
+				set = "Joker",
+				key = pseudorandom_element(pool, "mul_tree_of_eden"),
+			})
 		end)
 	end,
 })

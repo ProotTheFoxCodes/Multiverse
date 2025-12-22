@@ -39,6 +39,7 @@ function Card:is_suit(suit, bypass_debuff, flush_calc)
 			return "Hearts" == suit
 		end
 	end
+	return is_suit_hook(self, suit, bypass_debuff, flush_calc)
 end
 
 local get_id_hook = Card.get_id
@@ -95,6 +96,24 @@ function Game:update(dt)
 		})
 	end
 	return ret
+end
+
+local set_sprites_hook = Card.set_sprites
+function Card:set_sprites(_center, _front)
+	set_sprites_hook(self, _center, _front)
+	if Multiverse.can_receive_transmutable(self) then
+		self.children.transmutable_target = AnimatedSprite(
+			self.T.x,
+			self.T.y,
+			self.T.w,
+			self.T.h,
+			G.ANIMATION_ATLAS["mul_transmutable_target"],
+			{ x = 0, y = 0 }
+		)
+		self.children.transmutable_target.role.draw_major = self
+		self.children.transmutable_target.states.hover.can = false
+		self.children.transmutable_target.states.click.can = false
+	end
 end
 
 local tooltip_hook = create_popup_UIBox_tooltip
@@ -154,12 +173,12 @@ function love.keypressed(key, scancode, is_repeat)
 	end
 end
 
-local mouse_pressed_hook = love.keypressed
-function love.keypressed(key, scancode, is_repeat)
+local mousepressed_hook = love.mousepressed
+function love.mousepressed(x, y, button, istouch, presses)
 	if Multiverse.very_important_thing then
 		return
 	end
-	mouse_pressed_hook(key, scancode, is_repeat)
+	mousepressed_hook(x, y, button, istouch, presses)
 end
 
 function Multiverse.cannot_interrupt()

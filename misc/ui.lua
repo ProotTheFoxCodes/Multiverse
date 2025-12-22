@@ -497,7 +497,7 @@ end
 ---Creates a fancy UI that displays text from a loc table
 ---@param set string
 ---@param key string
----@param args? {bg_colour: ColorHex?, text_scale: number?, loc_vars: table?}
+---@param args? {bg_colour: table?, text_scale: number?, loc_vars: table?}
 ---@return table
 function Multiverse.create_localized_rows(set, key, args)
 	args = args or {}

@@ -126,14 +126,7 @@ SMODS.Joker({
 	cost = 8,
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
-		table.insert(info_queue, {
-			set = "Other",
-			key = "mul_dragon_hint",
-			vars = {
-				card.ability.extra.transmute_progress,
-				card.ability.extra.transmute_req,
-			},
-		})
+		Multiverse.transmute_info_queue(card, info_queue)
 		table.insert(info_queue, G.P_CENTERS.m_gold)
 		table.insert(info_queue, G.P_CENTERS.m_steel)
 		table.insert(info_queue, G.P_CENTERS.m_stone)
@@ -180,6 +173,9 @@ SMODS.Joker({
 		end
 	end,
 	pools = { ["mul_can_transmute"] = true },
+	transmutes_into = "j_mul_steve",
+	mul_grail = { "c_tower", "c_chariot", "c_devil" },
+	mul_tree_of_eden = { "j_midas_mask", "j_marble" },
 })
 
 local set_ability_hook = Card.set_ability
