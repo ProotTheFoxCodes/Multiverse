@@ -66,19 +66,6 @@ SMODS.Sound({
 })
 
 SMODS.Sound({
-	key = "presage_music",
-	path = "MIRAR_Presage.ogg",
-	select_music_track = function(self)
-		if G.GAME and G.GAME.round_resets.ante >= 8 then
-			return 1
-		end
-	end,
-	sync = false,
-	volume = 0.5,
-	pitch = 1,
-})
-
-SMODS.Sound({
 	key = "deltarune_explosion",
 	path = "deltarune_explosion.ogg",
 })
