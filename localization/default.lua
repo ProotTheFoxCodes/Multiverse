@@ -688,7 +688,20 @@ return {
 						"{C:inactive,s:0.8}fire this gun for 12 seconds"
 					}
 				}
-			}
+			},
+			j_mul_impostor = {
+				name = "Impostor",
+				text = {
+					{
+						"Copies the effect of",
+						"the {C:attention}Jokers{} to the",
+						"right and left",
+					},
+					{
+						"{C:inactive,s:0.8}When the impostor is sus",
+					}
+				}
+			},
 		},
 		Spectral = {
 			c_mul_eternity = {
@@ -805,9 +818,9 @@ return {
 			mul_distributed_retriggers = {
 				name = "Distributed Retriggers",
 				text = {
-					"Evenly {C:attention}divides{} the number",
+					"{C:attention}Distributes{} the number",
 					"of retriggers across the",
-					"relevant area as much as",
+					"relevant cards as {C:attention}evenly{} as",
 					"possible, distributing any",
 					"leftover retriggers to the",
 					"{C:attention}leftmost{} cards in the area"
@@ -830,6 +843,15 @@ return {
 				text = {
 					"Cost: {C:attention}#1#{} TP",
 					"Effect: {C:blue}+#2#{} hands",
+				}
+			},
+			mul_impostor_ability = {
+				name = "Ability: Murder",
+				text = {
+					"Cost: {C:attention}#1#{} TP",
+					"Effect: {X:purple,C:white}X#2#{} Blind size,",
+					"or {X:purple,C:white}^#3#{} Blind size if",
+					"{C:attention}Ante{} is greater than {C:attention}#4#{}",
 				}
 			},
 			--#endregion
@@ -994,7 +1016,7 @@ return {
 		v_text = {
 			ch_c_mul_waterfall1 = { "Every {C:attention}Boss Blind{} is replaced with {C:red}The Undying{}" },
 			ch_c_mul_waterfall2 = {
-				"If {C:chips}score{} is below {X:attention,C:white}X-0.5{} {C:attention}Blind Size{}, {C:red}lose instantly{}",
+				"If {C:chips}score{} is below {X:purple,C:white}X-0.5{} {C:attention}Blind size{}, {C:red}lose instantly{}",
 			},
 			ch_c_mul_waterfall3 = {
 				"You lose {C:attention}twice{} as many chips if hit by a spear",
@@ -1016,6 +1038,7 @@ return {
 			k_mul_lost_fifty_fifty = "Lost...",
 			k_mul_eliminated = "Eliminated!",
 			k_mul_boom = "Boom!",
+			k_mul_murdered = "Murdered!",
 			k_mul_thaumaturgy_energy = "Thaumaturgy Energy",
 			k_mul_make_room = "Must have at least 1 available consumable slot",
 			k_mul_make_room2 = "in order to create a Philosopher's Stone...",

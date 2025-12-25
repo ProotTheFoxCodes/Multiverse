@@ -416,3 +416,15 @@ function Multiverse.transmute_info_queue(card, info_queue)
 		}
 	end
 end
+
+---If `operation` is a number, then it will be added to current blind size
+---Otherwise, sets blind size equal to the result of the operation
+---@param operation number | fun(chips: number): number
+function Multiverse.change_blind_size(operation)
+	if G.GAME.facing_blind then
+		local returns = {}
+		local amt = type(operation) == "number" and (G.GAME.blind.chips + operation) or operation(G.GAME.blind.chips)
+		G.GAME.blind.chips = math.floor(amt + 0.5)
+		G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+	end
+end

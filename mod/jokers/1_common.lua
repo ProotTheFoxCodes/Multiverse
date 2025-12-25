@@ -106,7 +106,6 @@ SMODS.Joker({
 				ref_table = card.ability.extra,
 				ref_value = "mult",
 				scalar_value = "mult_inc",
-				message_key = "a_mult"
 			})
 		end
 		if context.joker_main and card.ability.extra.mult > 0 then
@@ -134,7 +133,6 @@ SMODS.Joker({
 					ref_table = card.ability.extra,
 					ref_value = "mult",
 					scalar_value = "mult_inc",
-					message_key = "a_mult"
 				})
 			end
 		end

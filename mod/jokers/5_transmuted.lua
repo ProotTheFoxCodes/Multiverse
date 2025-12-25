@@ -296,7 +296,7 @@ Multiverse.UsableJoker({
 			},
 		}
 	end,
-	config = { extra = { retriggers = 8, retriggers_per_hand = 4, hands = 2, hand_boost = 4, tp_cost = 30 } },
+	config = { extra = { retriggers = 6, retriggers_per_hand = 2, hands = 2, hand_boost = 4, tp_cost = 30 } },
 	calculate = function(self, card, context)
 		if context.repetition and context.cardarea == G.play then
 			local amt = card.ability.extra.retriggers
@@ -316,12 +316,11 @@ Multiverse.UsableJoker({
 		end
 	end,
 	use_ability = function(self, card)
-		G.E_MANAGER:add_event(Event({
-			func = function()
-				ease_hands_played(card.ability.extra.hand_boost)
-				return true
-			end,
-		}))
+		Multiverse.ease_TP(-card.ability.extra.tp_cost)
+		ease_hands_played(card.ability.extra.hand_boost)
+		SMODS.calculate_effect({
+			message = localize("k_eaten_ex")
+		}, card)
 	end,
 	can_use_ability = function(self, card)
 		return G.GAME.mul_TP >= card.ability.extra.tp_cost
@@ -343,4 +342,113 @@ Multiverse.UsableJoker({
 	rarity = "mul_transmuted",
 	blueprint_compat = false,
 	cost = 40,
+	config = { extra = { tp_cost = 30, blind_reduce_x = 0.25, blind_reduce_e = 0.75, min_ante = 10 } },
+	loc_vars = function(self, info_queue, card)
+		table.insert(info_queue, {
+			set = "Other",
+			key = "mul_impostor_ability",
+			vars = {
+				card.ability.extra.tp_cost,
+				card.ability.extra.blind_reduce_x,
+				card.ability.extra.blind_reduce_e,
+				card.ability.extra.min_ante
+			},
+		})
+		if card.area and card.area == G.jokers then
+			local left_joker
+			local right_joker
+			for i = 1, #G.jokers.cards do
+				if G.jokers.cards[i] == card then
+					right_joker = G.jokers.cards[i + 1]
+					left_joker = G.jokers.cards[i - 1]
+				end
+			end
+			local left_compatible = left_joker and left_joker ~= card and left_joker.config.center.blueprint_compat
+			local right_compatible = right_joker and right_joker ~= card and right_joker.config.center.blueprint_compat
+			main_end = {
+				{
+					n = G.UIT.R,
+					config = { align = "bm", minh = 0.4, padding = 0.05 },
+					nodes = {
+						{
+							n = G.UIT.C,
+							config = {
+								ref_table = card,
+								align = "m",
+								colour = left_compatible and mix_colours(G.C.GREEN, G.C.JOKER_GREY, 0.8)
+									or mix_colours(G.C.RED, G.C.JOKER_GREY, 0.8),
+								r = 0.05,
+								padding = 0.06,
+							},
+							nodes = {
+								{
+									n = G.UIT.T,
+									config = {
+										text = " "
+											.. localize("k_" .. (left_compatible and "compatible" or "incompatible"))
+											.. " ",
+										colour = G.C.UI.TEXT_LIGHT,
+										scale = 0.32 * 0.8,
+									},
+								},
+							},
+						},
+						{
+							n = G.UIT.C,
+							config = {
+								ref_table = card,
+								align = "m",
+								colour = right_compatible and mix_colours(G.C.GREEN, G.C.JOKER_GREY, 0.8)
+									or mix_colours(G.C.RED, G.C.JOKER_GREY, 0.8),
+								r = 0.05,
+								padding = 0.06,
+							},
+							nodes = {
+								{
+									n = G.UIT.T,
+									config = {
+										text = " "
+											.. localize("k_" .. (right_compatible and "compatible" or "incompatible"))
+											.. " ",
+										colour = G.C.UI.TEXT_LIGHT,
+										scale = 0.32 * 0.8,
+									},
+								},
+							},
+						},
+					},
+				},
+			}
+			return { main_end = main_end }
+		end
+	end,
+	calculate = function(self, card, context)
+		local index = 1
+		for i = 1, #G.jokers.cards do
+			if G.jokers.cards[i] == card then
+				index = i
+				break
+			end
+		end
+		local left = SMODS.blueprint_effect(card, G.jokers.cards[index - 1], context) or {}
+		local right = SMODS.blueprint_effect(card, G.jokers.cards[index + 1], context) or {}
+		return SMODS.merge_effects({ left, right })
+	end,
+	can_use_ability = function(self, card)
+		return G.GAME.mul_TP >= card.ability.extra.tp_cost and G.GAME.facing_blind
+	end,
+	use_ability = function(self, card)
+		Multiverse.ease_TP(-card.ability.extra.tp_cost)
+		Multiverse.change_blind_size(function(chips)
+			local ret = to_big(chips * card.ability.extra.blind_reduce_x)
+			if to_big(G.GAME.round_resets.ante) >= to_big(10) then
+				ret = to_big(chips ^ card.ability.extra.blind_reduce_e)
+			end
+			return ret
+		end)
+		SMODS.calculate_effect({
+			message = localize("k_mul_murdered"),
+			sound = "slice1"
+		}, card)
+	end,
 })

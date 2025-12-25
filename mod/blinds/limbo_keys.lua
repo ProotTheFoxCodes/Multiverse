@@ -149,8 +149,9 @@ function Multiverse.limbo_keys_end()
 			delay = 4 * G.SPEEDFACTOR,
 			func = function()
 				if not Multiverse.has_guessed then
-					G.GAME.blind.chips = G.GAME.blind.chips * 10
-					G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+					Multiverse.change_blind_size(function (chips)
+						return chips * 10
+					end)
 					Multiverse.start_animation("explosion")
 					play_sound("mul_deltarune_explosion", 1, 0.8)
 				end

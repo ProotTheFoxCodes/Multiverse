@@ -61,8 +61,8 @@ SMODS.Blind({
 		delay(18.6 * G.SPEEDFACTOR)
 	end,
 	disable = function(self)
-		if to_big(get_blind_amount(G.GAME.round_resets.ante) * to_big(2)) < G.GAME.blind.chips then
-			G.GAME.blind.chips = get_blind_amount(G.GAME.round_resets.ante) * 2
+		if to_big(get_blind_amount(G.GAME.round_resets.ante) * G.GAME.blind.mult) < G.GAME.blind.chips then
+			G.GAME.blind.chips = get_blind_amount(G.GAME.round_resets.ante) * G.GAME.blind.mult
 			G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
 		end
 		Multiverse.hide_blind_instructions()
@@ -74,6 +74,7 @@ SMODS.Blind({
 		return { vars = { 10 } }
 	end,
 })
+
 SMODS.Blind({
 	key = "undying",
 	atlas = "multiverse_blinds",
