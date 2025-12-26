@@ -76,7 +76,7 @@ SMODS.Consumable({
 		local count = 0
 		if G.jokers then
 			for _, j in ipairs(G.jokers.cards) do
-				if j.config.center.rarity == "mul_transmuted" then
+				if j:is_rarity("mul_transmuted") then
 					count = count + 1
 				end
 			end
@@ -93,7 +93,7 @@ SMODS.Consumable({
 		local joker_to_transmute = G.jokers.highlighted[1]
 		local count = 0
 		for _, j in ipairs(G.jokers.cards) do
-			if j.config.center.rarity == "mul_transmuted" then
+			if j:is_rarity("mul_transmuted") then
 				count = count + 1
 			end
 		end
