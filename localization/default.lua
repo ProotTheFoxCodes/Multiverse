@@ -70,6 +70,14 @@ return {
 					"{C:inactive}(Minimum of {C:attention}1{C:inactive} retrigger){}",
 				},
 			},
+			m_mul_sus_yellow = {
+				name = "Suspiciously Yellow Card",
+				text = {
+					"When discarded, earn {C:money}$#1#{}",
+					"{C:red,E:2}Self-destructs{} after",
+					"being discarded {C:attention}#2#{} {C:inactive}(#3#){} times",
+				},
+			},
 		},
 		Edition = {
 			e_mul_hyperdimensional = {
@@ -681,13 +689,13 @@ return {
 						"across all scored cards",
 						"Increases retriggers",
 						"by {C:attention}#3#{} per hand remaining",
-						"{C:inactive}(Currently {C:attention}#4#{C:inactive} retriggers){}"
+						"{C:inactive}(Currently {C:attention}#4#{C:inactive} retriggers){}",
 					},
 					{
 						"{C:inactive,s:0.8}It costs 400,000 dollars to",
-						"{C:inactive,s:0.8}fire this gun for 12 seconds"
-					}
-				}
+						"{C:inactive,s:0.8}fire this gun for 12 seconds",
+					},
+				},
 			},
 			j_mul_impostor = {
 				name = "Impostor",
@@ -699,8 +707,8 @@ return {
 					},
 					{
 						"{C:inactive,s:0.8}When the impostor is sus",
-					}
-				}
+					},
+				},
 			},
 		},
 		Spectral = {
@@ -787,6 +795,15 @@ return {
 					"a {C:attention}burger{} for {C:attention}1{} minute",
 				},
 			},
+			c_mul_eggman = {
+				name = "The {C:inactive}(Dr.){} Eggman",
+				text = {
+					"Converts all {C:clubs}Clubs{}",
+					"held in hand into",
+					"{C:attention}Suspiciously Yellow",
+					"{C:attention}Cards"
+				}
+			}
 		},
 		Other = {
 			mul_transmutable = {
@@ -823,8 +840,8 @@ return {
 					"relevant cards as {C:attention}evenly{} as",
 					"possible, distributing any",
 					"leftover retriggers to the",
-					"{C:attention}leftmost{} cards in the area"
-				}
+					"{C:attention}leftmost{} cards in the area",
+				},
 			},
 			--#region Activated ability descriptions
 			mul_steve_ability = {
@@ -843,7 +860,7 @@ return {
 				text = {
 					"Cost: {C:attention}#1#{} TP",
 					"Effect: {C:blue}+#2#{} hands",
-				}
+				},
 			},
 			mul_impostor_ability = {
 				name = "Ability: Murder",
@@ -852,7 +869,7 @@ return {
 					"Effect: {X:purple,C:white}X#2#{} Blind size,",
 					"or {X:purple,C:white}^#3#{} Blind size if",
 					"{C:attention}Ante{} is greater than {C:attention}#4#{}",
-				}
+				},
 			},
 			--#endregion
 			--#region Transmutation hints
@@ -902,7 +919,7 @@ return {
 					"Obtain {C:attention}#2#{} different",
 					"Jokers while owned",
 					"{C:inactive}(#1#/#2#){}",
-				}
+				},
 			},
 			--#endregion
 			--#region Mechanic descriptions
@@ -1050,6 +1067,45 @@ return {
 			b_mul_discord_server = "My Discord Server",
 			b_mul_landing_page = "About Me",
 			mul_stand_user = "Saved by Stand User via time reversal",
+			k_mul_eggman_speech = {
+				"I'VE COME TO MAKE AN ANNOUNCEMENT",
+				"THE PLANT IS A BITCH ASS MOTHERFUCKER",
+				"IT DEBUFFED MY FUCKING FACE CARDS",
+				"THAT'S RIGHT",
+				"IT TOOK ITS GREEN FUCKING LEAVES",
+				"AND DEBUFFED MY FACE CARDS",
+				"AND IT SAID ITS BLIND WAS THIS BIG",
+				"AND I SAID THAT'S DISGUSTING",
+				"SO I'M MAKING A",
+				"CALLOUT POST ON TWITTER DOT COM",
+				"THE PLANT, YOU'VE GOT A WEAK EFFECT",
+				"IT'S AS POWERFUL AS THE SERPENT,",
+				"EXCEPT WAY WEAKER",
+				"AND GUESS WHAT",
+				"HERE'S WHAT MY EFFECT LOOKS LIKE",
+				"BOOM",
+				"THAT'S RIGHT BABY",
+				"ALL JOKERS",
+				"NO DEBUFFS",
+				"NO FLIPS",
+				"LOOK AT THAT",
+				"IT LOOKS LIKE ALL BLINDS ARE DISABLED",
+				"IT DEBUFFED MY FACE CARDS",
+				"SO GUESS WHAT",
+				"I'M GONNA DISABLE THE BLIND",
+				"THAT'S RIGHT THIS IS WHAT YOU GET",
+				"MY SUPER LASER DISABLE",
+				"EXCEPT I'M NOT GONNA DISABLE THIS BLIND",
+				"I'M GONNA GO HIGHER",
+				"I'M DISABLING EVERY BLIND",
+				"HOW DO YA LIKE THAT, LOCALTHUNK?",
+				"I DISABLED EVERY BLIND, YOU IDIOT",
+				"YOU HAVE 7 ANTES",
+				"BEFORE THE Boss Disabled!",
+				"HITS THE VERDANT LEAF",
+				"NOW GET REROLLED",
+				"BEFORE I DISABLE YOU TOO",
+			},
 			mul_config_menu_text = {
 				"Debug Mode affects several elements of the mod for easier debugging",
 				"Debug Mode cannot be enabled, except if a certain file is loaded",

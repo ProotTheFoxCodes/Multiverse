@@ -111,3 +111,32 @@ SMODS.Enhancement({
 		end
 	end,
 })
+
+SMODS.Enhancement({
+	key = "sus_yellow",
+	atlas = "placeholder_modifiers",
+	pos = { x = 0, y = 0 },
+	config = { extra = { count = 0, money = 1, max_count = 3 } },
+	weight = 5,
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.money, card.ability.extra.max_count, card.ability.extra.count } }
+	end,
+	calculate = function(self, card, context)
+		if context.discard and context.other_card == card and not context.other_card.debuff then
+			G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+			card.ability.extra.count = card.ability.extra.count + 1
+			return {
+				dollars = card.ability.extra.money,
+				func = function()
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            G.GAME.dollar_buffer = 0
+                            return true
+                        end
+                    }))
+                end,
+				remove = card.ability.extra.count >= card.ability.extra.max_count and true or false
+			}
+		end
+	end,
+})
