@@ -49,6 +49,8 @@ SMODS.ObjectType({
 SMODS.draw_ignore_keys.mul_joker_use_button = true
 
 SMODS.current_mod.calculate = function(self, context)
+	local ret = {}
+	local haspost = false
 	if context.setting_blind and next(SMODS.find_card("c_mul_eggman")) and not G.GAME.mul_eggman_secret then
 		G.GAME.mul_eggman_secret = true
 		G.E_MANAGER:add_event(Event({
@@ -93,7 +95,7 @@ SMODS.current_mod.calculate = function(self, context)
 		Multiverse.hide_TP_meter()
 	end
 	if context.debuff_card then
-		return Multiverse.handle_debuffs(context.debuff_card)
+		ret[#ret+1] = Multiverse.handle_debuffs(context.debuff_card)
 	end
 	if context.setting_blind then
 		Multiverse.show_TP_meter()
@@ -107,6 +109,13 @@ SMODS.current_mod.calculate = function(self, context)
 		else
 			Multiverse.ease_TP(pseudorandom("mul_TP_gen", G.GAME.mul_TP_min_gain, G.GAME.mul_TP_max_gain))
 		end
+	end
+	if #ret == 0 then
+		return nil, haspost
+	elseif #ret == 1 then
+		return ret[1], haspost
+	else
+		return SMODS.merge_effects(unpack(ret)), haspost
 	end
 end
 
