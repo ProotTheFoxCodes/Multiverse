@@ -1043,6 +1043,10 @@ return {
 			},
 		},
 		dictionary = {
+			k_mul_level_up = "Level Up!",
+			k_mul_level_down = "Level Down...",
+			k_mul_enchanted = "Enchanted!",
+			k_mul_disenchanted = "Disenchanted...",
 			k_mul_transmuted = "Transmuted",
 			k_mul_missed_bus = "Missed the bus!",
 			k_mul_antimatter_init = "And so it begins...",

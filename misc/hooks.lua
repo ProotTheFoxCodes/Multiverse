@@ -213,43 +213,10 @@ end
 local start_run_hook = Game.start_run
 function Game:start_run(args)
 	start_run_hook(self, args)
-	---@type integer
-	G.GAME.mul_thaumaturgy_energy = G.GAME.mul_thaumaturgy_energy or 0
-	---@type integer
-	G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate or 2
-	---@type integer
-	G.GAME.mul_thaumaturgy_energy_per_joker = G.GAME.mul_thaumaturgy_energy_per_joker or 10
-	---@type number
-	G.GAME.mul_undyne_damage_mult = 1
-	if G.GAME.challenge == "c_mul_monsoon" then
-		G.GAME.mul_undyne_damage_mult = 2
-	end
-	if G.GAME.blind and G.GAME.facing_blind then
-		Multiverse.show_TP_meter()
-		if G.GAME.blind.config.blind.key == "bl_mul_undying" and not G.GAME.blind.disabled then
-			Multiverse.show_blind_instructions("undying")
-		end
-	end
-	---@type number
-	G.GAME.mul_money_mult = G.GAME.mul_money_mult or 1
-	---@type boolean
-	G.GAME.mul_time_machine_active = G.GAME.mul_time_machine_active or false
-	---@type boolean
-	G.GAME.mul_stand_arrow_active = G.GAME.mul_stand_arrow_active or false
-	---@type boolean
-	G.GAME.mul_elder_scroll_active = G.GAME.mul_stand_arrow_active or false
-	---@type integer
-	G.GAME.mul_unicorn_protections = G.GAME.mul_unicorn_protections or 0
-	---@type boolean
-	G.GAME.mul_kryptonite_active = G.GAME.mul_kryptonite_active or false
-	---@type string?
-	G.GAME.mul_last_myth_used = G.GAME.mul_last_myth_used or nil
-	---@type integer
-	G.GAME.mul_TP = G.GAME.mul_TP or 0
-	---@type integer
-	G.GAME.mul_TP_max_gain = G.GAME.mul_TP_max_gain or 8
-	---@type integer
-	G.GAME.mul_TP_min_gain = G.GAME.mul_TP_min_gain or 4
+	Multiverse.init_TP()
+	Multiverse.init_thaumaturgy()
+	Multiverse.init_myth()
+	Multiverse.init_blinds()
 end
 
 local can_sell_hook = Card.can_sell_card

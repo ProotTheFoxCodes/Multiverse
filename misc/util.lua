@@ -428,3 +428,52 @@ function Multiverse.change_blind_size(operation)
 		G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
 	end
 end
+
+function Multiverse.init_thaumaturgy()
+	---@type integer
+	G.GAME.mul_thaumaturgy_energy = G.GAME.mul_thaumaturgy_energy or 0
+	---@type integer
+	G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate or 2
+	---@type integer
+	G.GAME.mul_thaumaturgy_energy_per_joker = G.GAME.mul_thaumaturgy_energy_per_joker or 10
+end
+
+function Multiverse.init_TP()
+	---@type integer
+	G.GAME.mul_TP = G.GAME.mul_TP or 0
+	---@type integer
+	G.GAME.mul_TP_max_gain = G.GAME.mul_TP_max_gain or 5
+	---@type integer
+	G.GAME.mul_TP_min_gain = G.GAME.mul_TP_min_gain or 2
+end
+
+function Multiverse.init_myth()
+	---@type number
+	G.GAME.mul_money_mult = G.GAME.mul_money_mult or 1
+	---@type boolean
+	G.GAME.mul_time_machine_active = G.GAME.mul_time_machine_active or false
+	---@type boolean
+	G.GAME.mul_stand_arrow_active = G.GAME.mul_stand_arrow_active or false
+	---@type boolean
+	G.GAME.mul_elder_scroll_active = G.GAME.mul_stand_arrow_active or false
+	---@type integer
+	G.GAME.mul_unicorn_protections = G.GAME.mul_unicorn_protections or 0
+	---@type boolean
+	G.GAME.mul_kryptonite_active = G.GAME.mul_kryptonite_active or false
+	---@type string?
+	G.GAME.mul_last_myth_used = G.GAME.mul_last_myth_used or nil
+end
+
+function Multiverse.init_blinds()
+	---@type number
+	G.GAME.mul_undyne_damage_mult = 1
+	if G.GAME.challenge == "c_mul_monsoon" then
+		G.GAME.mul_undyne_damage_mult = 2
+	end
+	if G.GAME.blind and G.GAME.facing_blind then
+		Multiverse.show_TP_meter()
+		if G.GAME.blind.config.blind.key == "bl_mul_undying" and not G.GAME.blind.disabled then
+			Multiverse.show_blind_instructions("undying")
+		end
+	end
+end

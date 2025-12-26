@@ -110,6 +110,7 @@ SMODS.current_mod.calculate = function(self, context)
 			Multiverse.ease_TP(pseudorandom("mul_TP_gen", G.GAME.mul_TP_min_gain, G.GAME.mul_TP_max_gain))
 		end
 	end
+	Multiverse.calculate_deck_enchantments(context, ret)
 	if #ret == 0 then
 		return nil, haspost
 	elseif #ret == 1 then
