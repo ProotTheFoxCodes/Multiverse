@@ -477,3 +477,9 @@ function Multiverse.init_blinds()
 		end
 	end
 end
+
+function Multiverse.parse_vars(str, vars)
+	return string.gsub(str, "(#%d+#)", function(matched)
+		return tostring(vars[tonumber(string.gsub(matched, "[#%s]", ""), 10)])
+	end)
+end
