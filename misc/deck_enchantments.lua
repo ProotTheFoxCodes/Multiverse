@@ -217,7 +217,7 @@ function Multiverse.number_to_roman(num)
 	if num == 5 then
 		return "V"
 	end
-	if num == 0 then
+	if num <= 0 then
 		return ""
 	end
 	if num > 1000 then

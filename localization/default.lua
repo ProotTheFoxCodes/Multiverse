@@ -29,18 +29,25 @@ return {
 			},
 		},
 		mul_DeckEnchantment = {
-			de_mul_dark = {
-				name = "Dark #1#",
+			de_mul_dark_affinity = {
+				name = "Dark Affinity#1#",
 				text = {
 					"{V:1}+#2#{C:inactive}/{V:2}+#3#{} Joker slots",
 					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} hands"
 				}
 			},
-			de_mul_flame = {
-				name = "Flame #1#",
+			de_mul_flame_affinity = {
+				name = "Flame Affinity#1#",
 				text = {
-					"{V:1}+#2#{C:inactive}/{V:2}+#3#{} Joker slots",
+					"{V:1}+#2#{C:inactive}/{V:2}+#3#{} discards",
 					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} hands"
+				}
+			},
+			de_mul_aqua_affinity = {
+				name = "Aqua Affinity#1#",
+				text = {
+					"{V:1}+#2#{C:inactive}/{V:2}+#3#{} hands",
+					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} discards"
 				}
 			},
 		},
