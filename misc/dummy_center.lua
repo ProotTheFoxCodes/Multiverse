@@ -1,9 +1,39 @@
+Multiverse.DummyCenters = {}
 Multiverse.DummyCenter = SMODS.Center:extend({
-    set = "mul_Dummy",
-    obj_buffer = {},
-    in_pool = function(self, args)
-        return false
+	set = "mul_Dummy",
+	obj_buffer = {},
+	obj_table = Multiverse.DummyCenters,
+	required_params = {
+		"key",
+	},
+    class_prefix = "du",
+	in_pool = function(self, args)
+		return false
+	end,
+	no_collection = true,
+    inject = function (self, i)
+        Multiverse.DummyCenters[self.key] = self
     end,
-    no_collection = true,
-    generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table) end
+    delete = function (self)
+        Multiverse.DummyCenters[self.key] = nil
+    end,
+	process_loc_text = function(self)
+		if G.localization.descriptions[self.set].key or self.loc_txt then
+			SMODS.Center.process_loc_text(self)
+		end
+	end,
+})
+
+Multiverse.DummyCenter({
+	key = "all_enchants",
+	loc_vars = function(self, info_queue, card)
+		if G.GAME.mul_deck_enchantments then
+			for _, key in ipairs(Multiverse.DeckEnchantment.obj_buffer) do
+				local level = (G.GAME.mul_deck_enchantments[key] or {}).level or 0
+				if level > 0 then
+					info_queue[#info_queue + 1] = Multiverse.DeckEnchantments[key]
+				end
+			end
+		end
+	end,
 })

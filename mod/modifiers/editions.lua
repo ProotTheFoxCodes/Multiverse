@@ -53,8 +53,3 @@ SMODS.Edition({
 		end
 	end,
 })
-
-SMODS.Shader({
-	key = "enchantment",
-	path = "enchantment.fs",
-})

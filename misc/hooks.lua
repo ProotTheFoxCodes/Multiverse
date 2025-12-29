@@ -217,6 +217,7 @@ function Game:start_run(args)
 	Multiverse.init_thaumaturgy()
 	Multiverse.init_myth()
 	Multiverse.init_blinds()
+	Multiverse.init_deck_enchantments()
 end
 
 local can_sell_hook = Card.can_sell_card

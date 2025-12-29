@@ -77,6 +77,26 @@ SMODS.DrawStep({
 })
 
 SMODS.DrawStep({
+	key = "enchantment_shader",
+	order = 1,
+	func = function (card, layer)
+		local enchantment_shader = false
+		if G.GAME.mul_deck_enchantments and G.deck then
+			for _, enchant in pairs(G.GAME.mul_deck_enchantments) do
+				if enchant and enchant.level > 0 then
+					enchantment_shader = true
+					break
+				end
+			end
+		end
+		if enchantment_shader and card.area and card.area == G.deck then
+			card.children.back:draw_shader("mul_enchantment", nil, card.ARGS.send_to_shader, true)
+		end
+	end,
+	conditions = { vortex = false, facing = "back" }
+})
+
+SMODS.DrawStep({
 	key = "transmutable_sticker",
 	order = 96,
 	func = function(card, layer)

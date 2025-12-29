@@ -1,5 +1,15 @@
 return {
 	descriptions = {
+		mul_Dummy = {
+			du_mul_all_enchants = {
+				name = "Deck Enchantments",
+				text = {
+					"Your deck is {E:1,C:purple}enchanted{}",
+					"providing you with",
+					"passive effects...",
+				}
+			}
+		},
 		Blind = {
 			bl_mul_limbo = {
 				name = "The Limbo",
@@ -17,6 +27,15 @@ return {
 					"#1#% of Blind size when hit)",
 				},
 			},
+		},
+		mul_DeckEnchantment = {
+			de_mul_dark = {
+				name = "Dark#1#",
+				text = {
+					"{V:1}+#2#{C:inactive}/{V:2}+#3#{C:inactive} Joker slots",
+					"{V:3}-#2#{C:inactive}/{V:4}-#3#{C:inactive} hands"
+				}
+			}
 		},
 		Enhanced = {
 			m_mul_calling_card = {

@@ -16,13 +16,28 @@
 ---@field inject? fun(self: Multiverse.DeckEnchantment|table, i?: number) Called during `inject_class`. Injects the object into the game.
 ---@field take_ownership? fun(self: Multiverse.DeckEnchantment|table, key: string, obj: Multiverse.DeckEnchantment|table, silent?: boolean): nil|table|Multiverse.DeckEnchantment Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: Multiverse.DeckEnchantment|table, key: string): Multiverse.DeckEnchantment|table? Returns an object if one matches the `key`.
----@field calculate? fun(self: Multiverse.DeckEnchantment|table, context: CalcContext, level: number): table? Calculates this object if it is applied to the deck.
+---@field calculate? fun(self: Multiverse.DeckEnchantment|table, enchantment: EnchantmentData, context: CalcContext): table? Calculates this object if it is applied to the deck.
 ---@field add_to_deck? fun(self: Multiverse.DeckEnchantment|table) Called when the enchantment is applied.
 ---@field remove_from_deck? fun(self: Multiverse.DeckEnchantment|table) Called when the enchantment is removed.
 ---@field max_level? integer The maximum level this enchantment can be.
----@field back_incompat? string[] A list of keys of backs this enchantment cannot be applied to.
----@field on_change_level? fun(self: Multiverse.DeckEnchantment|table, delta: integer) Called when this enchantment's level changes, but not when this enchantment is applied or removed.
+---@field deck_incompat? string[] A list of keys of decks this enchantment cannot be applied to.
+---@field in_pool? fun(self: Multiverse.DeckEnchantment|table, args: table): any? Determines whether or not this enchantment can appear. args.level will indicate the attempted level up amount, and can be used to determine if a certain enchantment can be leveled 
+---@field enchant_incompat? string[] A list of keys of enchantments this
+---@field obj_buffer? string[] Array of keys to all objects registered to this class. 
+---@field obj_table? table<string, Multiverse.DeckEnchantment|table> Table of objects registered to this class.
+---@field loc_vars? fun(self: Multiverse.DeckEnchantment, info_queue: table, card: table): table?
+---@field on_change_level? fun(self: Multiverse.DeckEnchantment|table, delta: integer, final_level: integer) Called when this enchantment's level changes.
 ---@field get_level? fun(self: Multiverse.DeckEnchantment|table): number Returns the current level of this enchantment.
+
+---@alias EnchantmentType
+---| "positive"
+---| "neutral",
+---| "negative"
+
+---@class EnchantmentData
+---@field level number
+---@field config table
+---@field key string
 
 ---@overload fun(self: Multiverse.DeckEnchantment): Multiverse.DeckEnchantment
 Multiverse.DeckEnchantment = setmetatable({}, {

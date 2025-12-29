@@ -1,6 +1,45 @@
+SMODS.Shader({
+	key = "enchantment",
+	path = "enchantment.fs",
+})
+
+local draw_cardarea_hook = CardArea.draw
+function CardArea:draw()
+	draw_cardarea_hook(self)
+	if self == G.deck then
+		if self.states.collide.is or (G.buttons and G.buttons.states.collide.is and G.CONTROLLER.HID.controller) then
+			if not self.children.hover_tooltip then
+				local fake_card = {
+					ability_UIBox_table = generate_card_ui(Multiverse.DummyCenters["du_mul_all_enchants"]),
+					config = {
+						center = Multiverse.DummyCenters["du_mul_all_enchants"]
+					},
+					T = (self.cards[1] or self).T
+				}
+				self.children.hover_tooltip = UIBox({
+					definition = G.UIDEF.card_h_popup(fake_card),
+					config = { align = "tm", offset = { x = 0, y = -0.1 }, parent = self.cards[1] or self },
+				})
+			end
+			self.children.hover_tooltip.states.collide.can = false
+		elseif self.children.hover_tooltip then
+			self.children.hover_tooltip:remove()
+			self.children.hover_tooltip = nil
+		end
+	end
+	if
+		Multiverse.count_deck_enchantments() > 0
+		and self.children.hover_tooltip
+		and (self.states.collide.is or (G.buttons and G.buttons.states.collide.is and G.CONTROLLER.HID.controller))
+	then
+		self.children.hover_tooltip:draw()
+	end
+end
+
 ---@type table<string, Multiverse.DeckEnchantment>
 Multiverse.DeckEnchantments = {}
 
+---@type Multiverse.DeckEnchantment
 Multiverse.DeckEnchantment = SMODS.Center:extend({
 	set = "mul_DeckEnchantment",
 	max_level = 1,
@@ -10,46 +49,103 @@ Multiverse.DeckEnchantment = SMODS.Center:extend({
 	discovered = false,
 	config = {},
 	class_prefix = "de",
-	back_incompat = {},
+	deck_incompat = {},
+	enchant_incompat = {},
 	required_params = {
 		"key",
 	},
-	calculate = function(self, context, level) end,
+	calculate = function(self, enchantment, context) end,
 	add_to_deck = function(self) end,
 	remove_from_deck = function(self) end,
 	in_pool = function(self)
-		return not Multiverse.is_deck_incompat(self)
+		return true
 	end,
 	on_change_level = function(self) end,
 	get_level = function(self)
-        return G.GAME.mul_deck_enchantments[self.key] or 0
-    end,
+		return G.GAME.mul_deck_enchantments and ((G.GAME.mul_deck_enchantments[self.key] or {}).level or 0) or 0
+	end,
 })
 
+Multiverse.DeckEnchantment({
+	key = "dark",
+	max_level = 2,
+	loc_vars = function(self, info_queue, card)
+		local colours = {}
+		local ret = {
+			Multiverse.number_to_roman(self:get_level()),
+		}
+		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.FILTER)
+		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.BLUE)
+		for i = 1, self.max_level do
+			ret[#ret + 1] = i
+		end
+		ret.colours = colours
+		return {
+			vars = ret,
+		}
+	end,
+	on_change_level = function(self, delta, final_level)
+		G.jokers:change_size(delta)
+		ease_hands_played(-delta)
+		G.GAME.round_resets.hands = G.GAME.round_resets.hands - delta
+	end,
+	deck_incompat = {
+		"b_black",
+	},
+})
+
+---@param obj Multiverse.DeckEnchantment
+---@param colours table
+---@param active_colour table
+function Multiverse.handle_deck_enchantment_loc_colours(obj, colours, active_colour)
+	for i = 1, obj.max_level do
+		if obj:get_level() == i or obj:get_level() == 0 then
+			colours[#colours + 1] = active_colour
+		else
+			colours[#colours + 1] = G.C.UI.TEXT_INACTIVE
+		end
+	end
+end
+
 function Multiverse.init_deck_enchantments()
-	---@type table<string, number?>
+	---@type table<string, EnchantmentData?>
 	G.GAME.mul_deck_enchantments = G.GAME.mul_deck_enchantments or {}
 end
 
----Checks if an enchantment is incompatible with current selected deck.
+---Checks if an enchantment is compatible with current selected deck.
 ---@param enchantment string
 ---@return boolean
-function Multiverse.is_deck_incompat(enchantment)
+function Multiverse.is_deck_compat(enchantment)
 	for _, key in ipairs(Multiverse.DeckEnchantments[enchantment].back_incompat) do
 		if G.GAME.selected_back.effect.center.key == key then
-			return true
+			return false
 		end
 	end
-	return false
+	return true
+end
+
+---Checks if an enchantment is compatible with any other enchantments on current deck.
+---@param enchantment string
+---@return boolean
+function Multiverse.is_enchant_compat(enchantment)
+	for _, key in ipairs(Multiverse.DeckEnchantments[enchantment].back_incompat) do
+		if G.GAME.mul_deck_enchantments[key] and G.GAME.mul_deck_enchantments[key].level > 0 then
+			return false
+		end
+	end
+	return true
 end
 
 ---Calculates all applied deck enchantments.
 ---@param context CalcContext
 ---@param results table
 function Multiverse.calculate_deck_enchantments(context, results)
-	for key, level in pairs(G.GAME.mul_deck_enchantments) do
-		if level and level > 0 then
-			results[#results + 1] = Multiverse.DeckEnchantments[key]:calculate(context, level)
+	if G.GAME.mul_deck_enchantments then
+		for _, key in ipairs(Multiverse.DeckEnchantment.obj_buffer) do
+			local level = G.GAME.mul_deck_enchantments[key] and G.GAME.mul_deck_enchantments[key].level or 0
+			if level > 0 then
+				results[#results + 1] = Multiverse.DeckEnchantments[key]:calculate(context, level)
+			end
 		end
 	end
 end
@@ -66,20 +162,55 @@ function Multiverse.level_up_deck_enchantment(enchantment, amt)
 		return
 	end
 	local msg = ""
+	local removed = false
+	local added = false
 	if init_level == 0 then
 		msg = localize("k_mul_enchanted")
 		obj:add_to_deck()
+		added = true
 	elseif final_level == 0 then
 		msg = localize("k_mul_disenchanted")
 		obj:remove_from_deck()
+		removed = true
 	elseif delta > 0 then
 		msg = localize("k_mul_level_up")
-        obj:on_change_level(delta)
 	elseif delta < 0 then
 		msg = localize("k_mul_level_down")
-        obj:on_change_level(delta)
 	end
-    SMODS.calculate_context({mul_modify_deck_enchantments = true})
-	G.GAME.mul_deck_enchantments[enchantment] = final_level
-    return msg
+	obj:on_change_level(delta, final_level)
+	SMODS.calculate_context({
+		mul_modify_deck_enchantments = true,
+		amount = delta,
+		mul_enchantment_removed = removed,
+		mul_enchantment_applied = added,
+	})
+	G.GAME.mul_deck_enchantments[enchantment] =
+		{ level = final_level, key = enchantment, config = copy_table(obj.config) }
+	return msg
+end
+
+function Multiverse.count_deck_enchantments()
+	local count = 0
+	if G.GAME.mul_deck_enchantments then
+		for _, key in ipairs(Multiverse.DeckEnchantment.obj_buffer) do
+			local level = G.GAME.mul_deck_enchantments[key] and G.GAME.mul_deck_enchantments[key].level or 0
+			if level > 0 then
+				count = count + 1
+			end
+		end
+	end
+	return count
+end
+
+function Multiverse.count_deck_enchantment_levels()
+	local count = 0
+	if G.GAME.mul_deck_enchantments then
+		for _, key in ipairs(Multiverse.DeckEnchantment.obj_buffer) do
+			local level = G.GAME.mul_deck_enchantments[key] and G.GAME.mul_deck_enchantments[key].level or 0
+			if level > 0 then
+				count = count + level
+			end
+		end
+	end
+	return count
 end

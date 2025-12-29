@@ -74,6 +74,9 @@ vec4 effect(vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords)
     // Get a time variable that depends on other game variables (time, rotation, hover status)
     float t = enchantment.y*2. + time * 14.;
 
+    colour.r = colour.r * 1.25;
+    colour.b = colour.b * 1.5;
+
     // The next chunk is taken from the vanilla polychrome shader, with some numbers changed to make the shape
     // of the curves different from the vanilla polychrome shader
 	vec2 floored_uv = (floor((uv*texture_details.ba)))/texture_details.ba;
@@ -91,20 +94,16 @@ vec4 effect(vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords)
     // 0 indicates "do not change the base color at all"
     // 1 indicates "override the color completely"
     // Numbers between 0 and 1 determine the balance between keeping the original color and overriding it
-    // The pow operation makes the color changes more sudden
     // The 5. number multiplied by the rest of the other factors affects the distance between the lines
     // Increase this number to make the lines appear closer together
-    float res = pow((.5 + .5* cos(5. * ((enchantment.x) * 2.612 + ( field + -.5 ) *3.14))), 2.0);
+    float res = (.5 + .4* cos(5. * ((enchantment.x) * 2.612 + ( field + -.5 ) *3.14)));
+    // Alternates between 0 and 1 strictly
+    float fac = floor(res + 0.5);
     // I used a tool to visualize the target color in HSL format
-    // Then I used a weighted average
-    // As res is closer to 1, the final H value is weighted towards this 0.83333 constant,
-    // which ends up being purple according to the HSL color format
-    hsl.x = (hsl.x * (1. - res) + 0.83333 * res);
+    hsl.x = (hsl.x * (1. - fac) + 0.75 * fac);
     // We provide a minimum saturation and increase the overall saturation level of the sprite here
     hsl.y = (min(0.6, hsl.y + 0.5));
-    // We use the weighted system again, so as to get closer to the desired color
-    // as res gets closer to 1
-    hsl.z = (hsl.z * (1. - res) + 0.6 * res);
+    hsl.z = (hsl.z * (1. - fac) + 0.5 * fac) * 6. / 5.;
 
     // colour is still in rgb format
     // We want to convert the modified HSL value back into RGB,
