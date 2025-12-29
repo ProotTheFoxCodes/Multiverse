@@ -27,13 +27,6 @@ function CardArea:draw()
 			self.children.hover_tooltip = nil
 		end
 	end
-	if
-		Multiverse.count_deck_enchantments() > 0
-		and self.children.hover_tooltip
-		and (self.states.collide.is or (G.buttons and G.buttons.states.collide.is and G.CONTROLLER.HID.controller))
-	then
-		self.children.hover_tooltip:draw()
-	end
 end
 
 ---@type table<string, Multiverse.DeckEnchantment>

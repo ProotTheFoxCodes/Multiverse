@@ -5,8 +5,8 @@ return {
 				name = "Deck Enchantments",
 				text = {
 					"Your deck is {E:1,C:purple}enchanted{}",
-					"providing you with",
-					"passive effects...",
+					"{E:1,C:purple}Enchantments{} apply passive",
+					"effects to the run...",
 				}
 			}
 		},
@@ -40,14 +40,14 @@ return {
 				name = "Flame Affinity#1#",
 				text = {
 					"{V:1}+#2#{C:inactive}/{V:2}+#3#{} discards",
-					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} hands"
+					"{V:3}-#4#{C:inactive}/{V:4}-#5#{} hands"
 				}
 			},
 			de_mul_aqua_affinity = {
 				name = "Aqua Affinity#1#",
 				text = {
 					"{V:1}+#2#{C:inactive}/{V:2}+#3#{} hands",
-					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} discards"
+					"{V:3}-#4#{C:inactive}/{V:4}-#5#{} discards"
 				}
 			},
 		},

@@ -125,6 +125,20 @@ function create_popup_UIBox_tooltip(tooltip)
 	return ret
 end
 
+local game_draw_hook = Game.draw
+function Game:draw()
+	game_draw_hook(self)
+	if G.deck then
+		if
+			Multiverse.count_deck_enchantments() > 0
+			and G.deck.children.hover_tooltip
+			and (G.deck.states.collide.is or (G.buttons and G.buttons.states.collide.is and G.CONTROLLER.HID.controller))
+		then
+			G.deck.children.hover_tooltip:draw()
+		end
+	end
+end
+
 local copy_card_hook = copy_card
 function copy_card(other, new_card, card_scale, playing_card, strip_edition)
 	local card = copy_card_hook(other, new_card, card_scale, playing_card, strip_edition)
