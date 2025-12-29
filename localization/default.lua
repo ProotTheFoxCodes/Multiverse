@@ -32,8 +32,8 @@ return {
 			de_mul_dark = {
 				name = "Dark#1#",
 				text = {
-					"{V:1}+#2#{C:inactive}/{V:2}+#3#{C:inactive} Joker slots",
-					"{V:3}-#2#{C:inactive}/{V:4}-#3#{C:inactive} hands"
+					"{V:1}+#2#{C:inactive}/{V:2}+#3#{} Joker slots",
+					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} hands"
 				}
 			}
 		},
