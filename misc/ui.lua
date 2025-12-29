@@ -205,10 +205,6 @@ Multiverse.music_credits = {
 		},
 		{
 			{
-				"Presage",
-				"MIRAR",
-			},
-			{
 				"Sneaky Snitch",
 				"Kevin Macleod",
 			},
