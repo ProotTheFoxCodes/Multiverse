@@ -505,7 +505,7 @@ SMODS.Consumable({
 			set = "Other",
 			key = "mul_active_consumable",
 		})
-		local active = card.ability.extra.is_active and "active" or "inactive"
+		local active = card.ability.extra.is_active and localize("k_mul_active") or localize("k_mul_inactive")
 		return { vars = { card.ability.extra.temp_recharge_boost, active } }
 	end,
 	keep_on_use = function(self, card)
@@ -573,7 +573,7 @@ SMODS.Consumable({
 			set = "Other",
 			key = "mul_active_consumable",
 		})
-		local active = card.ability.extra.is_active and "active" or "inactive"
+		local active = card.ability.extra.is_active and localize("k_mul_active") or localize("k_mul_inactive")
 		return { vars = { card.ability.extra.temp_recharge_boost, card.ability.extra.shop_penalty, active } }
 	end,
 	keep_on_use = function(self, card)
@@ -612,7 +612,7 @@ SMODS.Consumable({
 			set = "Other",
 			key = "mul_active_consumable",
 		})
-		local active = card.ability.extra.is_active and "active" or "inactive"
+		local active = card.ability.extra.is_active and localize("k_mul_active") or localize("k_mul_inactive")
 		local suit = G.GAME.current_round.mul_stand_arrow_suit or "Spades"
 		return {
 			vars = {
@@ -705,7 +705,7 @@ SMODS.Consumable({
 			set = "Other",
 			key = "mul_active_consumable",
 		})
-		local active = card.ability.extra.is_active and "active" or "inactive"
+		local active = card.ability.extra.is_active and localize("k_mul_active") or localize("k_mul_inactive")
 		return { vars = { card.ability.extra.temp_recharge_boost, active } }
 	end,
 	keep_on_use = function(self, card)
@@ -814,7 +814,7 @@ SMODS.Consumable({
 			set = "Other",
 			key = "mul_active_consumable",
 		})
-		local active = card.ability.extra.is_active and "active" or "inactive"
+		local active = card.ability.extra.is_active and localize("k_mul_active") or localize("k_mul_inactive")
 		return { vars = { card.ability.extra.temp_recharge_boost, active } }
 	end,
 	keep_on_use = function(self, card)
@@ -908,7 +908,7 @@ SMODS.Consumable({
 			set = "Other",
 			key = "mul_active_consumable",
 		})
-		local active = card.ability.extra.is_active and "active" or "inactive"
+		local active = card.ability.extra.is_active and localize("k_mul_active") or localize("k_mul_inactive")
 		return {
 			vars = {
 				card.ability.extra.hands,
@@ -922,7 +922,11 @@ SMODS.Consumable({
 		return not card.ability.extra.is_active
 	end,
 	can_use = function(self, card)
-		return not card.ability.extra.is_active or (G.GAME.round_resets.hands > 3 and G.GAME.round_resets.discards > 2)
+		return not card.ability.extra.is_active
+			or (
+				math.min(G.GAME.round_resets.hands, G.GAME.current_round.hands_left) > 3
+				and math.min(G.GAME.round_resets.discards, G.GAME.current_round.discards_left) > 2
+			)
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.effect_animation(card, function()
@@ -960,7 +964,7 @@ SMODS.Consumable({
 			set = "Other",
 			key = "mul_active_consumable",
 		})
-		local active = card.ability.extra.is_active and "active" or "inactive"
+		local active = card.ability.extra.is_active and localize("k_mul_active") or localize("k_mul_inactive")
 		return {
 			vars = {
 				card.ability.extra.joker_slots,
@@ -1005,7 +1009,7 @@ SMODS.Consumable({
 			set = "Other",
 			key = "mul_active_consumable",
 		})
-		local active = card.ability.extra.is_active and "active" or "inactive"
+		local active = card.ability.extra.is_active and localize("k_mul_active") or localize("k_mul_inactive")
 		return { vars = { card.ability.extra.progress_boost, active } }
 	end,
 	keep_on_use = function(self, card)

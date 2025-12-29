@@ -30,7 +30,14 @@ return {
 		},
 		mul_DeckEnchantment = {
 			de_mul_dark = {
-				name = "Dark#1#",
+				name = "Dark #1#",
+				text = {
+					"{V:1}+#2#{C:inactive}/{V:2}+#3#{} Joker slots",
+					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} hands"
+				}
+			},
+			de_mul_flame = {
+				name = "Flame #1#",
 				text = {
 					"{V:1}+#2#{C:inactive}/{V:2}+#3#{} Joker slots",
 					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} hands"
@@ -1066,6 +1073,8 @@ return {
 			k_mul_level_down = "Level Down...",
 			k_mul_enchanted = "Enchanted!",
 			k_mul_disenchanted = "Disenchanted...",
+			k_mul_active = "active",
+			k_mul_inactive = "inactive",
 			k_mul_transmuted = "Transmuted",
 			k_mul_missed_bus = "Missed the bus!",
 			k_mul_antimatter_init = "And so it begins...",
@@ -1163,10 +1172,6 @@ return {
 			["mul_Hammer of Justice"] = {
 				"Plays when you",
 				"have {C:attention}Gerson{}",
-			},
-			["mul_Presage"] = {
-				"Plays on {C:attention}Ante 8{}",
-				"or higher",
 			},
 			["mul_Sneaky Snitch"] = {
 				"Plays when you",
