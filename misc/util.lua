@@ -234,10 +234,6 @@ function Multiverse.effect_animation(card, func)
 	delay(0.6)
 end
 
-function Multiverse.set_transmute_requirements(base)
-	return Multiverse.config.debug and 1 or base
-end
-
 ---Checks to see if an active consumable should have particles.
 ---@param card Card
 ---@param state boolean
