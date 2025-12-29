@@ -111,12 +111,12 @@ SMODS.Joker({
 	key = "dragon",
 	atlas = "placeholder",
 	pos = { x = 2, y = 0 },
+	transmute_req = Multiverse.set_transmute_requirements(25),
 	config = {
 		extra = {
 			xmult = 1,
 			xmult_inc = 0.5,
 			transmute_progress = 0,
-			transmute_req = Multiverse.set_transmute_requirements(25),
 		},
 	},
 	rarity = 3,

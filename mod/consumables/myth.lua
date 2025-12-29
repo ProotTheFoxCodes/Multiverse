@@ -338,23 +338,26 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
+	config = {
+		extra = {
+			progress_percent = 25,
+		},
+	},
+	loc_vars = function(self, info_queue, card)
+		return {
+			vars = {
+				card.ability.extra.progress_percent,
+			},
+		}
+	end,
 	can_use = function(self, card)
-		return G.jokers
-			and #G.jokers.highlighted == 1
-			and type(G.jokers.highlighted[1].ability.extra) == "table"
-			and G.jokers.highlighted[1].ability.extra.transmute_req >= 4
+		return G.jokers and #G.jokers.highlighted == 1 and Multiverse.can_receive_transmutable(G.jokers.highlighted[1])
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.effect_animation(card, function()
 			local target = G.jokers.highlighted[1]
 			play_sound("timpani")
-			if type(target.ability.extra.transmute_progress) == "table" then
-				target.ability.extra.transmute_progress.n = target.ability.extra.transmute_progress.n
-					+ math.floor(target.ability.extra.transmute_req / 4)
-			else
-				target.ability.extra.transmute_progress = target.ability.extra.transmute_progress
-					+ math.floor(target.ability.extra.transmute_req / 4)
-			end
+			Multiverse.increment_transmute_progress(target, nil, card.ability.extra.progress_percent)
 			target:juice_up(0.3, 0.5)
 			Multiverse.transmute_check(target)
 		end)
@@ -407,19 +410,13 @@ SMODS.Consumable({
 		})
 	end,
 	can_use = function(self, card)
-		return G.jokers
-			and #G.jokers.highlighted == 1
-			and type(G.jokers.highlighted[1].ability.extra) == "table"
-			and G.jokers.highlighted[1].ability.extra.transmute_req
+		return G.jokers and #G.jokers.highlighted == 1 and Multiverse.can_receive_transmutable(G.jokers.highlighted[1])
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.effect_animation(card, function()
 			local target = G.jokers.highlighted[1]
-			if type(target.ability.extra.transmute_progress) == "table" then
-				target.ability.extra.transmute_progress.n = target.ability.extra.transmute_req - 1
-			else
-				target.ability.extra.transmute_progress = target.ability.extra.transmute_req - 1
-			end
+			local amt = target.config.center.transmute_req - target.ability.extra.transmute_progress - 1
+			Multiverse.increment_transmute_progress(card, amt)
 			play_sound("tarot1")
 			target:add_sticker("mul_traitorous", true)
 			target:juice_up(0.3, 0.5)
@@ -484,8 +481,7 @@ SMODS.Consumable({
 		return G.jokers
 			and #G.jokers.highlighted == 1
 			and not SMODS.is_eternal(G.jokers.highlighted[1], card)
-			and type(G.jokers.highlighted[1].ability.extra) == "table"
-			and G.jokers.highlighted[1].ability.extra.transmute_req
+			and Multiverse.can_receive_transmutable(G.jokers.highlighted[1])
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.effect_animation(card, function()
@@ -542,15 +538,14 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { min_energy = 40 } },
+	config = { extra = { min_energy = 40, progress_percent = 50 } },
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.min_energy } }
+		return { vars = { card.ability.extra.progress_percent, card.ability.extra.min_energy } }
 	end,
 	can_use = function(self, card)
 		return G.jokers
 			and #G.jokers.highlighted == 1
-			and type(G.jokers.highlighted[1].ability.extra) == "table"
-			and G.jokers.highlighted[1].ability.extra.transmute_req >= 2
+			and Multiverse.can_receive_transmutable(G.jokers.highlighted[1])
 			and G.GAME.mul_thaumaturgy_energy >= card.ability.extra.min_energy
 	end,
 	use = function(self, card, area, copier)
@@ -558,13 +553,7 @@ SMODS.Consumable({
 			play_sound("timpani")
 			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { immediate = true })
 			local target = G.jokers.highlighted[1]
-			if type(target.ability.extra.transmute_progress) == "table" then
-				target.ability.extra.transmute_progress.n = target.ability.extra.transmute_progress.n
-					+ math.floor(target.ability.extra.transmute_req / 2)
-			else
-				target.ability.extra.transmute_progress = target.ability.extra.transmute_progress
-					+ math.floor(target.ability.extra.transmute_req / 2)
-			end
+			Multiverse.increment_transmute_progress(target, nil, card.ability.extra.progress_percent)
 			target:juice_up(0.3, 0.5)
 			Multiverse.transmute_check(target)
 		end)
@@ -782,7 +771,7 @@ SMODS.Consumable({
 				#Multiverse.get_stickers(target) * card.ability.extra.energy_per_sticker,
 				{ immediate = true }
 			)
-			SMODS.destroy_cards(target, nil, true)
+			SMODS.destroy_cards(target, true, true)
 		end)
 	end,
 })
@@ -879,23 +868,18 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
+	config = { extra = { progress_percent = 50 } },
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.progress_percent } }
+	end,
 	can_use = function(self, card)
-		return G.jokers
-			and #G.jokers.highlighted == 1
-			and type(G.jokers.highlighted[1].ability.extra) == "table"
-			and G.jokers.highlighted[1].ability.extra.transmute_req >= 2
+		return G.jokers and #G.jokers.highlighted == 1 and Multiverse.can_receive_transmutable(G.jokers.highlighted[1])
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.effect_animation(card, function()
 			play_sound("timpani")
 			local target = G.jokers.highlighted[1]
-			if type(target.ability.extra.transmute_progress) == "table" then
-				target.ability.extra.transmute_progress.n = target.ability.extra.transmute_progress.n
-					+ math.floor(target.ability.extra.transmute_req / 2)
-			else
-				target.ability.extra.transmute_progress = target.ability.extra.transmute_progress
-					+ math.floor(target.ability.extra.transmute_req / 2)
-			end
+			Multiverse.increment_transmute_progress(target, nil, card.ability.extra.progress_percent)
 			local targets = {}
 			for _, j in ipairs(G.jokers.cards) do
 				if j ~= target then
@@ -907,7 +891,6 @@ SMODS.Consumable({
 				nil,
 				true
 			)
-			Multiverse.transmute_check(target)
 		end)
 	end,
 })
@@ -1047,14 +1030,9 @@ SMODS.Consumable({
 			and context.main_eval
 		then
 			for _, j in ipairs(G.jokers.cards) do
-				if type(j.ability.extra) == "table" and j.ability.extra.transmute_progress then
-					if type(j.ability.extra.transmute_progress) == "table" then
-						j.ability.extra.transmute_progress.n = j.ability.extra.transmute_progress.n + 1
-					else
-						j.ability.extra.transmute_progress = j.ability.extra.transmute_progress + 1
-					end
+				if Multiverse.can_receive_transmutable(j) then
+					Multiverse.increment_transmute_progress(j, card.ability.extra.progress_boost)
 					j:juice_up(0.3, 0.5)
-					Multiverse.transmute_check(j)
 				end
 			end
 		end
@@ -1068,7 +1046,7 @@ SMODS.Consumable({
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { conversion_rate = 2 } },
+	config = { extra = { conversion_rate = 1 } },
 	loc_vars = function(self, info_queue, card)
 		local total = math.floor((G.GAME.mul_thaumaturgy_energy or 0) / card.ability.extra.conversion_rate)
 		return {

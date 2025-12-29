@@ -77,10 +77,6 @@ function Multiverse.get_unique_pseudorandom_elements(t, n, seed)
 	return ret
 end
 
-function Multiverse.set_transmute_requirements(base)
-	return Multiverse.config.debug and 1 or base
-end
-
 ---@param card Card
 function Multiverse.get_card_x_pos(card)
 	return 155 * Multiverse.get_screen_x_scale() + card.children.center.CT.x * card.children.center.scale.x / 1.0445
@@ -238,6 +234,10 @@ function Multiverse.effect_animation(card, func)
 	delay(0.6)
 end
 
+function Multiverse.set_transmute_requirements(base)
+	return Multiverse.config.debug and 1 or base
+end
+
 ---Checks to see if an active consumable should have particles.
 ---@param card Card
 ---@param state boolean
@@ -264,7 +264,7 @@ function Multiverse.can_receive_transmutable(card)
 	return card
 		and card.ability
 		and type(card.ability.extra) == "table"
-		and card.ability.extra.transmute_req
+		and card.config.center.transmute_req
 		and card.ability.extra.transmute_progress
 end
 
@@ -277,7 +277,7 @@ function Multiverse.transmute_check(card)
 	local progress = (
 		type(card.ability.extra.transmute_progress) == "table" and card.ability.extra.transmute_progress.n
 	) or card.ability.extra.transmute_progress
-	if progress >= card.ability.extra.transmute_req and not card.ability.mul_transmutable then
+	if progress >= card.config.center.transmute_req and not card.ability.mul_transmutable then
 		if not card.children.transmutable_target then
 			card.children.transmutable_target = AnimatedSprite(
 				card.T.x,
@@ -412,12 +412,26 @@ function Multiverse.transmute_info_queue(card, info_queue)
 		else
 			transmute_vars[#transmute_vars + 1] = card.ability.extra.transmute_progress
 		end
-		transmute_vars[#transmute_vars + 1] = card.ability.extra.transmute_req
+		transmute_vars[#transmute_vars + 1] = card.config.center.transmute_req
 		info_queue[#info_queue + 1] = {
 			set = "Other",
 			key = string.sub(card.config.center.key, 3) .. "_hint",
 			vars = transmute_vars,
 		}
+	end
+end
+
+function Multiverse.increment_transmute_progress(card, amt, percent)
+	if Multiverse.can_receive_transmutable(card) then
+		if not amt then
+			amt = math.floor(card.config.center.transmute_req * (percent or 0) / 100)
+		end
+		if type(card.ability.extra.transmute_progress) == "table" then
+			card.ability.extra.transmute_progress.n = card.ability.extra.transmute_progress.n + amt
+		else
+			card.ability.extra.transmute_progress = card.ability.extra.transmute_progress + amt
+		end
+		Multiverse.transmute_check(card)
 	end
 end
 

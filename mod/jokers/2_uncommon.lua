@@ -201,12 +201,12 @@ SMODS.Joker({
 	key = "hammer_bro",
 	atlas = "placeholder",
 	pos = { x = 1, y = 0 },
+	transmute_req = Multiverse.set_transmute_requirements(150),
 	config = {
 		extra = {
 			mult = 5,
 			xmult = 1.25,
 			transmute_progress = 0,
-			transmute_req = Multiverse.set_transmute_requirements(150),
 		},
 	},
 	rarity = 2,
@@ -243,7 +243,8 @@ SMODS.Joker({
 	key = "arms_dealer",
 	atlas = "placeholder",
 	pos = { x = 1, y = 0 },
-	config = { extra = { transmute_progress = 0, transmute_req = Multiverse.set_transmute_requirements(400) } },
+	transmute_req = Multiverse.set_transmute_requirements(400),
+	config = { extra = { transmute_progress = 0 } },
 	rarity = 2,
 	cost = 7,
 	loc_vars = function(self, info_queue, card)

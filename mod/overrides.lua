@@ -10,11 +10,11 @@ function Multiverse.transmutable_override(key, config, calc)
 	local loc_vars_hook = SMODS.Jokers[key].loc_vars
 	local temp_config = SMODS.Jokers[key].config
 	temp_config.extra = temp_config.extra or {}
-	temp_config.extra.transmute_req = Multiverse.set_transmute_requirements(config.requirement)
 	temp_config.extra.transmute_progress = config.tracker_var
 	local temp_pools = SMODS.Jokers[key].pools
 	temp_pools["mul_can_transmute"] = true
 	SMODS.Joker:take_ownership(no_joker_prefix_key, {
+		transmute_req = Multiverse.set_transmute_requirements(config.requirement),
 		config = temp_config,
 		loc_vars = function(self, info_queue, card)
 			local ret = nil
@@ -42,8 +42,9 @@ end
 --#region Manual vanilla overrides, which are annoying because of non-standardized config tables
 --Code is taken from vremade to streamline the process of preserving the original functionality of the overrided joker
 SMODS.Joker:take_ownership("joker", {
+	transmute_req = Multiverse.set_transmute_requirements(15),
 	config = {
-		extra = { mult = 4, transmute_progress = { n = 0 }, transmute_req = Multiverse.set_transmute_requirements(15) },
+		extra = { mult = 4, transmute_progress = { n = 0 } },
 	},
 	loc_vars = function(self, info_queue, card)
 		Multiverse.transmute_info_queue(card, info_queue)
@@ -70,7 +71,8 @@ SMODS.Joker:take_ownership("pareidolia", {
 	loc_vars = function(self, info_queue, card)
 		Multiverse.transmute_info_queue(card, info_queue)
 	end,
-	config = { extra = { transmute_progress = { n = 0 }, transmute_req = Multiverse.set_transmute_requirements(6) } },
+	transmute_req = Multiverse.set_transmute_requirements(6),
+	config = { extra = { transmute_progress = { n = 0 } } },
 	calculate = function(self, card, context)
 		if context.before and not context.blueprint then
 			if not card.ability.extra.transmute_progress[context.scoring_name] then
@@ -86,12 +88,12 @@ SMODS.Joker:take_ownership("pareidolia", {
 }, true)
 
 SMODS.Joker:take_ownership("invisible", {
+	transmute_req = Multiverse.set_transmute_requirements(20),
 	config = {
 		extra = {
 			invis_rounds = 0,
 			total_rounds = 2,
 			transmute_progress = { n = 0 },
-			transmute_req = Multiverse.set_transmute_requirements(20),
 		},
 	},
 	loc_vars = function(self, info_queue, card)

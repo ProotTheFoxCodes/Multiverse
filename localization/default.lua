@@ -157,7 +157,7 @@ return {
 				text = {
 					"{C:attention}Increases{} selected Joker's",
 					"progress towards becoming",
-					"{C:mul_transmuted}Transmutable{} by {C:attention}25%{}",
+					"{C:mul_transmuted}Transmutable{} by {C:attention}#1#%{}",
 				},
 			},
 			c_mul_one_ring = {
@@ -230,9 +230,9 @@ return {
 					"Sets Thaumaturgy Energy to{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}0{}",
 					"{C:attention}Increases{} selected Joker's",
 					"progress towards becoming",
-					"{C:mul_transmuted}Transmutable{} by {C:attention}50%{}",
+					"{C:mul_transmuted}Transmutable{} by {C:attention}#1#%{}",
 					"{C:inactive}(Cannot be used while Thaumaturgy{}",
-					"{C:inactive}Energy is below{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{C:inactive}){}",
+					"{C:inactive}Energy is below{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{C:inactive}){}",
 				},
 			},
 			c_mul_ufo = {
@@ -308,7 +308,7 @@ return {
 				text = {
 					"{C:attention}Increases{} selected Joker's",
 					"progress towards becoming",
-					"{C:mul_transmuted}Transmutable{} by {C:attention}50%{}",
+					"{C:mul_transmuted}Transmutable{} by {C:attention}#1#%{}",
 					"Randomly destroys {C:attention}half{}",
 					"of all other Jokers",
 				},
