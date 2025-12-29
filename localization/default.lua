@@ -35,14 +35,14 @@ return {
 					"{V:1}+#2#{C:inactive}/{V:2}+#3#{} Joker slots",
 					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} hands"
 				}
-			}
+			},
 		},
 		Enhanced = {
 			m_mul_calling_card = {
 				name = "Calling Card",
 				text = {
 					"Gives {X:mult,C:white}X#1#{} Mult",
-					"per ante",
+					"per current {C:attention}Ante",
 					"Always treated as an",
 					"{C:attention}Ace{} of {C:hearts}Hearts{}",
 					"Gives no base {C:chips}chips{}",
