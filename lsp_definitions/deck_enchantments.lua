@@ -21,7 +21,7 @@
 ---@field remove_from_deck? fun(self: Multiverse.DeckEnchantment|table) Called when the enchantment is removed.
 ---@field max_level? integer The maximum level this enchantment can be.
 ---@field deck_incompat? string[] A list of keys of decks this enchantment cannot be applied to.
----@field in_pool? fun(self: Multiverse.DeckEnchantment|table, args: table): any? Determines whether or not this enchantment can appear. args.level will indicate the attempted level up amount, and can be used to determine if a certain enchantment can be leveled 
+---@field in_pool? fun(self: Multiverse.DeckEnchantment|table, args: EnchantmentPoolArgs|table): any? Determines whether or not this enchantment can appear.
 ---@field enchant_incompat? string[] This enchantment cannot appear if any enchantments whose keys are in this table are currently applied.
 ---@field obj_buffer? string[] Array of keys to all objects registered to this class. 
 ---@field enchantment_type? EnchantmentType Classifies this enchantment as positive, neutral, or negative. For use with pools.
@@ -39,6 +39,10 @@
 ---@field level number
 ---@field config table
 ---@field key string
+
+---@class EnchantmentPoolArgs
+---@field level_amt integer
+---@field source string
 
 ---@overload fun(self: Multiverse.DeckEnchantment): Multiverse.DeckEnchantment
 Multiverse.DeckEnchantment = setmetatable({}, {

@@ -187,3 +187,58 @@ function Multiverse.count_deck_enchantment_levels()
 	end
 	return count
 end
+
+function Multiverse.parse_vars(str, vars)
+	return string.gsub(str, "(#%d+#)", function(matched)
+		return tostring(vars[tonumber(string.gsub(matched, "[#%s]", ""), 10)])
+	end)
+end
+
+function Multiverse.number_to_roman(num)
+	if num >= 4000 then
+		sendWarnMessage("Attempt to convert " .. num .. " >= 4000 into Roman numeral")
+		return "ERROR"
+	end
+	if num == 1000 then
+		return "M"
+	end
+	if num == 500 then
+		return "D"
+	end
+	if num == 100 then
+		return "C"
+	end
+	if num == 50 then
+		return "L"
+	end
+	if num == 10 then
+		return "X"
+	end
+	if num == 5 then
+		return "V"
+	end
+	if num == 0 then
+		return ""
+	end
+	if num > 1000 then
+		return "M" .. Multiverse.number_to_roman(num - 1000)
+	elseif num % 500 >= 400 then
+		return "C" .. Multiverse.number_to_roman(num + 100)
+	elseif num > 500 then
+		return "D" .. Multiverse.number_to_roman(num - 500)
+	elseif num > 100 then
+		return "C" .. Multiverse.number_to_roman(num - 100)
+	elseif num % 50 >= 40 then
+		return "X" .. Multiverse.number_to_roman(num + 10)
+	elseif num > 50 then
+		return "L" .. Multiverse.number_to_roman(num - 50)
+	elseif num > 10 then
+		return "X" .. Multiverse.number_to_roman(num - 10)
+	elseif num % 5 >= 4 then
+		return "I" .. Multiverse.number_to_roman(num + 1)
+	elseif num > 5 then
+		return "V" .. Multiverse.number_to_roman(num - 5)
+	else
+		return "I" .. Multiverse.number_to_roman(num - 1)
+	end
+end

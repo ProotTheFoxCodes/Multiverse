@@ -116,6 +116,20 @@ SMODS.Joker({
 	end,
 })
 
+function Multiverse.set_foddian_suit()
+	G.GAME.current_round.mul_foddian_suit = "Hearts"
+	local valid = {}
+	for _, c in ipairs(G.playing_cards) do
+		if not SMODS.has_no_suit(c) then
+			table.insert(valid, c)
+		end
+	end
+	local foddian_card = pseudorandom_element(valid, "mul_foddian" .. G.GAME.round_resets.ante)
+	if foddian_card then
+		G.GAME.current_round.mul_foddian_suit = foddian_card.base.suit
+	end
+end
+
 SMODS.Joker({
 	key = "peashooter",
 	atlas = "placeholder",

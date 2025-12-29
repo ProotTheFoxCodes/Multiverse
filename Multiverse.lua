@@ -46,7 +46,19 @@ SMODS.ObjectType({
 	},
 })
 
-SMODS.draw_ignore_keys.mul_joker_use_button = true
+---@param card Card
+function Multiverse.handle_debuffs(card)
+	if Multiverse.is_kryptonite_debuffed(card) then
+		return {
+			debuff = true,
+		}
+	end
+	if Multiverse.is_stand_arrow_debuffed(card) then
+		return {
+			debuff = true,
+		}
+	end
+end
 
 SMODS.current_mod.calculate = function(self, context)
 	local ret = {}
@@ -121,38 +133,11 @@ SMODS.current_mod.calculate = function(self, context)
 end
 
 SMODS.draw_ignore_keys["transmutable_target"] = true
-
-local function set_foddian_suit()
-	G.GAME.current_round.mul_foddian_suit = "Hearts"
-	local valid = {}
-	for _, c in ipairs(G.playing_cards) do
-		if not SMODS.has_no_suit(c) then
-			table.insert(valid, c)
-		end
-	end
-	local foddian_card = pseudorandom_element(valid, "mul_foddian" .. G.GAME.round_resets.ante)
-	if foddian_card then
-		G.GAME.current_round.mul_foddian_suit = foddian_card.base.suit
-	end
-end
-
-local function set_stand_arrow_suit()
-	if not G.GAME.current_round.mul_stand_arrow_suit then
-		G.GAME.current_round.mul_stand_arrow_suit =
-			pseudorandom_element(SMODS.Suit.obj_buffer, "mul_arrow" .. G.GAME.round_resets.ante)
-		return
-	end
-	local valid = Multiverse.filter(SMODS.Suit.obj_buffer, function(item)
-		return item ~= G.GAME.current_round.mul_stand_arrow_suit
-	end)
-	if next(valid) then
-		G.GAME.current_round.mul_stand_arrow_suit = pseudorandom_element(valid, "mul_arrow" .. G.GAME.round_resets.ante)
-	end
-end
+SMODS.draw_ignore_keys["mul_joker_use_button"] = true
 
 function SMODS.current_mod.reset_game_globals()
-	set_foddian_suit()
-	set_stand_arrow_suit()
+	Multiverse.set_foddian_suit()
+	Multiverse.set_stand_arrow_suit()
 end
 
 ---@param path string

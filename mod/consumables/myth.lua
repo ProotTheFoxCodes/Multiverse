@@ -666,6 +666,27 @@ SMODS.Consumable({
 	end,
 })
 
+function Multiverse.set_stand_arrow_suit()
+	if not G.GAME.current_round.mul_stand_arrow_suit then
+		G.GAME.current_round.mul_stand_arrow_suit =
+			pseudorandom_element(SMODS.Suit.obj_buffer, "mul_arrow" .. G.GAME.round_resets.ante)
+		return
+	end
+	local valid = Multiverse.filter(SMODS.Suit.obj_buffer, function(item)
+		return item ~= G.GAME.current_round.mul_stand_arrow_suit
+	end)
+	if next(valid) then
+		G.GAME.current_round.mul_stand_arrow_suit = pseudorandom_element(valid, "mul_arrow" .. G.GAME.round_resets.ante)
+	end
+end
+
+---@param card Card
+function Multiverse.is_stand_arrow_debuffed(card)
+	return card.playing_card
+		and G.GAME.mul_stand_arrow_active
+		and card:is_suit(G.GAME.current_round.mul_stand_arrow_suit, true)
+end
+
 SMODS.Consumable({
 	key = "moon_berry",
 	set = "mul_Myth",
@@ -860,6 +881,11 @@ SMODS.Consumable({
 		end
 	end,
 })
+
+---@param card Card
+function Multiverse.is_kryptonite_debuffed(card)
+	return card.area == G.jokers and G.GAME.mul_kryptonite_active and card:is_rarity(3)
+end
 
 SMODS.Consumable({
 	key = "infinity_gauntlet",
