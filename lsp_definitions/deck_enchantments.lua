@@ -22,8 +22,9 @@
 ---@field max_level? integer The maximum level this enchantment can be.
 ---@field deck_incompat? string[] A list of keys of decks this enchantment cannot be applied to.
 ---@field in_pool? fun(self: Multiverse.DeckEnchantment|table, args: table): any? Determines whether or not this enchantment can appear. args.level will indicate the attempted level up amount, and can be used to determine if a certain enchantment can be leveled 
----@field enchant_incompat? string[] A list of keys of enchantments this
+---@field enchant_incompat? string[] This enchantment cannot appear if any enchantments whose keys are in this table are currently applied.
 ---@field obj_buffer? string[] Array of keys to all objects registered to this class. 
+---@field enchantment_type? EnchantmentType Classifies this enchantment as positive, neutral, or negative. For use with pools.
 ---@field obj_table? table<string, Multiverse.DeckEnchantment|table> Table of objects registered to this class.
 ---@field loc_vars? fun(self: Multiverse.DeckEnchantment, info_queue: table, card: table): table?
 ---@field on_change_level? fun(self: Multiverse.DeckEnchantment|table, delta: integer, final_level: integer) Called when this enchantment's level changes.
@@ -31,7 +32,7 @@
 
 ---@alias EnchantmentType
 ---| "positive"
----| "neutral",
+---| "neutral"
 ---| "negative"
 
 ---@class EnchantmentData

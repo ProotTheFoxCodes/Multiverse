@@ -53,6 +53,7 @@ Multiverse.DeckEnchantment = SMODS.Center:extend({
 	enchant_incompat = {},
 	required_params = {
 		"key",
+		"enchantment_type"
 	},
 	calculate = function(self, enchantment, context) end,
 	add_to_deck = function(self) end,
@@ -64,34 +65,6 @@ Multiverse.DeckEnchantment = SMODS.Center:extend({
 	get_level = function(self)
 		return G.GAME.mul_deck_enchantments and ((G.GAME.mul_deck_enchantments[self.key] or {}).level or 0) or 0
 	end,
-})
-
-Multiverse.DeckEnchantment({
-	key = "dark",
-	max_level = 2,
-	loc_vars = function(self, info_queue, card)
-		local colours = {}
-		local ret = {
-			Multiverse.number_to_roman(self:get_level()),
-		}
-		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.FILTER)
-		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.BLUE)
-		for i = 1, self.max_level do
-			ret[#ret + 1] = i
-		end
-		ret.colours = colours
-		return {
-			vars = ret,
-		}
-	end,
-	on_change_level = function(self, delta, final_level)
-		G.jokers:change_size(delta)
-		ease_hands_played(-delta)
-		G.GAME.round_resets.hands = G.GAME.round_resets.hands - delta
-	end,
-	deck_incompat = {
-		"b_black",
-	},
 })
 
 ---@param obj Multiverse.DeckEnchantment
@@ -128,7 +101,7 @@ end
 ---@param enchantment string
 ---@return boolean
 function Multiverse.is_enchant_compat(enchantment)
-	for _, key in ipairs(Multiverse.DeckEnchantments[enchantment].back_incompat) do
+	for _, key in ipairs(Multiverse.DeckEnchantments[enchantment].enchant_incompat) do
 		if G.GAME.mul_deck_enchantments[key] and G.GAME.mul_deck_enchantments[key].level > 0 then
 			return false
 		end
