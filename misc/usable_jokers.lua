@@ -8,14 +8,14 @@ Multiverse.UsableJoker = SMODS.Joker:extend({
 	ability_pos = { x = 0, y = 0 },
 	highlight_ui = function(self, card)
 		return UIBox({
-			definition = Multiverse.joker_use_ui_def(card),
+			definition = Multiverse.joker_use_UI_def(card),
 			config = { align = "cl", offset = { x = 0.3, y = 0 }, parent = card, major = card, bond = "Strong" },
 		})
 	end,
 })
 
 ---@param card Card
-Multiverse.joker_use_ui_def = function(card)
+Multiverse.joker_use_UI_def = function(card)
 	local obj = card.config.center
 	local ability_sprite = Sprite(0, 0, 1.2, 1.2, G.ASSET_ATLAS[obj.ability_atlas], obj.ability_pos)
 	ability_sprite:define_draw_steps({ {

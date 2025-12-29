@@ -302,6 +302,20 @@ function Multiverse.get_stickers(card)
 	return stickers
 end
 
+---Gets the most played hand, as well as the number of times it has been played
+---@return string
+---@return integer
+function Multiverse.get_most_played_hand()
+	local _hand, _tally = nil, 0
+	for _, handname in ipairs(G.handlist) do
+		if SMODS.is_poker_hand_visible(handname) and G.GAME.hands[handname].played > _tally then
+			_hand = handname
+			_tally = G.GAME.hands[handname].played
+		end
+	end
+	return (_hand or "High Card"), _tally
+end
+
 ---@param func fun(joker: Card): nil
 function Multiverse.apply_to_jokers(func)
 	if G.jokers then
@@ -390,3 +404,17 @@ function Multiverse.init_blinds()
 	end
 end
 
+function Multiverse.update_main_menu()
+	if G.SPLASH_MULTIVERSE_LOGO and G.SPLASH_MULTIVERSE_LOGO.dissolve == 0 then
+		G.mul_loaded_timer = (G.mul_loaded_timer or 0)
+		if not G.SETTINGS.paused then
+			G.mul_loaded_timer = G.mul_loaded_timer + G.real_dt
+		end
+		G.SPLASH_MULTIVERSE_LOGO:set_alignment({
+			major = G.title_top,
+			type = "cm",
+			bond = "Strong",
+			offset = { x = 8 * math.sin(G.mul_loaded_timer * 0.075), y = 3.7 * math.cos(G.mul_loaded_timer * 0.075) },
+		})
+	end
+end

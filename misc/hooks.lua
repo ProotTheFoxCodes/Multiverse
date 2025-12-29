@@ -83,18 +83,8 @@ function Game:update(dt)
 	Multiverse.update_animations()
 	Multiverse.update_spears()
 	Multiverse.update_transmutable_sticker_anim_state()
-	if G.SPLASH_MULTIVERSE_LOGO and G.SPLASH_MULTIVERSE_LOGO.dissolve == 0 then
-		G.mul_loaded_timer = (G.mul_loaded_timer or 0)
-		if not G.SETTINGS.paused then
-			G.mul_loaded_timer = G.mul_loaded_timer + G.real_dt
-		end
-		G.SPLASH_MULTIVERSE_LOGO:set_alignment({
-			major = G.title_top,
-			type = "cm",
-			bond = "Strong",
-			offset = { x = 8 * math.sin(G.mul_loaded_timer * 0.075), y = 3.7 * math.cos(G.mul_loaded_timer * 0.075) },
-		})
-	end
+	Multiverse.update_deck_enchantments()
+	Multiverse.update_main_menu()
 	return ret
 end
 
@@ -123,20 +113,6 @@ function create_popup_UIBox_tooltip(tooltip)
 		ret.config.colour = tooltip.colour
 	end
 	return ret
-end
-
-local game_draw_hook = Game.draw
-function Game:draw()
-	game_draw_hook(self)
-	if G.deck then
-		if
-			Multiverse.count_deck_enchantments() > 0
-			and G.deck.children.hover_tooltip
-			and (G.deck.states.collide.is or (G.buttons and G.buttons.states.collide.is and G.CONTROLLER.HID.controller))
-		then
-			G.deck.children.hover_tooltip:draw()
-		end
-	end
 end
 
 local copy_card_hook = copy_card

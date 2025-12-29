@@ -50,6 +50,15 @@ return {
 					"{V:3}-#4#{C:inactive}/{V:4}-#5#{} discards"
 				}
 			},
+			de_mul_cosmic_affinity = {
+				name = "Cosmic Affinity#1#",
+				text = {
+					"When a {C:planet}Planet{} card is",
+					"used, level up most played",
+					"{C:attention}poker hand {V:1}#2#{C:inactive}/{V:2}#3#{} times",
+					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} consumable slots"
+				}
+			},
 		},
 		Enhanced = {
 			m_mul_calling_card = {

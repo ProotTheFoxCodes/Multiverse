@@ -3,32 +3,6 @@ SMODS.Shader({
 	path = "enchantment.fs",
 })
 
-local draw_cardarea_hook = CardArea.draw
-function CardArea:draw()
-	draw_cardarea_hook(self)
-	if self == G.deck then
-		if self.states.collide.is or (G.buttons and G.buttons.states.collide.is and G.CONTROLLER.HID.controller) then
-			if not self.children.hover_tooltip then
-				local fake_card = {
-					ability_UIBox_table = generate_card_ui(Multiverse.DummyCenters["du_mul_all_enchants"]),
-					config = {
-						center = Multiverse.DummyCenters["du_mul_all_enchants"]
-					},
-					T = (self.cards[1] or self).T
-				}
-				self.children.hover_tooltip = UIBox({
-					definition = G.UIDEF.card_h_popup(fake_card),
-					config = { align = "tm", offset = { x = 0, y = -0.1 }, parent = self.cards[1] or self },
-				})
-			end
-			self.children.hover_tooltip.states.collide.can = false
-		elseif self.children.hover_tooltip then
-			self.children.hover_tooltip:remove()
-			self.children.hover_tooltip = nil
-		end
-	end
-end
-
 ---@type table<string, Multiverse.DeckEnchantment>
 Multiverse.DeckEnchantments = {}
 
@@ -46,7 +20,7 @@ Multiverse.DeckEnchantment = SMODS.Center:extend({
 	enchant_incompat = {},
 	required_params = {
 		"key",
-		"enchantment_type"
+		"enchantment_type",
 	},
 	calculate = function(self, enchantment, context) end,
 	add_to_deck = function(self) end,
@@ -110,7 +84,8 @@ function Multiverse.calculate_deck_enchantments(context, results)
 		for _, key in ipairs(Multiverse.DeckEnchantment.obj_buffer) do
 			local level = G.GAME.mul_deck_enchantments[key] and G.GAME.mul_deck_enchantments[key].level or 0
 			if level > 0 then
-				results[#results + 1] = Multiverse.DeckEnchantments[key]:calculate(context, level)
+				results[#results + 1] =
+					Multiverse.DeckEnchantments[key]:calculate(G.GAME.mul_deck_enchantments[key], context)
 			end
 		end
 	end
@@ -144,14 +119,14 @@ function Multiverse.level_up_deck_enchantment(enchantment, amt)
 		msg = localize("k_mul_level_down")
 	end
 	obj:on_change_level(delta, final_level)
+	G.GAME.mul_deck_enchantments[enchantment] =
+		{ level = final_level, key = enchantment, config = copy_table(obj.config) }
 	SMODS.calculate_context({
 		mul_modify_deck_enchantments = true,
 		amount = delta,
 		mul_enchantment_removed = removed,
 		mul_enchantment_applied = added,
 	})
-	G.GAME.mul_deck_enchantments[enchantment] =
-		{ level = final_level, key = enchantment, config = copy_table(obj.config) }
 	return msg
 end
 
@@ -233,5 +208,75 @@ function Multiverse.number_to_roman(num)
 		return "V" .. Multiverse.number_to_roman(num - 5)
 	else
 		return "I" .. Multiverse.number_to_roman(num - 1)
+	end
+end
+
+function Multiverse.deck_enchantment_info_UI_def()
+	return {
+		n = G.UIT.ROOT,
+		config = { colour = G.C.UI.OUTLINE_LIGHT, r = 0.1, align = "cm", padding = 0.05 },
+		nodes = {
+			{
+				n = G.UIT.C,
+				config = {
+					colour = G.C.RED,
+					r = 0.1,
+					padding = 0.05,
+					align = "cm",
+					minw = 0.5,
+					minh = 0.5,
+					emboss = 0.05,
+				},
+				nodes = {
+					{
+						n = G.UIT.O,
+						config = {
+							object = DynaText({
+								string = "i",
+								colours = { G.C.UI.TEXT_LIGHT },
+								scale = 0.4,
+							}),
+							align = "cm",
+						},
+					},
+				},
+			},
+		},
+	}
+end
+
+function Multiverse.update_deck_enchantments()
+	if Multiverse.count_deck_enchantments() > 0 and G.deck and not G.mul_deck_enchantment_info then
+		G.mul_deck_enchantment_info = UIBox({
+			definition = Multiverse.deck_enchantment_info_UI_def(),
+			config = { align = "bri", offset = { x = 0.8, y = 0 }, major = G.deck },
+		})
+		G.mul_deck_enchantment_info.states.collide.can = true
+	elseif Multiverse.count_deck_enchantments() == 0 and G.mul_deck_enchantment_info then
+		G.mul_deck_enchantment_info:remove()
+		G.mul_deck_enchantment_info = nil
+	end
+	if
+		G.mul_deck_enchantment_info
+		and G.mul_deck_enchantment_info.states.collide.is
+		and G.deck
+		and not G.mul_deck_enchantment_tooltip
+	then
+		local fake_card = {
+			ability_UIBox_table = generate_card_ui(Multiverse.DummyCenters["du_mul_all_enchants"]),
+			config = {
+				center = Multiverse.DummyCenters["du_mul_all_enchants"],
+			},
+			T = (G.deck.cards[1] or G.deck).T,
+		}
+		G.mul_deck_enchantment_tooltip = UIBox({
+			definition = G.UIDEF.card_h_popup(fake_card),
+			config = { align = "tm", offset = { x = 0, y = -0.1 }, major = G.deck.cards[1] or G.deck, instance_type = "POPUP" },
+		})
+		G.mul_deck_enchantment_tooltip.states.collide.can = false
+		G.mul_deck_enchantment_tooltip:recalculate()
+	elseif (not G.mul_deck_enchantment_info or not G.mul_deck_enchantment_info.states.collide.is) and G.mul_deck_enchantment_tooltip then
+		G.mul_deck_enchantment_tooltip:remove()
+		G.mul_deck_enchantment_tooltip = nil
 	end
 end
