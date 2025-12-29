@@ -174,7 +174,7 @@ SMODS.Joker:take_ownership("invisible", {
 	transmutes_into = "j_mul_waldo",
 	mul_grail = { "c_judgement", "c_wraith" },
 	mul_tree_of_eden = { "j_riff_raff", "j_chaos", "j_diet_cola" },
-})
+}, true)
 
 -- Not really transmutation-related, more so for the funny factor
 SMODS.Joker:take_ownership("chicot", {
