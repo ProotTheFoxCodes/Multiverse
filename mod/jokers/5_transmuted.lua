@@ -159,8 +159,9 @@ Multiverse.UsableJoker({
 		Multiverse.effect_animation(card, function()
 			Multiverse.ease_TP(-card.ability.extra.tp_cost, { instant = true })
 			SMODS.destroy_cards(G.hand.highlighted)
+			local cards = {}
 			for i = 1, cards_to_create do
-				SMODS.add_card({
+				cards[#cards + 1] = SMODS.add_card({
 					set = "Enhanced",
 					key = "m_mul_netherite",
 					edition = SMODS.poll_edition({ no_negative = true, guaranteed = true, key = "mul_steve" }),
@@ -168,6 +169,7 @@ Multiverse.UsableJoker({
 					area = G.hand,
 				})
 			end
+			playing_card_joker_effects(cards)
 		end)
 	end,
 	can_use_ability = function(self, card)
@@ -249,12 +251,14 @@ SMODS.Joker({
 	end,
 	add_to_deck = function(self, card, from_debuff)
 		if not from_debuff then
-			SMODS.add_card({
+			local c = SMODS.add_card({
 				set = "Base",
 				area = G.deck,
 				skip_materialize = true,
 				enhancement = "m_mul_waldo",
 			})
+			playing_card_joker_effects({ c })
+			G.GAME.waldo_created = true
 		end
 	end,
 	calculate = function(self, card, context)
@@ -319,7 +323,7 @@ Multiverse.UsableJoker({
 		Multiverse.ease_TP(-card.ability.extra.tp_cost)
 		ease_hands_played(card.ability.extra.hand_boost)
 		SMODS.calculate_effect({
-			message = localize("k_eaten_ex")
+			message = localize("k_eaten_ex"),
 		}, card)
 	end,
 	can_use_ability = function(self, card)
@@ -351,7 +355,7 @@ Multiverse.UsableJoker({
 				card.ability.extra.tp_cost,
 				card.ability.extra.blind_reduce_x,
 				card.ability.extra.blind_reduce_e,
-				card.ability.extra.min_ante
+				card.ability.extra.min_ante,
 			},
 		})
 		if card.area and card.area == G.jokers then
@@ -448,7 +452,7 @@ Multiverse.UsableJoker({
 		end)
 		SMODS.calculate_effect({
 			message = localize("k_mul_murdered"),
-			sound = "slice1"
+			sound = "slice1",
 		}, card)
 	end,
 })
