@@ -223,8 +223,8 @@ function Multiverse.deck_enchantment_info_UI_def()
 					r = 0.1,
 					padding = 0.05,
 					align = "cm",
-					minw = 0.5,
-					minh = 0.5,
+					minw = 0.55,
+					minh = 0.55,
 					emboss = 0.05,
 				},
 				nodes = {
@@ -249,12 +249,18 @@ function Multiverse.update_deck_enchantments()
 	if Multiverse.count_deck_enchantments() > 0 and G.deck and not G.mul_deck_enchantment_info then
 		G.mul_deck_enchantment_info = UIBox({
 			definition = Multiverse.deck_enchantment_info_UI_def(),
-			config = { align = "bri", offset = { x = 0.8, y = 0 }, major = G.deck },
+			config = { align = "bri", offset = { x = 1.05, y = 0 }, major = G.deck },
 		})
 		G.mul_deck_enchantment_info.states.collide.can = true
+		if G.HUD_tags and G.HUD_tags[1] then
+			G.HUD_tags[1].config.offset.y = -0.9
+		end
 	elseif Multiverse.count_deck_enchantments() == 0 and G.mul_deck_enchantment_info then
 		G.mul_deck_enchantment_info:remove()
 		G.mul_deck_enchantment_info = nil
+		if G.HUD_tags and G.HUD_tags[1] then
+			G.HUD_tags[1].config.offset.y = 0
+		end
 	end
 	if
 		G.mul_deck_enchantment_info

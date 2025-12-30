@@ -59,6 +59,15 @@ return {
 					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} consumable slots"
 				}
 			},
+			de_mul_druidic_affinity = {
+				name = "Druidic Affinity#1#",
+				text = {
+					"Earn an additional {V:1}$#2#{C:inactive}/{V:2}$#3#{}",
+					"per remaining {C:blue}hand{} and",
+					"{C:red}discard{} at end of round",
+					"Raise all prices by {V:3}$#4#{C:inactive}/{V:4}$#5#{}",
+				}
+			},
 		},
 		Enhanced = {
 			m_mul_calling_card = {
