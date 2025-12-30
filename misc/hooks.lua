@@ -164,14 +164,6 @@ function love.keypressed(key, scancode, is_repeat)
 	end
 end
 
-local mousepressed_hook = love.mousepressed
-function love.mousepressed(x, y, button, istouch, presses)
-	if Multiverse.very_important_thing then
-		return
-	end
-	mousepressed_hook(x, y, button, istouch, presses)
-end
-
 function Multiverse.cannot_interrupt()
 	return Multiverse.in_limbo or Multiverse.in_undyne or Multiverse.very_important_thing
 end
