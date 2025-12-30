@@ -115,17 +115,17 @@ function create_popup_UIBox_tooltip(tooltip)
 	return ret
 end
 
-local copy_card_hook = copy_card
-function copy_card(other, new_card, card_scale, playing_card, strip_edition)
-	local card = copy_card_hook(other, new_card, card_scale, playing_card, strip_edition)
-	if card and card.config.center.key == "m_mul_waldo" and not G.VIEWING_DECK then
+local set_ability_hook = Card.set_ability
+function Card:set_ability(center, initial, delay_sprites)
+	if center == "" and G.GAME.waldo_created then
+		set_ability_hook(self, "c_base", initial, delay_sprites)
 		if not Multiverse.all_animations["explosion"].is_active then
 			Multiverse.start_animation("explosion")
 			play_sound("mul_deltarune_explosion", 1, 0.7)
 		end
-		card:set_ability("c_base")
+	else
+		set_ability_hook(self, center, initial, delay_sprites)
 	end
-	return card
 end
 
 local mousepressed_hook = love.mousepressed
