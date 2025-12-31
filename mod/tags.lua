@@ -23,7 +23,7 @@ SMODS.Tag({
 				key_append = "mul_magnum_opus",
 			})
 			card.states.visible = false
-			tag:yep("+", Multiverse.TRANSMUTED_GRADIENT, function()
+			tag:yep("+", Multiverse.C.TRANSMUTED_GRADIENT, function()
 				card:start_materialize()
 				return true
 			end)

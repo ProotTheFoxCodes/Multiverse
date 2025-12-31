@@ -47,7 +47,7 @@ SMODS.Edition({
 					key = "a_mul_thaumaturgy_energy",
 					vars = { card.edition.extra.thaum_energy },
 				}),
-				colour = Multiverse.TRANSMUTED_GRADIENT,
+				colour = Multiverse.C.TRANSMUTED_GRADIENT,
 			}, card)
 			Multiverse.ease_thaumaturgy_energy(card.edition.extra.thaum_energy, { from_charge = true })
 		end

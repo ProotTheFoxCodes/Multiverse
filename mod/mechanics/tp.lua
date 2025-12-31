@@ -24,6 +24,15 @@ function Multiverse.hide_TP_meter()
 	end
 end
 
+function Multiverse.init_TP()
+	---@type integer
+	G.GAME.mul_TP = G.GAME.mul_TP or 0
+	---@type integer
+	G.GAME.mul_TP_max_gain = G.GAME.mul_TP_max_gain or 5
+	---@type integer
+	G.GAME.mul_TP_min_gain = G.GAME.mul_TP_min_gain or 2
+end
+
 ---Changes the current amount of TP, and also triggers the relevant context.
 ---This function will automatically adjust the amount of TP earned/lost if doing the modification would cause TP to be negative or more than 100.
 ---@param amt integer
@@ -198,7 +207,7 @@ function G.FUNCS.mul_update_TP_bar(e)
 	if e.children then
 		for i, node in ipairs(e.children) do
 			local is_floating = (#e.children - i) < math.ceil(G.GAME.mul_TP / 100 * #e.children)
-			node.children[1].config.colour = is_floating and Multiverse.RAINBOW_GRADIENT or G.C.DYN_UI.BOSS_DARK
+			node.children[1].config.colour = is_floating and Multiverse.C.RAINBOW_GRADIENT or G.C.DYN_UI.BOSS_DARK
 		end
 	end
 end

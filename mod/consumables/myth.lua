@@ -7,58 +7,23 @@ SMODS.ConsumableType({
 	default = "c_mul_homunculus",
 })
 
----@type table<string, {key: string, other: table<string, string[]>}>
-Multiverse.transmutations = {
-	["j_joker"] = {
-		transmutes_into = "j_mul_ren_amamiya",
-		other = {
-			mul_grail = { "c_emperor" },
-			mul_tree_of_eden = { "j_cartomancer", "j_hallucination", "j_vagabond" },
-		},
-	},
-	["j_mul_dragon"] = {
-		transmutes_into = "j_mul_steve",
-		other = {
-			mul_grail = { "c_tower", "c_chariot", "c_devil" },
-			mul_tree_of_eden = { "j_midas_mask", "j_marble" },
-		},
-	},
-	["j_mul_hammer_bro"] = {
-		transmutes_into = "j_mul_gerson",
-		other = {
-			mul_grail = { "c_deja_vu", "c_mul_chair" },
-			mul_tree_of_eden = { "j_hanging_chad", "j_hack", "j_sock_and_buskin", "j_selzer" },
-		},
-	},
-	["j_pareidolia"] = {
-		transmutes_into = "j_mul_impostor",
-		other = {
-			mul_grail = { "c_lovers", "c_strength", "c_death", "c_hanged_man" },
-			mul_tree_of_eden = { "j_mul_jack_frost", "j_smeared", "j_shortcut" },
-		},
-	},
-	["j_invisible"] = {
-		transmutes_into = "j_mul_waldo",
-		other = {
-			mul_grail = { "c_judgement", "c_wraith" },
-			mul_tree_of_eden = { "j_riff_raff", "j_chaos", "j_diet_cola" },
-		},
-	},
-	["j_mul_arms_dealer"] = {
-		transmutes_into = "j_mul_heavy",
-		other = {
-			mul_grail = { "c_immolate", "c_hermit", "c_temperance" },
-			mul_tree_of_eden = {
-				"j_golden",
-				"j_cloud_9",
-				"j_satellite",
-				"j_todo_list",
-				"j_mul_red_bloon",
-				"j_mul_slime",
-			},
-		},
-	},
-}
+function Multiverse.init_myth()
+	---@type number
+	G.GAME.mul_money_mult = G.GAME.mul_money_mult or 1
+	---@type boolean
+	G.GAME.mul_time_machine_active = G.GAME.mul_time_machine_active or false
+	---@type boolean
+	G.GAME.mul_stand_arrow_active = G.GAME.mul_stand_arrow_active or false
+	---@type boolean
+	G.GAME.mul_elder_scroll_active = G.GAME.mul_stand_arrow_active or false
+	---@type integer
+	G.GAME.mul_unicorn_protections = G.GAME.mul_unicorn_protections or 0
+	---@type boolean
+	G.GAME.mul_kryptonite_active = G.GAME.mul_kryptonite_active or false
+	---@type string?
+	G.GAME.mul_last_myth_used = G.GAME.mul_last_myth_used or nil
+end
+
 SMODS.Consumable({
 	key = "philosophers_stone",
 	set = "mul_Myth",

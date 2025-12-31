@@ -1,6 +1,10 @@
 Multiverse = {}
 Multiverse = SMODS.current_mod
-Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient({
+Multiverse.C = {}
+Multiverse.C.PRIMARY1 = HEX("89C41B")
+Multiverse.C.PRIMARY2 = HEX("C5CC41")
+Multiverse.C.SECONDARY = HEX("204D7F")
+Multiverse.C.TRANSMUTED_GRADIENT = SMODS.Gradient({
 	key = "transmuted_gradient",
 	colours = {
 		HEX("89C41B"),
@@ -8,7 +12,15 @@ Multiverse.TRANSMUTED_GRADIENT = SMODS.Gradient({
 	},
 	cycle = 1.5,
 })
-Multiverse.RAINBOW_GRADIENT = SMODS.Gradient({
+Multiverse.C.TRANSMUTED_GRADIENT_SLOW = SMODS.Gradient({
+	key = "transmuted_gradient_slow",
+	colours = {
+		HEX("89C41B"),
+		HEX("C5CC41"),
+	},
+	cycle = 5,
+})
+Multiverse.C.RAINBOW_GRADIENT = SMODS.Gradient({
 	key = "rainbow_gradient",
 	colours = {
 		G.C.RED,
@@ -20,9 +32,6 @@ Multiverse.RAINBOW_GRADIENT = SMODS.Gradient({
 	},
 	cycle = 3,
 })
-Multiverse.C = {}
-Multiverse.C.PRIMARY1 = HEX("89C41B")
-Multiverse.C.PRIMARY2 = HEX("C5CC41")
 Multiverse.selected_music_page = 1
 Multiverse.transmutable_sticker_anim_state = 0
 Multiverse.transmutable_target_anim_state = 0

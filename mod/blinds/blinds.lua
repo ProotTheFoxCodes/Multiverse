@@ -7,6 +7,20 @@ function Multiverse.show_blind_instructions(key)
 	G.mul_INSTRUCTIONS_HUD:recalculate()
 end
 
+function Multiverse.init_blinds()
+	---@type number
+	G.GAME.mul_undyne_damage_mult = 1
+	if G.GAME.challenge == "c_mul_monsoon" then
+		G.GAME.mul_undyne_damage_mult = 2
+	end
+	if G.GAME.blind and G.GAME.facing_blind then
+		Multiverse.show_TP_meter()
+		if G.GAME.blind.config.blind.key == "bl_mul_undying" and not G.GAME.blind.disabled then
+			Multiverse.show_blind_instructions("undying")
+		end
+	end
+end
+
 function Multiverse.hide_blind_instructions()
 	if G.mul_INSTRUCTIONS_HUD then
 		ease_value(G.mul_INSTRUCTIONS_HUD.config.offset, "x", 4, nil, nil, true, 0.6, "quad")
@@ -29,7 +43,7 @@ SMODS.Blind({
 	atlas = "multiverse_blinds",
 	pos = { x = 0, y = 0 },
 	boss_colour = HEX("F2994B"),
-	boss = { min = 1 },
+	boss = { min = 3 },
 	mult = 2,
 	set_blind = function(self)
 		Multiverse.show_blind_instructions("limbo")

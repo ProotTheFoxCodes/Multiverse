@@ -2,7 +2,7 @@ SMODS.Sticker({
 	key = "transmutable",
 	atlas = "transmutable_sticker",
 	pos = { x = 0, y = 0 },
-	badge_colour = Multiverse.TRANSMUTED_GRADIENT,
+	badge_colour = Multiverse.C.TRANSMUTED_GRADIENT,
 	rate = 0,
 	default_compat = false,
 	loc_vars = function(self, info_queue, card)
@@ -19,7 +19,7 @@ SMODS.Sticker({
 					key = "a_mul_thaumaturgy_energy",
 					vars = { G.GAME.mul_thaumaturgy_energy_per_joker },
 				}),
-				colour = Multiverse.TRANSMUTED_GRADIENT,
+				colour = Multiverse.C.TRANSMUTED_GRADIENT,
 			}
 		end
 	end,

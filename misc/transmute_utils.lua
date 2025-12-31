@@ -77,3 +77,38 @@ end
 function Multiverse.set_transmute_requirements(base)
 	return Multiverse.config.debug and 1 or base
 end
+
+function Multiverse.can_receive_transmutable(card)
+	return card
+		and card.ability
+		and type(card.ability.extra) == "table"
+		and card.config.center.transmute_req
+		and card.ability.extra.transmute_progress
+end
+
+---Will now safely return and do nothing if the card cannot become transmutable
+---@param card Card
+function Multiverse.transmute_check(card)
+	if not Multiverse.can_receive_transmutable(card) then
+		return
+	end
+	local progress = (
+		type(card.ability.extra.transmute_progress) == "table" and card.ability.extra.transmute_progress.n
+	) or card.ability.extra.transmute_progress
+	if progress >= card.config.center.transmute_req and not card.ability.mul_transmutable then
+		if not card.children.transmutable_target then
+			card.children.transmutable_target = AnimatedSprite(
+				card.T.x,
+				card.T.y,
+				card.T.w,
+				card.T.h,
+				G.ANIMATION_ATLAS["mul_transmutable_target"],
+				{ x = 0, y = 0 }
+			)
+			card.children.transmutable_target.role.draw_major = card
+			card.children.transmutable_target.states.hover.can = false
+			card.children.transmutable_target.states.click.can = false
+		end
+		card:add_sticker("mul_transmutable", true)
+	end
+end

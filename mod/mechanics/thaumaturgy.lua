@@ -26,7 +26,7 @@ function Multiverse.ease_thaumaturgy_energy(amt, args)
 		end
 		local thaum_UI = G.hand_text_area.mul_thaumaturgy_energy
 		local text = "+"
-		local col = Multiverse.TRANSMUTED_GRADIENT
+		local col = Multiverse.C.TRANSMUTED_GRADIENT
 		if num < 0 then
 			text = "-"
 			col = G.C.RED
@@ -56,6 +56,15 @@ function Multiverse.ease_thaumaturgy_energy(amt, args)
 			end,
 		}))
 	end
+end
+
+function Multiverse.init_thaumaturgy()
+	---@type integer
+	G.GAME.mul_thaumaturgy_energy = G.GAME.mul_thaumaturgy_energy or 0
+	---@type integer
+	G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate or 2
+	---@type integer
+	G.GAME.mul_thaumaturgy_energy_per_joker = G.GAME.mul_thaumaturgy_energy_per_joker or 10
 end
 
 function Multiverse.thaumaturgy_UI_row(temp_col, temp_col2, scale)
@@ -106,7 +115,7 @@ function Multiverse.thaumaturgy_UI_row(temp_col, temp_col2, scale)
 										config = {
 											object = DynaText({
 												string = "+",
-												colours = { Multiverse.TRANSMUTED_GRADIENT },
+												colours = { Multiverse.C.TRANSMUTED_GRADIENT },
 												shadow = true,
 												scale = 1.4 * scale,
 												text_effect = "mul_rotate",
@@ -121,7 +130,7 @@ function Multiverse.thaumaturgy_UI_row(temp_col, temp_col2, scale)
 										config = {
 											object = DynaText({
 												string = { { ref_table = G.GAME, ref_value = "mul_thaumaturgy_energy" } },
-												colours = { Multiverse.TRANSMUTED_GRADIENT },
+												colours = { Multiverse.C.TRANSMUTED_GRADIENT },
 												shadow = true,
 												scale = 1.4 * scale,
 											}),

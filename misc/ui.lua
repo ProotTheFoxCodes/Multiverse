@@ -99,7 +99,7 @@ end
 function Multiverse.music_toggle(song, credit)
 	local toggle = Multiverse.create_custom_toggle({
 		label = "",
-		active_colour = Multiverse.TRANSMUTED_GRADIENT,
+		active_colour = Multiverse.C.TRANSMUTED_GRADIENT,
 		ref_table = Multiverse.config.music,
 		ref_value = song,
 		w = 0,
@@ -223,7 +223,7 @@ function Multiverse.config_tab_definition()
 			nodes = {
 				create_toggle({
 					label = localize("mul_debug"),
-					active_colour = Multiverse.TRANSMUTED_GRADIENT,
+					active_colour = Multiverse.C.TRANSMUTED_GRADIENT,
 					ref_table = Multiverse.config,
 					ref_value = "debug",
 					callback = function()
@@ -248,7 +248,7 @@ function Multiverse.config_tab_definition()
 			nodes = {
 				create_toggle({
 					label = localize("mul_joke"),
-					active_colour = Multiverse.TRANSMUTED_GRADIENT,
+					active_colour = Multiverse.C.TRANSMUTED_GRADIENT,
 					ref_table = Multiverse.config,
 					ref_value = "joke",
 					callback = function()
