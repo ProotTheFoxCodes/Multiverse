@@ -898,7 +898,7 @@ return {
 			c_mul_eggman = {
 				name = "The {C:inactive}(Dr.){} Eggman",
 				text = {
-					"Converts all {C:clubs}Clubs{}",
+					"Enhances all {C:clubs}Clubs{}",
 					"held in hand into",
 					"{C:attention}Suspiciously Yellow",
 					"{C:attention}Cards",
