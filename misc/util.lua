@@ -314,7 +314,7 @@ end
 function Multiverse.change_blind_size(operation)
 	if G.GAME.facing_blind then
 		local returns = {}
-		local amt = type(operation) == "number" and (G.GAME.blind.chips + operation) or operation(G.GAME.blind.chips)
+		local amt = type(operation) == "function" and operation(G.GAME.blind.chips) or (G.GAME.blind.chips + operation)
 		G.GAME.blind.chips = math.floor(amt + 0.5)
 		G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
 	end

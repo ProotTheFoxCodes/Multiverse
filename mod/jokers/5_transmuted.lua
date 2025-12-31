@@ -450,9 +450,9 @@ Multiverse.UsableJoker({
 	use_ability = function(self, card)
 		Multiverse.ease_TP(-card.ability.extra.tp_cost)
 		Multiverse.change_blind_size(function(chips)
-			local ret = to_big(chips * card.ability.extra.blind_reduce_x)
+			local ret = chips * card.ability.extra.blind_reduce_x
 			if to_big(G.GAME.round_resets.ante) >= to_big(10) then
-				ret = to_big(chips ^ card.ability.extra.blind_reduce_e)
+				ret = chips ^ card.ability.extra.blind_reduce_e
 			end
 			return ret
 		end)
