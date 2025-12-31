@@ -121,7 +121,7 @@ function Card:set_ability(center, initial, delay_sprites)
 		set_ability_hook(self, "c_base", initial, delay_sprites)
 		if not Multiverse.all_animations["explosion"].is_active then
 			Multiverse.start_animation("explosion")
-			play_sound("mul_deltarune_explosion", 1, 0.7)
+			play_sound("mul_deltarune_explosion", 1, 0.8)
 		end
 	else
 		set_ability_hook(self, center, initial, delay_sprites)

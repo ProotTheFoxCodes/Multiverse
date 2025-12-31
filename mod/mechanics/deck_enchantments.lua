@@ -171,7 +171,4 @@ Multiverse.DeckEnchantment({
 		"b_green",
 	},
 	enchantment_type = "neutral",
-	in_pool = function(self, args)
-		return G.GAME.round_resets.discards >= args.level_amt
-	end,
 })

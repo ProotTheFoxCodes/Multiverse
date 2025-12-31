@@ -7,8 +7,8 @@ return {
 					"Your deck is {E:1,C:purple}enchanted{}",
 					"{E:1,C:purple}Enchantments{} apply passive",
 					"effects to the run...",
-				}
-			}
+				},
+			},
 		},
 		Blind = {
 			bl_mul_limbo = {
@@ -33,22 +33,22 @@ return {
 				name = "Dark Affinity#1#",
 				text = {
 					"{V:1}+#2#{C:inactive}/{V:2}+#3#{} Joker slots",
-					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} hands"
-				}
+					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} hands",
+				},
 			},
 			de_mul_flame_affinity = {
 				name = "Flame Affinity#1#",
 				text = {
 					"{V:1}+#2#{C:inactive}/{V:2}+#3#{} discards",
-					"{V:3}-#4#{C:inactive}/{V:4}-#5#{} hands"
-				}
+					"{V:3}-#4#{C:inactive}/{V:4}-#5#{} hands",
+				},
 			},
 			de_mul_aqua_affinity = {
 				name = "Aqua Affinity#1#",
 				text = {
 					"{V:1}+#2#{C:inactive}/{V:2}+#3#{} hands",
-					"{V:3}-#4#{C:inactive}/{V:4}-#5#{} discards"
-				}
+					"{V:3}-#4#{C:inactive}/{V:4}-#5#{} discards",
+				},
 			},
 			de_mul_cosmic_affinity = {
 				name = "Cosmic Affinity#1#",
@@ -56,8 +56,8 @@ return {
 					"When a {C:planet}Planet{} card is",
 					"used, level up most played",
 					"{C:attention}poker hand {V:1}#2#{C:inactive}/{V:2}#3#{} times",
-					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} consumable slots"
-				}
+					"{V:3}-#2#{C:inactive}/{V:4}-#3#{} consumable slots",
+				},
 			},
 			de_mul_druidic_affinity = {
 				name = "Druidic Affinity#1#",
@@ -66,7 +66,70 @@ return {
 					"per remaining {C:blue}hand{} and",
 					"{C:red}discard{} at end of round",
 					"Raise all prices by {V:3}$#4#{C:inactive}/{V:4}$#5#{}",
-				}
+				},
+			},
+			de_mul_artistic_affinity = {
+				name = "Artistic Affinity#1#",
+				text = {
+					"{V:1}+#2#{C:inactive}/{V:2}+#3#{} hand size",
+					"{V:3}-#4#{C:inactive}/{V:4}-#5#{} Joker slots",
+				},
+			},
+			de_mul_light_affinity = {
+				name = "Light Affinity#1#",
+				text = {
+					"Earn {V:1}$#2#{C:inactive}/{V:2}$#3#{} at",
+					"end of round",
+					"{V:3}-#4#{C:inactive}/{V:4}-#5#{} hand size",
+				},
+			},
+			de_mul_arcane_affinity = {
+				name = "Arcane Affinity#1#",
+				text = {
+					"Create {V:1}#2#{C:inactive}/{V:2}#3#{} {C:dark_edition}Negative{} copies",
+					"of {C:tarot}The Fool{} after opening",
+					"an {C:tarot}Arcana Pack",
+					"Increase the base cost",
+					"of rerolls by {V:3}$#4#{C:inactive}/{V:4}$#5#{}",
+				},
+			},
+			de_mul_supernatural_affinity = {
+				name = "Supernatural Affinity#1#",
+				text = {
+					"Create {V:1}#2#{C:inactive}/{V:2}#3#{} random {C:dark_edition}Negative{}",
+					"{C:spectral}Spectral{} cards after",
+					"defeating a {C:attention}Boss Blind",
+					"{B:5,V:3}X#4#{C:inactive}/{B:6,V:4}X#5#{} Blind size when",
+					"selecting a {C:blind}Blind{}",
+				},
+			},
+			de_mul_illusory_affinity = {
+				name = "Illusory Affinity#1#",
+				text = {
+					"Create {V:1}#2#{C:inactive}/{V:2}#3#{} random {C:attention}Tags after",
+					"defeating a {C:attention}Boss Blind",
+					"Lose {V:3}$#4#{C:inactive}/{V:4}$#5#{} at",
+					"end of round",
+				},
+			},
+			de_mul_plasma_affinity = {
+				name = "Plasma Affinity#1#",
+				text = {
+					"Base {C:chips}Chips{} and {C:mult}Mult{} for",
+					"played {C:attention}poker hands{} are",
+					"{V:1}doubled{C:inactive}/{V:2}tripled{}",
+					"After playing a hand,",
+					"{B:5,V:3}X#2#{C:inactive}/{B:6,V:4}X#3#{} Blind size",
+				},
+			},
+			de_mul_decayed_affinity = {
+				name = "Decayed Affinity",
+				text = {
+					"Destroy {V:1}#2#{C:inactive}/{V:2}#3#{} random {C:attention}face cards",
+					"in deck at end of round",
+					"Lose {C:money}$#4#{} per card destroyed",
+					"by this {C:purple}Enchantment{}",
+				},
 			},
 		},
 		Enhanced = {
@@ -852,9 +915,9 @@ return {
 					"Converts all {C:clubs}Clubs{}",
 					"held in hand into",
 					"{C:attention}Suspiciously Yellow",
-					"{C:attention}Cards"
-				}
-			}
+					"{C:attention}Cards",
+				},
+			},
 		},
 		Other = {
 			mul_transmutable = {
@@ -1084,7 +1147,7 @@ return {
 		v_text = {
 			ch_c_mul_waterfall1 = { "Every {C:attention}Boss Blind{} is replaced with {C:red}The Undying{}" },
 			ch_c_mul_waterfall2 = {
-				"If {C:chips}score{} is below {X:purple,C:white}X-0.5{} {C:attention}Blind size{}, {C:red}lose instantly{}",
+				"If {C:chips}score{} is below {X:purple,C:white}X-0.5{} Blind size, {C:red}lose instantly{}",
 			},
 			ch_c_mul_waterfall3 = {
 				"You lose {C:attention}twice{} as many chips if hit by a spear",
