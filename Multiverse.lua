@@ -73,7 +73,6 @@ SMODS.current_mod.calculate = function(self, context)
 	local ret = {}
 	local haspost = false
 	if context.setting_blind and next(SMODS.find_card("c_mul_eggman")) and not G.GAME.mul_eggman_secret then
-		G.GAME.mul_eggman_secret = true
 		G.E_MANAGER:add_event(Event({
 			func = function()
 				if G.GAME.blind.disabled then
@@ -95,6 +94,7 @@ SMODS.current_mod.calculate = function(self, context)
 						}))
 						delay((len * 0.05 + 0.5) * G.SPEEDFACTOR)
 					end
+					G.GAME.mul_eggman_secret = true
 				end
 				return true
 			end,

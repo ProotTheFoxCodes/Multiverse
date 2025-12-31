@@ -67,12 +67,6 @@ SMODS.Atlas({
 	path = "myth_placeholder.png",
 })
 SMODS.Atlas({
-	key = "transmute_tag",
-	px = 34,
-	py = 34,
-	path = "transmute_tag.png",
-})
-SMODS.Atlas({
 	key = "transmutable_sticker",
 	px = 71,
 	py = 95,

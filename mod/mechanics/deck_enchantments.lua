@@ -38,12 +38,13 @@ Multiverse.DeckEnchantment = SMODS.Center:extend({
 ---@param obj Multiverse.DeckEnchantment
 ---@param colours table
 ---@param active_colour table
-function Multiverse.handle_deck_enchantment_loc_colours(obj, colours, active_colour)
+---@param inactive_colour? table
+function Multiverse.handle_deck_enchantment_loc_colours(obj, colours, active_colour, inactive_colour)
 	for i = 1, obj.max_level do
 		if obj:get_level() == i or obj:get_level() == 0 then
 			colours[#colours + 1] = active_colour
 		else
-			colours[#colours + 1] = G.C.UI.TEXT_INACTIVE
+			colours[#colours + 1] = inactive_colour or G.C.UI.TEXT_INACTIVE
 		end
 	end
 end

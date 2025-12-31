@@ -207,11 +207,11 @@ return {
 			c_mul_philosophers_stone = {
 				name = "Philosopher's Stone",
 				text = {
-					"Gain{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} per",
-					"{C:mul_transmuted}Transmuted{} Joker owned",
-					"{C:mul_transmuted,E:1}Transmutes{} selected Joker that",
-					"is currently {C:mul_transmuted}Transmutable{}",
-					"{C:inactive}(Preserves Joker modifications){}",
+					"Gain{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#1#{} per {C:mul_transmuted}Transmuted{}",
+					"Joker owned, then {C:mul_transmuted,E:1}transmutes{}",
+					"selected Joker that is",
+					"currently {C:mul_transmuted}Transmutable{}",
+					"{C:inactive}(Removes all other Stickers){}",
 					"{C:inactive}(Currently{s:0.58} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#2#{C:inactive}){}",
 				},
 			},
@@ -851,7 +851,7 @@ return {
 			},
 		},
 		Tag = {
-			
+
 		},
 		Tarot = {
 			c_mul_lobotomized = {

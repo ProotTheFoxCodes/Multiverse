@@ -135,7 +135,7 @@ Multiverse.DeckEnchantment({
 			local hand = Multiverse.get_most_played_hand()
 			return {
 				level_up = enchantment.level,
-				level_up_hand = hand
+				level_up_hand = hand,
 			}
 		end
 	end,
@@ -260,7 +260,7 @@ Multiverse.DeckEnchantment({
 			ret[#ret + 1] = i * 2
 		end
 		ret.colours = colours
-		info_queue[#info_queue+1] = G.P_CENTERS.c_fool
+		info_queue[#info_queue + 1] = G.P_CENTERS.c_fool
 		return {
 			vars = ret,
 		}
@@ -295,6 +295,78 @@ Multiverse.DeckEnchantment({
 						SMODS.calculate_effect({
 							message = localize("k_plus_tarot"),
 							colour = G.C.PURPLE,
+						}, G.deck.cards[1] or G.deck)
+					end
+					return true
+				end,
+			}))
+		end
+	end,
+})
+
+Multiverse.DeckEnchantment({
+	key = "supernatural_affinity",
+	max_level = 2,
+	loc_vars = function(self, info_queue, card)
+		local colours = {}
+		local ret = {
+			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+		}
+		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.FILTER)
+		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.WHITE)
+		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.PURPLE, lighten(G.C.UI.TEXT_INACTIVE, 0.3))
+		for i = 1, self.max_level do
+			ret[#ret + 1] = i
+		end
+		for i = 1, self.max_level do
+			ret[#ret + 1] = 1 + i * 0.5
+		end
+		ret.colours = colours
+		return {
+			vars = ret,
+		}
+	end,
+	deck_incompat = {
+		"b_magic",
+	},
+	enchantment_type = "neutral",
+	in_pool = function(self, args)
+		return G.jokers.config.card_limit >= args.level_amt
+	end,
+	calculate = function(self, enchantment, context)
+		if context.setting_blind then
+			return {
+				message = localize({
+					type = "variable",
+					key = "a_mul_x_blind_size",
+					vars = { 1 + enchantment.level * 0.5 },
+				}),
+				func = function()
+					Multiverse.change_blind_size(function(chips)
+						return chips * (1 + enchantment.level * 0.5)
+					end)
+				end
+			}
+		end
+		if context.end_of_round and context.main_eval and not context.game_over and context.beat_boss then
+			G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + enchantment.level
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					for i = 1, enchantment.level do
+						G.E_MANAGER:add_event(Event({
+							func = function()
+								SMODS.add_card({
+									set = "Spectral",
+									edition = "e_negative",
+								})
+
+								G.GAME.consumeable_buffer = G.GAME.consumeable_buffer - 1
+								return true
+							end,
+						}))
+						SMODS.calculate_effect({
+							message = localize("k_plus_spectral"),
+							colour = G.C.SECONDARY_SET.Spectral,
 						}, G.deck.cards[1] or G.deck)
 					end
 					return true
