@@ -851,15 +851,7 @@ return {
 			},
 		},
 		Tag = {
-			tag_mul_magnum_opus = {
-				name = "Magnum Opus Tag",
-				text = {
-					"Creates a",
-					"{C:mul_transmuted}Philosopher's Stone{}",
-					"{C:inactive,s:0.8}Cannot be duplicated{}",
-					"{C:inactive,s:0.8}Ignores consumable limit{}",
-				},
-			},
+			
 		},
 		Tarot = {
 			c_mul_lobotomized = {
