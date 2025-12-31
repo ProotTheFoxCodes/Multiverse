@@ -52,13 +52,13 @@ SMODS.Joker({
 		if context.initial_scoring_step then
 			local has_call_card = false
 			for _, c in ipairs(G.hand.cards) do
-				if c.config.center.key == "m_mul_calling_card" then
+				if c.config.center.key == "m_mul_calling_card" and c.facing == "front" then
 					has_call_card = true
 					break
 				end
 			end
 			for _, c in ipairs(context.full_hand) do
-				if c.config.center.key == "m_mul_calling_card" or has_call_card then
+				if (c.config.center.key == "m_mul_calling_card" and c.facing == "front") or has_call_card then
 					has_call_card = true
 					break
 				end
@@ -83,7 +83,7 @@ SMODS.Joker({
 			if G.consumeables then
 				for _, c in ipairs(G.consumeables.cards) do
 					if not tarots_held[c.config.center.key] and c.ability.set == "Tarot" then
-						tarots_held[c.config.center.key] = 1
+						tarots_held[c.config.center.key] = true
 						tarots_held.n = tarots_held.n + 1
 					end
 				end
@@ -95,13 +95,13 @@ SMODS.Joker({
 		if context.after then
 			local has_call_card = false
 			for _, c in ipairs(G.hand.cards) do
-				if c.config.center.key == "m_mul_calling_card" then
+				if c.config.center.key == "m_mul_calling_card" and c.facing == "front" then
 					has_call_card = true
 					break
 				end
 			end
 			for _, c in ipairs(context.full_hand) do
-				if c.config.center.key == "m_mul_calling_card" or has_call_card then
+				if (c.config.center.key == "m_mul_calling_card" and c.facing == "front") or has_call_card then
 					has_call_card = true
 					break
 				end
@@ -152,6 +152,9 @@ Multiverse.UsableJoker({
 					c:set_ability("m_mul_netherite")
 				end
 			end
+			return {
+				message = localize("k_mul_converted")
+			}
 		end
 	end,
 	use_ability = function(self, card)
@@ -225,6 +228,7 @@ SMODS.Joker({
 					return true
 				end,
 			}))
+			return nil, true
 		end
 		if context.other_joker and card.ability.extra.joker_xmult > 1 then
 			return {
@@ -251,14 +255,16 @@ SMODS.Joker({
 	end,
 	add_to_deck = function(self, card, from_debuff)
 		if not from_debuff then
+			G.GAME.waldo_spawn = true
 			local c = SMODS.add_card({
-				set = "Base",
+				set = "Enhanced",
 				area = G.deck,
 				skip_materialize = true,
 				enhancement = "m_mul_waldo",
 			})
+			G.GAME.waldo_spawn = false
 			playing_card_joker_effects({ c })
-			G.GAME.waldo_created = true
+			G.GAME.waldo_already_created = true
 		end
 	end,
 	calculate = function(self, card, context)

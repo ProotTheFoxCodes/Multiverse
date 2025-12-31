@@ -117,7 +117,7 @@ end
 
 local set_ability_hook = Card.set_ability
 function Card:set_ability(center, initial, delay_sprites)
-	if center == "" and G.GAME.waldo_created then
+	if center == "m_mul_waldo" and G.GAME.waldo_already_created and not G.GAME.waldo_spawn then
 		set_ability_hook(self, "c_base", initial, delay_sprites)
 		if not Multiverse.all_animations["explosion"].is_active then
 			Multiverse.start_animation("explosion")

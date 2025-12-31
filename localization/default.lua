@@ -507,20 +507,6 @@ return {
 					},
 				},
 			},
-			j_mul_v2 = {
-				name = "V2",
-				text = {
-					{
-						"When {C:attention}first hand{} of round is",
-						"played, add a {C:attention}Gold Seal{} to",
-						"first scored {C:hearts}Hearts{} card",
-					},
-					{
-						"{C:inactive,s:0.8}Ultrakill fans will do anything",
-						"{C:inactive,s:0.8}to screw the murder robot",
-					},
-				},
-			},
 			j_mul_villager = {
 				name = "Villager",
 				text = {
@@ -1171,6 +1157,7 @@ return {
 			k_mul_antimatter_grow3 = "Is this too much?",
 			k_mul_antimatter_grow4 = "What have we done?",
 			k_mul_popped = "Popped!",
+			k_mul_converted = "Converted!",
 			k_mul_won_fifty_fifty = "Won!",
 			k_mul_lost_fifty_fifty = "Lost...",
 			k_mul_eliminated = "Eliminated!",

@@ -70,33 +70,6 @@ SMODS.Joker({
 })
 
 SMODS.Joker({
-	key = "v2",
-	atlas = "placeholder",
-	pos = { x = 1, y = 0 },
-	config = { extra = { seal = "Gold" } },
-	rarity = 2,
-	blueprint_compat = true,
-	cost = 8,
-	loc_vars = function(self, info_queue, card)
-		table.insert(info_queue, {
-			set = "Other",
-			key = "gold_seal",
-		})
-		return { vars = { card.ability.extra.xmult } }
-	end,
-	calculate = function(self, card, context)
-		if context.before and G.GAME.current_round.hands_played == 0 then
-			for _, c in ipairs(context.scoring_hand) do
-				if c:is_suit("Hearts") then
-					c:set_seal(card.ability.extra.seal)
-					c:juice_up()
-				end
-			end
-		end
-	end,
-})
-
-SMODS.Joker({
 	key = "summoned_skull",
 	atlas = "placeholder",
 	pos = { x = 1, y = 0 },
@@ -223,7 +196,7 @@ SMODS.Joker({
 	calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play then
 			if not context.blueprint then
-				card.ability.extra.transmute_progress = card.ability.extra.transmute_progress + 1
+				Multiverse.increment_transmute_progress(card, 1)
 				Multiverse.transmute_check(card)
 			end
 			if pseudorandom("hammer_bro", 1, 2) == 1 then
@@ -252,7 +225,7 @@ SMODS.Joker({
 	end,
 	calculate = function(self, card, context)
 		if not context.blueprint and context.money_altered and context.from_shop and context.amount < 0 then
-			card.ability.extra.transmute_progress = card.ability.extra.transmute_progress - context.amount
+			Multiverse.increment_transmute_progress(card, -context.amount)
 			Multiverse.transmute_check(card)
 		end
 		if context.before and #G.hand.cards > 0 then

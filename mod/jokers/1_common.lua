@@ -198,6 +198,9 @@ SMODS.Joker({
 		if context.before and context.scoring_hand[1] then
 			assert(SMODS.change_base(context.scoring_hand[1], nil, "Jack"))
 			context.scoring_hand[1]:juice_up()
+			return {
+				message = localize("k_mul_converted")
+			}
 		end
 	end,
 })

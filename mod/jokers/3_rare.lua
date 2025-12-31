@@ -147,7 +147,7 @@ SMODS.Joker({
 					end
 				end
 				if amt > 0 then
-					card.ability.extra.transmute_progress = card.ability.extra.transmute_progress + amt
+					Multiverse.increment_transmute_progress(card, amt)
 					Multiverse.transmute_check(card)
 				end
 			end
