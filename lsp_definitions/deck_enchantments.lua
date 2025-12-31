@@ -29,6 +29,7 @@
 ---@field loc_vars? fun(self: Multiverse.DeckEnchantment, info_queue: table, card: table): table?
 ---@field on_change_level? fun(self: Multiverse.DeckEnchantment|table, delta: integer, final_level: integer) Called when this enchantment's level changes.
 ---@field get_level? fun(self: Multiverse.DeckEnchantment|table): number Returns the current level of this enchantment.
+---@field calc_dollar_bonus? fun(self: Multiverse.DeckEnchantment|table, enchantment: EnchantmentData): integer?
 
 ---@alias EnchantmentType
 ---| "positive"

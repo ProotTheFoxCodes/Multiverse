@@ -32,7 +32,6 @@ Multiverse.thaumaturgy_UI_row(temp_col, temp_col2, scale),
 # }},
 # '''
 match_indent = true
-times = 1
 
 [[patches]]
 [patches.pattern]
@@ -45,7 +44,6 @@ payload = '''
 mul_thaumaturgy_energy = self.HUD:get_UIE_by_ID("thaumaturgy_UI_count"),
 '''
 match_indent = true
-times = 1
 
 [[patches]]
 [patches.pattern]
@@ -58,7 +56,6 @@ payload = '''
 if _c.key == "mul_thaumaturgy_desc" then specific_vars = {G.GAME.mul_thaumaturgy_energy_rate >= 0 and "Gain" or "Lose", math.abs(G.GAME.mul_thaumaturgy_energy_rate)} end
 '''
 match_indent = true
-times = 1
 
 [[patches]]
 [patches.pattern]
@@ -69,4 +66,3 @@ payload = '''
 SMODS.calculate_context({mul_philosophers_stone_check = true, game_over = game_over, beat_boss = G.GAME.blind.boss })
 '''
 match_indent = true
-times = 1

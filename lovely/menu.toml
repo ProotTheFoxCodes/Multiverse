@@ -32,7 +32,6 @@ if self.SPLASH_MULTIVERSE_LOGO then
 end
 '''
 match_indent = true
-times = 1
 
 [[patches]]
 [patches.pattern]
@@ -45,4 +44,3 @@ payload = '''
 if self.SPLASH_MULTIVERSE_LOGO then self.SPLASH_MULTIVERSE_LOGO:remove(); self.SPLASH_MULTIVERSE_LOGO = nil end
 '''
 match_indent = true
-times = 1

@@ -14,7 +14,6 @@ payload = '''
 if _c.key == "mul_TP_desc" then specific_vars = {G.GAME.mul_TP_min_gain, G.GAME.mul_TP_max_gain} end
 '''
 match_indent = true
-times = 1
 
 [[patches]]
 [patches.pattern]
@@ -33,4 +32,3 @@ if self.config.detailed_tooltip_offset then
 end
 '''
 match_indent = true
-times = 1

@@ -32,6 +32,7 @@ Multiverse.DeckEnchantment = SMODS.Center:extend({
 	get_level = function(self)
 		return G.GAME.mul_deck_enchantments and ((G.GAME.mul_deck_enchantments[self.key] or {}).level or 0) or 0
 	end,
+	calc_dollar_bonus = function(self, enchantment) end,
 })
 
 ---@param obj Multiverse.DeckEnchantment
@@ -82,8 +83,8 @@ end
 function Multiverse.calculate_deck_enchantments(context, results)
 	if G.GAME.mul_deck_enchantments then
 		for _, key in ipairs(Multiverse.DeckEnchantment.obj_buffer) do
-			local level = G.GAME.mul_deck_enchantments[key] and G.GAME.mul_deck_enchantments[key].level or 0
-			if level > 0 then
+			local data = G.GAME.mul_deck_enchantments[key]
+			if data and data.level > 0 then
 				results[#results + 1] =
 					Multiverse.DeckEnchantments[key]:calculate(G.GAME.mul_deck_enchantments[key], context)
 			end

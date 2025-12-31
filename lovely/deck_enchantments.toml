@@ -1,0 +1,57 @@
+[manifest]
+version = "0.0.9"
+priority = 0
+dump_lua = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '''
+        -- TARGET: calc_dollar_bonus per card
+        if ret then
+            i = i+1
+            add_round_eval_row({dollars = ret, bonus = true, name='joker'..i, pitch = pitch, card = _card})
+            pitch = pitch + 0.06
+            dollars = dollars + ret
+        end
+    end
+end
+'''
+position = "after"
+payload = '''
+local i2 = 0
+for _, key in ipairs(Multiverse.DeckEnchantment.obj_buffer) do
+    local data = G.GAME.mul_deck_enchantments[key]
+    local obj = Multiverse.DeckEnchantments[key]
+    local ret = nil
+    if data and data.level > 0 then
+        ret = obj:calc_dollar_bonus(data)
+    end
+    if ret then
+        i2 = i2 + 1
+        add_round_eval_row({dollars = ret, bonus = true, name='enchantment'..i2, pitch = pitch, enchantment = obj})
+        pitch = pitch + 0.06
+        dollars = dollars + ret
+    end
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+elseif config.name == 'custom' then
+'''
+position = "before"
+payload = '''
+elseif string.find(config.name, 'enchantment') then
+    local vars = {}
+    local data = G.GAME.mul_deck_enchantments[config.enchantment.key]
+    if type(config.enchantment.loc_vars) == "function" then
+        vars = (config.enchantment:loc_vars({}, data) or {}).vars or {}
+    end
+    local text = Multiverse.parse_vars(localize({type = 'name_text', set = config.enchantment.set, key = config.enchantment.key}), vars)
+    table.insert(left_text, {n=G.UIT.O, config={object = DynaText({string = text, colours = {G.C.FILTER}, shadow = true, pop_in = 0, scale = 0.6*scale, silent = true})}})
+'''
+match_indent = true
