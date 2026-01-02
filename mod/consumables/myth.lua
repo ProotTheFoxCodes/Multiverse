@@ -463,6 +463,7 @@ SMODS.Consumable({
 	atlas = "temp_myth",
 	pos = { x = 0, y = 0 },
 	discovered = true,
+	eternal_compat = true,
 	cost = 6,
 	config = { extra = { is_active = false, temp_recharge_boost = 12, money_penalty = 2 } },
 	loc_vars = function(self, info_queue, card)
@@ -491,6 +492,11 @@ SMODS.Consumable({
 				G.GAME.mul_money_mult = G.GAME.mul_money_mult * card.ability.extra.money_penalty
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					- card.ability.extra.temp_recharge_boost
+			end
+			if card.ability.extra.is_active then
+				card:add_sticker("eternal", true)
+			else
+				card:remove_sticker("eternal")
 			end
 		end)
 	end,
@@ -531,6 +537,7 @@ SMODS.Consumable({
 	atlas = "temp_myth",
 	pos = { x = 0, y = 0 },
 	discovered = true,
+	eternal_compat = true,
 	cost = 6,
 	config = { extra = { is_active = false, temp_recharge_boost = 6, shop_penalty = 1 } },
 	loc_vars = function(self, info_queue, card)
@@ -545,7 +552,7 @@ SMODS.Consumable({
 		return not card.ability.extra.is_active
 	end,
 	can_use = function(self, card)
-		return card.ability.extra.is_active or (G.STATE == G.STATES.SHOP and to_big(G.GAME.shop.joker_max) > to_big(1))
+		return card.ability.extra.is_active or (to_big(G.GAME.shop.joker_max) > to_big(1))
 	end,
 	use = function(self, card, area, copier)
 		Multiverse.effect_animation(card, function()
@@ -560,6 +567,11 @@ SMODS.Consumable({
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					- card.ability.extra.temp_recharge_boost
 			end
+			if card.ability.extra.is_active then
+				card:add_sticker("eternal", true)
+			else
+				card:remove_sticker("eternal")
+			end
 		end)
 	end,
 })
@@ -570,6 +582,7 @@ SMODS.Consumable({
 	atlas = "temp_myth",
 	pos = { x = 0, y = 0 },
 	discovered = true,
+	eternal_compat = true,
 	cost = 6,
 	config = { extra = { is_active = false, temp_recharge_boost = 12 } },
 	loc_vars = function(self, info_queue, card)
@@ -619,6 +632,11 @@ SMODS.Consumable({
 				end)
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					- card.ability.extra.temp_recharge_boost
+			end
+			if card.ability.extra.is_active then
+				card:add_sticker("eternal", true)
+			else
+				card:remove_sticker("eternal")
 			end
 		end)
 	end,
@@ -684,6 +702,7 @@ SMODS.Consumable({
 	atlas = "temp_myth",
 	pos = { x = 0, y = 0 },
 	discovered = true,
+	eternal_compat = true,
 	cost = 6,
 	config = { extra = { is_active = false, temp_recharge_boost = 16 } },
 	loc_vars = function(self, info_queue, card)
@@ -721,6 +740,11 @@ SMODS.Consumable({
 				end)
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					- card.ability.extra.temp_recharge_boost
+			end
+			if card.ability.extra.is_active then
+				card:add_sticker("eternal", true)
+			else
+				card:remove_sticker("eternal")
 			end
 		end)
 	end,
@@ -793,6 +817,7 @@ SMODS.Consumable({
 	atlas = "temp_myth",
 	pos = { x = 0, y = 0 },
 	discovered = true,
+	eternal_compat = true,
 	cost = 6,
 	config = { extra = { is_active = false, temp_recharge_boost = 8 } },
 	loc_vars = function(self, info_queue, card)
@@ -833,6 +858,11 @@ SMODS.Consumable({
 				end)
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					- card.ability.extra.temp_recharge_boost
+			end
+			if card.ability.extra.is_active then
+				card:add_sticker("eternal", true)
+			else
+				card:remove_sticker("eternal")
 			end
 		end)
 	end,
@@ -892,6 +922,7 @@ SMODS.Consumable({
 	atlas = "temp_myth",
 	pos = { x = 0, y = 0 },
 	discovered = true,
+	eternal_compat = true,
 	cost = 6,
 	config = { extra = { is_active = false, temp_recharge_penalty = 8, hands = 2, discards = 2 } },
 	loc_vars = function(self, info_queue, card)
@@ -938,6 +969,11 @@ SMODS.Consumable({
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					+ card.ability.extra.temp_recharge_penalty
 			end
+			if card.ability.extra.is_active then
+				card:add_sticker("eternal", true)
+			else
+				card:remove_sticker("eternal")
+			end
 		end)
 	end,
 })
@@ -948,6 +984,7 @@ SMODS.Consumable({
 	atlas = "temp_myth",
 	pos = { x = 0, y = 0 },
 	discovered = true,
+	eternal_compat = true,
 	cost = 6,
 	config = { extra = { is_active = false, temp_recharge_penalty = 12, joker_slots = 1 } },
 	loc_vars = function(self, info_queue, card)
@@ -983,6 +1020,11 @@ SMODS.Consumable({
 				G.GAME.mul_thaumaturgy_energy_rate = G.GAME.mul_thaumaturgy_energy_rate
 					+ card.ability.extra.temp_recharge_penalty
 			end
+			if card.ability.extra.is_active then
+				card:add_sticker("eternal", true)
+			else
+				card:remove_sticker("eternal")
+			end
 		end)
 	end,
 })
@@ -993,6 +1035,7 @@ SMODS.Consumable({
 	atlas = "temp_myth",
 	pos = { x = 0, y = 0 },
 	discovered = true,
+	eternal_compat = true,
 	cost = 6,
 	config = { extra = { is_active = false, progress_boost = 1 } },
 	loc_vars = function(self, info_queue, card)
@@ -1014,6 +1057,11 @@ SMODS.Consumable({
 			play_sound("tarot1")
 			card.ability.extra.is_active = not card.ability.extra.is_active
 			G.GAME.mul_time_machine_active = card.ability.extra.is_active
+			if card.ability.extra.is_active then
+				card:add_sticker("eternal", true)
+			else
+				card:remove_sticker("eternal")
+			end
 		end)
 	end,
 	calculate = function(self, card, context)
