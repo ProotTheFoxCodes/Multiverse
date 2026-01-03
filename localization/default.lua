@@ -125,8 +125,8 @@ return {
 			de_mul_decayed_affinity = {
 				name = "Decayed Affinity#1#",
 				text = {
-					"Destroy {V:1}#2#{C:inactive}/{V:2}#3#{} random {C:attention}face cards",
-					"in deck at end of round",
+					"Destroy up to {V:1}#2#{C:inactive}/{V:2}#3#{} random {C:attention}face",
+					"{C:attention}cards{} in deck at end of round",
 				},
 			},
 		},

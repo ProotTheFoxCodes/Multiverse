@@ -275,17 +275,24 @@ function Multiverse.update_deck_enchantments()
 			config = {
 				center = Multiverse.DummyCenters["du_mul_all_enchants"],
 			},
-			T = (G.deck.cards[1] or G.deck).T,
+			T = G.deck.T,
 		}
 		G.mul_deck_enchantment_tooltip = UIBox({
 			definition = G.UIDEF.card_h_popup(fake_card),
 			config = {
 				align = "tm",
-				offset = { x = 0, y = -0.1 },
-				major = G.deck.cards[1] or G.deck,
+				offset = { x = #G.deck.cards * 0.004, y = -0.1 - #G.deck.cards * 0.004 },
+				major = G.deck,
 				instance_type = "POPUP",
 			},
 		})
+		function G.mul_deck_enchantment_tooltip:update(dt)
+			self:set_alignment({
+				offset = { x = #G.deck.cards * 0.004, y = -0.1 - #G.deck.cards * 0.004 },
+			})
+			self:recalculate()
+			UIBox.update(self, dt)
+		end
 		G.mul_deck_enchantment_tooltip.states.collide.can = false
 		G.mul_deck_enchantment_tooltip:recalculate()
 	elseif

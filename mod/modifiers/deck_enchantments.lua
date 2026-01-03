@@ -460,3 +460,45 @@ Multiverse.DeckEnchantment({
 		end
 	end,
 })
+
+Multiverse.DeckEnchantment({
+	key = "decayed_affinity",
+	max_level = 2,
+	loc_vars = function(self, info_queue, card)
+		local colours = {}
+		local ret = {
+			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+		}
+		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.FILTER)
+		for i = 1, self.max_level do
+			ret[#ret + 1] = i
+		end
+		ret.colours = colours
+		return {
+			vars = ret,
+		}
+	end,
+	deck_incompat = {
+		"b_abandoned",
+	},
+	enchantment_type = "neutral",
+	calculate = function(self, enchantment, context)
+		if context.end_of_round and context.main_eval and not context.game_over then
+			local pool = {}
+			Multiverse.apply_to_playing_cards(function(playing_card)
+				if playing_card:is_face() then
+					pool[#pool + 1] = playing_card
+				end
+			end)
+			local targets = Multiverse.get_unique_pseudorandom_elements(pool, enchantment.level, "decayed_destruction")
+			if #targets > 0 then
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						SMODS.destroy_cards(targets)
+						return true
+					end,
+				}))
+			end
+		end
+	end,
+})
