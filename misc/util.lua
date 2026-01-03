@@ -315,7 +315,17 @@ function Multiverse.change_blind_size(operation)
 	if G.GAME.facing_blind then
 		local returns = {}
 		local amt = type(operation) == "function" and operation(G.GAME.blind.chips) or (G.GAME.blind.chips + operation)
-		G.GAME.blind.chips = math.floor(amt + 0.5)
+		G.E_MANAGER:add_event(Event({
+			trigger = "ease",
+			delay = 0.5,
+			ease_to = math.floor(amt + 0.5),
+			ref_table = G.GAME.blind,
+			ref_value = "chips",
+			func = function (n)
+				G.GAME.blind.chip_text = number_format(math.floor(n + 0.5))
+				return math.floor(n)
+			end
+		}))
 		G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
 	end
 end

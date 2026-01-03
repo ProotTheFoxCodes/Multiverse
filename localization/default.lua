@@ -118,7 +118,7 @@ return {
 					"Base {C:chips}Chips{} and {C:mult}Mult{} for",
 					"played {C:attention}poker hands{} are",
 					"{V:1}doubled{C:inactive}/{V:2}tripled{}",
-					"After playing a hand,",
+					"Before playing a hand,",
 					"{B:5,V:3}X#2#{C:inactive}/{B:6,V:4}X#3#{} Blind size",
 				},
 			},

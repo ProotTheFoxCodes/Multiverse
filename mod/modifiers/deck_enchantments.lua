@@ -327,7 +327,7 @@ Multiverse.DeckEnchantment({
 		}
 	end,
 	deck_incompat = {
-		"b_magic",
+		"b_ghost",
 	},
 	enchantment_type = "neutral",
 	calculate = function(self, enchantment, context)
@@ -412,5 +412,51 @@ Multiverse.DeckEnchantment({
 	end,
 	calc_dollar_bonus = function(self, enchantment)
 		return enchantment.level * -3
+	end,
+})
+
+Multiverse.DeckEnchantment({
+	key = "plasma_affinity",
+	max_level = 2,
+	loc_vars = function(self, info_queue, card)
+		local colours = {}
+		local ret = {
+			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+		}
+		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.FILTER)
+		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.WHITE)
+		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.PURPLE, lighten(G.C.UI.TEXT_INACTIVE, 0.3))
+		for i = 1, self.max_level do
+			ret[#ret + 1] = 1 + i * 0.5
+		end
+		ret.colours = colours
+		return {
+			vars = ret,
+		}
+	end,
+	deck_incompat = {
+		"b_plasma",
+	},
+	enchantment_type = "neutral",
+	calculate = function(self, enchantment, context)
+		if context.before then
+			return {
+				message = localize({
+					type = "variable",
+					key = "a_mul_x_blind_size",
+					vars = { 1 + enchantment.level * 0.5 },
+				}),
+				func = function()
+					Multiverse.change_blind_size(function(chips)
+						return chips * (1 + enchantment.level * 0.5)
+					end)
+				end,
+			}
+		end
+		if context.modify_hand then
+			mult = mod_mult(mult * (enchantment.level + 1))
+			hand_chips = mod_chips(hand_chips * (enchantment.level + 1))
+			update_hand_text({ sound = "chips2", delay = 0 }, { chips = hand_chips, mult = mult })
+		end
 	end,
 })
