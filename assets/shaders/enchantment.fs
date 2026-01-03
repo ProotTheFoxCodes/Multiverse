@@ -101,19 +101,17 @@ vec4 effect(vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords)
     float fac = floor(res + 0.5);
     // I used a tool to visualize the target color in HSL format
     hsl.x = (hsl.x * (1. - fac) + 0.75 * fac);
-    // We provide a minimum saturation and increase the overall saturation level of the sprite here
-    hsl.y = (min(0.6, hsl.y + 0.5));
+    // hsl.y = (min(0.6, hsl.y + 0.5));
+    hsl.y = (hsl.y * (1. - fac) + fac);
     hsl.z = (hsl.z * (1. - fac) + 0.5 * fac) * 6. / 5.;
 
     // colour is still in rgb format
     // We want to convert the modified HSL value back into RGB,
     // then set colour to the red, green, and blue components of the converted HSL value
     colour.rgb = RGB(hsl).rgb;
-
-    // We set the transparency of the final colour to res in order to
-    // make it so that only the purple lines show up
-    colour.a = res;
-
+    colour.r = (colour.r + 1.) / 2.;
+    colour.b = (colour.b + 1.) / 2.;
+    colour.g = colour.g / 2.;
     // Needed in order to prevent the shader from crashing
     // Does nothing to the final color
     // This is needed because otherwise the compiler optimizes away
