@@ -330,9 +330,6 @@ Multiverse.DeckEnchantment({
 		"b_magic",
 	},
 	enchantment_type = "neutral",
-	in_pool = function(self, args)
-		return G.jokers.config.card_limit >= args.level_amt
-	end,
 	calculate = function(self, enchantment, context)
 		if context.setting_blind then
 			return {
@@ -345,7 +342,7 @@ Multiverse.DeckEnchantment({
 					Multiverse.change_blind_size(function(chips)
 						return chips * (1 + enchantment.level * 0.5)
 					end)
-				end
+				end,
 			}
 		end
 		if context.end_of_round and context.main_eval and not context.game_over and context.beat_boss then
@@ -373,5 +370,47 @@ Multiverse.DeckEnchantment({
 				end,
 			}))
 		end
+	end,
+})
+
+Multiverse.DeckEnchantment({
+	key = "illusory_affinity",
+	max_level = 2,
+	loc_vars = function(self, info_queue, card)
+		local colours = {}
+		local ret = {
+			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+		}
+		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.FILTER)
+		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.MONEY)
+		for i = 1, self.max_level do
+			ret[#ret + 1] = i
+		end
+		for i = 1, self.max_level do
+			ret[#ret + 1] = i * 3
+		end
+		ret.colours = colours
+		return {
+			vars = ret,
+		}
+	end,
+	deck_incompat = {
+		"b_anaglyph",
+	},
+	enchantment_type = "neutral",
+	calculate = function(self, enchantment, context)
+		if context.end_of_round and context.main_eval and not context.game_over and context.beat_boss then
+			for i = 1, enchantment.level do
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						Multiverse.create_random_tag()
+						return true
+					end,
+				}))
+			end
+		end
+	end,
+	calc_dollar_bonus = function(self, enchantment)
+		return enchantment.level * -3
 	end,
 })

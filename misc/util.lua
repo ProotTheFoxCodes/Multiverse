@@ -319,3 +319,15 @@ function Multiverse.change_blind_size(operation)
 		G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
 	end
 end
+
+---Internal code taken from vanilla remade
+function Multiverse.create_random_tag()
+	local tag_pool = get_current_pool("Tag")
+	local selected_tag = pseudorandom_element(tag_pool, "modprefix_seed")
+	local it = 1
+	while selected_tag == "UNAVAILABLE" do
+		it = it + 1
+		selected_tag = pseudorandom_element(tag_pool, "modprefix_seed_resample" .. it)
+	end
+	add_tag(Tag(selected_tag, false, "Small"))
+end

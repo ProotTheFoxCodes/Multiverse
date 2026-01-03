@@ -296,3 +296,13 @@ function Multiverse.update_deck_enchantments()
 		G.mul_deck_enchantment_tooltip = nil
 	end
 end
+
+local add_tag_hook = add_tag
+function add_tag(_tag)
+	add_tag_hook(_tag)
+	if Multiverse.count_deck_enchantments() > 0 then
+		if G.HUD_tags and G.HUD_tags[1] then
+			G.HUD_tags[1].config.offset.y = -0.9
+		end
+	end
+end

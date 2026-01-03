@@ -127,8 +127,6 @@ return {
 				text = {
 					"Destroy {V:1}#2#{C:inactive}/{V:2}#3#{} random {C:attention}face cards",
 					"in deck at end of round",
-					"Lose {C:money}$#4#{} per card destroyed",
-					"by this {C:purple}Enchantment{}",
 				},
 			},
 		},
