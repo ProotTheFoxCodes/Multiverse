@@ -91,6 +91,7 @@ SMODS.DrawStep({
 		end
 		if enchantment_shader and card.area and card.area == G.deck then
 			card.children.back:draw_shader("mul_enchantment", nil, card.ARGS.send_to_shader, true)
+			card.children.back:draw_shader("booster", nil, card.ARGS.send_to_shader, true)
 		end
 	end,
 	conditions = { vortex = false, facing = "back" }
