@@ -4,7 +4,7 @@ Multiverse.DeckEnchantment({
 	loc_vars = function(self, info_queue, card)
 		local colours = {}
 		local ret = {
-			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+			(card.level > 0 and " " or "") .. Multiverse.number_to_roman(card.level),
 		}
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.FILTER)
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.BLUE)
@@ -26,7 +26,10 @@ Multiverse.DeckEnchantment({
 	},
 	enchantment_type = "neutral",
 	in_pool = function(self, args)
-		return G.GAME.round_resets.hands > args.level_amt
+		if not args.level_amt then
+			return true
+		end
+		return math.min(G.GAME.round_resets.hands, G.GAME.current_round.hands_left) > args.level_amt
 	end,
 })
 
@@ -36,7 +39,7 @@ Multiverse.DeckEnchantment({
 	loc_vars = function(self, info_queue, card)
 		local colours = {}
 		local ret = {
-			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+			(card.level > 0 and " " or "") .. Multiverse.number_to_roman(card.level),
 		}
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.RED)
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.BLUE)
@@ -62,6 +65,7 @@ Multiverse.DeckEnchantment({
 	},
 	enchantment_type = "neutral",
 	in_pool = function(self, args)
+		if not args.level_amt then return true end
 		return math.min(G.GAME.round_resets.hands, G.GAME.current_round.hands_left) > args.level_amt
 	end,
 })
@@ -72,7 +76,7 @@ Multiverse.DeckEnchantment({
 	loc_vars = function(self, info_queue, card)
 		local colours = {}
 		local ret = {
-			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+			(card.level > 0 and " " or "") .. Multiverse.number_to_roman(card.level),
 		}
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.BLUE)
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.RED)
@@ -98,6 +102,7 @@ Multiverse.DeckEnchantment({
 	},
 	enchantment_type = "neutral",
 	in_pool = function(self, args)
+		if not args.level_amt then return true end
 		return math.min(G.GAME.round_resets.discards, G.GAME.current_round.discards_left) >= args.level_amt
 	end,
 })
@@ -108,7 +113,7 @@ Multiverse.DeckEnchantment({
 	loc_vars = function(self, info_queue, card)
 		local colours = {}
 		local ret = {
-			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+			(card.level > 0 and " " or "") .. Multiverse.number_to_roman(card.level),
 		}
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.FILTER)
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.RED)
@@ -128,6 +133,7 @@ Multiverse.DeckEnchantment({
 	},
 	enchantment_type = "neutral",
 	in_pool = function(self, args)
+		if not args.level_amt then return true end
 		return G.consumeables.config.card_limit >= args.level_amt
 	end,
 	calculate = function(self, enchantment, context)
@@ -147,7 +153,7 @@ Multiverse.DeckEnchantment({
 	loc_vars = function(self, info_queue, card)
 		local colours = {}
 		local ret = {
-			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+			(card.level > 0 and " " or "") .. Multiverse.number_to_roman(card.level),
 		}
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.MONEY)
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.MONEY)
@@ -179,7 +185,7 @@ Multiverse.DeckEnchantment({
 	loc_vars = function(self, info_queue, card)
 		local colours = {}
 		local ret = {
-			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+			(card.level > 0 and " " or "") .. Multiverse.number_to_roman(card.level),
 		}
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.FILTER)
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.RED)
@@ -213,7 +219,7 @@ Multiverse.DeckEnchantment({
 	loc_vars = function(self, info_queue, card)
 		local colours = {}
 		local ret = {
-			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+			(card.level > 0 and " " or "") .. Multiverse.number_to_roman(card.level),
 		}
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.MONEY)
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.RED)
@@ -236,6 +242,7 @@ Multiverse.DeckEnchantment({
 	},
 	enchantment_type = "neutral",
 	in_pool = function(self, args)
+		if not args.level_amt then return true end
 		return G.jokers.config.card_limit >= args.level_amt
 	end,
 	calc_dollar_bonus = function(self, enchantment)
@@ -249,7 +256,7 @@ Multiverse.DeckEnchantment({
 	loc_vars = function(self, info_queue, card)
 		local colours = {}
 		local ret = {
-			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+			(card.level > 0 and " " or "") .. Multiverse.number_to_roman(card.level),
 		}
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.FILTER)
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.MONEY)
@@ -272,9 +279,6 @@ Multiverse.DeckEnchantment({
 		"b_magic",
 	},
 	enchantment_type = "neutral",
-	in_pool = function(self, args)
-		return G.jokers.config.card_limit >= args.level_amt
-	end,
 	calculate = function(self, enchantment, context)
 		if context.open_booster and context.booster.kind == "Arcana" then
 			G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + enchantment.level
@@ -310,7 +314,7 @@ Multiverse.DeckEnchantment({
 	loc_vars = function(self, info_queue, card)
 		local colours = {}
 		local ret = {
-			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+			(card.level > 0 and " " or "") .. Multiverse.number_to_roman(card.level),
 		}
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.FILTER)
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.WHITE)
@@ -379,7 +383,7 @@ Multiverse.DeckEnchantment({
 	loc_vars = function(self, info_queue, card)
 		local colours = {}
 		local ret = {
-			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+			(card.level > 0 and " " or "") .. Multiverse.number_to_roman(card.level),
 		}
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.FILTER)
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.MONEY)
@@ -421,7 +425,7 @@ Multiverse.DeckEnchantment({
 	loc_vars = function(self, info_queue, card)
 		local colours = {}
 		local ret = {
-			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+			(card.level > 0 and " " or "") .. Multiverse.number_to_roman(card.level),
 		}
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.FILTER)
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.WHITE)
@@ -467,7 +471,7 @@ Multiverse.DeckEnchantment({
 	loc_vars = function(self, info_queue, card)
 		local colours = {}
 		local ret = {
-			(self:get_level() > 0 and " " or "") .. Multiverse.number_to_roman(self:get_level()),
+			(card.level > 0 and " " or "") .. Multiverse.number_to_roman(card.level),
 		}
 		Multiverse.handle_deck_enchantment_loc_colours(self, colours, G.C.FILTER)
 		for i = 1, self.max_level do
@@ -499,6 +503,29 @@ Multiverse.DeckEnchantment({
 					end,
 				}))
 			end
+		end
+	end,
+})
+
+Multiverse.DeckEnchantment({
+	key = "overflow",
+	max_level = math.huge,
+	config = {
+		xmult = 0.1,
+	},
+	enchantment_type = "positive",
+	loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.xmult, 1 + card.level * card.ability.xmult } }
+	end,
+	in_pool = function(self, args)
+		return false
+	end,
+	base_weight = 0,
+	calculate = function(self, enchantment, context)
+		if context.joker_main then
+			return {
+				xmult = 1 + enchantment.level * enchantment.ability.xmult,
+			}
 		end
 	end,
 })

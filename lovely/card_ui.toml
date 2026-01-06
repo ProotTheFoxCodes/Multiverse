@@ -5,19 +5,6 @@ dump_lua = true
 
 [[patches]]
 [patches.pattern]
-target = '''=[SMODS _ "src/game_object.lua"]'''
-pattern = '''
-elseif desc_nodes ~= full_UI_table.main and not desc_nodes.name and self.set ~= 'Enhanced' then
-    desc_nodes.name = localize{type = 'name_text', key = res.name_key or target.key, set = target.set }
-'''
-position = "after"
-payload = '''
-desc_nodes.name = Multiverse.parse_vars(desc_nodes.name, target.vars)
-'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
 target = "tag.lua"
 pattern = '''
 G.HUD_tags[HUD_tag_key+1]:set_alignment({type = 'bri',

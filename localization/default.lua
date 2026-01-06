@@ -130,6 +130,13 @@ return {
 					"deck at end of round"
 				},
 			},
+			de_mul_overflow = {
+				name = "Overflow",
+				text = {
+					"Gives {X:mult,C:white}X#1#{} per level",
+					"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}"
+				}
+			}
 		},
 		Enhanced = {
 			m_mul_calling_card = {

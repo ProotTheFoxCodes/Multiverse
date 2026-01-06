@@ -1,7 +1,7 @@
 ---@meta
 
----@class Multiverse.DeckEnchantment: SMODS.Center
----@field super? SMODS.Joker|table Parent class.
+---@class Multiverse.DeckEnchantment: SMODS.GameObject
+---@field super? SMODS.GameObject|table Parent class.
 ---@field __call? fun(self: Multiverse.DeckEnchantment|table, o: Multiverse.DeckEnchantment|table): nil|table|Multiverse.DeckEnchantment
 ---@field extend? fun(self: Multiverse.DeckEnchantment|table, o: Multiverse.DeckEnchantment|table): table Primary method of creating a class.
 ---@field check_duplicate_register? fun(self: Multiverse.DeckEnchantment|table): boolean? Ensures objects already registered will not register.
@@ -26,10 +26,13 @@
 ---@field obj_buffer? string[] Array of keys to all objects registered to this class. 
 ---@field enchantment_type? EnchantmentType Classifies this enchantment as positive, neutral, or negative. For use with pools.
 ---@field obj_table? table<string, Multiverse.DeckEnchantment|table> Table of objects registered to this class.
----@field loc_vars? fun(self: Multiverse.DeckEnchantment, info_queue: table, card: table): table?
+---@field loc_vars? fun(self: Multiverse.DeckEnchantment, info_queue: table, card: EnchantmentData|table): table?
 ---@field on_change_level? fun(self: Multiverse.DeckEnchantment|table, delta: integer, final_level: integer) Called when this enchantment's level changes.
 ---@field get_level? fun(self: Multiverse.DeckEnchantment|table): number Returns the current level of this enchantment.
----@field calc_dollar_bonus? fun(self: Multiverse.DeckEnchantment|table, enchantment: EnchantmentData): integer?
+---@field calc_dollar_bonus? fun(self: Multiverse.DeckEnchantment|table, enchantment: EnchantmentData): integer? Earns the returned amount of money at end of round, like Golden Joker.
+---@field legendary? boolean Whether or not this enchantment follows the logic of The Soul and Black Hole.
+---@field get_weight? fun(self: Multiverse.DeckEnchantment|table): number Returns the current weight of this Enchantment.
+---@field base_weight? number The base weight of this Enchantment, which defaults to 4.
 
 ---@alias EnchantmentType
 ---| "positive"
@@ -38,12 +41,12 @@
 
 ---@class EnchantmentData
 ---@field level number
----@field config table
+---@field ability table
 ---@field key string
 
 ---@class EnchantmentPoolArgs
----@field level_amt integer
----@field source string
+---@field level_amt? integer Will only be nil when checking if the enchantment can be spawned regardless of checked level.
+---@field source string A string detailing the source of the item polling the enchantment pool.
 
 ---@overload fun(self: Multiverse.DeckEnchantment): Multiverse.DeckEnchantment
 Multiverse.DeckEnchantment = setmetatable({}, {

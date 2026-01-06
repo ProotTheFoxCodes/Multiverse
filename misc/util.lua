@@ -42,11 +42,7 @@ function Multiverse.clamp(n, min, max)
 	end
 end
 
----Returns all cards in `t` such that `func(t)` is truthy.
----@generic T
----@param t T[]
----@param func fun(item: T): boolean
----@return T[]
+---Returns all cards in `t` such that `func(t)` is truthy in an indexed array.
 function Multiverse.filter(t, func)
 	local ret = {}
 	for _, v in pairs(t) do
@@ -321,16 +317,16 @@ function Multiverse.change_blind_size(operation)
 			ease_to = math.floor(amt + 0.5),
 			ref_table = G.GAME.blind,
 			ref_value = "chips",
-			func = function (n)
+			func = function(n)
 				G.GAME.blind.chip_text = number_format(math.floor(n + 0.5))
 				return math.floor(n)
-			end
+			end,
 		}))
 		G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
 	end
 end
 
----Internal code taken from vanilla remade
+---Internal code taken from vanilla remade wiki
 function Multiverse.create_random_tag()
 	local tag_pool = get_current_pool("Tag")
 	local selected_tag = pseudorandom_element(tag_pool, "modprefix_seed")
@@ -340,4 +336,35 @@ function Multiverse.create_random_tag()
 		selected_tag = pseudorandom_element(tag_pool, "modprefix_seed_resample" .. it)
 	end
 	add_tag(Tag(selected_tag, false, "Small"))
+end
+
+function Multiverse.weighted_pseudorandom(seed, weight_towards, bias, min, max)
+	local val = Multiverse.clamp(pseudorandom(seed) * (1 - bias) + weight_towards * bias, 0, 1)
+	if min and max then
+		return math.floor(val * (max - min + 1) + min)
+	else
+		return val
+	end
+end
+
+---@generic T
+---@param t `T`[]
+---@param get_weight fun(item: T): number
+---@param key_append string
+---@return T, integer
+function Multiverse.weighted_poll(t, get_weight, key_append)
+	local total_weight = 0
+	for _, item in ipairs(t) do
+		total_weight = total_weight + get_weight(item)
+	end
+	local rand_val = pseudorandom(key_append, 0, total_weight - 1)
+	local curr_weight = 0
+	for index, item in ipairs(t) do
+		local next_weight = curr_weight + get_weight(item)
+		if rand_val >= curr_weight and rand_val < next_weight then
+			return item, index
+		end
+		curr_weight = next_weight
+	end
+	return nil, -1
 end

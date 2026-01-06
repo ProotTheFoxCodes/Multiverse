@@ -83,7 +83,7 @@ SMODS.DrawStep({
 		local enchantment_shader = false
 		if G.GAME.mul_deck_enchantments and G.deck then
 			for _, enchant in pairs(G.GAME.mul_deck_enchantments) do
-				if enchant and enchant.level > 0 then
+				if enchant.level > 0 then
 					enchantment_shader = true
 					break
 				end
