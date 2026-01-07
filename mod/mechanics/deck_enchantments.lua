@@ -423,7 +423,12 @@ end
 ---Set `singular` to true to force this to generate exactly 1 enchantment with a random level increment.
 ---Set `no_legendary` to true to prevent any legendary enchantments from showing up.
 ---`key_append` functions similarly to other usages of key_append.
-function Multiverse.poll_deck_enchantments(key_append, singular, no_legendary, source)
+function Multiverse.poll_deck_enchantments(args)
+	local temp = args or {}
+	local singular = temp.singular
+	local key_append = temp.key_append or "default"
+	local no_legendary = temp.no_legendary
+	local source = temp.source
 	local ret = {}
 	local polled = {}
 	local luck_factor = Multiverse.clamp((G.GAME.mul_enchantment_luck or 0) / 100, 0, 1)
