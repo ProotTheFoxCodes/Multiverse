@@ -631,14 +631,9 @@ return {
 				name = "Victory Royale",
 				text = {
 					{
-						"{C:green}#1# in #2#{} chance for",
-						"scored cards to create",
-						"a random {C:dark_edition}Negative{}",
-						"{C:spectral}Spectral{} card",
-						"{C:green}Base odds{} decreases by",
-						"{C:attention}#3#{} when a card is scored",
-						"{C:green}Base odds{} resets to {C:attention}100{}",
-						"after creating a {C:spectral}Spectral{} card",
+						"Create a random {C:dark_edition}Negative{}",
+						"{C:spectral}Spectral{} card every",
+						"{C:attention}#1#{} {C:inactive}(#2#){} cards scored",
 					},
 					{
 						"{C:inactive,s:0.8}Who let Miku have a gun?",
@@ -771,8 +766,8 @@ return {
 				text = {
 					{
 						"Destroy all discarded",
-						"{C:attention}Kings{} and gain {X:mult,C:white}X#1#{} per",
-						"{C:attention}King{} discarded",
+						"{C:attention}Kings{} and gain {X:mult,C:white}X#1#{} Mult",
+						"per {C:attention}King{} discarded",
 						"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
 					},
 					{

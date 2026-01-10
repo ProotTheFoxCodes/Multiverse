@@ -128,18 +128,18 @@ SMODS.Joker({
 	key = "victory_royale",
 	atlas = "placeholder",
 	pos = { x = 1, y = 0 },
-	config = { extra = { odds = 100, decrement = 2 } },
+	config = { extra = { req = 100, current = 0, increment = 1 } },
 	rarity = 2,
 	cost = 7,
 	loc_vars = function(self, info_queue, card)
-		local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, "mul_victory_royale")
-		return { vars = { num, denom, card.ability.extra.decrement } }
+		info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+		return { vars = { card.ability.extra.req, card.ability.extra.req - card.ability.extra.current } }
 	end,
 	calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play then
-			if SMODS.pseudorandom_probability(card, "mul_victory_royale", 1, card.ability.extra.odds) then
+			if card.ability.extra.current >= card.ability.extra.req then
 				G.GAME.consumeable_buffer = (G.GAME.consumeable_buffer or 0) + 1
-				card.ability.extra.odds = 100
+				card.ability.extra.current = 0
 				G.E_MANAGER:add_event(Event({
 					func = function()
 						SMODS.add_card({
@@ -155,16 +155,8 @@ SMODS.Joker({
 					message = localize("k_plus_spectral"),
 					colour = G.C.SECONDARY_SET.Spectral,
 				}
-			elseif card.ability.extra.odds > 2 and not context.blueprint then
-				SMODS.scale_card(card, {
-					ref_table = card.ability.extra,
-					ref_value = "odds",
-					scalar_value = "decrement",
-					operation = "-",
-					scaling_message = {
-						message = localize("k_mul_eliminated"),
-					},
-				})
+			else
+				card.ability.extra.current = card.ability.extra.current + card.ability.extra.increment
 			end
 		end
 	end,
