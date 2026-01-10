@@ -33,6 +33,7 @@
 ---@field legendary? boolean Whether or not this enchantment follows the logic of The Soul and Black Hole.
 ---@field get_weight? fun(self: Multiverse.DeckEnchantment|table): number Returns the current weight of this Enchantment.
 ---@field base_weight? number The base weight of this Enchantment, which defaults to 4.
+---@field create_fake_card? fun(self: Multiverse.DeckEnchantment|table) Creates a fake data entry for loc vars purposes.
 
 ---@alias EnchantmentType
 ---| "positive"

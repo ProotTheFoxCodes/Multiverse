@@ -4,8 +4,8 @@ return {
 			du_mul_all_enchants = {
 				name = "Deck Enchantments",
 				text = {
-					"Your deck is {E:1,C:purple}enchanted{}",
-					"{E:1,C:purple}Enchantments{} apply passive",
+					"Your deck is {C:purple}enchanted{}",
+					"{C:purple}Enchantments{} apply passive",
 					"effects to the run...",
 				},
 			},
@@ -27,6 +27,9 @@ return {
 					"#1#% of Blind size when hit)",
 				},
 			},
+		},
+		Booster = {
+
 		},
 		mul_DeckEnchantment = {
 			de_mul_dark_affinity = {
@@ -133,8 +136,17 @@ return {
 			de_mul_overflow = {
 				name = "Overflow",
 				text = {
-					"Gives {X:mult,C:white}X#1#{} per level",
+					"Gives {X:mult,C:white}X#1#{} Mult per level",
 					"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}"
+				}
+			}
+		},
+		mul_EnchantedBook = {
+			c_mul_enchanted_book = {
+				name = "Enchanted Book",
+				text = {
+					"Use during a run to",
+					"{C:purple}enchant{} your deck..."
 				}
 			}
 		},
@@ -856,9 +868,6 @@ return {
 				},
 			},
 		},
-		Tag = {
-
-		},
 		Tarot = {
 			c_mul_lobotomized = {
 				name = "The Lobotomized",
@@ -930,12 +939,32 @@ return {
 					"learn what it does",
 				},
 			},
+			undiscovered_mul_enchantedbook = {
+				name = "Not Discovered",
+				text = {
+					"Find this card",
+					"within a certain",
+					"Table while in an",
+					"unseeded run to",
+					"learn what it does",
+				},
+			},
+			undiscovered_mul_deckenchantment = {
+				name = "Not Discovered",
+				text = {
+					"Enchant your deck",
+					"with this specific",
+					"enchantment in an",
+					"unseeded run to",
+					"learn what it does",
+				},
+			},
 			mul_distributed_retriggers = {
 				name = "Distributed Retriggers",
 				text = {
 					"{C:attention}Distributes{} the number",
 					"of retriggers across the",
-					"relevant cards as {C:attention}evenly{} as",
+					"area's cards as {C:attention}evenly{} as",
 					"possible, distributing any",
 					"leftover retriggers to the",
 					"{C:attention}leftmost{} cards in the area",
@@ -1158,9 +1187,13 @@ return {
 			k_mul_make_room2 = "in order to create a Philosopher's Stone...",
 			k_mul_TP = "TP",
 			k_mul_myth = "Myth",
+			k_mul_deckenchantment = "Deck Enchantment",
+			k_mul_enchantedbook = "Enchanted Book",
 			k_mul_activate = "Activate",
 			k_mul_ability = "Ability",
 			b_mul_myth_cards = "Myth Cards",
+			b_mul_deckenchantment_cards = "Deck Enchantments",
+			b_mul_enchantedbook_cards = "Enchanted Books",
 			b_mul_discord_server = "My Discord Server",
 			b_mul_landing_page = "About Me",
 			mul_stand_user = "Saved by Stand User via time reversal",
@@ -1251,6 +1284,8 @@ return {
 			mul_transmutable = "Transmutable",
 			mul_traitorous = "Traitorous",
 			myth = "Myth",
+			deckenchantment = "Deck Enchantment",
+			enchantedbook = "Enchanted Book",
 			k_mul_transmuted = "Transmuted",
 			mul_hyperdimensional = "Hyperdimensional",
 		},

@@ -6,7 +6,6 @@ SMODS.Shader({
 ---@type table<string, Multiverse.DeckEnchantment>
 Multiverse.DeckEnchantments = {}
 ---@type boolean
-Multiverse.generate_dummy_enchant = false
 
 ---@type Multiverse.DeckEnchantment
 Multiverse.DeckEnchantment = SMODS.GameObject:extend({
@@ -33,8 +32,7 @@ Multiverse.DeckEnchantment = SMODS.GameObject:extend({
 	on_change_level = function(self) end,
 	get_level = function(self)
 		return (
-			not Multiverse.generate_dummy_enchant
-			and G.GAME.mul_deck_enchantments
+			G.GAME.mul_deck_enchantments
 			and G.GAME.mul_deck_enchantments[self.key]
 			and G.GAME.mul_deck_enchantments[self.key].level
 		) or 0
@@ -48,8 +46,7 @@ Multiverse.DeckEnchantment = SMODS.GameObject:extend({
 	create_fake_card = function(self)
 		return {
 			ability = (
-				not Multiverse.generate_dummy_enchant
-				and G.GAME.mul_deck_enchantments
+				G.GAME.mul_deck_enchantments
 				and G.GAME.mul_deck_enchantments[self.key]
 				and G.GAME.mul_deck_enchantments[self.key].ability
 			) or copy_table(self.config),
@@ -109,7 +106,42 @@ Multiverse.DeckEnchantment = SMODS.GameObject:extend({
 		desc_nodes.background_colour = res.background_colour
 	end,
 	inject = function(self, i) end,
+	register = function(self)
+		if self.registered then
+			sendWarnMessage(("Detected duplicate register call on object %s"):format(self.key), self.set)
+			return
+		end
+		SMODS.GameObject.register(self)
+		self.order = #self.obj_buffer
+	end,
+	process_loc_text = function(self)
+		SMODS.GameObject.process_loc_text(self)
+		SMODS.process_loc_text(G.localization.misc.dictionary, "k_" .. string.lower(self.key), self.loc_txt, "name")
+		SMODS.process_loc_text(
+			G.localization.misc.dictionary,
+			"b_" .. string.lower(self.key) .. "_cards",
+			self.loc_txt,
+			"collection"
+		)
+		SMODS.process_loc_text(
+			G.localization.descriptions.Other,
+			"undiscovered_" .. string.lower(self.key),
+			self.loc_txt,
+			"undiscovered"
+		)
+	end,
 })
+
+SMODS.current_mod.custom_collection_tabs = function()
+	return {
+		UIBox_button({
+			button = "your_collection_mul_deckenchantments",
+			id = "your_collection_mul_deckenchantments",
+			label = { localize("b_mul_deckenchantment_cards") },
+			minw = 5,
+		}),
+	}
+end
 
 ---@param obj Multiverse.DeckEnchantment
 ---@param colours table
@@ -130,6 +162,8 @@ function Multiverse.init_deck_enchantments()
 	G.GAME.mul_deck_enchantments = G.GAME.mul_deck_enchantments or {}
 	---@type integer
 	G.GAME.mul_enchantment_luck = G.GAME.mul_enchantment_luck or 0
+	---@type integer
+	G.GAME.mul_visible_enchants = 1
 end
 
 ---Checks if an enchantment is compatible with current selected deck.
@@ -187,21 +221,14 @@ function Multiverse.level_up_deck_enchantment(enchantment, amt)
 	if delta == 0 then
 		return
 	end
-	local msg = ""
 	local removed = false
 	local added = false
 	if init_level == 0 then
-		msg = localize("k_mul_enchanted")
 		obj:add_to_deck()
 		added = true
 	elseif final_level == 0 then
-		msg = localize("k_mul_disenchanted")
 		obj:remove_from_deck()
 		removed = true
-	elseif delta > 0 then
-		msg = localize("k_mul_level_up")
-	elseif delta < 0 then
-		msg = localize("k_mul_level_down")
 	end
 	obj:on_change_level(delta, final_level)
 	G.GAME.mul_deck_enchantments[enchantment] =
@@ -212,7 +239,6 @@ function Multiverse.level_up_deck_enchantment(enchantment, amt)
 		mul_enchantment_removed = removed,
 		mul_enchantment_applied = added,
 	})
-	return msg
 end
 
 function Multiverse.count_deck_enchantments()
@@ -423,6 +449,7 @@ end
 ---Set `singular` to true to force this to generate exactly 1 enchantment with a random level increment.
 ---Set `no_legendary` to true to prevent any legendary enchantments from showing up.
 ---`key_append` functions similarly to other usages of key_append.
+---@param args {singular: boolean?, key_append: string?, no_legendary: boolean?, source: string?}
 function Multiverse.poll_deck_enchantments(args)
 	local temp = args or {}
 	local singular = temp.singular
@@ -532,3 +559,92 @@ function Multiverse.poll_deck_enchantments(args)
 	end
 	return ret
 end
+
+---@type boolean
+Multiverse.creating_collection = false
+
+SMODS.ConsumableType({
+	key = "mul_EnchantedBook",
+	primary_colour = HEX("CAA540"),
+	secondary_colour = HEX("A61A1F"),
+	shop_rate = 0,
+	default = "c_mul_enchanted_book",
+	collection_rows = { 1 },
+	create_UIBox_your_collection = function(self)
+		Multiverse.creating_collection = true
+		local type_buf = {}
+		for _, v in ipairs(SMODS.ConsumableType.visible_buffer) do
+			if not v.no_collection and (not G.ACTIVE_MOD_UI or modsCollectionTally(G.P_CENTER_POOLS[v]).of > 0) then
+				type_buf[#type_buf + 1] = v
+			end
+		end
+		local ret = SMODS.card_collection_UIBox(
+			G.P_CENTER_POOLS[self.key],
+			self.collection_rows,
+			{ back_func = #type_buf > 3 and "your_collection_consumables" or nil }
+		)
+		Multiverse.creating_collection = false
+		return ret
+	end,
+})
+
+SMODS.Consumable({
+	key = "enchanted_book",
+	set = "mul_EnchantedBook",
+	atlas = "enchantment_book",
+	discovered = true,
+	unlocked = true,
+	config = {
+		extra = {},
+	},
+	loc_vars = function(self, info_queue, card)
+		if card.ability.extra.collection_enchant then
+			local ench_key = card.ability.extra.collection_enchant
+			local temp = Multiverse.DeckEnchantments[ench_key]:create_fake_card()
+			temp.level = 0
+			temp.ability = copy_table(Multiverse.DeckEnchantments[ench_key].config)
+			local vars = Multiverse.DeckEnchantments[ench_key]:loc_vars(info_queue, temp)
+			vars.set = vars.set or "mul_DeckEnchantment"
+			vars.key = vars.key or ench_key
+			return vars
+		elseif card.ability.extra.enchant_list then
+			for index, value in ipairs(card.ability.extra.enchant_list) do
+			end
+		end
+	end,
+	can_use = function(self, card)
+		return true
+	end,
+	use = function(self, card, area, copier)
+		if card.ability.extra.enchant_list then
+			Multiverse.effect_animation(card, function()
+				
+			end)
+		end
+	end,
+	set_ability = function(self, card, initial, delay_sprites)
+		if not Multiverse.creating_collection then
+			card.ability.extra.enchant_list = Multiverse.poll_deck_enchantments({
+				source = "ench_book",
+				key_append = "ench_book",
+			})
+		end
+	end,
+	set_card_type_badge = function(self, card, badges)
+		if card.ability.extra.collection_enchant then
+			badges[#badges + 1] = create_badge(
+				localize("k_mul_deckenchantment"),
+				G.C.SECONDARY_SET["mul_EnchantedBook"],
+				G.C.UI.TEXT_LIGHT,
+				1.2
+			)
+		else
+			badges[#badges + 1] = create_badge(
+				localize("k_mul_enchantedbook"),
+				G.C.SECONDARY_SET["mul_EnchantedBook"],
+				G.C.UI.TEXT_LIGHT,
+				1.2
+			)
+		end
+	end,
+})

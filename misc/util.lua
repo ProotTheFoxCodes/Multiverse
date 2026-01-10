@@ -311,17 +311,7 @@ function Multiverse.change_blind_size(operation)
 	if G.GAME.facing_blind then
 		local returns = {}
 		local amt = type(operation) == "function" and operation(G.GAME.blind.chips) or (G.GAME.blind.chips + operation)
-		G.E_MANAGER:add_event(Event({
-			trigger = "ease",
-			delay = 0.5,
-			ease_to = math.floor(amt + 0.5),
-			ref_table = G.GAME.blind,
-			ref_value = "chips",
-			func = function(n)
-				G.GAME.blind.chip_text = number_format(math.floor(n + 0.5))
-				return math.floor(n)
-			end,
-		}))
+		G.GAME.blind.chips = math.floor(amt + 0.5)
 		G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
 	end
 end
@@ -329,11 +319,11 @@ end
 ---Internal code taken from vanilla remade wiki
 function Multiverse.create_random_tag()
 	local tag_pool = get_current_pool("Tag")
-	local selected_tag = pseudorandom_element(tag_pool, "modprefix_seed")
+	local selected_tag = pseudorandom_element(tag_pool, "mul_seed")
 	local it = 1
 	while selected_tag == "UNAVAILABLE" do
 		it = it + 1
-		selected_tag = pseudorandom_element(tag_pool, "modprefix_seed_resample" .. it)
+		selected_tag = pseudorandom_element(tag_pool, "mul_seed_resample" .. it)
 	end
 	add_tag(Tag(selected_tag, false, "Small"))
 end

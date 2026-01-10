@@ -101,3 +101,9 @@ SMODS.Atlas({
 	py = 95,
 	path = "book.png",
 })
+SMODS.Atlas({
+	key = "enchantment_table",
+	px = 71,
+	py = 95,
+	path = "enchantment_table.png"
+})

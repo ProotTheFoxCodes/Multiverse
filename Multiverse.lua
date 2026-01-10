@@ -32,6 +32,7 @@ Multiverse.C.RAINBOW_GRADIENT = SMODS.Gradient({
 	},
 	cycle = 3,
 })
+
 Multiverse.selected_music_page = 1
 Multiverse.transmutable_sticker_anim_state = 0
 Multiverse.transmutable_target_anim_state = 0
@@ -116,7 +117,7 @@ SMODS.current_mod.calculate = function(self, context)
 		Multiverse.hide_TP_meter()
 	end
 	if context.debuff_card then
-		ret[#ret+1] = Multiverse.handle_debuffs(context.debuff_card)
+		ret[#ret + 1] = Multiverse.handle_debuffs(context.debuff_card)
 	end
 	if context.setting_blind then
 		Multiverse.show_TP_meter()

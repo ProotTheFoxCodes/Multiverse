@@ -69,13 +69,9 @@ vec4 effect(vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords)
     vec4 tex = Texel(texture, texture_coords);
     // Position of a pixel within the sprite
 	vec2 uv = (((texture_coords)*(image_details)) - texture_details.xy*texture_details.ba)/texture_details.ba;
-    // Convert the color data from rgba into hsla (hue, saturation, luminosity, alpha)
-    vec4 hsl = HSL(tex);
+    
     // Get a time variable that depends on other game variables (time, rotation, hover status)
     float t = enchantment.y*2. + time * 14.;
-
-    colour.r = colour.r * 1.25;
-    colour.b = colour.b * 1.5;
 
     // The next chunk is taken from the vanilla polychrome shader, with some numbers changed to make the shape
     // of the curves different from the vanilla polychrome shader
@@ -99,19 +95,26 @@ vec4 effect(vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords)
     float res = (.5 + .4* cos(5. * ((enchantment.x) * 2.612 + ( field + -.5 ) *3.14)));
     // Alternates between 0 and 1 strictly
     float fac = floor(res + 0.5);
+    tex.rgb = vec3(1.0);
+    if (fac > 0.5) {
+        colour.a = colour.a * 0.7;
+    } else {
+        colour.a = colour.a * 0.45;
+    }
+    // Convert the color data from rgba into hsla (hue, saturation, luminosity, alpha)
+    vec4 hsl = HSL(tex);
     // I used a tool to visualize the target color in HSL format
-    hsl.x = (hsl.x * (1. - fac) + 0.75 * fac);
-    // hsl.y = (min(0.6, hsl.y + 0.5));
-    hsl.y = (hsl.y * (1. - fac) + fac);
-    hsl.z = (hsl.z * (1. - fac) + 0.5 * fac) * 6. / 5.;
-
+    // hsl.x = (hsl.x * (1. - fac) + 0.75 * fac);
+    // hsl.y = (hsl.y * (1. - fac) + fac);
+    // hsl.z = (hsl.z * (1. - fac) + 0.5 * fac) * 6. / 5.;
+    hsl.x = 0.75;
+    hsl.y = 1;
+    hsl.z = 0.6;
     // colour is still in rgb format
     // We want to convert the modified HSL value back into RGB,
     // then set colour to the red, green, and blue components of the converted HSL value
     colour.rgb = RGB(hsl).rgb;
-    colour.r = (colour.r + 1.) / 2.;
-    colour.b = (colour.b + 1.) / 2.;
-    colour.g = colour.g / 2.;
+
     // Needed in order to prevent the shader from crashing
     // Does nothing to the final color
     // This is needed because otherwise the compiler optimizes away

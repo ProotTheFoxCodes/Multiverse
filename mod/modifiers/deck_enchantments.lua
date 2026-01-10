@@ -65,7 +65,9 @@ Multiverse.DeckEnchantment({
 	},
 	enchantment_type = "neutral",
 	in_pool = function(self, args)
-		if not args.level_amt then return true end
+		if not args.level_amt then
+			return true
+		end
 		return math.min(G.GAME.round_resets.hands, G.GAME.current_round.hands_left) > args.level_amt
 	end,
 })
@@ -102,7 +104,9 @@ Multiverse.DeckEnchantment({
 	},
 	enchantment_type = "neutral",
 	in_pool = function(self, args)
-		if not args.level_amt then return true end
+		if not args.level_amt then
+			return true
+		end
 		return math.min(G.GAME.round_resets.discards, G.GAME.current_round.discards_left) >= args.level_amt
 	end,
 })
@@ -133,7 +137,9 @@ Multiverse.DeckEnchantment({
 	},
 	enchantment_type = "neutral",
 	in_pool = function(self, args)
-		if not args.level_amt then return true end
+		if not args.level_amt then
+			return true
+		end
 		return G.consumeables.config.card_limit >= args.level_amt
 	end,
 	calculate = function(self, enchantment, context)
@@ -242,7 +248,9 @@ Multiverse.DeckEnchantment({
 	},
 	enchantment_type = "neutral",
 	in_pool = function(self, args)
-		if not args.level_amt then return true end
+		if not args.level_amt then
+			return true
+		end
 		return G.jokers.config.card_limit >= args.level_amt
 	end,
 	calc_dollar_bonus = function(self, enchantment)
@@ -268,6 +276,7 @@ Multiverse.DeckEnchantment({
 		end
 		ret.colours = colours
 		info_queue[#info_queue + 1] = G.P_CENTERS.c_fool
+		info_queue[#info_queue + 1] = G.P_CENTERS.e_negative
 		return {
 			vars = ret,
 		}
@@ -326,6 +335,7 @@ Multiverse.DeckEnchantment({
 			ret[#ret + 1] = 1 + i * 0.5
 		end
 		ret.colours = colours
+		info_queue[#info_queue + 1] = G.P_CENTERS.e_negative
 		return {
 			vars = ret,
 		}

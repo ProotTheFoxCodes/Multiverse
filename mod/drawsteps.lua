@@ -79,7 +79,7 @@ SMODS.DrawStep({
 SMODS.DrawStep({
 	key = "enchantment_shader",
 	order = 1,
-	func = function (card, layer)
+	func = function(card, layer)
 		local enchantment_shader = false
 		if G.GAME.mul_deck_enchantments and G.deck then
 			for _, enchant in pairs(G.GAME.mul_deck_enchantments) do
@@ -90,11 +90,23 @@ SMODS.DrawStep({
 			end
 		end
 		if enchantment_shader and card.area and card.area == G.deck then
+			card.children.back:draw_shader("negative", nil, card.ARGS.send_to_shader, true)
 			card.children.back:draw_shader("mul_enchantment", nil, card.ARGS.send_to_shader, true)
-			card.children.back:draw_shader("booster", nil, card.ARGS.send_to_shader, true)
 		end
 	end,
-	conditions = { vortex = false, facing = "back" }
+	conditions = { vortex = false, facing = "back" },
+})
+
+SMODS.DrawStep({
+	key = "enchanted_book_shader",
+	order = 11,
+	func = function(card, layer)
+		if card.config.center.key == "c_mul_enchanted_book" then
+			card.children.center:draw_shader("negative_shine", nil, card.ARGS.send_to_shader)
+			card.children.center:draw_shader("mul_enchantment", nil, card.ARGS.send_to_shader)
+		end
+	end,
+	conditions = { vortex = false, facing = "front" },
 })
 
 SMODS.DrawStep({

@@ -29,8 +29,7 @@ Multiverse.DummyCenter({
 	loc_vars = function(self, info_queue, card)
 		if G.GAME.mul_deck_enchantments then
 			for _, key in ipairs(Multiverse.DeckEnchantment.obj_buffer) do
-				local level = (G.GAME.mul_deck_enchantments[key] or {}).level or 0
-				if level > 0 then
+				if Multiverse.DeckEnchantments[key]:get_level() > 0 then
 					info_queue[#info_queue + 1] = Multiverse.DeckEnchantments[key]
 				end
 			end
