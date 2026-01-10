@@ -571,7 +571,7 @@ return {
 						"Retrigger all played {C:attention}Calling Cards{}",
 						"once per {C:attention}distinct{} {C:tarot}Tarot{} card",
 						"held in your {C:attention}consumables{} area",
-						"{C:inactive}(Currently #1# times){}",
+						"{C:inactive}(Currently #1# retriggers){}",
 					},
 					{
 						"{C:inactive,s:0.8}You never see it coming",
