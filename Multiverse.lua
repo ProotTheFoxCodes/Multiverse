@@ -103,6 +103,9 @@ SMODS.current_mod.calculate = function(self, context)
 	end
 	if context.end_of_round and not context.game_over and context.main_eval then
 		Multiverse.ease_thaumaturgy_energy(G.GAME.mul_thaumaturgy_energy_rate, { from_charge = true })
+		if context.beat_boss then
+			G.GAME.num_bosses_defeated = (G.GAME.num_bosses_defeated or 0) + 1
+		end
 	end
 	if context.mul_philosophers_stone_check and not context.game_over and context.main_eval then
 		G.E_MANAGER:add_event(Event({

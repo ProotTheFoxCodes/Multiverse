@@ -28,9 +28,7 @@ return {
 				},
 			},
 		},
-		Booster = {
-
-		},
+		Booster = {},
 		mul_DeckEnchantment = {
 			de_mul_dark_affinity = {
 				name = "Dark Affinity#1#",
@@ -130,45 +128,46 @@ return {
 				text = {
 					"Destroys up to {V:1}#2#{C:inactive}/{V:2}#3#{}",
 					"random {C:attention}face cards{} in",
-					"deck at end of round"
+					"deck at end of round",
 				},
 			},
 			de_mul_overflow = {
 				name = "Overflow",
 				text = {
 					"Gives {X:mult,C:white}X#1#{} Mult per level",
-					"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}"
-				}
-			}
+					"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
+				},
+			},
 		},
 		mul_EnchantedBook = {
 			c_mul_enchanted_book = {
 				name = "Enchanted Book",
 				text = {
 					"Use during a run to",
-					"{C:purple}enchant{} your deck..."
-				}
-			}
+					"{C:purple}enchant{} your deck...",
+				},
+			},
 		},
 		Enhanced = {
 			m_mul_calling_card = {
 				name = "Calling Card",
 				text = {
-					"Gives {X:mult,C:white}X#1#{} Mult",
-					"per current {C:attention}Ante",
+					"Gives no base {C:chips}chips{}",
 					"Always treated as an",
 					"{C:attention}Ace{} of {C:hearts}Hearts{}",
-					"Gives no base {C:chips}chips{}",
+					"Gives {X:mult,C:white}X#1#{} Mult",
+					"per {C:attention}Boss Blind",
+					"defeated this run",
 					"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
 				},
 			},
 			m_mul_netherite = {
 				name = "Netherite Card",
 				text = {
-					"{X:mult,C:white}X#1#{} Mult per {C:money}$1{}",
-					"when held in hand",
 					"Gives {C:money}$#2#{} when held in",
 					"hand at end of round",
+					"Gives {X:mult,C:white}X#1#{} Mult for each {C:money}$1{}",
+					"you have when held in hand",
 					"{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult){}",
 				},
 			},

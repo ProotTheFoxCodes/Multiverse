@@ -2,7 +2,7 @@ SMODS.Enhancement({
 	key = "calling_card",
 	atlas = "calling_card",
 	pos = { x = 0, y = 0 },
-	config = { extra = { xmult = 1 } },
+	config = { extra = { xmult = 0.75 } },
 	replace_base_card = true,
 	weight = 0,
 	in_pool = function(self, args)
@@ -13,12 +13,12 @@ SMODS.Enhancement({
 		card.config.center.pos.x = math.floor(Multiverse.clamp(G.GAME.mul_call_card_anim_state, 0, 5))
 	end,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.xmult, 1 + math.max(1, G.GAME.round_resets.ante) } }
+		return { vars = { card.ability.extra.xmult, 1 + card.ability.extra.xmult * (G.GAME.num_bosses_defeated or 0) } }
 	end,
 	calculate = function(self, card, context)
 		if context.main_scoring and context.cardarea == G.play then
 			return {
-				xmult = 1 + card.ability.extra.xmult * math.max(1, G.GAME.round_resets.ante),
+				xmult = 1 + card.ability.extra.xmult * (G.GAME.num_bosses_defeated or 0),
 			}
 		end
 	end,
@@ -46,7 +46,7 @@ SMODS.Enhancement({
 				xmult = 1 + card.ability.extra.xmult * (G.GAME.dollars + G.GAME.dollar_buffer),
 			}
 		end
-	end
+	end,
 })
 
 SMODS.Enhancement({
@@ -128,14 +128,14 @@ SMODS.Enhancement({
 			return {
 				dollars = card.ability.extra.money,
 				func = function()
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            G.GAME.dollar_buffer = 0
-                            return true
-                        end
-                    }))
-                end,
-				remove = card.ability.extra.count >= card.ability.extra.max_count and true or false
+					G.E_MANAGER:add_event(Event({
+						func = function()
+							G.GAME.dollar_buffer = 0
+							return true
+						end,
+					}))
+				end,
+				remove = card.ability.extra.count >= card.ability.extra.max_count and true or false,
 			}
 		end
 	end,
