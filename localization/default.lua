@@ -566,8 +566,8 @@ return {
 				name = "Ren Amamiya",
 				text = {
 					{
-						"The {C:attention}first{} played card that",
-						"scores becomes a {C:attention}Calling Card{}",
+						"{C:attention}First{} scored card",
+						"becomes a {C:attention}Calling Card{}",
 						"Retrigger all played {C:attention}Calling Cards{}",
 						"once per {C:attention}distinct{} {C:tarot}Tarot{} card",
 						"held in your {C:attention}consumables{} area",
@@ -762,9 +762,9 @@ return {
 				name = "Dragon",
 				text = {
 					{
-						"Destroy all discarded",
-						"{C:attention}Kings{} and gain {X:mult,C:white}X#1#{} Mult",
-						"per {C:attention}King{} discarded",
+						"Destroy all discarded {C:attention}Kings{}",
+						"Gains {X:mult,C:white}X#1#{} Mult per",
+						"{C:attention}King{} discarded",
 						"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
 					},
 					{
