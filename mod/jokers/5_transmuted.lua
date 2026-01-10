@@ -242,11 +242,12 @@ SMODS.Joker({
 	key = "waldo",
 	atlas = "placeholder",
 	pos = { x = 4, y = 0 },
-	config = { extra = { xmult_inc = 1 } },
+	config = { extra = { xmult_inc = 0.5 } },
 	rarity = "mul_transmuted",
 	cost = 40,
 	blueprint_compat = false,
 	loc_vars = function(self, info_queue, card)
+		info_queue[#info_queue+1] = G.P_CENTERS["m_mul_waldo"]
 		local cards_in_deck = 0
 		if G.playing_cards then
 			cards_in_deck = #G.playing_cards

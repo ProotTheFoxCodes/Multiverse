@@ -190,12 +190,12 @@ return {
 			m_mul_waldo = {
 				name = "Waldo Card",
 				text = {
-					"Retrigger this card {C:attention}#1#{}",
-					"time for every {C:attention}#2#{} cards",
-					"in full deck",
 					"Gives no base {C:chips}chips{}",
 					"Has no rank or suit",
 					"Cannot be copied",
+					"Retrigger this card {C:attention}#1#{}",
+					"time for every {C:attention}#2#{} cards",
+					"in full deck",
 					"{C:inactive}(Currently {C:attention}#3#{C:inactive} retriggers){}",
 					"{C:inactive}(Minimum of {C:attention}1{C:inactive} retrigger){}",
 				},
@@ -569,9 +569,8 @@ return {
 						"The {C:attention}first{} played card that",
 						"scores becomes a {C:attention}Calling Card{}",
 						"Retrigger all played {C:attention}Calling Cards{}",
-						"a number of times equal to the",
-						"number of {C:attention}distinct{} {C:tarot}Tarot{} cards",
-						"in your consumable area",
+						"once per {C:attention}distinct{} {C:tarot}Tarot{} card",
+						"held in your {C:attention}consumables{} area",
 						"{C:inactive}(Currently #1# times){}",
 					},
 					{
@@ -660,10 +659,9 @@ return {
 				text = {
 					{
 						"Disables every {C:attention}Boss Blind{}",
-						"All Jokers each give",
-						"{X:mult,C:white}X#1#{} Mult, increases by",
-						"{X:mult,C:white}X#2#{} when entering",
-						"a {C:attention}Boss Blind{}",
+						"All Jokers give {X:mult,C:white}X#2#{} Mult",
+						"per {C:attention}Boss Blind{} selected",
+						"{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
 					},
 					{
 						"{C:inactive,s:0.8}I'm old!",
@@ -689,9 +687,8 @@ return {
 				name = "Waldo",
 				text = {
 					{
-						"Add a {C:attention}Waldo Card{} to",
-						"deck when this card",
-						"is obtained",
+						"Add a {C:attention}Waldo Card{} to deck",
+						"when this Joker is obtained",
 						"{C:attention}Waldo Cards{} give {X:mult,C:white}X#1#{} Mult",
 						"per card in full deck",
 						"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
@@ -988,15 +985,16 @@ return {
 				name = "Ability: Sandvich",
 				text = {
 					"Cost: {C:attention}#1#{} TP",
-					"Effect: {C:blue}+#2#{} hands",
+					"Effect: Gain {C:blue}+#2#{} hands",
+					"this round",
 				},
 			},
 			mul_impostor_ability = {
 				name = "Ability: Murder",
 				text = {
 					"Cost: {C:attention}#1#{} TP",
-					"Effect: {X:purple,C:white}X#2#{} Blind size,",
-					"or {X:purple,C:white}^#3#{} Blind size if",
+					"Effect: {X:purple,C:white}X#2#{} Blind size",
+					"{X:purple,C:white}^#3#{} Blind size instead if",
 					"{C:attention}Ante{} is greater than {C:attention}#4#{}",
 				},
 			},
