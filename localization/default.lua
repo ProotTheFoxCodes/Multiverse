@@ -4,8 +4,8 @@ return {
 			du_mul_all_enchants = {
 				name = "Deck Enchantments",
 				text = {
-					"Your deck is {C:purple}enchanted{}",
-					"{C:purple}Enchantments{} apply passive",
+					"Your deck is {C:mul_enchantedbook}enchanted{}",
+					"{C:mul_enchantedbook}Enchantments{} apply passive",
 					"effects to the run...",
 				},
 			},
@@ -28,7 +28,6 @@ return {
 				},
 			},
 		},
-		Booster = {},
 		mul_DeckEnchantment = {
 			de_mul_dark_affinity = {
 				name = "Dark Affinity#1#",
@@ -144,7 +143,7 @@ return {
 				name = "Enchanted Book",
 				text = {
 					"Use during a run to",
-					"{C:purple}enchant{} your deck...",
+					"{C:mul_enchantedbook}enchant{} your deck...",
 				},
 			},
 		},
@@ -912,6 +911,15 @@ return {
 			},
 		},
 		Other = {
+			p_mul_enchantment_table_normal = {
+				name = "Enchantment Table",
+				text = {
+					"Choose {C:attention}#1#{} of up to",
+					"{C:attention}#2#{} {C:mul_enchantedbook}Enchanted Books",
+					"and {C:attention}apply{} the book's",
+					"{C:mul_enchantedbook}enchantments{} to {C:attention}deck"
+				}
+			},
 			mul_transmutable = {
 				name = "Transmutable",
 				text = {

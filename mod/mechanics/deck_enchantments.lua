@@ -565,8 +565,8 @@ Multiverse.creating_collection = false
 
 SMODS.ConsumableType({
 	key = "mul_EnchantedBook",
-	primary_colour = HEX("CAA540"),
-	secondary_colour = HEX("A61A1F"),
+	primary_colour = HEX("A61A1F"),
+	secondary_colour = HEX("CAA540"),
 	shop_rate = 0,
 	default = "c_mul_enchanted_book",
 	collection_rows = { 1 },
