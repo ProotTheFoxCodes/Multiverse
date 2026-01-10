@@ -213,7 +213,7 @@ return {
 			e_mul_hyperdimensional = {
 				name = "Hyperdimensional",
 				text = {
-					"{C:attention}+#1#{} card area slot",
+					"{C:attention}+#1#{} Joker slot",
 					"Gain {C:attention}#2#%{} TP and{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#3#{} Thaumaturgy",
 					"Energy at end of round",
 				},
