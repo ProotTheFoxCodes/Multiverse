@@ -502,7 +502,7 @@ return {
 						"scored on {C:attention}last hand{} of round",
 					},
 					{
-						"{C:inactive,s:0.8}That first wave part is so stupid",
+						"{C:inactive,s:0.8}We love mini wave chokepoints",
 					},
 				},
 			},
