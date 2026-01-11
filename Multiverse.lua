@@ -117,13 +117,9 @@ SMODS.current_mod.calculate = function(self, context)
 	end
 	if context.starting_shop then
 		Multiverse.hide_blind_instructions()
-		Multiverse.hide_TP_meter()
 	end
 	if context.debuff_card then
 		ret[#ret + 1] = Multiverse.handle_debuffs(context.debuff_card)
-	end
-	if context.setting_blind then
-		Multiverse.show_TP_meter()
 	end
 	if context.after then
 		if SMODS.last_hand_oneshot then

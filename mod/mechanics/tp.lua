@@ -1,25 +1,38 @@
 function Multiverse.show_TP_meter()
+	if G.mul_TP_meter then
+		G.mul_TP_meter:remove()
+		G.mul_TP_meter = nil
+	end
 	G.mul_TP_meter = UIBox({
 		definition = Multiverse.create_TP_ui(),
-		config = { align = "tri", offset = { x = 5.3, y = -0.55 }, major = G.ROOM_ATTACH },
+		config = { align = "tri", offset = { x = 4.3, y = -0.55 }, major = G.ROOM_ATTACH },
 	})
-	ease_value(G.mul_TP_meter.config.offset, "x", -4, nil, nil, true, 0.6, "quad")
+	G.E_MANAGER:add_event(Event({
+		trigger = "ease",
+		ref_table = G.mul_TP_meter.config.offset,
+		ref_value = "x",
+		ease_to = G.mul_TP_meter.config.offset.x - 3,
+		timer = "REAL",
+		blockable = false,
+		blocking = false,
+		delay = 0.4,
+		ease = "inquad",
+	}))
 	G.mul_TP_meter:recalculate()
 end
 
 function Multiverse.hide_TP_meter()
 	if G.mul_TP_meter then
-		ease_value(G.mul_TP_meter.config.offset, "x", 4, nil, nil, true, 0.6, "quad")
 		G.E_MANAGER:add_event(Event({
-			trigger = "after",
-			delay = 1,
-			blocking = false,
+			trigger = "ease",
+			ref_table = G.mul_TP_meter.config.offset,
+			ref_value = "x",
+			ease_to = G.mul_TP_meter.config.offset.x + 3,
+			timer = "REAL",
 			blockable = false,
-			func = function()
-				G.mul_TP_meter:remove()
-				G.mul_TP_meter = nil
-				return true
-			end,
+			blocking = false,
+			delay = 0.4,
+			ease = "outquad",
 		}))
 	end
 end

@@ -46,7 +46,7 @@
 ---@field key string
 
 ---@class EnchantmentPoolArgs
----@field level_amt? integer Will only be nil when checking if the enchantment can be spawned regardless of checked level.
+---@field level_amt? integer Will equal 0 when checking if the enchantment can be spawned regardless of checked level.
 ---@field source string A string detailing the source of the item polling the enchantment pool.
 
 ---@overload fun(self: Multiverse.DeckEnchantment): Multiverse.DeckEnchantment

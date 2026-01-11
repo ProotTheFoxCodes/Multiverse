@@ -106,8 +106,9 @@ return {
 			de_mul_illusory_affinity = {
 				name = "Illusory Affinity#1#",
 				text = {
-					"Create {V:1}#2#{C:inactive}/{V:2}#3#{} random {C:attention}Tags after",
-					"defeating a {C:attention}Boss Blind",
+					"Create {V:1}#2#{C:inactive}/{V:2}#3#{} random",
+					"{C:attention}Tags{} after defeating",
+					" a {C:attention}Boss Blind",
 					"Lose {V:3}$#4#{C:inactive}/{V:4}$#5#{} at",
 					"end of round",
 				},
@@ -143,7 +144,16 @@ return {
 				name = "Enchanted Book",
 				text = {
 					"Use during a run to",
-					"{C:mul_enchantedbook}enchant{} your deck...",
+					"{C:mul_enchantedbook}enchant{} your deck",
+					"{C:inactive}(Will do nothing if{}",
+					"{C:inactive}not created inside an{}",
+					"{C:mul_enchantedbook}Enchantment Table{C:inactive}){}",
+				},
+			},
+			c_mul_enchanted_book_list_enchants = {
+				name = "Enchanted Book",
+				text = {
+					"{C:mul_enchantedbook}Enchants{} your deck with",
 				},
 			},
 		},
@@ -1162,6 +1172,14 @@ return {
 			},
 		},
 		dictionary = {
+			mul_enchant_visible_entry = {
+				"{C:mul_enchantedbook}#1#",
+				"{C:inactive}(lvl. #2# -> lvl. #3#){}",
+			},
+			mul_enchant_hidden_entry = {
+				"{C:inactive}?????"
+			},
+			enchantment_table = "Enchant your Deck",
 			k_mul_level_up = "Level Up!",
 			k_mul_level_down = "Level Down...",
 			k_mul_enchanted = "Enchanted!",

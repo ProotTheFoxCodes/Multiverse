@@ -493,7 +493,7 @@ end
 ---Creates a fancy UI that displays text from a loc table
 ---@param set string
 ---@param key string
----@param args? {bg_colour: table?, text_scale: number?, loc_vars: table?}
+---@param args? {bg_colour: table?, text_scale: number?, loc_vars: table?, no_padding: boolean?}
 ---@return table
 function Multiverse.create_localized_rows(set, key, args)
 	args = args or {}
@@ -509,7 +509,7 @@ function Multiverse.create_localized_rows(set, key, args)
 	if set then
 		table.insert(rows, {
 			n = G.UIT.R,
-			config = { align = "cm", padding = 0.05 },
+			config = { align = "cm", padding = args.no_padding and 0 or 0.05 },
 			nodes = {
 				{
 					n = G.UIT.C,
@@ -530,7 +530,7 @@ function Multiverse.create_localized_rows(set, key, args)
 		end
 		table.insert(rows, {
 			n = G.UIT.R,
-			config = { align = "cm", padding = 0.05, colour = args.bg_colour, r = 0.1, emboss = 0.05 },
+			config = { align = "cm", padding = args.no_padding and 0 or 0.05, colour = args.bg_colour, r = 0.1, emboss = 0.05 },
 			nodes = {
 				{
 					n = G.UIT.C,
@@ -553,7 +553,7 @@ function Multiverse.create_localized_rows(set, key, args)
 		end
 		table.insert(rows, {
 			n = G.UIT.R,
-			config = { align = "cm", padding = 0.05, colour = args.bg_colour, r = 0.1, emboss = 0.05 },
+			config = { align = "cm", padding = args.no_padding and 0 or 0.05, colour = args.bg_colour, r = 0.1, emboss = 0.05 },
 			nodes = {
 				{
 					n = G.UIT.C,
@@ -568,11 +568,9 @@ end
 
 G.FUNCS.your_collection_mul_deckenchantments = function()
 	G.SETTINGS.paused = true
-	Multiverse.creating_collection = true
 	G.FUNCS.overlay_menu({
 		definition = Multiverse.create_UIBox_your_collection_deckenchantments(),
 	})
-	Multiverse.creating_collection = false
 end
 
 function Multiverse.create_UIBox_your_collection_deckenchantments()
@@ -682,7 +680,6 @@ end
 
 function G.FUNCS.mul_deckenchantment_collection_page(args)
 	local page = args and args.cycle_config.current_option or 1
-	Multiverse.creating_collection = true
 	local t = Multiverse.create_UIBox_your_collection_deckenchantments_content(page)
 	if G.your_collection then
 		for i = #G.your_collection, 1, -1 do
@@ -718,7 +715,6 @@ function G.FUNCS.mul_deckenchantment_collection_page(args)
 			end
 		end
 	end
-	Multiverse.creating_collection = false
 	local e = G.OVERLAY_MENU:get_UIE_by_ID("your_collection_deckenchantment_contents")
 	if e and e.config.object then
 		e.config.object:remove()

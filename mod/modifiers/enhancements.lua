@@ -38,7 +38,7 @@ SMODS.Enhancement({
 		if G.GAME.dollar_buffer then
 			total = total + G.GAME.dollar_buffer
 		end
-		return { vars = { card.ability.extra.xmult, card.ability.h_dollars, 1 + total * 0.1 } }
+		return { vars = { card.ability.extra.xmult, card.ability.h_dollars, 1 + total * card.ability.extra.xmult } }
 	end,
 	calculate = function(self, card, context)
 		if context.main_scoring and context.cardarea == G.hand then

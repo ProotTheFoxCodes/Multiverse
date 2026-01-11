@@ -44,7 +44,7 @@ Multiverse.DeckEnchantment = SMODS.GameObject:extend({
 	end,
 	base_weight = 4,
 	create_fake_card = function(self)
-		return {
+		local ret = {
 			ability = (
 				G.GAME.mul_deck_enchantments
 				and G.GAME.mul_deck_enchantments[self.key]
@@ -53,6 +53,11 @@ Multiverse.DeckEnchantment = SMODS.GameObject:extend({
 			fake_card = true,
 			level = self:get_level(),
 		}
+		if Multiverse.info_queue_levels[self.key] then
+			ret.level = Multiverse.info_queue_levels[self.key]
+			Multiverse.info_queue_levels[self.key] = nil
+		end
+		return ret
 	end,
 	generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
 		if not card then
@@ -144,12 +149,13 @@ SMODS.current_mod.custom_collection_tabs = function()
 end
 
 ---@param obj Multiverse.DeckEnchantment
+---@param ench_data EnchantmentData
 ---@param colours table
 ---@param active_colour table
 ---@param inactive_colour? table
-function Multiverse.handle_deck_enchantment_loc_colours(obj, colours, active_colour, inactive_colour)
+function Multiverse.handle_deck_enchantment_loc_colours(obj, ench_data, colours, active_colour, inactive_colour)
 	for i = 1, obj.max_level do
-		if obj:get_level() == i or obj:get_level() == 0 then
+		if not ench_data or ench_data.level == i or ench_data.level == 0 then
 			colours[#colours + 1] = active_colour
 		else
 			colours[#colours + 1] = inactive_colour or G.C.UI.TEXT_INACTIVE
@@ -432,7 +438,7 @@ function Multiverse.get_valid_enchantment_level_ups(key, other, source)
 		not Multiverse.is_enchant_compat(key, other)
 		or not Multiverse.is_deck_compat(key)
 		or obj:get_weight() == 0
-		or not obj:in_pool({ source = source })
+		or not obj:in_pool({ source = source, level_amt = 0 })
 	then
 		return levels
 	end
@@ -460,7 +466,7 @@ function Multiverse.poll_deck_enchantments(args)
 	local polled = {}
 	local luck_factor = Multiverse.clamp((G.GAME.mul_enchantment_luck or 0) / 100, 0, 1)
 	local amt = singular and 1
-		or Multiverse.weighted_pseudorandom("mul_ench_amt_" .. key_append, luck_factor, 0.3 + luck_factor / 5, 1, 3)
+		or Multiverse.weighted_pseudorandom("mul_ench_amt_" .. key_append, luck_factor, 0.4 + luck_factor / 5, 1, 3)
 	if not singular and pseudorandom("mul_lucky_4_" .. G.GAME.round_resets.ante, 1, 1000) <= 3 then
 		amt = 4
 	end
@@ -503,7 +509,7 @@ function Multiverse.poll_deck_enchantments(args)
 				local level_index = Multiverse.weighted_pseudorandom(
 					"mul_generate_level_" .. key_append,
 					luck_factor,
-					0.3 + luck_factor / 5,
+					0.4 + luck_factor / 5,
 					1,
 					#l_ench.level_pool
 				)
@@ -516,7 +522,7 @@ function Multiverse.poll_deck_enchantments(args)
 				local level_index = Multiverse.weighted_pseudorandom(
 					"mul_generate_level_" .. key_append,
 					luck_factor,
-					0.3 + luck_factor / 5,
+					0.4 + luck_factor / 5,
 					1,
 					#ench.level_pool
 				)
@@ -560,9 +566,6 @@ function Multiverse.poll_deck_enchantments(args)
 	return ret
 end
 
----@type boolean
-Multiverse.creating_collection = false
-
 SMODS.ConsumableType({
 	key = "mul_EnchantedBook",
 	primary_colour = HEX("A61A1F"),
@@ -571,7 +574,6 @@ SMODS.ConsumableType({
 	default = "c_mul_enchanted_book",
 	collection_rows = { 1 },
 	create_UIBox_your_collection = function(self)
-		Multiverse.creating_collection = true
 		local type_buf = {}
 		for _, v in ipairs(SMODS.ConsumableType.visible_buffer) do
 			if not v.no_collection and (not G.ACTIVE_MOD_UI or modsCollectionTally(G.P_CENTER_POOLS[v]).of > 0) then
@@ -583,10 +585,11 @@ SMODS.ConsumableType({
 			self.collection_rows,
 			{ back_func = #type_buf > 3 and "your_collection_consumables" or nil }
 		)
-		Multiverse.creating_collection = false
 		return ret
 	end,
 })
+
+Multiverse.info_queue_levels = {}
 
 SMODS.Consumable({
 	key = "enchanted_book",
@@ -608,8 +611,48 @@ SMODS.Consumable({
 			vars.key = vars.key or ench_key
 			return vars
 		elseif card.ability.extra.enchant_list then
+			local main_end = {}
+			local rows = {}
 			for index, value in ipairs(card.ability.extra.enchant_list) do
+				if index <= G.GAME.mul_visible_enchants then
+					info_queue[#info_queue + 1] = Multiverse.DeckEnchantments[value.key]
+				end
+				local name = Multiverse.parse_vars(
+					localize({ type = "name_text", set = "mul_DeckEnchantment", key = value.key }, ""),
+					{ "" }
+				)
+				local init_level = Multiverse.DeckEnchantments[value.key]:get_level()
+				Multiverse.info_queue_levels[value.key] = init_level + value.level_amt
+				local temp_rows = Multiverse.create_localized_rows(
+					nil,
+					index <= G.GAME.mul_visible_enchants and "mul_enchant_visible_entry" or "mul_enchant_hidden_entry",
+					{
+						bg_colour = G.C.CLEAR,
+						loc_vars = { name, init_level, init_level + value.level_amt },
+						text_scale = 1.1,
+						no_padding = true,
+					}
+				)
+				for _, row in ipairs(temp_rows[1].nodes[1].nodes) do
+					row.config.padding = 0.02
+					rows[#rows + 1] = row
+				end
 			end
+			main_end[#main_end + 1] = {
+				n = G.UIT.R,
+				config = { align = "cm" },
+				nodes = {
+					{
+						n = G.UIT.C,
+						config = { align = "cm" },
+						nodes = rows,
+					},
+				},
+			}
+			return {
+				key = "c_mul_enchanted_book_list_enchants",
+				main_end = main_end,
+			}
 		end
 	end,
 	can_use = function(self, card)
@@ -617,17 +660,21 @@ SMODS.Consumable({
 	end,
 	use = function(self, card, area, copier)
 		if card.ability.extra.enchant_list then
-			Multiverse.effect_animation(card, function()
-				
-			end)
-		end
-	end,
-	set_ability = function(self, card, initial, delay_sprites)
-		if not Multiverse.creating_collection then
-			card.ability.extra.enchant_list = Multiverse.poll_deck_enchantments({
-				source = "ench_book",
-				key_append = "ench_book",
-			})
+			for _, ench in ipairs(card.ability.extra.enchant_list) do
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						card:juice_up()
+						local is_newly_enchanted = Multiverse.DeckEnchantments[ench.key]:get_level() == 0
+						Multiverse.level_up_deck_enchantment(ench.key, ench.level_amt)
+						SMODS.calculate_effect({
+							message = is_newly_enchanted and localize("k_mul_enchanted") or localize("k_mul_level_up"),
+							instant = true,
+						}, G.deck.cards[1] or G.deck)
+						return true
+					end,
+				}))
+				delay(1.2)
+			end
 		end
 	end,
 	set_card_type_badge = function(self, card, badges)
