@@ -202,7 +202,9 @@ function Game:start_run(args)
 	Multiverse.init_deck_enchantments()
 	G.E_MANAGER:add_event(Event({
 		func = function()
-			Multiverse.show_TP_meter()
+			if not G.mul_TP_meter then
+				Multiverse.show_TP_meter()
+			end
 			return true
 		end,
 	}))

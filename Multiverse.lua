@@ -25,7 +25,7 @@ Multiverse.C.RAINBOW_GRADIENT = SMODS.Gradient({
 	colours = {
 		G.C.RED,
 		G.C.ORANGE,
-		G.C.YELLOW,
+		darken(G.C.YELLOW, 0.15),
 		G.C.GREEN,
 		G.C.BLUE,
 		G.C.PURPLE,

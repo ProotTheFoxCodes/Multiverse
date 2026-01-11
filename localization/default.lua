@@ -224,7 +224,7 @@ return {
 				name = "Hyperdimensional",
 				text = {
 					"{C:attention}+#1#{} Joker slot",
-					"Gain {C:attention}#2#%{} TP and{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#3#{} Thaumaturgy",
+					"Gain {C:attention}#2#%{} {C:attention}TP{} and{s:0.57} {C:mul_transmuted,f:mul_thaum_icon,E:mul_rotate}+{C:mul_transmuted}#3#{} Thaumaturgy",
 					"Energy at end of round",
 				},
 			},
@@ -983,7 +983,7 @@ return {
 			mul_steve_ability = {
 				name = "Ability: Crafting",
 				text = {
-					"Cost: {C:attention}#1#{} TP",
+					"Cost: {C:attention}#1#{} {C:attention}TP",
 					"Effect: Destroy any number",
 					"of selected cards, then",
 					"create an equal number",
@@ -994,7 +994,7 @@ return {
 			mul_heavy_ability = {
 				name = "Ability: Sandvich",
 				text = {
-					"Cost: {C:attention}#1#{} TP",
+					"Cost: {C:attention}#1#{} {C:attention}TP",
 					"Effect: Gain {C:blue}+#2#{} hands",
 					"this round",
 				},
@@ -1002,7 +1002,7 @@ return {
 			mul_impostor_ability = {
 				name = "Ability: Murder",
 				text = {
-					"Cost: {C:attention}#1#{} TP",
+					"Cost: {C:attention}#1#{} {C:attention}TP",
 					"Effect: {X:purple,C:white}X#2#{} Blind size",
 					"{X:purple,C:white}^#3#{} Blind size instead if",
 					"{C:attention}Ante{} is greater than {C:attention}#4#{}",
@@ -1073,10 +1073,12 @@ return {
 			mul_TP_desc = {
 				name = "TP",
 				text = {
+					"{C:attention}TP{} is used for activating",
+					"certain Jokers' abilities",
 					"If total score of played",
 					"hand does not exceed current",
-					"blind size, gain {C:attention}#1#-#2#%{} TP",
-					"{C:inactive}(TP is capped at 100%){}",
+					"blind size, gain {C:attention}#1#-#2#%{} {C:attention}TP",
+					"{C:inactive}({C:attention}TP{C:inactive} is capped at 100%){}",
 				},
 			},
 			mul_active_consumable = {
