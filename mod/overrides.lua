@@ -116,36 +116,41 @@ SMODS.Joker:take_ownership("invisible", {
 		}
 	end,
 	calculate = function(self, card, context)
-		if
-			context.selling_self
-			and (card.ability.extra.invis_rounds >= card.ability.extra.total_rounds)
-			and not context.blueprint
-		then
-			local jokers = {}
-			for i = 1, #G.jokers.cards do
-				if G.jokers.cards[i] ~= card then
-					jokers[#jokers + 1] = G.jokers.cards[i]
+		if context.selling_self and not context.blueprint then
+			if not card.ability.extra.invis_rounds >= card.ability.extra.total_rounds then
+				local jokers = {}
+				for i = 1, #G.jokers.cards do
+					if G.jokers.cards[i] ~= card then
+						jokers[#jokers + 1] = G.jokers.cards[i]
+					end
 				end
-			end
-			if #jokers > 0 then
-				if #G.jokers.cards <= G.jokers.config.card_limit then
-					local chosen_joker = pseudorandom_element(jokers, "vremade_invisible")
-					local copied_joker =
-						copy_card(chosen_joker, nil, nil, nil, chosen_joker.edition and chosen_joker.edition.negative)
-					if copied_joker.ability.invis_rounds then
-						copied_joker.ability.invis_rounds = 0
+				if #jokers > 0 then
+					if #G.jokers.cards <= G.jokers.config.card_limit then
+						local chosen_joker = pseudorandom_element(jokers, "vremade_invisible")
+						local copied_joker = copy_card(
+							chosen_joker,
+							nil,
+							nil,
+							nil,
+							chosen_joker.edition and chosen_joker.edition.negative
+						)
+						if copied_joker.ability.invis_rounds then
+							copied_joker.ability.invis_rounds = 0
+						end
+						if type(copied_joker.ability.extra) == "table" and copied_joker.ability.extra.invis_rounds then
+							copied_joker.ability.extra.invis_rounds = 0
+						end
+						copied_joker:add_to_deck()
+						G.jokers:emplace(copied_joker)
+						return { message = localize("k_duplicated_ex") }
+					else
+						return { message = localize("k_no_room_ex") }
 					end
-					if type(copied_joker.ability.extra) == "table" and copied_joker.ability.extra.invis_rounds then
-						copied_joker.ability.extra.invis_rounds = 0
-					end
-					copied_joker:add_to_deck()
-					G.jokers:emplace(copied_joker)
-					return { message = localize("k_duplicated_ex") }
 				else
-					return { message = localize("k_no_room_ex") }
+					return { message = localize("k_no_other_jokers") }
 				end
 			else
-				return { message = localize("k_no_other_jokers") }
+				return nil, true
 			end
 		end
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then

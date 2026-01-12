@@ -260,7 +260,7 @@ SMODS.Consumable({
 })
 
 SMODS.Consumable({
-	key = "one_ring",
+	key = "necronomicon",
 	set = "mul_Myth",
 	atlas = "temp_myth",
 	pos = { x = 0, y = 0 },
@@ -272,7 +272,7 @@ SMODS.Consumable({
 	use = function(self, card, area, copier)
 		Multiverse.effect_animation(card, function()
 			play_sound("timpani")
-			SMODS.add_card({ rarity = "Rare", set = "Joker", key_append = "mul_one_ring" })
+			SMODS.add_card({ rarity = "Rare", set = "Joker", key_append = "mul_necronomicon" })
 			Multiverse.ease_thaumaturgy_energy(-G.GAME.mul_thaumaturgy_energy, { immediate = true })
 		end)
 	end,
@@ -291,7 +291,7 @@ SMODS.Consumable({
 	use = function(self, card, area, copier)
 		Multiverse.effect_animation(card, function()
 			play_sound("timpani")
-			SMODS.add_card({ set = "mul_can_transmute", key_append = "mul_one_ring" })
+			SMODS.add_card({ set = "mul_can_transmute", key_append = "mul_theory" })
 		end)
 	end,
 })
@@ -390,43 +390,34 @@ SMODS.Consumable({
 })
 
 SMODS.Consumable({
-	key = "one_piece",
+	key = "one_ring",
 	set = "mul_Myth",
 	atlas = "temp_myth",
 	pos = { x = 0, y = 0 },
 	discovered = true,
 	cost = 6,
-	config = { extra = { max_thaum_energy = 75 } },
+	config = {},
 	loc_vars = function(self, info_queue, card)
-		local total = 0
-		if G.jokers then
-			for _, j in ipairs(G.jokers.cards) do
-				total = total + j.sell_cost
-			end
-		end
+		local total = G.GAME.mul_thaumaturgy_energy or 0
 		return {
 			vars = {
-				card.ability.extra.max_thaum_energy,
-				math.min(math.floor(to_number(total)), card.ability.extra.max_thaum_energy),
+				total / 2,
 			},
 		}
 	end,
 	can_use = function(self, card)
-		return true
+		return G.GAME.mul_thaumaturgy_energy > 1
 	end,
 	use = function(self, card, area, copier)
+		local total = math.floor(G.GAME.mul_thaumaturgy_energy / 2)
 		Multiverse.effect_animation(card, function()
-			local total = 0
-			if G.jokers then
-				for _, j in ipairs(G.jokers.cards) do
-					total = total + j.sell_cost
-				end
-			end
 			play_sound("timpani")
-			Multiverse.ease_thaumaturgy_energy(
-				math.min(math.floor(to_number(total)), card.ability.extra.max_thaum_energy),
-				{ immediate = true }
-			)
+			Multiverse.ease_thaumaturgy_energy(-total, { immediate = true })
+		end)
+		delay(0.6)
+		Multiverse.effect_animation(card, function()
+			play_sound("timpani")
+			Multiverse.ease_TP(total, { instant = true })
 		end)
 	end,
 })
