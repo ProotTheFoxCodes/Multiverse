@@ -6,11 +6,13 @@
 
 A Balatro mod where I add whatever I feel like to the game.
 This mod introduces:
- - New Jokers (mostly) based on references to other things, somewhat balanced compared to vanilla Jokers
+ - New Jokers based on references to other things, somewhat balanced compared to vanilla Jokers
  - A new "transmutation" mechanic that transmutes Jokers into more powerful Transmuted Jokers that exceed the power of Legendary jokers
  - Enhancements, Seals and Stickers associated with these Transmuted Jokers
  - New Tarot and Spectral cards to add more variety to the overall Balatro experience
  - Myth Cards, a new consumable type to facilitate this transmutation mechanic
+ - Deck Enchantments, a way to augment your Deck and give it powers beyond what it should be able to do
+ - TP and Thaumaturgy Energy, two new currencies/meters that the mod utilizes heavily
 
 > :page_facing_up: Note: Compatibility with other mods is **not** guaranteed.
 
