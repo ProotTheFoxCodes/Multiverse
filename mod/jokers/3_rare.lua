@@ -4,7 +4,6 @@ SMODS.Joker({
 	pos = { x = 2, y = 0 },
 	config = { extra = { xmult = 1.9 } },
 	rarity = 3,
-	blueprint_compat = true,
 	cost = 9,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.xmult } }
@@ -26,7 +25,6 @@ SMODS.Joker({
 	pos = { x = 2, y = 0 },
 	config = { extra = { mult = 1, dim1 = 1, dim2 = 1, rounds_held = 0 } },
 	rarity = 3,
-	blueprint_compat = true,
 	perishable_compat = false,
 	cost = 7,
 	loc_vars = function(self, info_queue, card)
@@ -90,7 +88,6 @@ SMODS.Joker({
 			and context.game_over
 			and context.main_eval
 			and card.ability.extra.in_boss
-			and not context.blueprint
 		then
 			ease_ante(-card.ability.extra.ante_change)
 			G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
@@ -109,3 +106,82 @@ SMODS.Joker({
 		end
 	end,
 })
+
+SMODS.Joker({
+	key = "dragon",
+	atlas = "placeholder",
+	pos = { x = 2, y = 0 },
+	transmute_req = Multiverse.set_transmute_requirements(25),
+	config = {
+		extra = {
+			xmult = 1,
+			xmult_inc = 0.5,
+			transmute_progress = 0,
+		},
+	},
+	rarity = 3,
+	cost = 8,
+	loc_vars = function(self, info_queue, card)
+		Multiverse.transmute_info_queue(card, info_queue)
+		table.insert(info_queue, G.P_CENTERS.m_gold)
+		table.insert(info_queue, G.P_CENTERS.m_steel)
+		table.insert(info_queue, G.P_CENTERS.m_stone)
+		return {
+			vars = { card.ability.extra.xmult_inc, card.ability.extra.xmult },
+		}
+	end,
+	calculate = function(self, card, context)
+		if not context.blueprint then
+			if context.mul_dragon_transmute_check or context.playing_card_added then
+				local amt = 1
+				if context.cards then
+					amt = 0
+					for _, c in ipairs(context.cards) do
+						if
+							SMODS.has_enhancement(c, "m_stone")
+							or SMODS.has_enhancement(c, "m_steel")
+							or SMODS.has_enhancement(c, "m_gold")
+						then
+							amt = amt + 1
+						end
+					end
+				end
+				if amt > 0 then
+					Multiverse.increment_transmute_progress(card, amt)
+					Multiverse.transmute_check(card)
+				end
+			end
+			if context.discard and context.other_card:get_id() == 13 then
+				SMODS.scale_card(card, {
+					ref_table = card.ability.extra,
+					ref_value = "xmult",
+					scalar_value = "xmult_inc",
+				})
+				return {
+					destroy = true,
+				}
+			end
+		end
+		if context.joker_main then
+			return {
+				xmult = card.ability.extra.xmult,
+			}
+		end
+	end,
+	pools = { ["mul_can_transmute"] = true },
+	transmutes_into = "j_mul_steve",
+	mul_grail = { "c_tower", "c_chariot", "c_devil" },
+	mul_tree_of_eden = { "j_midas_mask", "j_marble" },
+})
+
+local set_ability_hook = Card.set_ability
+function Card:set_ability(center, initial, delay_sprites)
+	if
+		self.playing_card
+		and (center.key == "m_stone" or center.key == "m_steel" or center.key == "m_gold")
+		and self.config.center.key ~= center.key
+	then
+		SMODS.calculate_context({ mul_dragon_transmute_check = true })
+	end
+	set_ability_hook(self, center, initial, delay_sprites)
+end

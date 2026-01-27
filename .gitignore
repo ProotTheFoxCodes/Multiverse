@@ -41,6 +41,7 @@ luac.out
 
 # Everything that deals with VS Code stuff
 .vscode
+.config
 
 # Vim stuff i guess
 *.vim

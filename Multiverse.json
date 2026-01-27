@@ -8,9 +8,9 @@
     "prefix": "mul",
     "main_file": "Multiverse.lua",
     "priority": 0,
-    "badge_colour": "063970",
-    "version": "0.0.8~PRERELEASE",
+    "badge_colour": "204d7f",
+    "version": "0.0.9b~PRERELEASE",
     "dependencies": [
-        "Steamodded (>=1.0.0~BETA-0827c)"
+        "Steamodded (>=1.0.0~BETA-1224a)"
     ]
 }

@@ -1,55 +1,16 @@
 SMODS.Joker({
-	key = "aftermath",
-	atlas = "placeholder",
-	pos = { x = 0, y = 0 },
-	config = { extra = { chips = 19 } },
-	rarity = 1,
-	blueprint_compat = true,
-	cost = 5,
-	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.chips } }
-	end,
-	calculate = function(self, card, context)
-		if context.individual and context.cardarea == G.play then
-			if G.GAME.current_round.hands_left == 0 then
-				return {
-					chips = card.ability.extra.chips,
-				}
-			end
-		end
-	end,
-})
-
-SMODS.Joker({
 	key = "villager",
 	atlas = "placeholder",
 	pos = { x = 0, y = 0 },
-	config = { extra = { mult = 20, money_loss = 1, transmute_req = Multiverse.set_transmute_requirements(25) } },
+	config = {
+		extra = {
+			mult = 15,
+			money_loss = 1,
+		},
+	},
 	rarity = 1,
-	blueprint_compat = true,
-	transmutable_compat = true,
 	cost = 6,
 	loc_vars = function(self, info_queue, card)
-		local count = 0
-		if G.playing_cards then
-			for _, v in ipairs(G.playing_cards) do
-				if
-					SMODS.has_enhancement(v, "m_steel")
-					or SMODS.has_enhancement(v, "m_gold")
-					or SMODS.has_enhancement(v, "m_stone")
-				then
-					count = count + 1
-				end
-			end
-		end
-		table.insert(info_queue, {
-			set = "Other",
-			key = "mul_villager_hint",
-			vars = {
-				count,
-				card.ability.extra.transmute_req,
-			},
-		})
 		return {
 			vars = {
 				card.ability.extra.mult,
@@ -58,27 +19,10 @@ SMODS.Joker({
 		}
 	end,
 	calculate = function(self, card, context)
-		local count = 0
-		if not context.blueprint then
-			for _, c in ipairs(G.playing_cards) do
-				if
-					SMODS.has_enhancement(c, "m_steel")
-					or SMODS.has_enhancement(c, "m_gold")
-					or SMODS.has_enhancement(c, "m_stone")
-				then
-					count = count + 1
-				end
-			end
-			if count >= card.ability.extra.transmute_req then
-				card:add_sticker("mul_transmutable", true)
-			else
-				card:remove_sticker("mul_transmutable")
-			end
-		end
 		if context.joker_main then
 			G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) - card.ability.extra.money_loss
-			ease_dollars(-card.ability.extra.money_loss)
 			return {
+				dollars = -card.ability.extra.money_loss,
 				mult = card.ability.extra.mult,
 				func = function()
 					G.E_MANAGER:add_event(Event({
@@ -91,15 +35,13 @@ SMODS.Joker({
 			}
 		end
 	end,
-	pools = { ["mul_can_transmute"] = true },
 })
 
 SMODS.Joker({
-	key = "red_balloon",
+	key = "red_bloon",
 	atlas = "placeholder",
 	pos = { x = 0, y = 0 },
 	config = { extra = { money = 1, rounds_held = 0, total_rounds = 3 } },
-	blueprint_compat = true,
 	eternal_compat = false,
 	cost = 4,
 	loc_vars = function(self, info_queue, card)
@@ -136,16 +78,15 @@ SMODS.Joker({
 	key = "foddian_struggle",
 	atlas = "placeholder",
 	pos = { x = 0, y = 0 },
-	config = { extra = { mult = 0, mult_gain = 2 } },
+	config = { extra = { mult = 0, mult_inc = 2 } },
 	rarity = 1,
 	cost = 6,
-	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		local suit = G.GAME.current_round.mul_foddian_suit or "Hearts"
 		return {
 			vars = {
 				localize(suit, "suits_plural"),
-				card.ability.extra.mult_gain,
+				card.ability.extra.mult_inc,
 				card.ability.extra.mult,
 				colours = { G.C.SUITS[suit] },
 			},
@@ -164,7 +105,7 @@ SMODS.Joker({
 			SMODS.scale_card(card, {
 				ref_table = card.ability.extra,
 				ref_value = "mult",
-				scalar_value = "mult_gain",
+				scalar_value = "mult_inc",
 			})
 		end
 		if context.joker_main and card.ability.extra.mult > 0 then
@@ -175,7 +116,7 @@ SMODS.Joker({
 	end,
 })
 
-local function set_foddian_suit()
+function Multiverse.set_foddian_suit()
 	G.GAME.current_round.mul_foddian_suit = "Hearts"
 	local valid = {}
 	for _, c in ipairs(G.playing_cards) do
@@ -188,20 +129,16 @@ local function set_foddian_suit()
 		G.GAME.current_round.mul_foddian_suit = foddian_card.base.suit
 	end
 end
-function SMODS.current_mod.reset_game_globals()
-	set_foddian_suit()
-end
 
 SMODS.Joker({
 	key = "peashooter",
 	atlas = "placeholder",
 	pos = { x = 0, y = 0 },
-	config = { extra = { mult = 0, mult_gain = 1 } },
+	config = { extra = { mult = 0, mult_inc = 1 } },
 	rarity = 1,
 	cost = 6,
-	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.mult_gain, card.ability.extra.mult } }
+		return { vars = { card.ability.extra.mult_inc, card.ability.extra.mult } }
 	end,
 	calculate = function(self, card, context)
 		if context.before and context.main_eval and not context.blueprint then
@@ -209,7 +146,7 @@ SMODS.Joker({
 				SMODS.scale_card(card, {
 					ref_table = card.ability.extra,
 					ref_value = "mult",
-					scalar_value = "mult_gain",
+					scalar_value = "mult_inc",
 				})
 			end
 		end
@@ -228,7 +165,6 @@ SMODS.Joker({
 	config = { extra = { dollars = 2, min_cards = 5 } },
 	rarity = 1,
 	cost = 6,
-	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.min_cards, card.ability.extra.dollars } }
 	end,
@@ -259,8 +195,12 @@ SMODS.Joker({
 	cost = 5,
 	blueprint_compat = false,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint and context.scoring_hand[1] then
+		if context.before and context.scoring_hand[1] then
 			assert(SMODS.change_base(context.scoring_hand[1], nil, "Jack"))
+			context.scoring_hand[1]:juice_up()
+			return {
+				message = localize("k_mul_converted")
+			}
 		end
 	end,
 })

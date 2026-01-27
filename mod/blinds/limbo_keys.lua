@@ -9,9 +9,9 @@ local blunder_file = assert(NFS.newFileData(Multiverse.path .. "assets/misc/blun
 local blunder_data = assert(love.image.newImageData(blunder_file))
 Multiverse.BLUNDER_SPRITE = assert(love.graphics.newImage(blunder_data))
 
-local limbo_instructions_file = assert(NFS.newFileData(Multiverse.path .. "assets/misc/limbo_instructions.png"))
-local limbo_instructions_data = assert(love.image.newImageData(limbo_instructions_file))
-Multiverse.LIMBO_INSTRUCTIONS_SPRITE = assert(love.graphics.newImage(limbo_instructions_data))
+-- local limbo_instructions_file = assert(NFS.newFileData(Multiverse.path .. "assets/misc/limbo_instructions.png"))
+-- local limbo_instructions_data = assert(love.image.newImageData(limbo_instructions_file))
+-- Multiverse.LIMBO_INSTRUCTIONS_SPRITE = assert(love.graphics.newImage(limbo_instructions_data))
 
 Multiverse.LIMBO_KEY_COLORS = {
 	{ 236 / 255, 0, 0, 1 },
@@ -138,7 +138,7 @@ end
 
 function Multiverse.limbo_keys_end()
 	Multiverse.in_limbo = "end"
-    ease_background_colour({
+	ease_background_colour({
 		new_colour = lighten(G.C.BLACK, 0.1),
 		special_colour = G.C.BLACK,
 		contrast = 2,
@@ -149,8 +149,9 @@ function Multiverse.limbo_keys_end()
 			delay = 4 * G.SPEEDFACTOR,
 			func = function()
 				if not Multiverse.has_guessed then
-					G.GAME.blind.chips = G.GAME.blind.chips * 10
-					G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+					Multiverse.change_blind_size(function (chips)
+						return chips * 10
+					end)
 					Multiverse.start_animation("explosion")
 					play_sound("mul_deltarune_explosion", 1, 0.8)
 				end
@@ -286,19 +287,19 @@ end
 
 function Multiverse.handle_limbo_drawing(x_factor, y_factor)
 	if Multiverse.in_limbo and not G.SETTINGS.paused then
-		love.graphics.setColor(1, 1, 1, 1)
-		love.graphics.draw(
-			Multiverse.LIMBO_INSTRUCTIONS_SPRITE,
-			love.graphics.getWidth() - 50 * x_factor,
-			love.graphics.getHeight() / 2,
-			0,
-			x_factor,
-			y_factor,
-			200,
-			150,
-			0,
-			0
-		)
+		-- love.graphics.setColor(1, 1, 1, 1)
+		-- love.graphics.draw(
+		-- 	Multiverse.LIMBO_INSTRUCTIONS_SPRITE,
+		-- 	love.graphics.getWidth() - 50 * x_factor,
+		-- 	love.graphics.getHeight() / 2,
+		-- 	0,
+		-- 	x_factor,
+		-- 	y_factor,
+		-- 	200,
+		-- 	150,
+		-- 	0,
+		-- 	0
+		-- )
 		if Multiverse.in_limbo == "end" then
 			for _, key in ipairs(Multiverse.limbo_keys) do
 				love.graphics.setColor(key.end_color)
@@ -307,8 +308,8 @@ function Multiverse.handle_limbo_drawing(x_factor, y_factor)
 					love.graphics.getWidth() / 2 + (key.x - 2.5) * 150 * x_factor,
 					love.graphics.getHeight() / 2 + (key.y - 1.5) * 150 * y_factor,
 					0,
-					x_factor * (Multiverse.secret_limbo and 1/9 or 1),
-					y_factor * (Multiverse.secret_limbo and 1/9 or 1),
+					x_factor * (Multiverse.secret_limbo and 1 / 9 or 1),
+					y_factor * (Multiverse.secret_limbo and 1 / 9 or 1),
 					Multiverse.secret_limbo and 237.5 or 30.5,
 					Multiverse.secret_limbo and 237.5 or 21.5,
 					0,
@@ -319,16 +320,16 @@ function Multiverse.handle_limbo_drawing(x_factor, y_factor)
 			for _, key in ipairs(Multiverse.limbo_keys) do
 				love.graphics.setColor(key.current_color)
 				love.graphics.draw(
-    				Multiverse.secret_limbo and Multiverse.BLUNDER_SPRITE or Multiverse.LIMBO_KEY_SPRITE,
-    				love.graphics.getWidth() / 2 + (key.x - 2.5) * 150 * x_factor,
-    				love.graphics.getHeight() / 2 + (key.y - 1.5) * 150 * y_factor,
-    				0,
-    				x_factor * (Multiverse.secret_limbo and 1/9 or 1),
-    				y_factor * (Multiverse.secret_limbo and 1/9 or 1),
-    				Multiverse.secret_limbo and 237.5 or 30.5,
-    				Multiverse.secret_limbo and 237.5 or 21.5,
-    				0,
-    				0
+					Multiverse.secret_limbo and Multiverse.BLUNDER_SPRITE or Multiverse.LIMBO_KEY_SPRITE,
+					love.graphics.getWidth() / 2 + (key.x - 2.5) * 150 * x_factor,
+					love.graphics.getHeight() / 2 + (key.y - 1.5) * 150 * y_factor,
+					0,
+					x_factor * (Multiverse.secret_limbo and 1 / 9 or 1),
+					y_factor * (Multiverse.secret_limbo and 1 / 9 or 1),
+					Multiverse.secret_limbo and 237.5 or 30.5,
+					Multiverse.secret_limbo and 237.5 or 21.5,
+					0,
+					0
 				)
 			end
 		end

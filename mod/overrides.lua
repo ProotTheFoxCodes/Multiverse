@@ -1,38 +1,28 @@
 ---Effectively a cleaner take_ownership that makes taking ownership of modded Jokers and making them transmutable more convenient
----Note that I do not adhere to the standards implied by this function.
+---Note that I adhere to the standards implied by this function due to consumable behavior.
+---Also note that calc must manually handle checking if the Joker is transmutable via Multiverse.transmute_check()
 ---@param key string Note that the Joker with this key must satisfy `type(modded_joker.ability.extra) == "table"`
----@param tracker_var number | table If this is a table, it must contain a key called `n` that maps to an integer value.
----@param requirement integer The requirement needed for a Joker to receive the sticker.
+---@param config {requirement: number, tracker_var: number | table, transmutes_into: string, grail_pool: string[], eden_pool: string[]} Other data needed for a transmutable Joker.
 ---@param calc fun(self, card, context): nil A calculation function used to increment transmute_progress. This should not return anything.
-function Multiverse.transmutable_override(key, tracker_var, requirement, calc)
+function Multiverse.transmutable_override(key, config, calc)
 	local no_joker_prefix_key = key:sub(3)
 	local calculate_hook = SMODS.Jokers[key].calculate
 	local loc_vars_hook = SMODS.Jokers[key].loc_vars
-	local update_hook = SMODS.Jokers[key].update
 	local temp_config = SMODS.Jokers[key].config
 	temp_config.extra = temp_config.extra or {}
-	temp_config.extra.transmute_req = Multiverse.set_transmute_requirements(requirement)
-	temp_config.extra.transmute_progress = tracker_var
+	temp_config.extra.transmute_progress = config.tracker_var
 	local temp_pools = SMODS.Jokers[key].pools
 	temp_pools["mul_can_transmute"] = true
 	SMODS.Joker:take_ownership(no_joker_prefix_key, {
-		transmutable_compat = true,
+		transmute_req = Multiverse.set_transmute_requirements(config.requirement),
 		config = temp_config,
 		loc_vars = function(self, info_queue, card)
+			local ret = nil
 			if loc_vars_hook then
-				loc_vars_hook(self, info_queue, card)
+				ret = loc_vars_hook(self, info_queue, card)
 			end
-			local transmute_vars = {}
-			if type(card.ability.extra.transmute_progress) == "table" then
-				transmute_vars[#transmute_vars + 1] = card.ability.extra.transmute_progress.n
-			else
-				transmute_vars[#transmute_vars + 1] = card.ability.extra.transmute_progress
-			end
-			transmute_vars[#transmute_vars + 1] = card.ability.extra.transmute_req
-			table.insert(info_queue, {
-				set = "Other",
-				key = "mul_" .. no_joker_prefix_key .. "hint",
-			})
+			Multiverse.transmute_info_queue(card, info_queue)
+			return ret
 		end,
 		calculate = function(self, card, context)
 			if not context.blueprint then
@@ -42,33 +32,22 @@ function Multiverse.transmutable_override(key, tracker_var, requirement, calc)
 				calculate_hook(self, card, context)
 			end
 		end,
-		update = function(self, card, dt)
-			local progress = (
-				type(card.ability.extra.transmute_progress) == "table" and card.ability.extra.transmute_progress.n
-			) or card.ability.extra.transmute_progress
-			if progress >= card.ability.extra.transmute_req then
-				card:add_sticker("mul_transmutable", true)
-			end
-			if update_hook then
-				update_hook(self, card, dt)
-			end
-		end,
 		pools = temp_pools,
+		transmutes_into = config.transmutes_into,
+		mul_grail = config.grail_pool,
+		mul_tree_of_eden = config.eden_pool,
 	}, true)
 end
 
 --#region Manual vanilla overrides, which are annoying because of non-standardized config tables
+--Code is taken from vremade to streamline the process of preserving the original functionality of the overrided joker
 SMODS.Joker:take_ownership("joker", {
-	transmutable_compat = true,
+	transmute_req = Multiverse.set_transmute_requirements(15),
 	config = {
-		extra = { mult = 4, tarots_used = { n = 0 }, transmute_req = Multiverse.set_transmute_requirements(15) },
+		extra = { mult = 4, transmute_progress = { n = 0 } },
 	},
 	loc_vars = function(self, info_queue, card)
-		table.insert(info_queue, {
-			set = "Other",
-			key = "mul_joker_hint",
-			vars = { card.ability.extra.tarots_used.n, card.ability.extra.transmute_req },
-		})
+		Multiverse.transmute_info_queue(card, info_queue)
 		return { vars = { card.ability.extra.mult } }
 	end,
 	calculate = function(self, card, context)
@@ -76,43 +55,132 @@ SMODS.Joker:take_ownership("joker", {
 			return { mult = card.ability.extra.mult }
 		end
 		if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == "Tarot" then
-			if not card.ability.extra.tarots_used[context.consumeable.config.center.key] then
-				card.ability.extra.tarots_used[context.consumeable.config.center.key] = true
-				card.ability.extra.tarots_used.n = card.ability.extra.tarots_used.n + 1
+			if not card.ability.extra.transmute_progress[context.consumeable.config.center.key] then
+				card.ability.extra.transmute_progress[context.consumeable.config.center.key] = true
+				card.ability.extra.transmute_progress.n = card.ability.extra.transmute_progress.n + 1
 			end
-			if card.ability.extra.tarots_used.n >= card.ability.extra.transmute_req then
-				-- note to self: when adding modded stickers, must add mod prefix before sticker key
-				card:add_sticker("mul_transmutable", true)
-				-- another note to self: pass in true as 2nd argument to card:add_sticker()
-			end
+			Multiverse.transmute_check(card)
 		end
 	end,
-	pools = { ["mul_can_transmute"] = true },
+	transmutes_into = "j_mul_ren_amamiya",
+	mul_grail = { "c_emperor" },
+	mul_tree_of_eden = { "j_cartomancer", "j_hallucination", "j_vagabond" },
 }, true)
 
 SMODS.Joker:take_ownership("pareidolia", {
-	transmutable_compat = true,
 	loc_vars = function(self, info_queue, card)
-		table.insert(info_queue, {
-			set = "Other",
-			key = "mul_pareidolia_hint",
-			vars = { card.ability.extra.hands_played.n, card.ability.extra.transmute_req },
-		})
+		Multiverse.transmute_info_queue(card, info_queue)
 	end,
-	config = { extra = { hands_played = { n = 0 }, transmute_req = Multiverse.set_transmute_requirements(5) } },
+	transmute_req = Multiverse.set_transmute_requirements(6),
+	config = { extra = { transmute_progress = { n = 0 } } },
 	calculate = function(self, card, context)
 		if context.before and not context.blueprint then
-			if not card.ability.extra.hands_played[context.scoring_name] then
-				card.ability.extra.hands_played[context.scoring_name] = true
-				card.ability.extra.hands_played.n = card.ability.extra.hands_played.n + 1
+			if not card.ability.extra.transmute_progress[context.scoring_name] then
+				card.ability.extra.transmute_progress[context.scoring_name] = true
+				card.ability.extra.transmute_progress.n = card.ability.extra.transmute_progress.n + 1
 			end
-			if card.ability.extra.hands_played.n >= card.ability.extra.transmute_req then
-				card:add_sticker("mul_transmutable", true)
-			end
+			Multiverse.transmute_check(card)
 		end
 	end,
-	pools = { ["mul_can_transmute"] = true },
+	transmutes_into = "j_mul_impostor",
+	mul_grail = { "c_lovers", "c_strength", "c_death", "c_hanged_man" },
+	mul_tree_of_eden = { "j_mul_jack_frost", "j_smeared", "j_shortcut" },
 }, true)
+
+SMODS.Joker:take_ownership("invisible", {
+	transmute_req = Multiverse.set_transmute_requirements(20),
+	config = {
+		extra = {
+			invis_rounds = 0,
+			total_rounds = 2,
+			transmute_progress = { n = 0 },
+		},
+	},
+	loc_vars = function(self, info_queue, card)
+		local main_end = {}
+		if G.jokers and G.jokers.cards then
+			for _, joker in ipairs(G.jokers.cards) do
+				if joker.edition and joker.edition.negative then
+					localize({ type = "other", key = "remove_negative", nodes = main_end, vars = {} })
+					break
+				end
+			end
+		end
+		Multiverse.transmute_info_queue(card, info_queue)
+		return {
+			vars = {
+				card.ability.extra.total_rounds,
+				card.ability.extra.invis_rounds,
+			},
+			main_end = main_end[1],
+		}
+	end,
+	calculate = function(self, card, context)
+		if context.selling_self and not context.blueprint then
+			if card.ability.extra.invis_rounds >= card.ability.extra.total_rounds then
+				local jokers = {}
+				for i = 1, #G.jokers.cards do
+					if G.jokers.cards[i] ~= card then
+						jokers[#jokers + 1] = G.jokers.cards[i]
+					end
+				end
+				if #jokers > 0 then
+					if #G.jokers.cards <= G.jokers.config.card_limit then
+						local chosen_joker = pseudorandom_element(jokers, "vremade_invisible")
+						local copied_joker = copy_card(
+							chosen_joker,
+							nil,
+							nil,
+							nil,
+							chosen_joker.edition and chosen_joker.edition.negative
+						)
+						if copied_joker.ability.invis_rounds then
+							copied_joker.ability.invis_rounds = 0
+						end
+						if type(copied_joker.ability.extra) == "table" and copied_joker.ability.extra.invis_rounds then
+							copied_joker.ability.extra.invis_rounds = 0
+						end
+						copied_joker:add_to_deck()
+						G.jokers:emplace(copied_joker)
+						return { message = localize("k_duplicated_ex") }
+					else
+						return { message = localize("k_no_room_ex") }
+					end
+				else
+					return { message = localize("k_no_other_jokers") }
+				end
+			else
+				return nil, true
+			end
+		end
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+			card.ability.extra.invis_rounds = card.ability.extra.invis_rounds + 1
+			if card.ability.extra.invis_rounds == card.ability.extra.total_rounds then
+				local eval = function(c)
+					return not c.REMOVED
+				end
+				juice_card_until(card, eval, true)
+			end
+			return {
+				message = (card.ability.extra.invis_rounds < card.ability.extra.total_rounds)
+						and (card.ability.extra.invis_rounds .. "/" .. card.ability.extra.total_rounds)
+					or localize("k_active_ex"),
+				colour = G.C.FILTER,
+			}
+		end
+		if not context.blueprint and context.card_added and context.card.ability.set == "Joker" then
+			if not card.ability.extra.transmute_progress[context.card.config.center.key] then
+				card.ability.extra.transmute_progress[context.card.config.center.key] = true
+				card.ability.extra.transmute_progress.n = card.ability.extra.transmute_progress.n + 1
+			end
+			Multiverse.transmute_check(card)
+		end
+	end,
+	transmutes_into = "j_mul_waldo",
+	mul_grail = { "c_judgement", "c_wraith" },
+	mul_tree_of_eden = { "j_riff_raff", "j_chaos", "j_diet_cola" },
+}, true)
+
 -- Not really transmutation-related, more so for the funny factor
 SMODS.Joker:take_ownership("chicot", {
 	add_to_deck = function(self, card, from_debuff)

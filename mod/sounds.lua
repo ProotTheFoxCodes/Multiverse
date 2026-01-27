@@ -61,20 +61,7 @@ SMODS.Sound({
 		end
 	end,
 	sync = false,
-	volume = 0.7,
-	pitch = 1,
-})
-
-SMODS.Sound({
-	key = "presage_music",
-	path = "MIRAR_Presage.ogg",
-	select_music_track = function(self)
-		if G.GAME and G.GAME.round_resets.ante >= 8 then
-			return 1
-		end
-	end,
-	sync = false,
-	volume = 0.5,
+	volume = 0.9,
 	pitch = 1,
 })
 

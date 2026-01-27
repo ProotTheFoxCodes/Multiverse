@@ -27,6 +27,9 @@ SMODS.Atlas({
 	px = 71,
 	py = 95,
 	path = "philosophers_stone.png",
+	atlas_table = "ANIMATION_ATLAS",
+	frames = 18,
+	fps = 12,
 })
 SMODS.Atlas({
 	key = "ren_amamiya",
@@ -45,6 +48,9 @@ SMODS.Atlas({
 	px = 71,
 	py = 95,
 	path = "holy_grail.png",
+	atlas_table = "ANIMATION_ATLAS",
+	frames = 18,
+	fps = 12,
 })
 SMODS.Atlas({
 	key = "multiverse_blinds",
@@ -61,14 +67,43 @@ SMODS.Atlas({
 	path = "myth_placeholder.png",
 })
 SMODS.Atlas({
-	key = "transmute_tag",
-	px = 34,
-	py = 34,
-	path = "transmute_tag.png",
-})
-SMODS.Atlas({
 	key = "transmutable_sticker",
 	px = 71,
 	py = 95,
 	path = "transmutable.png",
+})
+SMODS.Atlas({
+	key = "3d_banana",
+	px = 95,
+	py = 95,
+	path = "3d_cavendish.png",
+	atlas_table = "ANIMATION_ATLAS",
+	frames = 40,
+	fps = 40,
+})
+SMODS.Atlas({
+	key = "ability_placeholder",
+	px = 34,
+	py = 34,
+	path = "ability_placeholder.png",
+})
+SMODS.Atlas({
+	key = "transmutable_target",
+	px = 71,
+	py = 95,
+	path = "target.png",
+	frames = 2,
+	atlas_table = "ANIMATION_ATLAS",
+})
+SMODS.Atlas({
+	key = "enchantment_book",
+	px = 71,
+	py = 95,
+	path = "book.png",
+})
+SMODS.Atlas({
+	key = "enchantment_table",
+	px = 71,
+	py = 95,
+	path = "enchantment_table.png"
 })

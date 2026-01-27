@@ -99,7 +99,7 @@ end
 function Multiverse.music_toggle(song, credit)
 	local toggle = Multiverse.create_custom_toggle({
 		label = "",
-		active_colour = Multiverse.TRANSMUTED_GRADIENT,
+		active_colour = Multiverse.C.TRANSMUTED_GRADIENT,
 		ref_table = Multiverse.config.music,
 		ref_value = song,
 		w = 0,
@@ -205,10 +205,6 @@ Multiverse.music_credits = {
 		},
 		{
 			{
-				"Presage",
-				"MIRAR",
-			},
-			{
 				"Sneaky Snitch",
 				"Kevin Macleod",
 			},
@@ -227,13 +223,21 @@ function Multiverse.config_tab_definition()
 			nodes = {
 				create_toggle({
 					label = localize("mul_debug"),
-					active_colour = Multiverse.TRANSMUTED_GRADIENT,
+					active_colour = Multiverse.C.TRANSMUTED_GRADIENT,
 					ref_table = Multiverse.config,
 					ref_value = "debug",
 					callback = function()
 						if not Multiverse.debug then
 							Multiverse.config.debug = false
+							return
 						end
+						SMODS.save_all_config()
+						G.E_MANAGER:add_event(Event({
+							func = function()
+								SMODS.restart_game()
+								return true
+							end,
+						}))
 					end,
 				}),
 			},
@@ -244,146 +248,38 @@ function Multiverse.config_tab_definition()
 			nodes = {
 				create_toggle({
 					label = localize("mul_joke"),
-					active_colour = Multiverse.TRANSMUTED_GRADIENT,
+					active_colour = Multiverse.C.TRANSMUTED_GRADIENT,
 					ref_table = Multiverse.config,
 					ref_value = "joke",
+					callback = function()
+						SMODS.save_all_config()
+						G.E_MANAGER:add_event(Event({
+							func = function()
+								SMODS.restart_game()
+								return true
+							end,
+						}))
+					end,
 				}),
 			},
 		},
 	}
-	local mul_nodes = {
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { align = "cm", padding = 0.1 },
-					nodes = {
-						{
-							n = G.UIT.T,
-							config = {
-								text = localize("mul_customization"),
-								scale = 0.5,
-								colour = G.C.WHITE,
-							},
-						},
-					},
-				},
-			},
-		},
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { align = "cm", padding = 0.05 },
-					nodes = mul_settings,
-				},
-			},
-		},
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { align = "cm", padding = 0.05 },
-					nodes = {
-						{
-							n = G.UIT.T,
-							config = {
-								text = localize("mul_changes_warn"),
-								scale = 0.4,
-								colour = G.C.WHITE,
-							},
-						},
-					},
-				},
-			},
-		},
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { align = "cm", padding = 0.05 },
-					nodes = {
-						{
-							n = G.UIT.T,
-							config = {
-								text = localize("mul_changes_debug"),
-								scale = 0.4,
-								colour = G.C.WHITE,
-							},
-						},
-					},
-				},
-			},
-		},
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { align = "cm", padding = 0.05 },
-					nodes = {
-						{
-							n = G.UIT.T,
-							config = {
-								text = localize("mul_changes_debug2"),
-								scale = 0.4,
-								colour = G.C.WHITE,
-							},
-						},
-					},
-				},
-			},
-		},
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { align = "cm", padding = 0.05 },
-					nodes = {
-						{
-							n = G.UIT.T,
-							config = {
-								text = localize("mul_changes_pool1"),
-								scale = 0.4,
-								colour = G.C.WHITE,
-							},
-						},
-					},
-				},
-			},
-		},
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.C,
-					config = { align = "cm", padding = 0.05 },
-					nodes = {
-						{
-							n = G.UIT.T,
-							config = {
-								text = localize("mul_changes_pool2"),
-								scale = 0.4,
-								colour = G.C.WHITE,
-							},
-						},
-					},
-				},
+	local mul_nodes = Multiverse.create_localized_rows(nil, "mul_config_menu_title", { text_scale = 1.5 })
+	mul_nodes[#mul_nodes + 1] = {
+		n = G.UIT.R,
+		config = { align = "cm" },
+		nodes = {
+			{
+				n = G.UIT.C,
+				config = { align = "cm", padding = 0.05 },
+				nodes = mul_settings,
 			},
 		},
 	}
+	local rows = Multiverse.create_localized_rows(nil, "mul_config_menu_text", { text_scale = 1.25 })
+	for _, r in ipairs(rows) do
+		mul_nodes[#mul_nodes + 1] = r
+	end
 	return {
 		n = G.UIT.ROOT,
 		config = { align = "cm", colour = G.C.BLACK, padding = 0.1 },
@@ -462,48 +358,8 @@ function Multiverse.display_songs(page)
 	}
 end
 
-function Multiverse.music_tab_text()
-	local n = {
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.O,
-					config = {
-						object = DynaText({
-							string = localize("mul_music_customization1"),
-							colours = { G.C.WHITE },
-							shadow = true,
-							scale = 0.4,
-						}),
-					},
-				},
-			},
-		},
-		{
-			n = G.UIT.R,
-			config = { align = "cm" },
-			nodes = {
-				{
-					n = G.UIT.O,
-					config = {
-						object = DynaText({
-							string = localize("mul_music_customization2"),
-							colours = { G.C.WHITE },
-							shadow = true,
-							scale = 0.4,
-						}),
-					},
-				},
-			},
-		},
-	}
-	return n
-end
-
 function Multiverse.music_tab_definition(page)
-	local mul_nodes = Multiverse.music_tab_text()
+	local mul_nodes = Multiverse.create_localized_rows(nil, "mul_music_menu_text", { text_scale = 1.5 })
 	table.insert(mul_nodes, Multiverse.display_songs(page))
 	local pages = {}
 	for i, _ in ipairs(Multiverse.music_credits) do
@@ -620,66 +476,251 @@ SMODS.current_mod.extra_tabs = function()
 	}
 end
 
-function Multiverse.create_thaumaturgy_ui()
+function Multiverse.blind_instructions_HUD_def(key)
 	return {
-		n = G.UIT.R,
-		config = { align = "cm", id = "row_thaumaturgy" },
+		n = G.UIT.ROOT,
+		config = { padding = 0.05, colour = lighten(G.C.JOKER_GREY, 0.5), align = "cm", r = 0.1 },
 		nodes = {
 			{
 				n = G.UIT.C,
-				config = {
-					align = "cm",
-					padding = 0.05,
-					minw = 1.45,
-					minh = 0.6,
-					colour = G.C.DYN_UI.BOSS_MAIN,
-					emboss = 0.05,
-					r = 0.1,
-				},
-				nodes = {
-					{
-						n = G.UIT.R,
-						config = { align = "cm", padding = 0.05 },
-						nodes = {
-							{
-								n = G.UIT.T,
-								config = {
-									text = localize("k_mul_thaumaturgy_energy"),
-									minh = 0.33,
-									scale = 0.85 * 0.4,
-									colour = G.C.UI.TEXT_LIGHT,
-									shadow = true,
-								},
-							},
-							{ n = G.UIT.C, config = { minw = 0.05 } },
-							{
-								n = G.UIT.C,
-								config = {
-									align = "cm",
-									r = 0.1,
-									minw = 1.2,
-									colour = G.C.DYN_UI.BOSS_DARK,
-									id = "col_thaumaturgy_text",
-								},
-								nodes = {
-									{
-										n = G.UIT.O,
-										config = {
-											object = DynaText({
-												string = { { ref_table = G.GAME, ref_value = "mul_thaumaturgy_energy" } },
-												colours = { Multiverse.TRANSMUTED_GRADIENT },
-												shadow = true,
-												scale = 1.5 * 0.4,
-											}),
-											id = "thaumaturgy_UI_count",
-										},
-									},
-								},
-							},
-						},
-					},
-				},
+				config = { padding = 0.05, colour = G.C.L_BLACK, align = "cm", r = 0.1, emboss = 0.05 },
+				nodes = Multiverse.create_localized_rows("Other", "mul_" .. key .. "_inst"),
 			},
 		},
 	}
+end
+
+---Creates a fancy UI that displays text from a loc table
+---@param set string
+---@param key string
+---@param args? {bg_colour: table?, text_scale: number?, loc_vars: table?, no_padding: boolean?}
+---@return table
+function Multiverse.create_localized_rows(set, key, args)
+	args = args or {}
+	args.bg_colour = args.bg_colour or G.C.WHITE
+	local loc_entry
+	args.text_scale = args.text_scale or 1
+	if set then
+		loc_entry = G.localization.descriptions[set][key]
+	else
+		loc_entry = G.localization.misc.dictionary[key]
+	end
+	local rows = {}
+	if set then
+		table.insert(rows, {
+			n = G.UIT.R,
+			config = { align = "cm", padding = args.no_padding and 0 or 0.05 },
+			nodes = {
+				{
+					n = G.UIT.C,
+					config = { align = "cm" },
+					nodes = {
+						{ n = G.UIT.T, config = { text = loc_entry.name, colour = G.C.UI.TEXT_LIGHT, scale = 0.4 } },
+					},
+				},
+			},
+		})
+		local text_rows = {}
+		for _, line in ipairs(loc_entry.text_parsed) do
+			table.insert(text_rows, {
+				n = G.UIT.R,
+				config = { align = "cm" },
+				nodes = SMODS.localize_box(line, { scale = 0.9 * args.text_scale, vars = args.loc_vars }),
+			})
+		end
+		table.insert(rows, {
+			n = G.UIT.R,
+			config = { align = "cm", padding = args.no_padding and 0 or 0.05, colour = args.bg_colour, r = 0.1, emboss = 0.05 },
+			nodes = {
+				{
+					n = G.UIT.C,
+					config = { align = "cm", padding = 0.05 },
+					nodes = text_rows,
+				},
+			},
+		})
+	else
+		local text_rows = {}
+		for _, line in ipairs(loc_entry) do
+			table.insert(text_rows, {
+				n = G.UIT.R,
+				config = { align = "cm" },
+				nodes = SMODS.localize_box(
+					loc_parse_string(line),
+					{ scale = 0.9 * args.text_scale, vars = args.loc_vars }
+				),
+			})
+		end
+		table.insert(rows, {
+			n = G.UIT.R,
+			config = { align = "cm", padding = args.no_padding and 0 or 0.05, colour = args.bg_colour, r = 0.1, emboss = 0.05 },
+			nodes = {
+				{
+					n = G.UIT.C,
+					config = { align = "cm", padding = 0.05 },
+					nodes = text_rows,
+				},
+			},
+		})
+	end
+	return rows
+end
+
+G.FUNCS.your_collection_mul_deckenchantments = function()
+	G.SETTINGS.paused = true
+	G.FUNCS.overlay_menu({
+		definition = Multiverse.create_UIBox_your_collection_deckenchantments(),
+	})
+end
+
+function Multiverse.create_UIBox_your_collection_deckenchantments()
+	G.E_MANAGER:add_event(Event({
+		func = function()
+			G.FUNCS.mul_deckenchantment_collection_page({ cycle_config = {} })
+			return true
+		end,
+	}))
+	return {
+		n = G.UIT.O,
+		config = {
+			object = UIBox({
+				definition = Multiverse.create_UIBox_your_collection_deckenchantments_content(),
+				config = { offset = { x = 0, y = 0 }, align = "cm" },
+			}),
+			id = "your_collection_deckenchantment_contents",
+			align = "cm",
+		},
+	}
+end
+
+function Multiverse.create_UIBox_your_collection_deckenchantments_content(page)
+	page = page or 1
+	args = {}
+	args.w_mod = 1
+	args.h_mod = 0.95
+	args.card_scale = 1
+	local pool = SMODS.collection_pool(Multiverse.DeckEnchantments)
+	G.your_collection = {}
+	local rows = 3
+	local cols = 5
+	local table_nodes = {}
+
+	for i = 1, rows do
+		G.your_collection[i] = CardArea(
+			G.ROOM.T.x + 0.2 * G.ROOM.T.w / 2,
+			G.ROOM.T.h,
+			(args.w_mod * 5 + 0.25) * G.CARD_W,
+			args.h_mod * G.CARD_H,
+			{ card_limit = 5, type = "title", highlight_limit = 0, collection = true }
+		)
+		table.insert(table_nodes, {
+			n = G.UIT.R,
+			config = { align = "cm", padding = 0.07, no_fill = true },
+			nodes = {
+				{ n = G.UIT.O, config = { object = G.your_collection[i] } },
+			},
+		})
+	end
+
+	local options = {}
+	for i = 1, math.ceil(#pool / (rows * cols)) do
+		table.insert(
+			options,
+			localize("k_page") .. " " .. tostring(i) .. "/" .. tostring(math.ceil(#pool / (rows * cols)))
+		)
+	end
+
+	local t = create_UIBox_generic_options({
+		colour = G.ACTIVE_MOD_UI
+			and ((G.ACTIVE_MOD_UI.ui_config or {}).collection_colour or (G.ACTIVE_MOD_UI.ui_config or {}).colour),
+		bg_colour = G.ACTIVE_MOD_UI
+			and ((G.ACTIVE_MOD_UI.ui_config or {}).collection_bg_colour or (G.ACTIVE_MOD_UI.ui_config or {}).bg_colour),
+		back_colour = G.ACTIVE_MOD_UI and ((G.ACTIVE_MOD_UI.ui_config or {}).collection_back_colour or (
+			G.ACTIVE_MOD_UI.ui_config or {}
+		).back_colour),
+		outline_colour = G.ACTIVE_MOD_UI and ((G.ACTIVE_MOD_UI.ui_config or {}).collection_outline_colour or (
+			G.ACTIVE_MOD_UI.ui_config or {}
+		).outline_colour),
+		back_func = G.ACTIVE_MOD_UI and "openModUI_" .. G.ACTIVE_MOD_UI.id or "your_collection",
+		snap_back = args.snap_back,
+		infotip = args.infotip,
+		contents = {
+			{
+				n = G.UIT.R,
+				config = { align = "cm", r = 0.1, colour = G.C.BLACK, emboss = 0.05 },
+				nodes = {
+					{
+						n = G.UIT.C,
+						config = { align = "cm" },
+						nodes = table_nodes,
+					},
+				},
+			},
+			((rows * cols) < #pool) and {
+				n = G.UIT.R,
+				config = { align = "cm" },
+				nodes = {
+					create_option_cycle({
+						options = options,
+						w = 4.5,
+						cycle_shoulders = true,
+						opt_callback = "mul_deckenchantment_collection_page",
+						current_option = page,
+						colour = G.ACTIVE_MOD_UI and (G.ACTIVE_MOD_UI.ui_config or {}).collection_option_cycle_colour
+							or G.C.RED,
+						no_pips = true,
+						focus_args = { snap_to = true, nav = "wide" },
+					}),
+				},
+			} or nil,
+		},
+	})
+	return t
+end
+
+function G.FUNCS.mul_deckenchantment_collection_page(args)
+	local page = args and args.cycle_config.current_option or 1
+	local t = Multiverse.create_UIBox_your_collection_deckenchantments_content(page)
+	if G.your_collection then
+		for i = #G.your_collection, 1, -1 do
+			for j = #G.your_collection[i].cards, 1, -1 do
+				local c = G.your_collection[j]:remove_card(G.your_collection[i].cards[j])
+				c:remove()
+				c = nil
+			end
+		end
+		local pool = SMODS.collection_pool(Multiverse.DeckEnchantments)
+		local row, col = 1, 1
+		for index, obj in ipairs(pool) do
+			if index <= (page - 1) * 15 then
+			elseif index > page * 15 then
+				break
+			else
+				local card = Card(
+					G.your_collection[row].T.x + G.your_collection[row].T.w / 2,
+					G.your_collection[row].T.y,
+					G.CARD_W,
+					G.CARD_H,
+					G.P_CARDS.empty,
+					G.P_CENTERS["c_mul_enchanted_book"]
+				)
+				card.ability.extra.collection_enchant = pool[index].key
+				card:start_materialize({HEX("A61A1F"), HEX("CAA540")}, row > 1 or col > 1)
+				G.your_collection[row]:emplace(card)
+				col = col + 1
+				if col > 5 then
+					row = row + 1
+					col = 1
+				end
+			end
+		end
+	end
+	local e = G.OVERLAY_MENU:get_UIE_by_ID("your_collection_deckenchantment_contents")
+	if e and e.config.object then
+		e.config.object:remove()
+	end
+	e.config.object = UIBox({
+		definition = t,
+		config = { offset = { x = 0, y = 0 }, align = "cm", parent = e },
+	})
 end
