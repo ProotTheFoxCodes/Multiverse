@@ -10,6 +10,10 @@ end
 function Multiverse.init_blinds()
 	---@type number
 	G.GAME.mul_undyne_damage_mult = 1
+
+	Multiverse.in_undyne = false
+	Multiverse.in_limbo = nil
+
 	if G.GAME.challenge == "c_mul_monsoon" then
 		G.GAME.mul_undyne_damage_mult = 2
 	end
@@ -88,6 +92,35 @@ SMODS.Blind({
 	end,
 })
 
+function Multiverse.undying_press_play_effect()
+	Multiverse.undyne_spears = {}
+	Multiverse.done_attacking = false
+	Multiverse.in_undyne = true
+	local num_attacks = Multiverse.start_undyne_attack()
+	G.E_MANAGER:add_event(Event({
+		trigger = "immediate",
+		func = function()
+			if
+				Multiverse.undyne_spears[num_attacks]
+				and not Multiverse.undyne_spears[num_attacks].active
+				and Multiverse.in_undyne
+			then
+				G.E_MANAGER:add_event(Event({
+					trigger = "after",
+					blockable = false,
+					blocking = false,
+					delay = 0.5 * G.SPEEDFACTOR,
+					func = function()
+						Multiverse.in_undyne = false
+						return true
+					end,
+				}))
+			end
+			return not Multiverse.in_undyne
+		end,
+	}))
+end
+
 SMODS.Blind({
 	key = "undying",
 	atlas = "multiverse_blinds",
@@ -97,32 +130,7 @@ SMODS.Blind({
 	mult = 2,
 	press_play = function(self)
 		if not G.GAME.blind.disabled then
-			Multiverse.undyne_spears = {}
-			Multiverse.done_attacking = false
-			Multiverse.in_undyne = true
-			local num_attacks = Multiverse.start_undyne_attack()
-			G.E_MANAGER:add_event(Event({
-				trigger = "immediate",
-				func = function()
-					if
-						Multiverse.undyne_spears[num_attacks]
-						and not Multiverse.undyne_spears[num_attacks].active
-						and Multiverse.in_undyne
-					then
-						G.E_MANAGER:add_event(Event({
-							trigger = "after",
-							blockable = false,
-							blocking = false,
-							delay = 0.5 * G.SPEEDFACTOR,
-							func = function()
-								Multiverse.in_undyne = false
-								return true
-							end,
-						}))
-					end
-					return not Multiverse.in_undyne
-				end,
-			}))
+			Multiverse.undying_press_play_effect()
 		end
 	end,
 	set_blind = function(self)
