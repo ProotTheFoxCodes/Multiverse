@@ -41,6 +41,36 @@ function Multiverse.hide_blind_instructions()
 	end
 end
 
+function Multiverse.limbo_set_effect()
+	Multiverse.show_blind_instructions("limbo")
+	Multiverse.in_limbo = "pre_start"
+	if pseudorandom("mul_limbo", 1, 1000) < 8 then
+		Multiverse.secret_limbo = true
+		Multiverse.HIDDEN_KEY_COLOR = { 1, 1, 1, 1 }
+	else
+		Multiverse.secret_limbo = false
+		Multiverse.HIDDEN_KEY_COLOR = { 224 / 255, 85 / 255, 32 / 255, 1 }
+	end
+	Multiverse.add_limbo_keys()
+	ease_background_colour_blind(G.STATES.BLIND_SELECT)
+	attention_text({
+		scale = 0.7,
+		text = localize({ type = "variable", key = "a_mul_limbo_popup", vars = { 10 } }),
+		hold = G.SPEEDFACTOR * 2.4,
+		align = "cm",
+		offset = { x = 0, y = -1 },
+		major = G.play,
+	})
+	delay(2 * G.SPEEDFACTOR)
+	G.E_MANAGER:add_event(Event({
+		func = function()
+			Multiverse.limbo_keys_intro()
+			return true
+		end,
+	}))
+	delay(18.6 * G.SPEEDFACTOR)
+end
+
 SMODS.Blind({
 	key = "limbo",
 	atlas = "multiverse_blinds",
@@ -49,33 +79,7 @@ SMODS.Blind({
 	boss = { min = 3 },
 	mult = 2,
 	set_blind = function(self)
-		Multiverse.show_blind_instructions("limbo")
-		Multiverse.in_limbo = "pre_start"
-		if pseudorandom("mul_limbo", 1, 1000) < 8 then
-			Multiverse.secret_limbo = true
-			Multiverse.HIDDEN_KEY_COLOR = { 1, 1, 1, 1 }
-		else
-			Multiverse.secret_limbo = false
-			Multiverse.HIDDEN_KEY_COLOR = { 224 / 255, 85 / 255, 32 / 255, 1 }
-		end
-		Multiverse.add_limbo_keys()
-		ease_background_colour_blind(G.STATES.BLIND_SELECT)
-		attention_text({
-			scale = 0.7,
-			text = localize({ type = "variable", key = "a_mul_limbo_popup", vars = { 10 } }),
-			hold = G.SPEEDFACTOR * 2.4,
-			align = "cm",
-			offset = { x = 0, y = -1 },
-			major = G.play,
-		})
-		delay(2 * G.SPEEDFACTOR)
-		G.E_MANAGER:add_event(Event({
-			func = function()
-				Multiverse.limbo_keys_intro()
-				return true
-			end,
-		}))
-		delay(18.6 * G.SPEEDFACTOR)
+		Multiverse.limbo_set_effect()
 	end,
 	disable = function(self)
 		if to_big(get_blind_amount(G.GAME.round_resets.ante) * G.GAME.blind.mult) < G.GAME.blind.chips then
