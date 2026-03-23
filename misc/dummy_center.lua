@@ -6,22 +6,14 @@ Multiverse.DummyCenter = SMODS.Center:extend({
 	required_params = {
 		"key",
 	},
-    class_prefix = "du",
+	class_prefix = "du",
 	in_pool = function(self, args)
 		return false
 	end,
 	no_collection = true,
-    inject = function (self, i)
-        Multiverse.DummyCenters[self.key] = self
-    end,
-    delete = function (self)
-        Multiverse.DummyCenters[self.key] = nil
-    end,
-	process_loc_text = function(self)
-		if G.localization.descriptions[self.set].key or self.loc_txt then
-			SMODS.Center.process_loc_text(self)
-		end
-	end,
+	pre_inject_class = function(self)
+		G.P_CENTER_POOLS[self.set] = {}
+	end
 })
 
 Multiverse.DummyCenter({
